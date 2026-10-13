@@ -278,8 +278,8 @@
                 </select>
             </div>
             <div class="form-group hidden" id="customSizeGroup">
-                <label>Özel Ebat Girin</label>
-                <input type="text" id="pCustomSize" class="form-control" placeholder="Örn: 16.9-30 veya 165/80R13">
+                <label>Manuel Ebat Girin</label>
+                <input type="text" id="pCustomSize" class="form-control" placeholder="Örn: 16.9-30, 6.00-16 Vb.">
             </div>
             
             <div class="form-group">
@@ -298,8 +298,8 @@
                 </select>
             </div>
             <div class="form-group hidden" id="customBrandGroup">
-                <label>Özel Marka Adı</label>
-                <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Kabat">
+                <label>Manuel Marka Adı</label>
+                <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Kabat, BKT Vb.">
             </div>
 
             <div class="form-group">
@@ -635,7 +635,7 @@
             document.getElementById('modalTitleText').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Ürünü Düzenle`;
             document.getElementById('saveProductBtn').innerHTML = `<i class="fa-solid fa-floppy-disk"></i> Değişiklikleri Kaydet`;
 
-            // Bilgileri Moda'a doldur
+            // Bilgileri Modal'a doldur
             document.getElementById('pGroupSelect').value = product.group || 'Otomobil';
             toggleGroupFields(product.group || 'Otomobil');
 
@@ -684,6 +684,8 @@
             document.getElementById('pImg').value = '';
             document.getElementById('pPrice').value = '';
             document.getElementById('pStock').value = '';
+            document.getElementById('pSizeSelect').value = '205/55R16';
+            document.getElementById('pBrandSelect').value = 'Petlas';
             document.getElementById('customSizeGroup').classList.add('hidden');
             document.getElementById('customBrandGroup').classList.add('hidden');
 
