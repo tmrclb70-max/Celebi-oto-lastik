@@ -33,7 +33,7 @@
         .btn-logout { background: var(--danger-color); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 
         /* MAIN CONTAINER */
-        .main-container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        .main-container { max-width: 1350px; margin: 30px auto; padding: 0 20px; }
 
         /* GİRİŞ EKRANI */
         .login-wrapper {
@@ -66,31 +66,35 @@
         .admin-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 10px; background: rgba(255,255,255,0.03); padding: 15px 20px; border-radius: 10px; border: 1px solid var(--card-border); }
         .btn-add { background: var(--success-color); color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; font-size: 1rem; }
 
-        /* STOK LİSTESİ */
-        .products-list { display: flex; flex-direction: column; gap: 15px; }
+        /* TAM YATAY HİZALANMIŞ STOK LİSTESİ */
+        .products-list { display: flex; flex-direction: column; gap: 12px; }
         
-        .product-row { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 20px; position: relative; cursor: pointer; transition: 0.2s; flex-wrap: wrap; }
-        .product-row:hover { border-color: var(--accent-yellow); transform: translateX(4px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+        .product-row { 
+            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; 
+            padding: 12px 20px; display: grid; 
+            grid-template-columns: 70px 1.2fr 1fr 1fr 90px 90px 1.2fr 140px auto; 
+            align-items: center; gap: 15px; cursor: pointer; transition: 0.2s; 
+        }
+        .product-row:hover { border-color: var(--accent-yellow); transform: translateX(3px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
         
-        .row-left { display: flex; align-items: center; gap: 20px; flex: 2; min-width: 280px; }
-        .product-img { width: 75px; height: 75px; object-fit: contain; background: #ffffff; padding: 6px; border-radius: 8px; border: 1px solid var(--card-border); flex-shrink: 0; }
-        .product-details { flex: 1; }
-        .product-brand { font-size: 0.85rem; color: var(--accent-yellow); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-        .product-size { font-size: 1.3rem; font-weight: 800; color: #fff; margin: 3px 0; }
-        .product-tags { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
-        .tag { font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; background: #0f172a; color: var(--text-muted); border: 1px solid var(--card-border); font-weight: 600; }
+        .product-img { width: 65px; height: 65px; object-fit: contain; background: #ffffff; padding: 4px; border-radius: 8px; border: 1px solid var(--card-border); }
+        
+        .col-size { font-size: 1.25rem; font-weight: 800; color: #fff; }
+        .col-brand { font-size: 1.05rem; color: var(--accent-yellow); font-weight: 800; text-transform: uppercase; }
+        .col-pattern { font-size: 0.95rem; color: var(--text-main); font-weight: 600; }
+        .col-season { display: inline-block; }
+        .col-dot { display: inline-block; }
+        .col-price { font-size: 1.25rem; font-weight: 800; color: var(--success-color); text-align: right; }
+        
+        .tag { font-size: 0.78rem; padding: 4px 8px; border-radius: 5px; background: #0f172a; color: var(--text-muted); border: 1px solid var(--card-border); font-weight: 600; text-align: center; }
         .tag-pattern { color: var(--accent-yellow); border-color: rgba(245, 158, 11, 0.3); }
 
-        .row-right { display: flex; align-items: center; gap: 25px; flex: 1; justify-content: flex-end; min-width: 240px; flex-wrap: wrap; }
-        .product-price { font-size: 1.35rem; font-weight: 800; color: var(--success-color); }
-        
-        /* STOK ROLLERİNE ÖZEL ROZETLER */
-        .stock-badge-in { background: rgba(16, 185, 129, 0.15); color: var(--success-color); border: 1.5px solid var(--success-color); font-weight: 800; padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 6px; }
-        .stock-badge-out { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1.5px solid var(--danger-color); font-weight: 800; padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 6px; }
-        .stock-badge-admin { background: rgba(15, 23, 42, 0.8); color: var(--text-main); border: 1px solid var(--card-border); font-weight: 700; padding: 8px 14px; border-radius: 8px; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; }
+        /* STOK ROZETLERİ */
+        .stock-badge-in { background: rgba(16, 185, 129, 0.15); color: var(--success-color); border: 1.5px solid var(--success-color); font-weight: 800; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; text-align: center; }
+        .stock-badge-out { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1.5px solid var(--danger-color); font-weight: 800; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; text-align: center; }
+        .stock-badge-admin { background: rgba(15, 23, 42, 0.8); color: var(--text-main); border: 1px solid var(--card-border); font-weight: 700; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; text-align: center; }
 
-        .row-actions { display: flex; gap: 8px; }
-        .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 34px; height: 34px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 32px; height: 32px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .btn-icon:hover { background: var(--danger-color); color: #fff; }
 
         /* MODALLAR */
@@ -111,7 +115,16 @@
         .modal-header h3 { color: var(--accent-yellow); font-size: 1.3rem; }
         .close-btn { font-size: 1.6rem; cursor: pointer; color: var(--text-muted); }
 
+        .input-with-btn { display: flex; gap: 8px; }
+        .btn-search-img { background: #3b82f6; color: white; border: none; padding: 0 14px; border-radius: 6px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
+
         .hidden { display: none !important; }
+
+        /* RESPONSIVE TELEFON DÜZENİ */
+        @media (max-width: 992px) {
+            .product-row { grid-template-columns: 60px 1fr 1fr auto; gap: 10px; }
+            .col-pattern, .col-season, .col-dot { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -191,8 +204,8 @@
             </div>
             <div class="detail-right">
                 <h2 id="detBrand">--</h2>
-                <div class="detail-info-row"><span>Desen / Model:</span> <span id="detPattern" style="color: var(--accent-yellow);">--</span></div>
                 <div class="detail-info-row"><span>Ebat:</span> <span id="detSize">--</span></div>
+                <div class="detail-info-row"><span>Desen / Model:</span> <span id="detPattern" style="color: var(--accent-yellow);">--</span></div>
                 <div class="detail-info-row"><span>Mevsim:</span> <span id="detSeason">--</span></div>
                 <div class="detail-info-row"><span>DOT (Yıl):</span> <span id="detDot">--</span></div>
                 <div class="detail-info-row"><span>Stok Durumu:</span> <span id="detStock">--</span></div>
@@ -207,6 +220,25 @@
             <div class="modal-header">
                 <h3><i class="fa-solid fa-plus-circle"></i> Yeni Ürün Ekle</h3>
                 <span class="close-btn" onclick="closeModal('productModal')">&times;</span>
+            </div>
+
+            <div class="form-group">
+                <label>Ebat Seçin veya Yazın</label>
+                <select id="pSizeSelect" class="form-control" onchange="checkCustomSize(this)">
+                    <option value="175/65R14">175/65R14</option>
+                    <option value="185/65R15">185/65R15</option>
+                    <option value="195/65R15">195/65R15</option>
+                    <option value="205/55R16" selected>205/55R16</option>
+                    <option value="215/55R17">215/55R17</option>
+                    <option value="225/45R17">225/45R17</option>
+                    <option value="225/55R17">225/55R17</option>
+                    <option value="235/60R18">235/60R18</option>
+                    <option value="Diger">Diğer (Manuel Ebat Yaz)</option>
+                </select>
+            </div>
+            <div class="form-group hidden" id="customSizeGroup">
+                <label>Özel Ebat Girin</label>
+                <input type="text" id="pCustomSize" class="form-control" placeholder="Örn: 245/40R19">
             </div>
             
             <div class="form-group">
@@ -237,25 +269,6 @@
             </div>
 
             <div class="form-group">
-                <label>Ebat Seçin veya Yazın</label>
-                <select id="pSizeSelect" class="form-control" onchange="checkCustomSize(this)">
-                    <option value="175/65R14">175/65R14</option>
-                    <option value="185/65R15">185/65R15</option>
-                    <option value="195/65R15">195/65R15</option>
-                    <option value="205/55R16" selected>205/55R16</option>
-                    <option value="215/55R17">215/55R17</option>
-                    <option value="225/45R17">225/45R17</option>
-                    <option value="225/55R17">225/55R17</option>
-                    <option value="235/60R18">235/60R18</option>
-                    <option value="Diger">Diğer (Manuel Ebat Yaz)</option>
-                </select>
-            </div>
-            <div class="form-group hidden" id="customSizeGroup">
-                <label>Özel Ebat Girin</label>
-                <input type="text" id="pCustomSize" class="form-control" placeholder="Örn: 245/40R19">
-            </div>
-
-            <div class="form-group">
                 <label>Mevsim</label>
                 <select id="pSeason" class="form-control">
                     <option value="Yaz">Yaz</option>
@@ -263,22 +276,30 @@
                     <option value="4 Mevsim">4 Mevsim</option>
                 </select>
             </div>
+
             <div class="form-group">
                 <label>DOT (Üretim Yılı)</label>
                 <input type="text" id="pDot" class="form-control" placeholder="Örn: 2026">
             </div>
+
             <div class="form-group">
                 <label>Görsel URL (Lastik Fotoğrafı)</label>
-                <input type="text" id="pImg" class="form-control" placeholder="İnternetten resim linki yapıştırın">
+                <div class="input-with-btn">
+                    <input type="text" id="pImg" class="form-control" placeholder="Resim linki yapıştırın">
+                    <button type="button" class="btn-search-img" onclick="searchTireImage()"><i class="fa-solid fa-magnifying-glass"></i> Görsel Ara</button>
+                </div>
             </div>
+
             <div class="form-group">
                 <label>Fiyat (TL)</label>
-                <input type="number" id="pPrice" class="form-control" placeholder="Örn: 3224">
+                <input type="text" id="pPrice" class="form-control" placeholder="Örn: 3456.24" oninput="formatPriceInput(this)">
             </div>
+
             <div class="form-group">
                 <label>Stok Adedi</label>
                 <input type="number" id="pStock" class="form-control" placeholder="Örn: 12">
             </div>
+
             <button class="btn-primary" style="background: var(--success-color); color: white;" onclick="saveProduct()"><i class="fa-solid fa-check"></i> Ürünü Kaydet</button>
         </div>
     </div>
@@ -317,19 +338,38 @@
         };
 
         let products = JSON.parse(localStorage.getItem('celebi_products')) || [
-            { id: 1, brand: 'Petlas', pattern: 'Snowmaster 2', size: '205/55R16', season: 'Kış', dot: '2026', price: 3224, stock: 12, img: DEFAULT_TIRE_IMG }
+            { id: 1, brand: 'Petlas', pattern: 'Snowmaster 2', size: '205/55R16', season: 'Kış', dot: '2026', price: 3456.24, stock: 12, img: DEFAULT_TIRE_IMG }
         ];
 
         let currentUser = null;
         let selectedSeason = 'all';
 
-        // FİYAT BİÇİMLENDİRME FONKSİYONU: ₺3.224.00 DÜZENİ
+        // OTOMATİK ₺3.456.24 BİÇİMLENDİRMESİ
         function formatPrice(val) {
             let num = Number(val);
             if (isNaN(num)) return '₺0.00';
             let parts = num.toFixed(2).split('.');
             let integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
             return '₺' + integerPart + '.' + parts[1];
+        }
+
+        function formatPriceInput(input) {
+            input.value = input.value.replace(/[^0-9.]/g, '');
+        }
+
+        // GOOGLE GÖRSELLER'DE OTOMATİK LASTİK RESMİ ARAMA
+        function searchTireImage() {
+            let sizeSelect = document.getElementById('pSizeSelect').value;
+            let size = sizeSelect === 'Diger' ? document.getElementById('pCustomSize').value.trim() : sizeSelect;
+
+            let brandSelect = document.getElementById('pBrandSelect').value;
+            let brand = brandSelect === 'Diger' ? document.getElementById('pCustomBrand').value.trim() : brandSelect;
+
+            let pattern = document.getElementById('pPattern').value.trim();
+
+            let query = `${brand} ${size} ${pattern} lastik`.trim();
+            let searchUrl = `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(query)}`;
+            window.open(searchUrl, '_blank');
         }
 
         function login() {
@@ -417,7 +457,6 @@
                 
                 row.onclick = () => openDetailModal(p);
 
-                // STOK ROZETİ BELİRLEME
                 let stockHtml = '';
                 if (currentUser.role === 'admin') {
                     stockHtml = `<div class="stock-badge-admin"><i class="fa-solid fa-boxes-stacked"></i> ${p.stock} Adet</div>`;
@@ -430,27 +469,19 @@
                 }
 
                 row.innerHTML = `
-                    <div class="row-left">
-                        <img src="${imgSrc}" class="product-img" alt="Lastik" onerror="this.src='${DEFAULT_TIRE_IMG}'">
-                        <div class="product-details">
-                            <div class="product-brand">${p.brand}</div>
-                            <div class="product-size">${p.size}</div>
-                            <div class="product-tags">
-                                ${p.pattern ? `<span class="tag tag-pattern"><i class="fa-solid fa-grip"></i> ${p.pattern}</span>` : ''}
-                                <span class="tag">${p.season}</span>
-                                <span class="tag">DOT ${p.dot}</span>
-                            </div>
+                    <img src="${imgSrc}" class="product-img" alt="Lastik" onerror="this.src='${DEFAULT_TIRE_IMG}'">
+                    <div class="col-size">${p.size}</div>
+                    <div class="col-brand">${p.brand}</div>
+                    <div class="col-pattern">${p.pattern ? `<span class="tag tag-pattern"><i class="fa-solid fa-grip"></i> ${p.pattern}</span>` : '-'}</div>
+                    <div class="col-season"><span class="tag">${p.season}</span></div>
+                    <div class="col-dot"><span class="tag">DOT ${p.dot}</span></div>
+                    <div class="col-price">${formatPrice(p.price)}</div>
+                    <div>${stockHtml}</div>
+                    ${currentUser.role === 'admin' ? `
+                        <div>
+                            <button class="btn-icon" onclick="event.stopPropagation(); deleteProduct(${p.id})" title="Ürünü Sil"><i class="fa-solid fa-trash"></i></button>
                         </div>
-                    </div>
-                    <div class="row-right">
-                        <div class="product-price">${formatPrice(p.price)}</div>
-                        ${stockHtml}
-                        ${currentUser.role === 'admin' ? `
-                            <div class="row-actions">
-                                <button class="btn-icon" onclick="event.stopPropagation(); deleteProduct(${p.id})" title="Ürünü Sil"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        ` : ''}
-                    </div>
+                    ` : '<div></div>'}
                 `;
                 grid.appendChild(row);
             });
@@ -459,12 +490,11 @@
         function openDetailModal(p) {
             document.getElementById('detImg').src = p.img && p.img.trim() !== '' ? p.img : DEFAULT_TIRE_IMG;
             document.getElementById('detBrand').innerText = p.brand;
-            document.getElementById('detPattern').innerText = p.pattern ? p.pattern : '--';
             document.getElementById('detSize').innerText = p.size;
+            document.getElementById('detPattern').innerText = p.pattern ? p.pattern : '--';
             document.getElementById('detSeason').innerText = p.season;
             document.getElementById('detDot').innerText = p.dot;
             
-            // DETAY MODALINDAKİ STOK GÖRÜNÜMÜ
             let detStockElem = document.getElementById('detStock');
             if (currentUser.role === 'admin') {
                 detStockElem.innerText = p.stock + " Adet";
@@ -493,14 +523,13 @@
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
         function saveProduct() {
+            let sizeSelect = document.getElementById('pSizeSelect').value;
+            let size = sizeSelect === 'Diger' ? document.getElementById('pCustomSize').value.trim() : sizeSelect;
+
             let brandSelect = document.getElementById('pBrandSelect').value;
             let brand = brandSelect === 'Diger' ? document.getElementById('pCustomBrand').value.trim() : brandSelect;
 
             let pattern = document.getElementById('pPattern').value.trim();
-
-            let sizeSelect = document.getElementById('pSizeSelect').value;
-            let size = sizeSelect === 'Diger' ? document.getElementById('pCustomSize').value.trim() : sizeSelect;
-
             const season = document.getElementById('pSeason').value;
             const dot = document.getElementById('pDot').value;
             const img = document.getElementById('pImg').value;
