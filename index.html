@@ -72,12 +72,12 @@
         .product-row { 
             background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; 
             padding: 12px 20px; display: grid; 
-            grid-template-columns: 70px 1.2fr 1fr 1fr 90px 90px 1.2fr 140px auto; 
+            grid-template-columns: 80px 1.2fr 1fr 1fr 90px 90px 1.2fr 140px auto; 
             align-items: center; gap: 15px; cursor: pointer; transition: 0.2s; 
         }
         .product-row:hover { border-color: var(--accent-yellow); transform: translateX(3px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
         
-        .product-img { width: 65px; height: 65px; object-fit: contain; background: #ffffff; padding: 4px; border-radius: 8px; border: 1px solid var(--card-border); }
+        .product-img { width: 75px; height: 55px; object-fit: contain; background: #ffffff; padding: 4px; border-radius: 8px; border: 1px solid var(--card-border); }
         
         .col-size { font-size: 1.25rem; font-weight: 800; color: #fff; }
         .col-brand { font-size: 1.05rem; color: var(--accent-yellow); font-weight: 800; text-transform: uppercase; }
@@ -104,7 +104,7 @@
         /* DETAY MODALI */
         .detail-modal-content { max-width: 650px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; border: 2px solid var(--accent-yellow); }
         .detail-left { flex: 1; min-width: 220px; text-align: center; background: #ffffff; padding: 20px; border-radius: 10px; }
-        .detail-left img { width: 100%; height: 210px; object-fit: contain; }
+        .detail-left img { width: 100%; height: 180px; object-fit: contain; }
         .detail-right { flex: 1.5; min-width: 250px; }
         .detail-right h2 { color: var(--accent-yellow); font-size: 1.6rem; margin-bottom: 15px; }
         .detail-info-row { font-size: 1.05rem; margin-bottom: 10px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
@@ -200,7 +200,7 @@
                 <span class="close-btn" onclick="closeModal('detailModal')">&times;</span>
             </div>
             <div class="detail-left">
-                <img id="detImg" src="" alt="Lastik Görseli">
+                <img id="detImg" src="" alt="Lastik / Marka Logosu">
             </div>
             <div class="detail-right">
                 <h2 id="detBrand">--</h2>
@@ -283,9 +283,9 @@
             </div>
 
             <div class="form-group">
-                <label>Görsel URL (Lastik Fotoğrafı)</label>
+                <label>Görsel URL (Boş Bırakırsanız Marka Logosu Eklenir)</label>
                 <div class="input-with-btn">
-                    <input type="text" id="pImg" class="form-control" placeholder="Resim linki yapıştırın">
+                    <input type="text" id="pImg" class="form-control" placeholder="Resim linki veya boş bırakın">
                     <button type="button" class="btn-search-img" onclick="searchTireImage()"><i class="fa-solid fa-magnifying-glass"></i> Görsel Ara</button>
                 </div>
             </div>
@@ -328,6 +328,21 @@
     </div>
 
     <script>
+        // OTOMATİK MARKA LOGO HARİTASI
+        const BRAND_LOGOS = {
+            'petlas': 'https://logo.clearbit.com/petlas.com.tr',
+            'lassa': 'https://logo.clearbit.com/lassa.com.tr',
+            'bridgestone': 'https://logo.clearbit.com/bridgestone.com',
+            'michelin': 'https://logo.clearbit.com/michelin.com',
+            'goodyear': 'https://logo.clearbit.com/goodyear.com',
+            'starmaxx': 'https://logo.clearbit.com/starmaxx.com',
+            'hankook': 'https://logo.clearbit.com/hankooktire.com',
+            'pirelli': 'https://logo.clearbit.com/pirelli.com',
+            'kumho': 'https://logo.clearbit.com/kumhotire.com',
+            'yokohama': 'https://logo.clearbit.com/yokohamatire.com',
+            'continental': 'https://logo.clearbit.com/continental-tires.com'
+        };
+
         const DEFAULT_TIRE_IMG = "https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=300&auto=format&fit=crop&q=80";
 
         let config = JSON.parse(localStorage.getItem('celebi_config')) || {
@@ -338,11 +353,23 @@
         };
 
         let products = JSON.parse(localStorage.getItem('celebi_products')) || [
-            { id: 1, brand: 'Petlas', pattern: 'Snowmaster 2', size: '205/55R16', season: 'Kış', dot: '2026', price: 3456.24, stock: 12, img: DEFAULT_TIRE_IMG }
+            { id: 1, brand: 'Petlas', pattern: 'Snowmaster 2', size: '205/55R16', season: 'Kış', dot: '2026', price: 3456.24, stock: 12, img: '' }
         ];
 
         let currentUser = null;
         let selectedSeason = 'all';
+
+        // MÜKEMMEL LOGO VEYA LASTİK RESMİ GETİRİCİ
+        function getProductImage(p) {
+            if (p.img && p.img.trim() !== '') {
+                return p.img;
+            }
+            let brandKey = p.brand ? p.brand.toLowerCase().trim() : '';
+            if (BRAND_LOGOS[brandKey]) {
+                return BRAND_LOGOS[brandKey];
+            }
+            return DEFAULT_TIRE_IMG;
+        }
 
         // OTOMATİK ₺3.456.24 BİÇİMLENDİRMESİ
         function formatPrice(val) {
@@ -453,7 +480,7 @@
             filtered.forEach(p => {
                 const row = document.createElement('div');
                 row.className = 'product-row';
-                const imgSrc = p.img && p.img.trim() !== '' ? p.img : DEFAULT_TIRE_IMG;
+                const imgSrc = getProductImage(p);
                 
                 row.onclick = () => openDetailModal(p);
 
@@ -469,7 +496,7 @@
                 }
 
                 row.innerHTML = `
-                    <img src="${imgSrc}" class="product-img" alt="Lastik" onerror="this.src='${DEFAULT_TIRE_IMG}'">
+                    <img src="${imgSrc}" class="product-img" alt="${p.brand}" onerror="this.src='${DEFAULT_TIRE_IMG}'">
                     <div class="col-size">${p.size}</div>
                     <div class="col-brand">${p.brand}</div>
                     <div class="col-pattern">${p.pattern ? `<span class="tag tag-pattern"><i class="fa-solid fa-grip"></i> ${p.pattern}</span>` : '-'}</div>
@@ -488,7 +515,7 @@
         }
 
         function openDetailModal(p) {
-            document.getElementById('detImg').src = p.img && p.img.trim() !== '' ? p.img : DEFAULT_TIRE_IMG;
+            document.getElementById('detImg').src = getProductImage(p);
             document.getElementById('detBrand').innerText = p.brand;
             document.getElementById('detSize').innerText = p.size;
             document.getElementById('detPattern').innerText = p.pattern ? p.pattern : '--';
