@@ -244,33 +244,15 @@
         </div>
     </div>
 
-    <!-- YÖNETİCİ HIZLI FİYAT VE STOK DÜZENLEME MODALI -->
-    <div id="quickEditModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fa-solid fa-pen-to-square"></i> Fiyat & Stok Güncelle</h3>
-                <span class="close-btn" onclick="closeModal('quickEditModal')">&times;</span>
-            </div>
-            <input type="hidden" id="editProductId">
-            <div class="form-group">
-                <label>Yeni Fiyat (TL)</label>
-                <input type="text" id="editProductPrice" class="form-control" placeholder="Örn: 2500" oninput="formatPriceInput(this)">
-            </div>
-            <div class="form-group">
-                <label>Yeni Stok Adedi</label>
-                <input type="number" id="editProductStock" class="form-control" placeholder="Örn: 10">
-            </div>
-            <button class="btn-primary" style="background: var(--accent-yellow); color: #000;" onclick="saveQuickEdit()"><i class="fa-solid fa-floppy-disk"></i> Değişiklikleri Kaydet</button>
-        </div>
-    </div>
-
-    <!-- YENİ ÜRÜN EKLEME MODALI -->
+    <!-- ÜRÜN EKLE / TAM DÜZENLE MODALI -->
     <div id="productModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fa-solid fa-plus-circle"></i> Yeni Ürün Ekle</h3>
+                <h3 id="modalTitleText"><i class="fa-solid fa-plus-circle"></i> Yeni Ürün Ekle</h3>
                 <span class="close-btn" onclick="closeModal('productModal')">&times;</span>
             </div>
+            
+            <input type="hidden" id="editingProductId" value="">
 
             <div class="form-group">
                 <label>Ürün Grubu / Kategorisi</label>
@@ -357,7 +339,7 @@
                 <input type="number" id="pStock" class="form-control" placeholder="Örn: 12">
             </div>
 
-            <button class="btn-primary" style="background: var(--success-color); color: white;" onclick="saveProduct()"><i class="fa-solid fa-check"></i> Ürünü Kaydet</button>
+            <button class="btn-primary" id="saveProductBtn" style="background: var(--success-color); color: white;" onclick="saveProduct()"><i class="fa-solid fa-check"></i> Ürünü Kaydet</button>
         </div>
     </div>
 
@@ -416,7 +398,7 @@
             input.value = input.value.replace(/[^0-9.]/g, '');
         }
 
-        /* EBATLARİ KÜÇÜKTEN BÜYÜĞE SIRALAMA AKILLI ALGORİTMASI */
+        /* EBATLARİ KÜÇÜKTEN BÜYÜĞE SIRALAMA ALGORİTMASI */
         function parseSizeForSort(sizeStr) {
             if (!sizeStr) return 0;
             let match = sizeStr.match(/(\d+)[\/\.-](\d+)?.*[R_]?(\d+)?/i);
@@ -517,8 +499,12 @@
                 const matchSearch = p.brand.toLowerCase().includes(search) || p.size.toLowerCase().includes(search) || patternStr.includes(search);
                 
                 let matchCat = true;
-                if (selectedCategory === 'Yaz' || selectedCategory === 'Kış' || selectedCategory === '4 Mevsim') {
-                    matchCat = p.season === selectedCategory;
+
+                // İÇ LASTİK İZOLASYONU: İç lastikler SADECE "İç Lastik" butonuna basılınca açılır!
+                if (selectedCategory === 'all') {
+                    matchCat = p.group !== 'İç Lastik'; // Tüm ürünler tıklandığında iç lastikler ÇIKMAZ
+                } else if (selectedCategory === 'Yaz' || selectedCategory === 'Kış' || selectedCategory === '4 Mevsim') {
+                    matchCat = p.season === selectedCategory && p.group !== 'İç Lastik';
                 } else if (selectedCategory === 'Zirai') {
                     matchCat = p.group === 'Zirai';
                 } else if (selectedCategory === 'İç Lastik') {
@@ -573,7 +559,7 @@
                     <div>${stockHtml}</div>
                     ${currentUser.role === 'admin' ? `
                         <div class="row-actions">
-                            <button class="btn-edit-price" onclick="event.stopPropagation(); openQuickEditModal(${p.id})" title="Fiyat & Stok Düzenle"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn-edit-price" onclick="event.stopPropagation(); openEditProductModal(${p.id})" title="Ürünü Tam Düzenle"><i class="fa-solid fa-pen"></i></button>
                             <button class="btn-icon" onclick="event.stopPropagation(); deleteProduct(${p.id})" title="Ürünü Sil"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     ` : '<div></div>'}
@@ -640,31 +626,68 @@
             }
         }
 
-        /* HIZLI FİYAT VE STOK DÜZENLEME PENCERESİ */
-        function openQuickEditModal(id) {
+        /* KALEM BUTONUNA BASTIĞINDA YENİ ÜRÜN EKLER GİBİ FULL DÜZENLEME AÇILMASI */
+        function openEditProductModal(id) {
             const product = products.find(p => p.id === id);
-            if (product) {
-                document.getElementById('editProductId').value = product.id;
-                document.getElementById('editProductPrice').value = product.price;
-                document.getElementById('editProductStock').value = product.stock;
-                document.getElementById('quickEditModal').style.display = 'flex';
+            if (!product) return;
+
+            document.getElementById('editingProductId').value = product.id;
+            document.getElementById('modalTitleText').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Ürünü Düzenle`;
+            document.getElementById('saveProductBtn').innerHTML = `<i class="fa-solid fa-floppy-disk"></i> Değişiklikleri Kaydet`;
+
+            // Bilgileri Moda'a doldur
+            document.getElementById('pGroupSelect').value = product.group || 'Otomobil';
+            toggleGroupFields(product.group || 'Otomobil');
+
+            // Ebat Seçimi
+            const sizeSelect = document.getElementById('pSizeSelect');
+            let sizeExists = Array.from(sizeSelect.options).some(opt => opt.value === product.size);
+            if (sizeExists) {
+                sizeSelect.value = product.size;
+                document.getElementById('customSizeGroup').classList.add('hidden');
+            } else {
+                sizeSelect.value = 'Diger';
+                document.getElementById('customSizeGroup').classList.remove('hidden');
+                document.getElementById('pCustomSize').value = product.size;
             }
+
+            // Marka Seçimi
+            const brandSelect = document.getElementById('pBrandSelect');
+            let brandExists = Array.from(brandSelect.options).some(opt => opt.value === product.brand);
+            if (brandExists) {
+                brandSelect.value = product.brand;
+                document.getElementById('customBrandGroup').classList.add('hidden');
+            } else {
+                brandSelect.value = 'Diger';
+                document.getElementById('customBrandGroup').classList.remove('hidden');
+                document.getElementById('pCustomBrand').value = product.brand;
+            }
+
+            document.getElementById('pPattern').value = product.pattern || '';
+            document.getElementById('pSeason').value = product.season || 'Yaz';
+            document.getElementById('pDot').value = product.dot || '2026';
+            document.getElementById('pImg').value = product.img || '';
+            document.getElementById('pPrice').value = product.price;
+            document.getElementById('pStock').value = product.stock;
+
+            document.getElementById('productModal').style.display = 'flex';
         }
 
-        function saveQuickEdit() {
-            const id = Number(document.getElementById('editProductId').value);
-            const newPrice = document.getElementById('editProductPrice').value;
-            const newStock = document.getElementById('editProductStock').value;
+        function openAddModal() { 
+            document.getElementById('editingProductId').value = '';
+            document.getElementById('modalTitleText').innerHTML = `<i class="fa-solid fa-plus-circle"></i> Yeni Ürün Ekle`;
+            document.getElementById('saveProductBtn').innerHTML = `<i class="fa-solid fa-check"></i> Ürünü Kaydet`;
+            
+            // Formu Temizle
+            document.getElementById('pPattern').value = '';
+            document.getElementById('pDot').value = '2026';
+            document.getElementById('pImg').value = '';
+            document.getElementById('pPrice').value = '';
+            document.getElementById('pStock').value = '';
+            document.getElementById('customSizeGroup').classList.add('hidden');
+            document.getElementById('customBrandGroup').classList.add('hidden');
 
-            const product = products.find(p => p.id === id);
-            if (product) {
-                if (newPrice !== '') product.price = Number(newPrice);
-                if (newStock !== '') product.stock = Math.max(0, Number(newStock));
-                
-                localStorage.setItem('celebi_products', JSON.stringify(products));
-                closeModal('quickEditModal');
-                renderProducts();
-            }
+            document.getElementById('productModal').style.display = 'flex'; 
         }
 
         function openDetailModal(p) {
@@ -693,7 +716,6 @@
             document.getElementById('detailModal').style.display = 'flex';
         }
 
-        function openAddModal() { document.getElementById('productModal').style.display = 'flex'; }
         function openSettingsModal() { 
             document.getElementById('cfgAdminPass').value = config.adminPass;
             document.getElementById('cfgBayiUser').value = config.bayiUser;
@@ -703,6 +725,7 @@
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
         function saveProduct() {
+            const editId = document.getElementById('editingProductId').value;
             const group = document.getElementById('pGroupSelect').value;
 
             let sizeSelect = document.getElementById('pSizeSelect').value;
@@ -720,7 +743,17 @@
 
             if(!brand || !size || !price || stock === '') { alert('Lütfen zorunlu alanları doldurun!'); return; }
 
-            products.push({ id: Date.now(), group, brand, pattern, size, season, dot, img, price: Number(price), stock: Number(stock) });
+            if (editId) {
+                // Ürünü Güncelle
+                const idx = products.findIndex(p => p.id === Number(editId));
+                if (idx !== -1) {
+                    products[idx] = { id: Number(editId), group, brand, pattern, size, season, dot, img, price: Number(price), stock: Number(stock) };
+                }
+            } else {
+                // Yeni Ürün Ekle
+                products.push({ id: Date.now(), group, brand, pattern, size, season, dot, img, price: Number(price), stock: Number(stock) });
+            }
+
             localStorage.setItem('celebi_products', JSON.stringify(products));
             closeModal('productModal');
             renderProducts();
