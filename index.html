@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Çelebi Oto Lastik - B2B Stok Portalı</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --card-border: #30363d;
+            --accent-yellow: #f1c40f;
+            --accent-yellow-hover: #d4ac0d;
+            --text-main: #f0f6fc;
+            --text-muted: #8b949e;
+            --danger-color: #e74c3c;
+            --success-color: #2ecc71;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-bottom: 30px;
+        }
+
+        /* HEADER */
+        header {
+            background: #12161f;
+            border-bottom: 2px solid var(--accent-yellow);
+            padding: 18px 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .brand-title {
+            color: var(--accent-yellow);
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .brand-slogan {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        .user-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.05);
+            padding: 8px 15px;
+            font-size: 0.85rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid var(--danger-color);
+            color: var(--danger-color);
+            padding: 3px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 15px;
+            flex: 1;
+        }
+
+        /* LOGIN MODAL */
+        #login-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(13, 17, 23, 0.98);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            border: 1px solid var(--accent-yellow);
+            padding: 25px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(241, 196, 15, 0.2);
+        }
+
+        /* SEARCH & FILTER */
+        .search-box {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 12px 12px 38px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--accent-yellow);
+        }
+
+        .season-filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .filter-btn {
+            flex: 1;
+            padding: 8px 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .filter-btn.active {
+            background: var(--accent-yellow);
+            color: #000;
+            font-weight: bold;
+            border-color: var(--accent-yellow);
+        }
+
+        /* TIRE CARDS */
+        .tire-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            position: relative;
+        }
+
+        .tire-img {
+            width: 70px;
+            height: 70px;
+            background: #21262d;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--accent-yellow);
+            flex-shrink: 0;
+            object-fit: cover;
+        }
+
+        .tire-info { flex: 1; }
+        .tire-size { font-size: 1.1rem; font-weight: bold; color: #fff; }
+        .tire-brand { color: var(--accent-yellow); font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
+        
+        .tire-meta {
+            display: flex;
+            gap: 8px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .badge {
+            background: #21262d;
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid var(--card-border);
+        }
+
+        .tire-price-stock {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .price { font-size: 1.1rem; font-weight: 800; color: var(--success-color); }
+        .stock { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+
+        /* BUTTONS */
+        .btn-primary {
+            background: var(--accent-yellow);
+            color: #000;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-delete {
+            background: transparent;
+            border: none;
+            color: var(--danger-color);
+            padding: 5px;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        .admin-panel {
+            background: #1c2128;
+            border: 1px dashed var(--accent-yellow);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .admin-panel h3 {
+            color: var(--accent-yellow);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group { margin-bottom: 10px; }
+        .form-group input, .form-group select { padding-left: 12px; }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-title">
+            <i class="fa-solid fa-compact-disc"></i> ÇELEBİ OTO LASTİK
+        </div>
+        <div class="brand-slogan">Yolunuzda Güven, Lastiğinizde Kalite</div>
+    </header>
+
+    <div id="user-bar" class="user-bar hidden">
+        <span>Giriş yapan: <strong id="current-user-text" style="color:var(--accent-yellow)">-</strong></span>
+        <button class="logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Çıkış</button>
+    </div>
+
+    <!-- LOGIN EKRANI -->
+    <div id="login-screen">
+        <div class="login-card">
+            <div class="brand-title" style="margin-bottom: 5px;">ÇELEBİ OTO LASTİK</div>
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 20px;">B2B Stok Takip Portalı</p>
+            
+            <div class="form-group" style="position:relative;">
+                <i class="fa-solid fa-user" style="position:absolute; left:12px; top:14px; color:var(--text-muted);"></i>
+                <input type="text" id="login-username" placeholder="Kullanıcı Adı">
+            </div>
+            <div class="form-group" style="position:relative;">
+                <i class="fa-solid fa-lock" style="position:absolute; left:12px; top:14px; color:var(--text-muted);"></i>
+                <input type="password" id="login-password" placeholder="Şifre">
+            </div>
+            <button class="btn-primary" onclick="login()">SİSTEME GİRİŞ YAP</button>
+            <p id="login-error" style="color:var(--danger-color); font-size:0.8rem; margin-top:10px;" class="hidden">Kullanıcı adı veya şifre hatalı!</p>
+            
+            <div style="margin-top:20px; font-size:0.75rem; color:var(--text-muted); text-align:left; border-top:1px solid var(--card-border); padding-top:10px;">
+                <strong>Giriş Yetkileri:</strong><br>
+                • Yönetici: <b>admin</b> / <b>1234</b> (Full Yetki)<br>
+                • Partner/Bayi: <b>bayi</b> / <b>1234</b> (Salt Okunur)
+            </div>
+        </div>
+    </div>
+
+    <!-- ANA İÇERİK -->
+    <div class="container">
+
+        <!-- YÖNETİCİ EKLENME PANELİ -->
+        <div id="admin-panel" class="admin-panel hidden">
+            <h3><i class="fa-solid fa-plus-circle"></i> Yeni Lastik Stoğu Ekle</h3>
+            <div class="form-group"><input type="text" id="add-size" placeholder="Ebat (Örn: 205/55/16)"></div>
+            <div class="form-group"><input type="text" id="add-brand" placeholder="Marka / Model (Örn: Lassa Greenways)"></div>
+            <div style="display:flex; gap:10px;">
+                <div class="form-group" style="flex:1;">
+                    <select id="add-season">
+                        <option value="Yaz">Yaz</option>
+                        <option value="Kış">Kış</option>
+                        <option value="4 Mevsim">4 Mevsim</option>
+                    </select>
+                </div>
+                <div class="form-group" style="flex:1;"><input type="text" id="add-dot" placeholder="DOT (Örn: 2024)"></div>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <div class="form-group" style="flex:1;"><input type="number" id="add-price" placeholder="Fiyat (TL)"></div>
+                <div class="form-group" style="flex:1;"><input type="number" id="add-stock" placeholder="Adet"></div>
+            </div>
+            <div class="form-group"><input type="text" id="add-img" placeholder="Görsel Linki (Opsiyonel)"></div>
+            <button class="btn-primary" onclick="addTire()"><i class="fa-solid fa-save"></i> Stoğa Kaydet</button>
+        </div>
+
+        <!-- ARAMA & FİLTRELER -->
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="search-input" placeholder="Ebat veya Marka Ara... (Örn: 205/55 veya Lassa)" oninput="renderTires()">
+        </div>
+
+        <div class="season-filters">
+            <div class="filter-btn active" onclick="filterSeason('Tümü', this)">Tümü</div>
+            <div class="filter-btn" onclick="filterSeason('Yaz', this)">☀️ Yaz</div>
+            <div class="filter-btn" onclick="filterSeason('Kış', this)">❄️ Kış</div>
+            <div class="filter-btn" onclick="filterSeason('4 Mevsim', this)">🍂 4 Mevsim</div>
+        </div>
+
+        <!-- STOK LİSTESİ -->
+        <div id="tire-list"></div>
+
+    </div>
+
+    <script>
+        // ÖRNEK BAŞLANGIÇ VERİLERİ
+        const defaultTires = [
+            { id: 1, size: '205/55/16', brand: 'Lassa Greenways', season: 'Yaz', dot: '2024', price: 2100, stock: 8, img: '' },
+            { id: 2, size: '195/65/15', brand: 'Bridgestone Blizzak LM005', season: 'Kış', dot: '2023', price: 2450, stock: 4, img: '' },
+            { id: 3, size: '225/45/17', brand: 'Petlas Velox Sport PT741', season: 'Yaz', dot: '2024', price: 2800, stock: 12, img: '' },
+            { id: 4, size: '175/65/14', brand: 'Dayton Touring 2', season: '4 Mevsim', dot: '2024', price: 1650, stock: 6, img: '' }
+        ];
+
+        let tires = JSON.parse(localStorage.getItem('celebi_tires')) || defaultTires;
+        let currentUser = null;
+        let activeSeasonFilter = 'Tümü';
+
+        function saveTires() {
+            localStorage.setItem('celebi_tires', JSON.stringify(tires));
+        }
+
+        // GİRİŞ İŞLEMİ
+        function login() {
+            const u = document.getElementById('login-username').value.trim();
+            const p = document.getElementById('login-password').value.trim();
+            const err = document.getElementById('login-error');
+
+            if (u === 'admin' && p === '1234') {
+                currentUser = { name: 'Yönetici (Tamer Çelebi)', role: 'admin' };
+            } else if (u === 'bayi' && p === '1234') {
+                currentUser = { name: 'Partner / Bayi', role: 'dealer' };
+            } else {
+                err.classList.remove('hidden');
+                return;
+            }
+
+            err.classList.add('hidden');
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('user-bar').classList.remove('hidden');
+            document.getElementById('current-user-text').innerText = currentUser.name;
+
+            if (currentUser.role === 'admin') {
+                document.getElementById('admin-panel').classList.remove('hidden');
+            } else {
+                document.getElementById('admin-panel').classList.add('hidden');
+            }
+
+            renderTires();
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('user-bar').classList.add('hidden');
+            document.getElementById('login-username').value = '';
+            document.getElementById('login-password').value = '';
+        }
+
+        // FİLTRELEME
+        function filterSeason(season, btn) {
+            activeSeasonFilter = season;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderTires();
+        }
+
+        // LİSTELEME
+        function renderTires() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const list = document.getElementById('tire-list');
+            list.innerHTML = '';
+
+            const filtered = tires.filter(item => {
+                const matchesQuery = item.size.toLowerCase().includes(query) || item.brand.toLowerCase().includes(query);
+                const matchesSeason = activeSeasonFilter === 'Tümü' || item.season === activeSeasonFilter;
+                return matchesQuery && matchesSeason;
+            });
+
+            if (filtered.length === 0) {
+                list.innerHTML = '<div style="text-align:center; padding:30px; color:var(--text-muted);"><i class="fa-solid fa-box-open" style="font-size:2rem; margin-bottom:10px;"></i><br>Aranan kriterlerde lastik bulunamadı.</div>';
+                return;
+            }
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'tire-card';
+                
+                const imgContent = item.img 
+                    ? `<img src="${item.img}" class="tire-img">`
+                    : `<div class="tire-img"><i class="fa-solid fa-compact-disc"></i></div>`;
+
+                const deleteBtn = (currentUser && currentUser.role === 'admin') 
+                    ? `<button class="btn-delete" onclick="deleteTire(${item.id})"><i class="fa-solid fa-trash"></i></button>`
+                    : '';
+
+                card.innerHTML = `
+                    ${imgContent}
+                    <div class="tire-info">
+                        <div class="tire-brand">${item.brand}</div>
+                        <div class="tire-size">${item.size}</div>
+                        <div class="tire-meta">
+                            <span class="badge">${item.season}</span>
+                            <span class="badge">DOT ${item.dot}</span>
+                        </div>
+                    </div>
+                    <div class="tire-price-stock">
+                        <div class="price">${item.price.toLocaleString('tr-TR')} TL</div>
+                        <div class="stock">📦 ${item.stock} Adet</div>
+                        ${deleteBtn}
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        // ADMIN - YENİ STOK EKLEME
+        function addTire() {
+            const size = document.getElementById('add-size').value.trim();
+            const brand = document.getElementById('add-brand').value.trim();
+            const season = document.getElementById('add-season').value;
+            const dot = document.getElementById('add-dot').value.trim();
+            const price = parseFloat(document.getElementById('add-price').value);
+            const stock = parseInt(document.getElementById('add-stock').value);
+            const img = document.getElementById('add-img').value.trim();
+
+            if (!size || !brand || isNaN(price) || isNaN(stock)) {
+                alert('Lütfen Ebat, Marka, Fiyat ve Adet alanlarını eksiksiz doldurun.');
+                return;
+            }
+
+            const newTire = {
+                id: Date.now(),
+                size,
+                brand,
+                season,
+                dot: dot || '2024',
+                price,
+                stock,
+                img
+            };
+
+            tires.unshift(newTire);
+            saveTires();
+            renderTires();
+
+            // Formu Temizle
+            document.getElementById('add-size').value = '';
+            document.getElementById('add-brand').value = '';
+            document.getElementById('add-dot').value = '';
+            document.getElementById('add-price').value = '';
+            document.getElementById('add-stock').value = '';
+            document.getElementById('add-img').value = '';
+
+            alert('Yeni lastik stoğu başarıyla eklendi!');
+        }
+
+        // ADMIN - SİLME
+        function deleteTire(id) {
+            if (confirm('Bu lastik stoğunu silmek istediğinize emin misiniz?')) {
+                tires = tires.filter(t => t.id !== id);
+                saveTires();
+                renderTires();
+            }
+        }
+    </script>
+</body>
+</html>
