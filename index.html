@@ -81,9 +81,13 @@
         .tag { font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; background: #0f172a; color: var(--text-muted); border: 1px solid var(--card-border); font-weight: 600; }
         .tag-pattern { color: var(--accent-yellow); border-color: rgba(245, 158, 11, 0.3); }
 
-        .row-right { display: flex; align-items: center; gap: 30px; flex: 1; justify-content: flex-end; min-width: 220px; flex-wrap: wrap; }
-        .product-price { font-size: 1.4rem; font-weight: 800; color: var(--success-color); }
-        .product-stock { font-size: 0.95rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; font-weight: 600; background: rgba(15, 23, 42, 0.6); padding: 8px 14px; border-radius: 6px; border: 1px solid var(--card-border); }
+        .row-right { display: flex; align-items: center; gap: 25px; flex: 1; justify-content: flex-end; min-width: 240px; flex-wrap: wrap; }
+        .product-price { font-size: 1.35rem; font-weight: 800; color: var(--success-color); }
+        
+        /* STOK ROLLERİNE ÖZEL ROZETLER */
+        .stock-badge-in { background: rgba(16, 185, 129, 0.15); color: var(--success-color); border: 1.5px solid var(--success-color); font-weight: 800; padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 6px; }
+        .stock-badge-out { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1.5px solid var(--danger-color); font-weight: 800; padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 6px; }
+        .stock-badge-admin { background: rgba(15, 23, 42, 0.8); color: var(--text-main); border: 1px solid var(--card-border); font-weight: 700; padding: 8px 14px; border-radius: 8px; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; }
 
         .row-actions { display: flex; gap: 8px; }
         .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 34px; height: 34px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
@@ -191,7 +195,7 @@
                 <div class="detail-info-row"><span>Ebat:</span> <span id="detSize">--</span></div>
                 <div class="detail-info-row"><span>Mevsim:</span> <span id="detSeason">--</span></div>
                 <div class="detail-info-row"><span>DOT (Yıl):</span> <span id="detDot">--</span></div>
-                <div class="detail-info-row"><span>Stok Adedi:</span> <span id="detStock" style="color: var(--success-color);">--</span></div>
+                <div class="detail-info-row"><span>Stok Durumu:</span> <span id="detStock">--</span></div>
                 <div class="detail-info-row"><span>Birim Fiyat:</span> <span id="detPrice" style="color: var(--accent-yellow);">--</span></div>
             </div>
         </div>
@@ -269,7 +273,7 @@
             </div>
             <div class="form-group">
                 <label>Fiyat (TL)</label>
-                <input type="number" id="pPrice" class="form-control" placeholder="Örn: 3900">
+                <input type="number" id="pPrice" class="form-control" placeholder="Örn: 3224">
             </div>
             <div class="form-group">
                 <label>Stok Adedi</label>
@@ -313,11 +317,20 @@
         };
 
         let products = JSON.parse(localStorage.getItem('celebi_products')) || [
-            { id: 1, brand: 'Petlas', pattern: 'Snowmaster 2', size: '205/55R16', season: 'Kış', dot: '2026', price: 3900, stock: 12, img: DEFAULT_TIRE_IMG }
+            { id: 1, brand: 'Petlas', pattern: 'Snowmaster 2', size: '205/55R16', season: 'Kış', dot: '2026', price: 3224, stock: 12, img: DEFAULT_TIRE_IMG }
         ];
 
         let currentUser = null;
         let selectedSeason = 'all';
+
+        // FİYAT BİÇİMLENDİRME FONKSİYONU: ₺3.224.00 DÜZENİ
+        function formatPrice(val) {
+            let num = Number(val);
+            if (isNaN(num)) return '₺0.00';
+            let parts = num.toFixed(2).split('.');
+            let integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            return '₺' + integerPart + '.' + parts[1];
+        }
 
         function login() {
             const u = document.getElementById('username').value.trim();
@@ -404,6 +417,18 @@
                 
                 row.onclick = () => openDetailModal(p);
 
+                // STOK ROZETİ BELİRLEME
+                let stockHtml = '';
+                if (currentUser.role === 'admin') {
+                    stockHtml = `<div class="stock-badge-admin"><i class="fa-solid fa-boxes-stacked"></i> ${p.stock} Adet</div>`;
+                } else {
+                    if (Number(p.stock) > 0) {
+                        stockHtml = `<div class="stock-badge-in"><i class="fa-solid fa-circle-check"></i> STOKTA VAR</div>`;
+                    } else {
+                        stockHtml = `<div class="stock-badge-out"><i class="fa-solid fa-circle-xmark"></i> REZERVE STOK</div>`;
+                    }
+                }
+
                 row.innerHTML = `
                     <div class="row-left">
                         <img src="${imgSrc}" class="product-img" alt="Lastik" onerror="this.src='${DEFAULT_TIRE_IMG}'">
@@ -418,8 +443,8 @@
                         </div>
                     </div>
                     <div class="row-right">
-                        <div class="product-price">${Number(p.price).toLocaleString('tr-TR')} TL</div>
-                        <div class="product-stock"><i class="fa-solid fa-boxes-stacked"></i> ${p.stock} Adet</div>
+                        <div class="product-price">${formatPrice(p.price)}</div>
+                        ${stockHtml}
                         ${currentUser.role === 'admin' ? `
                             <div class="row-actions">
                                 <button class="btn-icon" onclick="event.stopPropagation(); deleteProduct(${p.id})" title="Ürünü Sil"><i class="fa-solid fa-trash"></i></button>
@@ -438,8 +463,23 @@
             document.getElementById('detSize').innerText = p.size;
             document.getElementById('detSeason').innerText = p.season;
             document.getElementById('detDot').innerText = p.dot;
-            document.getElementById('detStock').innerText = p.stock + " Adet";
-            document.getElementById('detPrice').innerText = Number(p.price).toLocaleString('tr-TR') + " TL";
+            
+            // DETAY MODALINDAKİ STOK GÖRÜNÜMÜ
+            let detStockElem = document.getElementById('detStock');
+            if (currentUser.role === 'admin') {
+                detStockElem.innerText = p.stock + " Adet";
+                detStockElem.style.color = "var(--text-main)";
+            } else {
+                if (Number(p.stock) > 0) {
+                    detStockElem.innerText = "STOKTA VAR";
+                    detStockElem.style.color = "var(--success-color)";
+                } else {
+                    detStockElem.innerText = "REZERVE STOK";
+                    detStockElem.style.color = "var(--danger-color)";
+                }
+            }
+
+            document.getElementById('detPrice').innerText = formatPrice(p.price);
             document.getElementById('detailModal').style.display = 'flex';
         }
 
@@ -467,7 +507,7 @@
             const price = document.getElementById('pPrice').value;
             const stock = document.getElementById('pStock').value;
 
-            if(!brand || !size || !price || !stock) { alert('Lütfen zorunlu alanları doldurun!'); return; }
+            if(!brand || !size || !price || stock === '') { alert('Lütfen zorunlu alanları doldurun!'); return; }
 
             products.push({ id: Date.now(), brand, pattern, size, season, dot, img, price: Number(price), stock: Number(stock) });
             localStorage.setItem('celebi_products', JSON.stringify(products));
