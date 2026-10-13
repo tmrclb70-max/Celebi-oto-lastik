@@ -72,12 +72,12 @@
         .product-row { 
             background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; 
             padding: 12px 20px; display: grid; 
-            grid-template-columns: 100px 1.2fr 1fr 1fr 90px 90px 1.2fr 140px auto; 
+            grid-template-columns: 85px 1.2fr 1fr 1fr 90px 90px 1.2fr 140px auto; 
             align-items: center; gap: 15px; cursor: pointer; transition: 0.2s; 
         }
         .product-row:hover { border-color: var(--accent-yellow); transform: translateX(3px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
         
-        .logo-box-container { width: 95px; height: 50px; background: #ffffff; padding: 4px; border-radius: 8px; border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .logo-box-container { width: 80px; height: 50px; background: #ffffff; padding: 4px; border-radius: 8px; border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .product-img { max-width: 100%; max-height: 100%; object-fit: contain; }
         
         .col-size { font-size: 1.25rem; font-weight: 800; color: #fff; }
@@ -104,7 +104,8 @@
         
         /* DETAY MODALI */
         .detail-modal-content { max-width: 650px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; border: 2px solid var(--accent-yellow); }
-        .detail-left { flex: 1; min-width: 220px; text-align: center; background: #ffffff; padding: 20px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+        .detail-left { flex: 1; min-width: 220px; text-align: center; background: #ffffff; padding: 20px; border-radius: 10px; }
+        .detail-left img { width: 100%; height: 180px; object-fit: contain; }
         .detail-right { flex: 1.5; min-width: 250px; }
         .detail-right h2 { color: var(--accent-yellow); font-size: 1.6rem; margin-bottom: 15px; }
         .detail-info-row { font-size: 1.05rem; margin-bottom: 10px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
@@ -121,7 +122,7 @@
         .hidden { display: none !important; }
 
         @media (max-width: 992px) {
-            .product-row { grid-template-columns: 80px 1fr 1fr auto; gap: 10px; }
+            .product-row { grid-template-columns: 60px 1fr 1fr auto; gap: 10px; }
             .col-pattern, .col-season, .col-dot { display: none; }
         }
     </style>
@@ -198,8 +199,8 @@
                 <h3><i class="fa-solid fa-circle-info"></i> Ürün Detayları</h3>
                 <span class="close-btn" onclick="closeModal('detailModal')">&times;</span>
             </div>
-            <div class="detail-left" id="detImgContainer">
-                <!-- Vektör Logo veya Resim Yüklenecek -->
+            <div class="detail-left">
+                <img id="detImg" src="" alt="Marka Logosu / Lastik Görseli">
             </div>
             <div class="detail-right">
                 <h2 id="detBrand">--</h2>
@@ -282,7 +283,7 @@
             </div>
 
             <div class="form-group">
-                <label>Görsel URL (İsteğe Bağlı Resim Linki)</label>
+                <label>Görsel URL (Boş Bırakırsanız Marka Logosu Eklenir)</label>
                 <div class="input-with-btn">
                     <input type="text" id="pImg" class="form-control" placeholder="Resim linki yapıştırın veya boş bırakın">
                     <button type="button" class="btn-search-img" onclick="searchTireImage()"><i class="fa-solid fa-magnifying-glass"></i> Görsel Ara</button>
@@ -327,29 +328,20 @@
     </div>
 
     <script>
-        // KONTROL VE KESİN ÇALIŞAN SAF KOD/SVG MARKA LOGOLARI (DIŞ RESME BAĞIMSIZ)
-        function renderBrandLogoSvg(brand) {
-            let b = brand ? brand.toLowerCase().trim() : '';
-            if (b.includes('petlas')) {
-                return `<svg viewBox="0 0 160 50" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#ffffff"/><text x="50%" y="65%" font-family="'Impact', sans-serif" font-size="28" font-style="italic" fill="#dc2626" text-anchor="middle">PETLAS</text></svg>`;
-            } else if (b.includes('lassa')) {
-                return `<svg viewBox="0 0 160 50" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#ffffff"/><text x="50%" y="65%" font-family="'Arial Black', sans-serif" font-size="26" font-style="italic" fill="#dc2626" text-anchor="middle">LASSA</text></svg>`;
-            } else if (b.includes('bridgestone')) {
-                return `<svg viewBox="0 0 160 50" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#ffffff"/><text x="50%" y="65%" font-family="'Arial Black', sans-serif" font-size="18" fill="#111" text-anchor="middle"><tspan fill="#dc2626">B</tspan>RIDGESTONE</text></svg>`;
-            } else if (b.includes('michelin')) {
-                return `<svg viewBox="0 0 160 50" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#00205b"/><text x="50%" y="65%" font-family="'Arial Black', sans-serif" font-size="22" font-style="italic" fill="#facc15" text-anchor="middle">MICHELIN</text></svg>`;
-            } else if (b.includes('goodyear')) {
-                return `<svg viewBox="0 0 160 50" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#002868"/><text x="50%" y="65%" font-family="'Impact', sans-serif" font-size="24" font-style="italic" fill="#ffd100" text-anchor="middle">GOODYEAR</text></svg>`;
-            } else if (b.includes('starmaxx')) {
-                return `<svg viewBox="0 0 160 50" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#ffffff"/><text x="50%" y="65%" font-family="'Impact', sans-serif" font-size="24" font-style="italic" fill="#f59e0b" text-anchor="middle">STARMAXX</text></svg>`;
-            } else if (b.includes('pirelli')) {
-                return `<svg viewBox="0 0 160 50" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#ffd100"/><text x="50%" y="65%" font-family="'Arial Black', sans-serif" font-size="26" fill="#dc2626" text-anchor="middle">PIRELLI</text></svg>`;
-            } else if (b.includes('continental')) {
-                return `<svg viewBox="0 0 160 50" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#ffa000"/><text x="50%" y="65%" font-family="'Arial Black', sans-serif" font-size="18" fill="#000000" text-anchor="middle">Continental</text></svg>`;
-            } else {
-                return `<svg viewBox="0 0 160 50" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="#0f172a"/><text x="50%" y="65%" font-family="'Arial Black', sans-serif" font-size="20" fill="#f59e0b" text-anchor="middle">${brand.toUpperCase()}</text></svg>`;
-            }
-        }
+        // DOĞRUDAN WIKIMEDIA VEYA KESİN ÇALIŞAN LOGO LİNKLERİ
+        const BRAND_LOGOS = {
+            'petlas': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Petlas_logo.svg/320px-Petlas_logo.svg.png',
+            'lassa': 'https://upload.wikimedia.org/wikipedia/tr/thumb/8/87/Lassa_Logo.png/320px-Lassa_Logo.png',
+            'bridgestone': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Bridgestone_logo.svg/320px-Bridgestone_logo.svg.png',
+            'michelin': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Michelin_logo.svg/320px-Michelin_logo.svg.png',
+            'goodyear': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Goodyear_logo.svg/320px-Goodyear_logo.svg.png',
+            'starmaxx': 'https://starmaxx.com/assets/img/logo.png',
+            'hankook': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Hankook_Tire_logo.svg/320px-Hankook_Tire_logo.svg.png',
+            'pirelli': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Pirelli_logo.svg/320px-Pirelli_logo.svg.png',
+            'kumho': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Kumho_Tire_Logo.svg/320px-Kumho_Tire_Logo.svg.png',
+            'yokohama': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Yokohama_Rubber_Company_logo.svg/320px-Yokohama_Rubber_Company_logo.svg.png',
+            'continental': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Continental_AG_logo.svg/320px-Continental_AG_logo.svg.png'
+        };
 
         const DEFAULT_TIRE_IMG = "https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=300&auto=format&fit=crop&q=80";
 
@@ -361,12 +353,22 @@
         };
 
         let products = JSON.parse(localStorage.getItem('celebi_products')) || [
-            { id: 1, brand: 'Petlas', pattern: 'Snowmaster 2', size: '205/55R16', season: 'Kış', dot: '2026', price: 3456.24, stock: 12, img: '' },
-            { id: 2, brand: 'Lassa', pattern: 'Greenways', size: '205/55R16', season: 'Yaz', dot: '2026', price: 3100.00, stock: 8, img: '' }
+            { id: 1, brand: 'Petlas', pattern: 'Snowmaster 2', size: '205/55R16', season: 'Kış', dot: '2026', price: 3456.24, stock: 12, img: '' }
         ];
 
         let currentUser = null;
         let selectedSeason = 'all';
+
+        function getProductImage(p) {
+            if (p.img && p.img.trim() !== '') {
+                return p.img;
+            }
+            let brandKey = p.brand ? p.brand.toLowerCase().trim() : '';
+            if (BRAND_LOGOS[brandKey]) {
+                return BRAND_LOGOS[brandKey];
+            }
+            return DEFAULT_TIRE_IMG;
+        }
 
         function formatPrice(val) {
             let num = Number(val);
@@ -475,11 +477,7 @@
             filtered.forEach(p => {
                 const row = document.createElement('div');
                 row.className = 'product-row';
-                
-                // LOGO HTML/SVG ALANI
-                let logoContent = p.img && p.img.trim() !== '' 
-                    ? `<img src="${p.img}" class="product-img" alt="${p.brand}" onerror="this.parentElement.innerHTML=\`${renderBrandLogoSvg(p.brand)}\`;">`
-                    : renderBrandLogoSvg(p.brand);
+                const imgSrc = getProductImage(p);
                 
                 row.onclick = () => openDetailModal(p);
 
@@ -496,7 +494,7 @@
 
                 row.innerHTML = `
                     <div class="logo-box-container">
-                        ${logoContent}
+                        <img src="${imgSrc}" class="product-img" alt="${p.brand}" onerror="this.onerror=null; this.src='${DEFAULT_TIRE_IMG}';">
                     </div>
                     <div class="col-size">${p.size}</div>
                     <div class="col-brand">${p.brand}</div>
@@ -516,13 +514,7 @@
         }
 
         function openDetailModal(p) {
-            let detImgBox = document.getElementById('detImgContainer');
-            if (p.img && p.img.trim() !== '') {
-                detImgBox.innerHTML = `<img src="${p.img}" style="max-width:100%; max-height:200px; object-fit:contain;" alt="Lastik">`;
-            } else {
-                detImgBox.innerHTML = `<div style="width:200px; height:100px;">${renderBrandLogoSvg(p.brand)}</div>`;
-            }
-
+            document.getElementById('detImg').src = getProductImage(p);
             document.getElementById('detBrand').innerText = p.brand;
             document.getElementById('detSize').innerText = p.size;
             document.getElementById('detPattern').innerText = p.pattern ? p.pattern : '--';
