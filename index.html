@@ -21,15 +21,14 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding-bottom: 40px; }
 
-        /* HEADER & ŞEFFAF ARKA PLANLI LOGO */
+        /* HEADER & ŞEFFAF KOD-BAŞLIĞI / LOGO */
         header { background: #020617; border-bottom: 3px solid #dc2626; padding: 12px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
         .header-container { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         
         .logo-wrapper { display: flex; align-items: center; gap: 18px; }
         
-        /* LOGO KUTUSU (ŞEFFAF / ARKA PLANSIZ) */
-        .brand-logo-box { background: transparent; padding: 2px; display: flex; align-items: center; }
-        .site-logo-img { height: 60px; max-width: 220px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6)); mix-blend-mode: screen; }
+        /* BİREBİR ORİJİNAL KOD ÇİZİMİ (KIRILMAZ / ŞEFFAF) */
+        .brand-logo-svg { width: 220px; height: 65px; display: block; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
 
         .slogan-area h1 { font-size: 1.3rem; font-weight: 800; color: #ffffff; }
         .slogan-area p { font-size: 0.85rem; color: var(--accent-yellow); font-style: italic; font-weight: 600; margin-top: 2px; }
@@ -43,7 +42,7 @@
 
         /* GİRİŞ EKRANI */
         .login-card { max-width: 400px; margin: 40px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; border: 2px solid var(--accent-yellow); box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; }
-        .login-card h2 { margin-bottom: 18px; color: var(--accent-yellow); font-size: 1.4rem; }
+        .login-card h2 { margin-bottom: 18px; color: var(--accent-yellow); font-size: 1.4rem; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .form-group { margin-bottom: 12px; text-align: left; }
         .form-group label { display: block; margin-bottom: 4px; font-size: 0.85rem; color: var(--text-main); font-weight: 600; }
         .form-control { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--card-border); background: #0f172a; color: white; font-size: 0.95rem; }
@@ -111,10 +110,26 @@
     <header>
         <div class="header-container">
             <div class="logo-wrapper">
-                <!-- ARKA PLANSIZ ORİJİNAL LOGO -->
-                <div class="brand-logo-box">
-                    <img src="https://i.ibb.co/3ykG8L3/celebi-logo.png" class="site-logo-img" alt="Çelebi Oto Lastik Logo" onerror="this.onerror=null; this.parentElement.innerHTML='<span style=\'color:#dc2626; font-weight:bold; font-size:1.5rem; font-style:italic;\'>ÇELEBİ OTO LASTİK</span>';">
-                </div>
+                <!-- %100 SAF KODLA ÇİZİLMİŞ ŞEFFAF LOGO -->
+                <svg class="brand-logo-svg" viewBox="0 0 420 120" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(5, 5)">
+                        <!-- Siyah/Kırmızı Lastik Çizimi -->
+                        <path d="M 80 10 C 35 10 5 35 5 65 C 5 95 35 105 80 105 L 105 105 C 85 92 70 78 70 65 C 70 52 85 38 105 10 Z" fill="#ffffff" />
+                        <path d="M 80 18 C 45 18 18 38 18 65 C 18 92 45 97 80 97 L 98 97 C 82 86 76 74 76 65 C 76 56 82 44 98 18 Z" fill="#1e293b" />
+                        <path d="M 65 25 C 45 35 45 80 65 88 C 55 78 55 52 65 25 Z" fill="#dc2626" />
+                        
+                        <!-- ÇELEBİ Yazısı -->
+                        <text x="110" y="55" font-family="'Impact', 'Arial Black', sans-serif" font-size="52" font-style="italic" font-weight="bold" fill="#dc2626" letter-spacing="1">ÇELEBİ</text>
+                        <line x1="110" y1="63" x2="310" y2="63" stroke="#dc2626" stroke-width="4" />
+                        
+                        <!-- OTO LASTİK Siyah Kutusu -->
+                        <rect x="110" y="70" width="200" height="24" rx="12" fill="#000000" />
+                        <text x="210" y="87" font-family="'Arial Black', sans-serif" font-size="14" font-style="italic" font-weight="bold" fill="#ffffff" text-anchor="middle" letter-spacing="2">OTO LASTİK</text>
+                        
+                        <!-- TAMİR - BALANS -->
+                        <text x="210" y="110" font-family="'Arial', sans-serif" font-size="14" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="2">TAMİR - BALANS</text>
+                    </g>
+                </svg>
                 <div class="slogan-area">
                     <h1>ÇELEBİ OTO LASTİK B2B</h1>
                     <p>"Yolunuzda Güven, Lastiğinizde Kalite"</p>
@@ -132,4 +147,350 @@
 
         <!-- GİRİŞ EKRANI -->
         <div id="loginSection" class="login-card">
-            <h2><i class="fa-solid fa-lock"></i> B
+            <h2><i class="fa-solid fa-lock"></i> B2B Portal Girişi</h2>
+            <div class="form-group">
+                <label>Kullanıcı Adı</label>
+                <input type="text" id="username" class="form-control" placeholder="admin veya bayi">
+            </div>
+            <div class="form-group">
+                <label>Şifre</label>
+                <input type="password" id="password" class="form-control" placeholder="****">
+            </div>
+            <button class="btn-primary" onclick="login()"><i class="fa-solid fa-right-to-bracket"></i> Giriş Yap</button>
+        </div>
+
+        <!-- PORTAL İÇERİĞİ -->
+        <div id="portalSection" class="hidden">
+            
+            <!-- ARAMA VE FİLTRELEME -->
+            <div class="controls-section">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" oninput="renderProducts()" placeholder="Ebat veya Marka Ara... (Örn: 205/55 veya Petlas)">
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="setSeason('all', this)"><i class="fa-solid fa-border-all"></i> Tüm Ürünler</button>
+                    <button class="filter-btn" onclick="setSeason('Yaz', this)"><i class="fa-solid fa-sun"></i> Yaz Lastikleri</button>
+                    <button class="filter-btn" onclick="setSeason('Kış', this)"><i class="fa-solid fa-snowflake"></i> Kış Lastikleri</button>
+                    <button class="filter-btn" onclick="setSeason('4 Mevsim', this)"><i class="fa-solid fa-cloud-sun-rain"></i> 4 Mevsim</button>
+                </div>
+            </div>
+
+            <!-- YÖNETİCİ ÇUBUĞU -->
+            <div id="adminBar" class="admin-bar hidden">
+                <h3 style="color: var(--text-muted); font-size: 1.1rem;"><i class="fa-solid fa-boxes-stacked"></i> Stok Yönetimi</h3>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-add" onclick="openAddModal()"><i class="fa-solid fa-plus"></i> Yeni Ürün Ekle</button>
+                    <button class="btn-add" style="background: #3b82f6;" onclick="openSettingsModal()"><i class="fa-solid fa-gear"></i> Ayarlar / Şifreler</button>
+                </div>
+            </div>
+
+            <!-- ÜRÜN IZGARASI -->
+            <div id="productsGrid" class="products-grid">
+                <!-- Ürünler JavaScript ile yüklenecek -->
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ÜRÜN DETAY MODALI (BAYİ VE YÖNETİCİ İÇİN TIKLAMA PENCERESİ) -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content detail-modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-circle-info"></i> Ürün Detayları</h3>
+                <span class="close-btn" onclick="closeModal('detailModal')">&times;</span>
+            </div>
+            <div class="detail-left">
+                <img id="detImg" src="" alt="Lastik Görseli">
+            </div>
+            <div class="detail-right">
+                <h2 id="detBrand">--</h2>
+                <div class="detail-info-row"><span>Ebat:</span> <span id="detSize">--</span></div>
+                <div class="detail-info-row"><span>Mevsim:</span> <span id="detSeason">--</span></div>
+                <div class="detail-info-row"><span>DOT (Yıl):</span> <span id="detDot">--</span></div>
+                <div class="detail-info-row"><span>Stok Adedi:</span> <span id="detStock" style="color: var(--success-color);">--</span></div>
+                <div class="detail-info-row"><span>Birim Fiyat:</span> <span id="detPrice" style="color: var(--accent-yellow);">--</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- YENİ ÜRÜN EKLEME MODALI -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-plus-circle"></i> Yeni Ürün Ekle</h3>
+                <span class="close-btn" onclick="closeModal('productModal')">&times;</span>
+            </div>
+            
+            <div class="form-group">
+                <label>Marka Seçin veya Yazın</label>
+                <select id="pBrandSelect" class="form-control" onchange="checkCustomBrand(this)">
+                    <option value="Petlas">Petlas</option>
+                    <option value="Lassa">Lassa</option>
+                    <option value="Bridgestone">Bridgestone</option>
+                    <option value="Michelin">Michelin</option>
+                    <option value="Goodyear">Goodyear</option>
+                    <option value="Starmaxx">Starmaxx</option>
+                    <option value="Hankook">Hankook</option>
+                    <option value="Pirelli">Pirelli</option>
+                    <option value="Kumho">Kumho</option>
+                    <option value="Yokohama">Yokohama</option>
+                    <option value="Continental">Continental</option>
+                    <option value="Diger">Diğer (Manuel Yaz)</option>
+                </select>
+            </div>
+            <div class="form-group hidden" id="customBrandGroup">
+                <label>Özel Marka / Model Adı</label>
+                <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Petlas Snowmaster 2">
+            </div>
+
+            <div class="form-group">
+                <label>Ebat Seçin veya Yazın</label>
+                <select id="pSizeSelect" class="form-control" onchange="checkCustomSize(this)">
+                    <option value="175/65R14">175/65R14</option>
+                    <option value="185/65R15">185/65R15</option>
+                    <option value="195/65R15">195/65R15</option>
+                    <option value="205/55R16" selected>205/55R16</option>
+                    <option value="215/55R17">215/55R17</option>
+                    <option value="225/45R17">225/45R17</option>
+                    <option value="225/55R17">225/55R17</option>
+                    <option value="235/60R18">235/60R18</option>
+                    <option value="Diger">Diğer (Manuel Ebat Yaz)</option>
+                </select>
+            </div>
+            <div class="form-group hidden" id="customSizeGroup">
+                <label>Özel Ebat Girin</label>
+                <input type="text" id="pCustomSize" class="form-control" placeholder="Örn: 245/40R19">
+            </div>
+
+            <div class="form-group">
+                <label>Mevsim</label>
+                <select id="pSeason" class="form-control">
+                    <option value="Yaz">Yaz</option>
+                    <option value="Kış">Kış</option>
+                    <option value="4 Mevsim">4 Mevsim</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>DOT (Üretim Yılı)</label>
+                <input type="text" id="pDot" class="form-control" placeholder="Örn: 2026">
+            </div>
+            <div class="form-group">
+                <label>Görsel URL (Lastik Fotoğrafı)</label>
+                <input type="text" id="pImg" class="form-control" placeholder="İnternetten resim linki yapıştırın">
+            </div>
+            <div class="form-group">
+                <label>Fiyat (TL)</label>
+                <input type="number" id="pPrice" class="form-control" placeholder="Örn: 3900">
+            </div>
+            <div class="form-group">
+                <label>Stok Adedi</label>
+                <input type="number" id="pStock" class="form-control" placeholder="Örn: 12">
+            </div>
+            <button class="btn-primary" style="background: var(--success-color); color: white;" onclick="saveProduct()"><i class="fa-solid fa-check"></i> Ürünü Kaydet</button>
+        </div>
+    </div>
+
+    <!-- AYARLAR MODALI -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-gear"></i> Yönetici Ayarları</h3>
+                <span class="close-btn" onclick="closeModal('settingsModal')">&times;</span>
+            </div>
+            <div class="form-group">
+                <label>Admin Şifresi</label>
+                <input type="text" id="cfgAdminPass" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Bayi Kullanıcı Adı</label>
+                <input type="text" id="cfgBayiUser" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Bayi Şifresi</label>
+                <input type="text" id="cfgBayiPass" class="form-control">
+            </div>
+            <button class="btn-primary" style="background: #3b82f6; color: white;" onclick="saveSettings()"><i class="fa-solid fa-floppy-disk"></i> Ayarları Kaydet</button>
+        </div>
+    </div>
+
+    <script>
+        const DEFAULT_TIRE_IMG = "https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=300&auto=format&fit=crop&q=80";
+
+        let config = JSON.parse(localStorage.getItem('celebi_config')) || {
+            adminUser: 'admin',
+            adminPass: '1234',
+            bayiUser: 'bayi',
+            bayiPass: '1234'
+        };
+
+        let products = JSON.parse(localStorage.getItem('celebi_products')) || [
+            { id: 1, brand: 'Petlas Snowmaster 2', size: '205/55R16', season: 'Kış', dot: '2026', price: 3900, stock: 12, img: DEFAULT_TIRE_IMG }
+        ];
+
+        let currentUser = null;
+        let selectedSeason = 'all';
+
+        function login() {
+            const u = document.getElementById('username').value.trim();
+            const p = document.getElementById('password').value.trim();
+
+            if (u === config.adminUser && p === config.adminPass) {
+                currentUser = { role: 'admin', name: 'Yönetici' };
+            } else if (u === config.bayiUser && p === config.bayiPass) {
+                currentUser = { role: 'bayi', name: config.bayiUser };
+            } else {
+                alert('Kullanıcı adı veya şifre hatalı!');
+                return;
+            }
+
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('portalSection').classList.remove('hidden');
+            document.getElementById('userInfoArea').classList.remove('hidden');
+            document.getElementById('userBadge').innerText = currentUser.name;
+
+            if (currentUser.role === 'admin') {
+                document.getElementById('adminBar').classList.remove('hidden');
+            } else {
+                document.getElementById('adminBar').classList.add('hidden');
+            }
+
+            renderProducts();
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('portalSection').classList.add('hidden');
+            document.getElementById('userInfoArea').classList.add('hidden');
+        }
+
+        function setSeason(season, btn) {
+            selectedSeason = season;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderProducts();
+        }
+
+        function checkCustomBrand(select) {
+            const customGroup = document.getElementById('customBrandGroup');
+            if (select.value === 'Diger') {
+                customGroup.classList.remove('hidden');
+            } else {
+                customGroup.classList.add('hidden');
+            }
+        }
+
+        function checkCustomSize(select) {
+            const customGroup = document.getElementById('customSizeGroup');
+            if (select.value === 'Diger') {
+                customGroup.classList.remove('hidden');
+            } else {
+                customGroup.classList.add('hidden');
+            }
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            grid.innerHTML = '';
+
+            const filtered = products.filter(p => {
+                const matchSearch = p.brand.toLowerCase().includes(search) || p.size.toLowerCase().includes(search);
+                const matchSeason = selectedSeason === 'all' || p.season === selectedSeason;
+                return matchSearch && matchSeason;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Aranan kriterlere uygun ürün bulunamadı.</p>';
+                return;
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                const imgSrc = p.img && p.img.trim() !== '' ? p.img : DEFAULT_TIRE_IMG;
+                
+                card.onclick = () => openDetailModal(p);
+
+                card.innerHTML = `
+                    ${currentUser.role === 'admin' ? `<div class="card-actions"><button class="btn-icon" onclick="event.stopPropagation(); deleteProduct(${p.id})"><i class="fa-solid fa-trash"></i></button></div>` : ''}
+                    <img src="${imgSrc}" class="product-img" alt="Lastik" onerror="this.src='${DEFAULT_TIRE_IMG}'">
+                    <div class="product-details">
+                        <div class="product-brand">${p.brand}</div>
+                        <div class="product-size">${p.size}</div>
+                        <div class="product-tags">
+                            <span class="tag">${p.season}</span>
+                            <span class="tag">DOT ${p.dot}</span>
+                        </div>
+                    </div>
+                    <div class="product-price-area">
+                        <div class="product-price">${Number(p.price).toLocaleString('tr-TR')} TL</div>
+                        <div class="product-stock"><i class="fa-solid fa-boxes-stacked"></i> ${p.stock} Adet</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openDetailModal(p) {
+            document.getElementById('detImg').src = p.img && p.img.trim() !== '' ? p.img : DEFAULT_TIRE_IMG;
+            document.getElementById('detBrand').innerText = p.brand;
+            document.getElementById('detSize').innerText = p.size;
+            document.getElementById('detSeason').innerText = p.season;
+            document.getElementById('detDot').innerText = p.dot;
+            document.getElementById('detStock').innerText = p.stock + " Adet";
+            document.getElementById('detPrice').innerText = Number(p.price).toLocaleString('tr-TR') + " TL";
+            document.getElementById('detailModal').style.display = 'flex';
+        }
+
+        function openAddModal() { document.getElementById('productModal').style.display = 'flex'; }
+        function openSettingsModal() { 
+            document.getElementById('cfgAdminPass').value = config.adminPass;
+            document.getElementById('cfgBayiUser').value = config.bayiUser;
+            document.getElementById('cfgBayiPass').value = config.bayiPass;
+            document.getElementById('settingsModal').style.display = 'flex'; 
+        }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        function saveProduct() {
+            let brandSelect = document.getElementById('pBrandSelect').value;
+            let brand = brandSelect === 'Diger' ? document.getElementById('pCustomBrand').value.trim() : brandSelect;
+
+            let sizeSelect = document.getElementById('pSizeSelect').value;
+            let size = sizeSelect === 'Diger' ? document.getElementById('pCustomSize').value.trim() : sizeSelect;
+
+            const season = document.getElementById('pSeason').value;
+            const dot = document.getElementById('pDot').value;
+            const img = document.getElementById('pImg').value;
+            const price = document.getElementById('pPrice').value;
+            const stock = document.getElementById('pStock').value;
+
+            if(!brand || !size || !price || !stock) { alert('Lütfen zorunlu alanları doldurun!'); return; }
+
+            products.push({ id: Date.now(), brand, size, season, dot, img, price: Number(price), stock: Number(stock) });
+            localStorage.setItem('celebi_products', JSON.stringify(products));
+            closeModal('productModal');
+            renderProducts();
+        }
+
+        function deleteProduct(id) {
+            if(confirm('Bu ürünü silmek istediğinize emin misiniz?')) {
+                products = products.filter(p => p.id !== id);
+                localStorage.setItem('celebi_products', JSON.stringify(products));
+                renderProducts();
+            }
+        }
+
+        function saveSettings() {
+            config.adminPass = document.getElementById('cfgAdminPass').value;
+            config.bayiUser = document.getElementById('cfgBayiUser').value;
+            config.bayiPass = document.getElementById('cfgBayiPass').value;
+            localStorage.setItem('celebi_config', JSON.stringify(config));
+            alert('Ayarlar kaydedildi!');
+            closeModal('settingsModal');
+        }
+    </script>
+</body>
+</html>
