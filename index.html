@@ -21,13 +21,16 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding-bottom: 40px; }
 
-        /* HEADER */
-        header { background: #020617; border-bottom: 2px solid var(--accent-yellow); padding: 20px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+        /* HEADER & LOGO AREA */
+        header { background: #020617; border-bottom: 3px solid #dc2626; padding: 15px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
         .header-container { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-        .logo-area { display: flex; align-items: center; gap: 15px; }
-        .logo-icon { font-size: 2.2rem; color: var(--accent-yellow); }
-        .logo-text h1 { font-size: 1.8rem; font-weight: 800; color: var(--accent-yellow); letter-spacing: 1px; }
-        .logo-text p { font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
+        
+        .logo-wrapper { display: flex; align-items: center; gap: 20px; }
+        .logo-box { background: #ffffff; padding: 8px 16px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(220, 38, 38, 0.3); border: 2px solid #dc2626; }
+        .site-logo { height: 65px; width: auto; object-fit: contain; }
+        
+        .slogan-area h1 { font-size: 1.4rem; font-weight: 800; color: #ffffff; letter-spacing: 0.5px; }
+        .slogan-area p { font-size: 0.95rem; color: var(--accent-yellow); font-style: italic; font-weight: 600; margin-top: 2px; }
 
         .user-info { display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 8px; border: 1px solid var(--card-border); }
         .user-badge { color: var(--accent-yellow); font-weight: 600; }
@@ -38,7 +41,7 @@
         .main-container { max-width: 1400px; margin: 30px auto; padding: 0 20px; }
 
         /* LOGIN SCREEN */
-        .login-card { max-width: 420px; margin: 80px auto; background: var(--card-bg); padding: 35px; border-radius: 12px; border: 1px solid var(--card-border); box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; }
+        .login-card { max-width: 420px; margin: 60px auto; background: var(--card-bg); padding: 35px; border-radius: 12px; border: 1px solid var(--card-border); box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; }
         .login-card h2 { margin-bottom: 20px; color: var(--accent-yellow); }
         .form-group { margin-bottom: 18px; text-align: left; }
         .form-group label { display: block; margin-bottom: 6px; font-size: 0.9rem; color: var(--text-muted); }
@@ -60,12 +63,12 @@
         .admin-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
         .btn-add { background: var(--success-color); color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
 
-        /* PRODUCT GRID (MASAÜSTÜNDE YAN YANA / GENİŞ ALAN) */
+        /* PRODUCT GRID */
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
         
         .product-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 18px; display: flex; gap: 15px; align-items: center; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
         .product-card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); border-color: var(--accent-yellow); }
-        .product-img { width: 90px; height: 90px; object-fit: contain; background: #fff; padding: 5px; border-radius: 8px; }
+        .product-img { width: 90px; height: 90px; object-fit: contain; background: #ffffff; padding: 6px; border-radius: 8px; border: 1px solid var(--card-border); }
         .product-details { flex: 1; }
         .product-brand { font-size: 0.85rem; color: var(--accent-yellow); font-weight: 700; text-transform: uppercase; }
         .product-size { font-size: 1.25rem; font-weight: 800; color: #fff; margin: 2px 0; }
@@ -94,11 +97,33 @@
     <!-- HEADER -->
     <header>
         <div class="header-container">
-            <div class="logo-area">
-                <i class="fa-solid fa-compact-disc logo-icon"></i>
-                <div class="logo-text">
-                    <h1>ÇELEBİ OTO LASTİK</h1>
-                    <p>Yolunuzda Güven, Lastiğinizde Kalite</p>
+            <div class="logo-wrapper">
+                <!-- Vektörel Çelebi Logo Yapısı -->
+                <div class="logo-box">
+                    <svg class="site-logo" viewBox="0 0 450 200" xmlns="http://www.w3.org/2000/svg">
+                        <g transform="translate(10, 10)">
+                            <!-- Lastik C İkonu -->
+                            <path d="M 120 20 C 50 20 10 60 10 110 C 10 160 50 180 120 180 L 160 180 C 130 160 110 130 110 100 C 110 70 130 40 160 20 Z" fill="#222" />
+                            <path d="M 120 40 C 70 40 40 70 40 100 C 40 130 70 160 120 160 C 95 140 85 120 85 100 C 85 80 95 60 120 40 Z" fill="#fff" />
+                            <path d="M 100 50 C 70 70 70 130 100 150 C 85 130 85 70 100 50 Z" fill="#d92525" />
+                            <path d="M 30 50 L 10 35 M 20 80 L 0 70 M 20 120 L 0 130 M 30 150 L 10 165" stroke="#222" stroke-width="8" stroke-linecap="round" />
+                            
+                            <!-- CELEBI Yazısı -->
+                            <text x="145" y="90" font-family="'Impact', 'Arial Black', sans-serif" font-size="75" font-style="italic" font-weight="bold" fill="#d92525" letter-spacing="2">ÇELEBİ</text>
+                            <line x1="145" y1="102" x2="410" y2="102" stroke="#d92525" stroke-width="5" />
+                            
+                            <!-- OTO LASTIK Siyah Çubuk -->
+                            <rect x="145" y="115" width="270" height="32" rx="16" fill="#222" />
+                            <text x="280" y="138" font-family="'Arial Black', sans-serif" font-size="20" font-style="italic" font-weight="bold" fill="#fff" text-anchor="middle" letter-spacing="3">OTO LASTİK</text>
+                            
+                            <!-- TAMİR - BALANS -->
+                            <text x="280" y="175" font-family="'Georgia', serif" font-size="22" font-weight="bold" fill="#111" text-anchor="middle" letter-spacing="3">TAMİR - BALANS</text>
+                        </g>
+                    </svg>
+                </div>
+                <div class="slogan-area">
+                    <h1>ÇELEBİ OTO LASTİK B2B</h1>
+                    <p>"Yolunuzda Güven, Lastiğinizde Kalite"</p>
                 </div>
             </div>
             <div id="userInfoArea" class="user-info hidden">
@@ -122,244 +147,4 @@
                 <label>Şifre</label>
                 <input type="password" id="password" class="form-control" placeholder="****">
             </div>
-            <button class="btn-primary" onclick="login()"><i class="fa-solid fa-right-to-bracket"></i> Giriş Yap</button>
-        </div>
-
-        <!-- PORTAL İÇERİĞİ -->
-        <div id="portalSection" class="hidden">
-            
-            <!-- ARAMA VE FİLTRELEME -->
-            <div class="controls-section">
-                <div class="search-box">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="searchInput" oninput="renderProducts()" placeholder="Ebat veya Marka Ara... (Örn: 205/55 veya Petlas)">
-                </div>
-                <div class="filter-buttons">
-                    <button class="filter-btn active" onclick="setSeason('all', this)"><i class="fa-solid fa-border-all"></i> Tüm Ürünler</button>
-                    <button class="filter-btn" onclick="setSeason('Yaz', this)"><i class="fa-solid fa-sun"></i> Yaz Lastikleri</button>
-                    <button class="filter-btn" onclick="setSeason('Kış', this)"><i class="fa-solid fa-snowflake"></i> Kış Lastikleri</button>
-                    <button class="filter-btn" onclick="setSeason('4 Mevsim', this)"><i class="fa-solid fa-cloud-sun-rain"></i> 4 Mevsim</button>
-                </div>
-            </div>
-
-            <!-- YÖNETİCİ ÇUBUĞU -->
-            <div id="adminBar" class="admin-bar hidden">
-                <h3 style="color: var(--text-muted);"><i class="fa-solid fa-boxes-stacked"></i> Stok Listesi</h3>
-                <div style="display: flex; gap: 10px;">
-                    <button class="btn-add" onclick="openAddModal()"><i class="fa-solid fa-plus"></i> Yeni Ürün Ekle</button>
-                    <button class="btn-add" style="background: #3b82f6;" onclick="openSettingsModal()"><i class="fa-solid fa-gear"></i> Ayarlar / Şifreler</button>
-                </div>
-            </div>
-
-            <!-- ÜRÜN IZGARASI -->
-            <div id="productsGrid" class="products-grid">
-                <!-- Ürünler JavaScript ile buraya doldurulacak -->
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- ÜRÜN EKLEME MODALI -->
-    <div id="productModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fa-solid fa-plus-circle"></i> Yeni Ürün Ekle</h3>
-                <span class="close-btn" onclick="closeModal('productModal')">&times;</span>
-            </div>
-            <div class="form-group">
-                <label>Marka & Model</label>
-                <input type="text" id="pBrand" class="form-control" placeholder="Örn: Petlas Snowmaster 2">
-            </div>
-            <div class="form-group">
-                <label>Ebat</label>
-                <input type="text" id="pSize" class="form-control" placeholder="Örn: 205/55R16">
-            </div>
-            <div class="form-group">
-                <label>Mevsim</label>
-                <select id="pSeason" class="form-control">
-                    <option value="Yaz">Yaz</option>
-                    <option value="Kış">Kış</option>
-                    <option value="4 Mevsim">4 Mevsim</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>DOT (Üretim Yılı)</label>
-                <input type="text" id="pDot" class="form-control" placeholder="Örn: 2026">
-            </div>
-            <div class="form-group">
-                <label>Fiyat (TL)</label>
-                <input type="number" id="pPrice" class="form-control" placeholder="Örn: 3900">
-            </div>
-            <div class="form-group">
-                <label>Stok Adedi</label>
-                <input type="number" id="pStock" class="form-control" placeholder="Örn: 12">
-            </div>
-            <button class="btn-primary" onclick="saveProduct()">Ürünü Kaydet</button>
-        </div>
-    </div>
-
-    <!-- AYARLAR & ŞİFRE MODALI -->
-    <div id="settingsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fa-solid fa-gear"></i> Yönetici Ayarları</h3>
-                <span class="close-btn" onclick="closeModal('settingsModal')">&times;</span>
-            </div>
-            <div class="form-group">
-                <label>Admin Şifresi</label>
-                <input type="text" id="cfgAdminPass" class="form-control">
-            </div>
-            <div class="form-group">
-                <label>Bayi Kullanıcı Adı</label>
-                <input type="text" id="cfgBayiUser" class="form-control">
-            </div>
-            <div class="form-group">
-                <label>Bayi Şifresi</label>
-                <input type="text" id="cfgBayiPass" class="form-control">
-            </div>
-            <button class="btn-primary" onclick="saveSettings()">Ayarları Kaydet</button>
-        </div>
-    </div>
-
-    <script>
-        // VARSAYILAN KULLANICI VE AYARLAR
-        let config = JSON.parse(localStorage.getItem('celebi_config')) || {
-            adminUser: 'admin',
-            adminPass: '1234',
-            bayiUser: 'bayi',
-            bayiPass: '1234'
-        };
-
-        // ÖRNEK İLK VERİ
-        let products = JSON.parse(localStorage.getItem('celebi_products')) || [
-            { id: 1, brand: 'Petlas Snowmaster 2', size: '205/55R16', season: 'Kış', dot: '2026', price: 3900, stock: 12 }
-        ];
-
-        let currentUser = null;
-        let selectedSeason = 'all';
-
-        function login() {
-            const u = document.getElementById('username').value.trim();
-            const p = document.getElementById('password').value.trim();
-
-            if (u === config.adminUser && p === config.adminPass) {
-                currentUser = { role: 'admin', name: 'Yönetici' };
-            } else if (u === config.bayiUser && p === config.bayiPass) {
-                currentUser = { role: 'bayi', name: config.bayiUser };
-            } else {
-                alert('Kullanıcı adı veya şifre hatalı!');
-                return;
-            }
-
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('portalSection').classList.remove('hidden');
-            document.getElementById('userInfoArea').classList.remove('hidden');
-            document.getElementById('userBadge').innerText = currentUser.name;
-
-            if (currentUser.role === 'admin') {
-                document.getElementById('adminBar').classList.remove('hidden');
-            } else {
-                document.getElementById('adminBar').classList.add('hidden');
-            }
-
-            renderProducts();
-        }
-
-        function logout() {
-            currentUser = null;
-            document.getElementById('loginSection').classList.remove('hidden');
-            document.getElementById('portalSection').classList.add('hidden');
-            document.getElementById('userInfoArea').classList.add('hidden');
-        }
-
-        function setSeason(season, btn) {
-            selectedSeason = season;
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderProducts();
-        }
-
-        function renderProducts() {
-            const grid = document.getElementById('productsGrid');
-            const search = document.getElementById('searchInput').value.toLowerCase();
-            grid.innerHTML = '';
-
-            const filtered = products.filter(p => {
-                const matchSearch = p.brand.toLowerCase().includes(search) || p.size.toLowerCase().includes(search);
-                const matchSeason = selectedSeason === 'all' || p.season === selectedSeason;
-                return matchSearch && matchSeason;
-            });
-
-            if (filtered.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Aranan kriterlere uygun ürün bulunamadı.</p>';
-                return;
-            }
-
-            filtered.forEach(p => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.innerHTML = `
-                    ${currentUser.role === 'admin' ? `<div class="card-actions"><button class="btn-icon" onclick="deleteProduct(${p.id})"><i class="fa-solid fa-trash"></i></button></div>` : ''}
-                    <img src="https://cdn-icons-png.flaticon.com/512/2965/2965318.png" class="product-img" alt="Lastik">
-                    <div class="product-details">
-                        <div class="product-brand">${p.brand}</div>
-                        <div class="product-size">${p.size}</div>
-                        <div class="product-tags">
-                            <span class="tag">${p.season}</span>
-                            <span class="tag">DOT ${p.dot}</span>
-                        </div>
-                    </div>
-                    <div class="product-price-area">
-                        <div class="product-price">${Number(p.price).toLocaleString('tr-TR')} TL</div>
-                        <div class="product-stock"><i class="fa-solid fa-boxes-stacked"></i> ${p.stock} Adet</div>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        function openAddModal() { document.getElementById('productModal').style.display = 'flex'; }
-        function openSettingsModal() { 
-            document.getElementById('cfgAdminPass').value = config.adminPass;
-            document.getElementById('cfgBayiUser').value = config.bayiUser;
-            document.getElementById('cfgBayiPass').value = config.bayiPass;
-            document.getElementById('settingsModal').style.display = 'flex'; 
-        }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-        function saveProduct() {
-            const brand = document.getElementById('pBrand').value;
-            const size = document.getElementById('pSize').value;
-            const season = document.getElementById('pSeason').value;
-            const dot = document.getElementById('pDot').value;
-            const price = document.getElementById('pPrice').value;
-            const stock = document.getElementById('pStock').value;
-
-            if(!brand || !size || !price || !stock) { alert('Lütfen tüm alanları doldurun!'); return; }
-
-            products.push({ id: Date.now(), brand, size, season, dot, price: Number(price), stock: Number(stock) });
-            localStorage.setItem('celebi_products', JSON.stringify(products));
-            closeModal('productModal');
-            renderProducts();
-        }
-
-        function deleteProduct(id) {
-            if(confirm('Bu ürünü silmek istediğinize emin misiniz?')) {
-                products = products.filter(p => p.id !== id);
-                localStorage.setItem('celebi_products', JSON.stringify(products));
-                renderProducts();
-            }
-        }
-
-        function saveSettings() {
-            config.adminPass = document.getElementById('cfgAdminPass').value;
-            config.bayiUser = document.getElementById('cfgBayiUser').value;
-            config.bayiPass = document.getElementById('cfgBayiPass').value;
-            localStorage.setItem('celebi_config', JSON.stringify(config));
-            alert('Ayarlar kaydedildi!');
-            closeModal('settingsModal');
-        }
-    </script>
-</body>
-</html>
+            <button class="btn-primary"
