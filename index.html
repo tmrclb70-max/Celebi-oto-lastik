@@ -21,19 +21,19 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding-bottom: 40px; }
 
-        /* HEADER & LOGO */
+        /* HEADER & KURUMSAL LOGO */
         header { background: #020617; border-bottom: 3px solid #dc2626; padding: 12px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
         .header-container { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         
         .logo-wrapper { display: flex; align-items: center; gap: 18px; }
         
-        /* KODLA ÇİZİLMİŞ BİREBİR LOGO */
-        .brand-logo-box { background: #ffffff; padding: 6px 14px; border-radius: 8px; border: 2px solid #dc2626; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(220, 38, 38, 0.3); }
-        .logo-top { display: flex; align-items: center; gap: 6px; }
-        .logo-top i { color: #dc2626; font-size: 1.6rem; }
-        .logo-title { font-family: 'Impact', 'Arial Black', sans-serif; font-size: 1.6rem; font-weight: bold; color: #dc2626; font-style: italic; letter-spacing: 1px; line-height: 1; }
-        .logo-sub-black { background: #000000; color: #ffffff; font-weight: bold; font-size: 0.7rem; padding: 2px 8px; border-radius: 8px; margin: 2px 0; letter-spacing: 1px; font-style: italic; width: 100%; text-align: center; }
-        .logo-sub-text { color: #000000; font-weight: 800; font-size: 0.65rem; letter-spacing: 1.5px; }
+        /* GERÇEK LOGO TASARIMI */
+        .brand-logo-box { background: #ffffff; padding: 5px 12px; border-radius: 8px; border: 2px solid #dc2626; display: flex; align-items: center; gap: 10px; box-shadow: 0 0 12px rgba(220, 38, 38, 0.4); }
+        .logo-icon-svg { width: 50px; height: 50px; }
+        .logo-text-group { display: flex; flexDirection: column; }
+        .logo-title { font-family: 'Impact', 'Arial Black', sans-serif; font-size: 1.5rem; font-weight: bold; color: #dc2626; font-style: italic; letter-spacing: 1px; line-height: 1; }
+        .logo-sub-black { background: #000000; color: #ffffff; font-weight: bold; font-size: 0.65rem; padding: 2px 6px; border-radius: 6px; margin: 2px 0; letter-spacing: 1px; font-style: italic; text-align: center; }
+        .logo-sub-text { color: #111; font-weight: 800; font-size: 0.6rem; letter-spacing: 1px; text-align: center; }
 
         .slogan-area h1 { font-size: 1.3rem; font-weight: 800; color: #ffffff; }
         .slogan-area p { font-size: 0.85rem; color: var(--accent-yellow); font-style: italic; font-weight: 600; margin-top: 2px; }
@@ -88,7 +88,7 @@
         .btn-icon { background: rgba(0,0,0,0.5); color: #fff; border: none; width: 26px; height: 26px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .btn-icon:hover { background: var(--danger-color); }
 
-        /* MODAL (AÇILIR PENCEREKORUMASI - AŞAĞI KAYDIRILABİLİR SCROLLBAR) */
+        /* MODAL */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: flex-start; z-index: 1000; padding: 20px; overflow-y: auto; }
         .modal-content { background: var(--card-bg); border-radius: 12px; padding: 20px; width: 100%; max-width: 480px; border: 1px solid var(--card-border); margin: 20px auto; max-height: 85vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; }
@@ -104,13 +104,20 @@
     <header>
         <div class="header-container">
             <div class="logo-wrapper">
+                <!-- BİREBİR ORİJİNAL LOGO TASARIMI -->
                 <div class="brand-logo-box">
-                    <div class="logo-top">
-                        <i class="fa-solid fa-compact-disc"></i>
+                    <svg class="logo-icon-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Lastik C İkonu -->
+                        <path d="M 70 15 C 30 15 10 40 10 65 C 10 90 30 95 70 95 L 85 95 C 65 85 55 75 55 65 C 55 55 65 45 85 35 Z" fill="#222" />
+                        <path d="M 70 27 C 40 27 25 45 25 65 C 25 85 40 83 70 83 C 55 75 50 68 50 65 C 50 62 55 55 70 27 Z" fill="#fff" />
+                        <path d="M 60 33 C 40 45 40 85 60 90 C 50 80 50 50 60 33 Z" fill="#dc2626" />
+                        <path d="M 22 35 L 12 25 M 18 55 L 6 52 M 18 75 L 6 78 M 25 90 L 15 100" stroke="#222" stroke-width="5" stroke-linecap="round" />
+                    </svg>
+                    <div class="logo-text-group">
                         <span class="logo-title">ÇELEBİ</span>
+                        <div class="logo-sub-black">OTO LASTİK</div>
+                        <div class="logo-sub-text">TAMİR - BALANS</div>
                     </div>
-                    <div class="logo-sub-black">OTO LASTİK</div>
-                    <div class="logo-sub-text">TAMİR - BALANS</div>
                 </div>
                 <div class="slogan-area">
                     <h1>ÇELEBİ OTO LASTİK B2B</h1>
@@ -176,21 +183,55 @@
 
     </div>
 
-    <!-- ÜRÜN EKLEME MODALI (KAYDIRILABİLİR İÇ PENCERE) -->
+    <!-- ÜRÜN EKLEME MODALI (SEÇENEKLİ + SERBEST GİRİŞLİ) -->
     <div id="productModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3><i class="fa-solid fa-plus-circle"></i> Yeni Ürün Ekle</h3>
                 <span class="close-btn" onclick="closeModal('productModal')">&times;</span>
             </div>
+            
             <div class="form-group">
-                <label>Marka & Model</label>
-                <input type="text" id="pBrand" class="form-control" placeholder="Örn: Petlas Snowmaster 2">
+                <label>Marka Seçin veya Yazın</label>
+                <select id="pBrandSelect" class="form-control" onchange="checkCustomBrand(this)">
+                    <option value="Petlas">Petlas</option>
+                    <option value="Lassa">Lassa</option>
+                    <option value="Bridgestone">Bridgestone</option>
+                    <option value="Michelin">Michelin</option>
+                    <option value="Goodyear">Goodyear</option>
+                    <option value="Starmaxx">Starmaxx</option>
+                    <option value="Hankook">Hankook</option>
+                    <option value="Pirelli">Pirelli</option>
+                    <option value="Kumho">Kumho</option>
+                    <option value="Yokohama">Yokohama</option>
+                    <option value="Continental">Continental</option>
+                    <option value="Diger">Diğer (Manuel Yaz)</option>
+                </select>
             </div>
+            <div class="form-group hidden" id="customBrandGroup">
+                <label>Özel Marka Adı Girin</label>
+                <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Orium, Triangle vb.">
+            </div>
+
             <div class="form-group">
-                <label>Ebat</label>
-                <input type="text" id="pSize" class="form-control" placeholder="Örn: 205/55R16">
+                <label>Ebat Seçin veya Yazın</label>
+                <select id="pSizeSelect" class="form-control" onchange="checkCustomSize(this)">
+                    <option value="175/65R14">175/65R14</option>
+                    <option value="185/65R15">185/65R15</option>
+                    <option value="195/65R15">195/65R15</option>
+                    <option value="205/55R16" selected>205/55R16</option>
+                    <option value="215/55R17">215/55R17</option>
+                    <option value="225/45R17">225/45R17</option>
+                    <option value="225/55R17">225/55R17</option>
+                    <option value="235/60R18">235/60R18</option>
+                    <option value="Diger">Diğer (Manuel Ebat Yaz)</option>
+                </select>
             </div>
+            <div class="form-group hidden" id="customSizeGroup">
+                <label>Özel Ebat Girin</label>
+                <input type="text" id="pCustomSize" class="form-control" placeholder="Örn: 245/40R19">
+            </div>
+
             <div class="form-group">
                 <label>Mevsim</label>
                 <select id="pSeason" class="form-control">
@@ -202,6 +243,10 @@
             <div class="form-group">
                 <label>DOT (Üretim Yılı)</label>
                 <input type="text" id="pDot" class="form-control" placeholder="Örn: 2026">
+            </div>
+            <div class="form-group">
+                <label>Görsel URL (İsteğe Bağlı Resim Linki)</label>
+                <input type="text" id="pImg" class="form-control" placeholder="İnternetten resim linki yapıştırın">
             </div>
             <div class="form-group">
                 <label>Fiyat (TL)</label>
@@ -296,6 +341,24 @@
             renderProducts();
         }
 
+        function checkCustomBrand(select) {
+            const customGroup = document.getElementById('customBrandGroup');
+            if (select.value === 'Diger') {
+                customGroup.classList.remove('hidden');
+            } else {
+                customGroup.classList.add('hidden');
+            }
+        }
+
+        function checkCustomSize(select) {
+            const customGroup = document.getElementById('customSizeGroup');
+            if (select.value === 'Diger') {
+                customGroup.classList.remove('hidden');
+            } else {
+                customGroup.classList.add('hidden');
+            }
+        }
+
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             const search = document.getElementById('searchInput').value.toLowerCase();
@@ -315,10 +378,11 @@
             filtered.forEach(p => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
+                const imgSrc = p.img && p.img.trim() !== '' ? p.img : DEFAULT_TIRE_IMG;
                 
                 card.innerHTML = `
                     ${currentUser.role === 'admin' ? `<div class="card-actions"><button class="btn-icon" onclick="deleteProduct(${p.id})"><i class="fa-solid fa-trash"></i></button></div>` : ''}
-                    <img src="${DEFAULT_TIRE_IMG}" class="product-img" alt="Lastik">
+                    <img src="${imgSrc}" class="product-img" alt="Lastik" onerror="this.src='${DEFAULT_TIRE_IMG}'">
                     <div class="product-details">
                         <div class="product-brand">${p.brand}</div>
                         <div class="product-size">${p.size}</div>
@@ -346,16 +410,21 @@
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
         function saveProduct() {
-            const brand = document.getElementById('pBrand').value;
-            const size = document.getElementById('pSize').value;
+            let brandSelect = document.getElementById('pBrandSelect').value;
+            let brand = brandSelect === 'Diger' ? document.getElementById('pCustomBrand').value.trim() : brandSelect;
+
+            let sizeSelect = document.getElementById('pSizeSelect').value;
+            let size = sizeSelect === 'Diger' ? document.getElementById('pCustomSize').value.trim() : sizeSelect;
+
             const season = document.getElementById('pSeason').value;
             const dot = document.getElementById('pDot').value;
+            const img = document.getElementById('pImg').value;
             const price = document.getElementById('pPrice').value;
             const stock = document.getElementById('pStock').value;
 
             if(!brand || !size || !price || !stock) { alert('Lütfen zorunlu alanları doldurun!'); return; }
 
-            products.push({ id: Date.now(), brand, size, season, dot, price: Number(price), stock: Number(stock) });
+            products.push({ id: Date.now(), brand, size, season, dot, img, price: Number(price), stock: Number(stock) });
             localStorage.setItem('celebi_products', JSON.stringify(products));
             closeModal('productModal');
             renderProducts();
