@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Çelebi Oto Lastik - B2B Stok Portalı</title>
-    <!-- Font Awesome & Google Calligraphy / Handdrawn Fonts -->
+    <!-- Font Awesome & Google Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,21 +26,42 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding-bottom: 40px; }
 
-        /* HEADER */
-        header { background: #020617; border-bottom: 3px solid #dc2626; padding: 18px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-        .header-container { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-        
-        .header-title-area h1 { font-size: 2rem; font-weight: 900; color: #ffffff; letter-spacing: 1px; text-transform: uppercase; }
-        .header-title-area p { font-size: 0.9rem; color: var(--accent-yellow); font-style: italic; font-weight: 600; margin-top: 2px; }
+        /* HEADER - ARKA PLANDA FLU LASTİK İZİ EFEKTİ */
+        header { 
+            position: relative;
+            background: linear-gradient(90deg, rgba(2, 6, 23, 0.92) 0%, rgba(15, 23, 42, 0.85) 100%), 
+                        url('https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1600&auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 3px solid #dc2626; 
+            padding: 22px 0; 
+            box-shadow: 0 4px 25px rgba(0,0,0,0.6); 
+            overflow: hidden;
+        }
 
-        .user-info { display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 8px; border: 1px solid var(--card-border); }
+        /* HEADER ÜZERİNDEKİ SÜS LASTİK İZİ DESENİ */
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/tire-tread.png');
+            opacity: 0.25;
+            pointer-events: none;
+        }
+
+        .header-container { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        
+        .header-title-area h1 { font-size: 2.1rem; font-weight: 900; color: #ffffff; letter-spacing: 1.5px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .header-title-area p { font-size: 0.95rem; color: var(--accent-yellow); font-style: italic; font-weight: 600; margin-top: 2px; letter-spacing: 0.5px; }
+
+        .user-info { display: flex; align-items: center; gap: 15px; background: rgba(15, 23, 42, 0.7); padding: 8px 16px; border-radius: 8px; border: 1px solid var(--card-border); backdrop-filter: blur(8px); }
         .user-badge { color: var(--accent-yellow); font-weight: 600; }
         .btn-logout { background: var(--danger-color); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 
         /* MAIN CONTAINER */
         .main-container { max-width: 1350px; margin: 30px auto; padding: 0 20px; }
 
-        /* YENİ KURUMSAL GİRİŞ EKRANI */
+        /* GİRİŞ EKRANI */
         .login-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(2, 6, 23, 0.88)), url('https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80');
@@ -127,7 +148,7 @@
         .product-row { 
             background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; 
             padding: 12px 20px; display: grid; 
-            grid-template-columns: 75px 1.2fr 1fr 1fr 90px 90px 1.2fr auto auto; 
+            grid-template-columns: 75px 1.2fr 1fr 1fr 100px 90px 1.3fr auto auto; 
             align-items: center; gap: 15px; cursor: pointer; transition: 0.2s; 
         }
         .product-row:hover { border-color: var(--accent-yellow); transform: translateX(3px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
@@ -139,9 +160,22 @@
         .col-pattern { font-size: 0.95rem; color: var(--text-main); font-weight: 600; }
         .col-season { display: inline-block; }
         .col-dot { display: inline-block; }
-        .col-price { font-size: 1.25rem; font-weight: 800; color: var(--success-color); text-align: right; }
         
-        .tag { font-size: 0.78rem; padding: 4px 8px; border-radius: 5px; background: #0f172a; color: var(--text-muted); border: 1px solid var(--card-border); font-weight: 600; text-align: center; }
+        /* ŞIK VE MODERN FİYAT ALANI */
+        .col-price { 
+            font-size: 1.25rem; 
+            font-weight: 900; 
+            color: #34d399; 
+            text-align: right; 
+            background: rgba(16, 185, 129, 0.08); 
+            padding: 6px 14px; 
+            border-radius: 8px; 
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            letter-spacing: 0.5px;
+        }
+        
+        /* KATEGORİ SİMGELİ / İKONLU ROZETLER */
+        .tag { font-size: 0.8rem; padding: 5px 10px; border-radius: 6px; background: #0f172a; color: var(--text-main); border: 1px solid var(--card-border); font-weight: 600; text-align: center; display: inline-flex; align-items: center; gap: 5px; }
         .tag-pattern { color: var(--accent-yellow); border-color: rgba(245, 158, 11, 0.3); }
 
         /* STOK ROZETLERİ VE HIZLI YÖNETİCİ BUTONLARI */
@@ -201,7 +235,6 @@
     <!-- YENİ KURUMSAL GİRİŞ EKRANI -->
     <div id="loginSection" class="login-wrapper">
         <div class="login-card">
-            <!-- El Yazısı Fontu İle Şık Marka İsmi -->
             <h1 class="login-brand-title">Çelebi Oto Lastik</h1>
             <p class="login-slogan">"Yolunuzda Güven, Lastiğinizde Kalite"</p>
             
@@ -312,7 +345,7 @@
                 <div class="detail-info-row"><span>Mevsim / Tür:</span> <span id="detSeason">--</span></div>
                 <div class="detail-info-row"><span>DOT (Yıl):</span> <span id="detDot">--</span></div>
                 <div class="detail-info-row"><span>Stok Durumu:</span> <span id="detStock">--</span></div>
-                <div class="detail-info-row"><span>Birim Fiyat:</span> <span id="detPrice" style="color: var(--accent-yellow);">--</span></div>
+                <div class="detail-info-row"><span>Birim Fiyat:</span> <span id="detPrice" style="color: #34d399;">--</span></div>
                 
                 <!-- BAYİLER İÇİN ADET BELİRTEREK SİPARİŞ TALEBİ ALANI -->
                 <div id="bayiOrderArea" class="hidden" style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px;">
@@ -564,7 +597,6 @@
             document.getElementById('password').value = '';
         }
 
-        /* YÖNETİCİ İÇİN TEKLİ STOK KONTROLÜ VE ROZET SAYISI HESAPLAMA */
         function checkCriticalStocks() {
             const notifBadge = document.getElementById('notifBadge');
 
@@ -579,7 +611,6 @@
             }
         }
 
-        /* BİLDİRİM MODALINI AÇMA VE KATEGORİLERE GÖRE DÜZENLİ LİSTELEME */
         function openNotifModal() {
             const container = document.getElementById('notifListContainer');
             container.innerHTML = '';
@@ -651,6 +682,24 @@
             else customGroup.classList.add('hidden');
         }
 
+        /* İKONLU KATEGORİ ETİKETİ HESAPLAYICI */
+        function getCategoryBadgeHtml(p) {
+            if (p.group === 'Zirai') {
+                return `<span class="tag"><i class="fa-solid fa-tractor" style="color:#f59e0b;"></i> Zirai</span>`;
+            } else if (p.group === 'İç Lastik') {
+                return `<span class="tag"><i class="fa-solid fa-circle-dot" style="color:#e11d48;"></i> İç Lastik</span>`;
+            } else {
+                if (p.season === 'Kış') {
+                    return `<span class="tag"><i class="fa-solid fa-snowflake" style="color:#3b82f6;"></i> Kış</span>`;
+                } else if (p.season === 'Yaz') {
+                    return `<span class="tag"><i class="fa-solid fa-sun" style="color:#f59e0b;"></i> Yaz</span>`;
+                } else if (p.season === '4 Mevsim') {
+                    return `<span class="tag"><i class="fa-solid fa-cloud-sun-rain" style="color:#10b981;"></i> 4 Mevsim</span>`;
+                }
+            }
+            return `<span class="tag">${p.season || p.group}</span>`;
+        }
+
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             const search = document.getElementById('searchInput').value.toLowerCase();
@@ -706,14 +755,12 @@
                     }
                 }
 
-                let seasonLabel = p.season || p.group || 'Otomobil';
-
                 row.innerHTML = `
                     <img src="${imgSrc}" class="product-img" alt="Ürün" onerror="this.src='${DEFAULT_TIRE_IMG}'">
                     <div class="col-size">${p.size}</div>
                     <div class="col-brand">${p.brand}</div>
                     <div class="col-pattern">${p.pattern ? `<span class="tag tag-pattern"><i class="fa-solid fa-grip"></i> ${p.pattern}</span>` : '-'}</div>
-                    <div class="col-season"><span class="tag">${seasonLabel}</span></div>
+                    <div class="col-season">${getCategoryBadgeHtml(p)}</div>
                     <div class="col-dot"><span class="tag">DOT ${p.dot || '2026'}</span></div>
                     <div class="col-price">${formatPrice(p.price)}</div>
                     <div>${stockHtml}</div>
@@ -728,7 +775,6 @@
             });
         }
 
-        /* HIZLI STOK ARTTIRMA VE DÜŞÜRME FONKSİYONU */
         function changeStock(id, delta) {
             const product = products.find(p => p.id === id);
             if (product) {
@@ -739,7 +785,6 @@
             }
         }
 
-        /* BAĞIMSIZ TOPLU ZAM MODALI */
         function openBulkPriceModal(targetType) {
             document.getElementById('bulkPercentInput').value = '';
             document.getElementById('bulkTargetType').value = targetType;
@@ -787,7 +832,6 @@
             }
         }
 
-        /* KALEM BUTONUNA BASTIĞINDA YENİ ÜRÜN EKLER GİBİ FULL DÜZENLEME AÇILMASI */
         function openEditProductModal(id) {
             const product = products.find(p => p.id === id);
             if (!product) return;
@@ -881,7 +925,6 @@
             document.getElementById('detailModal').style.display = 'flex';
         }
 
-        /* BAYİLERİN ADET BELİRTEREK TALEP / SİPARİŞ OLUŞTURMASI */
         function requestBayiOrder() {
             const reqQty = document.getElementById('bayiReqQty').value;
             if (!reqQty || reqQty <= 0) {
