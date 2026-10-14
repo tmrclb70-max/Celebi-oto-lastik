@@ -39,7 +39,6 @@
             overflow: hidden;
         }
 
-        /* HEADER ÜZERİNDEKİ SÜS LASTİK İZİ DESENİ */
         header::before {
             content: "";
             position: absolute;
@@ -142,7 +141,7 @@
         .btn-add { background: var(--success-color); color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem; }
         .btn-bulk-price { background: var(--accent-yellow); color: #000; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 800; display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem; }
 
-        /* SATIR DÜZENİ */
+        /* SATIR DÜZENİ (MASAÜSTÜ) */
         .products-list { display: flex; flex-direction: column; gap: 12px; }
         
         .product-row { 
@@ -161,7 +160,6 @@
         .col-season { display: inline-block; }
         .col-dot { display: inline-block; }
         
-        /* ŞIK VE MODERN FİYAT ALANI */
         .col-price { 
             font-size: 1.25rem; 
             font-weight: 900; 
@@ -174,11 +172,9 @@
             letter-spacing: 0.5px;
         }
         
-        /* KATEGORİ SİMGELİ / İKONLU ROZETLER */
         .tag { font-size: 0.8rem; padding: 5px 10px; border-radius: 6px; background: #0f172a; color: var(--text-main); border: 1px solid var(--card-border); font-weight: 600; text-align: center; display: inline-flex; align-items: center; gap: 5px; }
         .tag-pattern { color: var(--accent-yellow); border-color: rgba(245, 158, 11, 0.3); }
 
-        /* STOK ROZETLERİ VE HIZLI YÖNETİCİ BUTONLARI */
         .stock-badge-in { background: rgba(16, 185, 129, 0.15); color: var(--success-color); border: 1.5px solid var(--success-color); font-weight: 800; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; text-align: center; }
         .stock-badge-out { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1.5px solid var(--danger-color); font-weight: 800; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; text-align: center; }
         
@@ -195,7 +191,6 @@
         .btn-edit-price { background: rgba(245, 158, 11, 0.15); color: var(--accent-yellow); border: 1px solid var(--accent-yellow); width: 32px; height: 32px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .btn-edit-price:hover { background: var(--accent-yellow); color: #000; }
 
-        /* KRİTİK BİLDİRİM PENCERESİ LİSTE STİLİ */
         .notif-category-title { font-size: 1rem; font-weight: 800; color: var(--accent-yellow); margin: 15px 0 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px; display: flex; align-items: center; gap: 8px; }
         .notif-item { background: #0f172a; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--card-border); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; }
         .notif-item-title { color: #fff; font-weight: 700; }
@@ -205,7 +200,6 @@
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: flex-start; z-index: 3000; padding: 20px; overflow-y: auto; }
         .modal-content { background: var(--card-bg); border-radius: 12px; padding: 25px; width: 100%; max-width: 550px; border: 1px solid var(--card-border); margin: 30px auto; max-height: 85vh; overflow-y: auto; box-shadow: 0 15px 35px rgba(0,0,0,0.8); }
         
-        /* DETAY MODALI */
         .detail-modal-content { max-width: 650px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; border: 2px solid var(--accent-yellow); }
         .detail-left { flex: 1; min-width: 220px; text-align: center; background: #ffffff; padding: 20px; border-radius: 10px; }
         .detail-left img { width: 100%; height: 210px; object-fit: contain; }
@@ -224,9 +218,15 @@
 
         .hidden { display: none !important; }
 
+        /* TELEFON VE MOBİL UYUMLULUK DÜZENLEMELERİ (RESPONSIVE) */
         @media (max-width: 992px) {
-            .product-row { grid-template-columns: 60px 1fr 1fr auto; gap: 10px; }
+            .product-row { 
+                grid-template-columns: 60px 1fr 1fr auto; 
+                gap: 10px; 
+                padding: 12px;
+            }
             .col-pattern, .col-season, .col-dot { display: none; }
+            .col-price { font-size: 1.05rem; padding: 4px 8px; }
         }
     </style>
 </head>
@@ -531,7 +531,6 @@
             input.value = input.value.replace(/[^0-9.]/g, '');
         }
 
-        /* EBATLARİ KÜÇÜKTEN BÜYÜĞE SIRALAMA ALGORİTMASI */
         function parseSizeForSort(sizeStr) {
             if (!sizeStr) return 0;
             let match = sizeStr.match(/(\d+)[\/\.-](\d+)?.*[R_]?(\d+)?/i);
@@ -682,7 +681,6 @@
             else customGroup.classList.add('hidden');
         }
 
-        /* İKONLU KATEGORİ ETİKETİ HESAPLAYICI */
         function getCategoryBadgeHtml(p) {
             if (p.group === 'Zirai') {
                 return `<span class="tag"><i class="fa-solid fa-tractor" style="color:#f59e0b;"></i> Zirai</span>`;
