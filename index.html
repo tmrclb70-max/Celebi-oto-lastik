@@ -141,7 +141,7 @@
         .btn-add { background: var(--success-color); color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem; }
         .btn-bulk-price { background: var(--accent-yellow); color: #000; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 800; display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem; }
 
-        /* SATIR DÜZENİ (MASAÜSTÜ) */
+        /* SATIR DÜZENİ (MASAÜSTÜ İÇİN KESİNLİKLE SABİT VE ORİJİNAL) */
         .products-list { display: flex; flex-direction: column; gap: 12px; }
         
         .product-row { 
@@ -218,15 +218,38 @@
 
         .hidden { display: none !important; }
 
-        /* TELEFON VE MOBİL UYUMLULUK DÜZENLEMELERİ (RESPONSIVE) */
-        @media (max-width: 992px) {
+        /* TELEFONLAR İÇİN ÖZEL MOBİL KART GÖRÜNÜMÜ (BİLGİSAYARI ASLA ETKİLEMEZ) */
+        @media (max-width: 768px) {
+            .header-title-area h1 { font-size: 1.5rem; }
+            .search-bar-row { flex-direction: column; }
+            .btn-notification { width: 100%; justify-content: center; height: 44px; }
+            
             .product-row { 
-                grid-template-columns: 60px 1fr 1fr auto; 
-                gap: 10px; 
-                padding: 12px;
+                grid-template-columns: 1fr 1fr; 
+                grid-template-areas: 
+                    "img size"
+                    "img brand"
+                    "img price"
+                    "stock stock";
+                gap: 8px; 
+                padding: 14px;
+                text-align: left;
             }
-            .col-pattern, .col-season, .col-dot { display: none; }
-            .col-price { font-size: 1.05rem; padding: 4px 8px; }
+            .product-img { grid-area: img; width: 100%; height: 80px; }
+            .col-size { grid-area: size; font-size: 1.1rem; }
+            .col-brand { grid-area: brand; font-size: 0.95rem; }
+            .col-price { grid-area: price; text-align: left; font-size: 1.1rem; }
+            .col-pattern, .col-season, .col-dot { display: none; } /* Telefonda kalabalık yapmasın diye gizlendi */
+            
+            /* Mobilde en alt satıra stok / yönetim butonları yerleşir */
+            .product-row > div:nth-last-child(2) { 
+                grid-area: stock; 
+                width: 100%; 
+                display: flex; 
+                justify-content: center; 
+                margin-top: 5px; 
+            }
+            .row-actions { justify-content: center; width: 100%; margin-top: 5px; }
         }
     </style>
 </head>
