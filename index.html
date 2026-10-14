@@ -32,6 +32,10 @@
         .user-badge { color: var(--accent-yellow); font-weight: 600; }
         .btn-logout { background: var(--danger-color); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 
+        /* KRİTİK STOK UYARI BANNERI */
+        .critical-alert-banner { background: rgba(239, 68, 68, 0.2); border: 1px solid var(--danger-color); color: #fca5a5; padding: 12px 20px; border-radius: 10px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; font-weight: 600; }
+        .critical-alert-banner i { font-size: 1.2rem; color: var(--danger-color); }
+
         /* MAIN CONTAINER */
         .main-container { max-width: 1350px; margin: 30px auto; padding: 0 20px; }
 
@@ -171,7 +175,10 @@
     <!-- MAIN CONTAINER -->
     <div id="portalSection" class="main-container hidden">
         
-        <!-- ARAMA VE FİLTRELEME -->
+        <!-- KRİTİK TEKLİ STOK UYARI ALANI -->
+        <div id="criticalAlertArea"></div>
+
+        <!-- ARAMA VE KONTROLLER -->
         <div class="controls-section">
             <div class="search-box">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -205,7 +212,7 @@
 
     </div>
 
-    <!-- ÜRÜN DETAY MODALI -->
+    <!-- ÜRÜN DETAY / BAYİ SİPARİŞ MODALI -->
     <div id="detailModal" class="modal">
         <div class="modal-content detail-modal-content">
             <div class="modal-header">
@@ -213,7 +220,7 @@
                 <span class="close-btn" onclick="closeModal('detailModal')">&times;</span>
             </div>
             <div class="detail-left">
-                <img id="detImg" src="" alt="Lastik Görseli">
+                <img id="detImg" src="" alt="Ürün Görseli">
             </div>
             <div class="detail-right">
                 <h2 id="detBrand">--</h2>
@@ -223,6 +230,15 @@
                 <div class="detail-info-row"><span>DOT (Yıl):</span> <span id="detDot">--</span></div>
                 <div class="detail-info-row"><span>Stok Durumu:</span> <span id="detStock">--</span></div>
                 <div class="detail-info-row"><span>Birim Fiyat:</span> <span id="detPrice" style="color: var(--accent-yellow);">--</span></div>
+                
+                <!-- BAYİLER İÇİN ADET BELİRTEREK SİPARİŞ TALEBİ ALANI -->
+                <div id="bayiOrderArea" class="hidden" style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px;">
+                    <label style="display: block; font-size: 0.9rem; color: var(--accent-yellow); font-weight: 600; margin-bottom: 6px;">İstediğiniz Adet / Miktar:</label>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="number" id="bayiReqQty" class="form-control" value="4" min="1" style="width: 100px;">
+                        <button class="btn-primary" style="margin-top: 0; padding: 8px 14px; font-size: 0.95rem; background: var(--success-color); color: white;" onclick="requestBayiOrder()"><i class="fa-solid fa-cart-shopping"></i> Talep Et / Bildir</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -378,13 +394,14 @@
 
         let products = JSON.parse(localStorage.getItem('celebi_products')) || [
             { id: 1, group: 'Otomobil', brand: 'Starmaxx', pattern: 'Polarmaxx', size: '165/80R13', season: 'Kış', dot: '2026', price: 1850, stock: 10, img: DEFAULT_TIRE_IMG },
-            { id: 2, group: 'Otomobil', brand: 'Petlas', pattern: 'Snowmaster 2', size: '205/55R16', season: 'Kış', dot: '2026', price: 2500, stock: 8, img: DEFAULT_TIRE_IMG },
+            { id: 2, group: 'Otomobil', brand: 'Petlas', pattern: 'Snowmaster 2', size: '205/55R16', season: 'Kış', dot: '2026', price: 2500, stock: 3, img: DEFAULT_TIRE_IMG }, // Örnek tekli stok
             { id: 3, group: 'Zirai', brand: 'Petlas', pattern: 'TA60 Traktör Ön', size: '6.00-16', season: 'Zirai', dot: '2026', price: 3200, stock: 4, img: DEFAULT_TIRE_IMG },
-            { id: 4, group: 'İç Lastik', brand: 'Petlas', pattern: 'Otomobil Şambrel', size: '175/185-14', season: 'İç Lastik', dot: '2026', price: 350, stock: 25, img: DEFAULT_TIRE_IMG }
+            { id: 4, group: 'İç Lastik', brand: 'Petlas', pattern: 'Otomobil Şambrel', size: '175/185-14', season: 'İç Lastik', dot: '2026', price: 350, stock: 1, img: DEFAULT_TIRE_IMG } // Örnek tekli iç lastik stoğu
         ];
 
         let currentUser = null;
         let selectedCategory = 'all';
+        let activeDetailProduct = null;
 
         function formatPrice(val) {
             let num = Number(val);
@@ -449,6 +466,7 @@
                 document.getElementById('adminBar').classList.add('hidden');
             }
 
+            checkCriticalStocks();
             renderProducts();
         }
 
@@ -459,6 +477,25 @@
             document.getElementById('userInfoArea').classList.add('hidden');
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
+        }
+
+        /* YÖNETİCİ İÇİN TEKLİ STOK KONTROLÜ VE UYARI VERME */
+        function checkCriticalStocks() {
+            const alertArea = document.getElementById('criticalAlertArea');
+            alertArea.innerHTML = '';
+
+            if (currentUser && currentUser.role === 'admin') {
+                const oddProducts = products.filter(p => Number(p.stock) % 2 !== 0);
+                if (oddProducts.length > 0) {
+                    let itemsText = oddProducts.map(p => `<strong>${p.brand} (${p.size} - ${p.pattern || p.group}):</strong> ${p.stock} Adet`).join(' | ');
+                    alertArea.innerHTML = `
+                        <div class="critical-alert-banner">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <div><strong>Kritik Stok Uyarısı:</strong> Aşağıdaki ürünlerin stoğu tekli sayıda kalmıştır (Set bozulabilir): <br>${itemsText}</div>
+                        </div>
+                    `;
+                }
+            }
         }
 
         function setCategory(cat, btn) {
@@ -574,6 +611,7 @@
             if (product) {
                 product.stock = Math.max(0, Number(product.stock) + delta);
                 localStorage.setItem('celebi_products', JSON.stringify(products));
+                checkCriticalStocks();
                 renderProducts();
             }
         }
@@ -693,6 +731,7 @@
         }
 
         function openDetailModal(p) {
+            activeDetailProduct = p;
             document.getElementById('detImg').src = p.img && p.img.trim() !== '' ? p.img : DEFAULT_TIRE_IMG;
             document.getElementById('detBrand').innerText = p.brand;
             document.getElementById('detSize').innerText = p.size;
@@ -701,9 +740,12 @@
             document.getElementById('detDot').innerText = p.dot || '2026';
             
             let detStockElem = document.getElementById('detStock');
+            const bayiOrderArea = document.getElementById('bayiOrderArea');
+
             if (currentUser.role === 'admin') {
                 detStockElem.innerText = p.stock + " Adet";
                 detStockElem.style.color = "var(--text-main)";
+                bayiOrderArea.classList.add('hidden'); // Yönetici adet talebi alanı görmez
             } else {
                 if (Number(p.stock) > 0) {
                     detStockElem.innerText = "STOKTA VAR";
@@ -712,10 +754,25 @@
                     detStockElem.innerText = "REZERVE STOK";
                     detStockElem.style.color = "var(--danger-color)";
                 }
+                bayiOrderArea.classList.remove('hidden'); // Bayi adet sipariş alanı görür
+                document.getElementById('bayiReqQty').value = 4;
             }
 
             document.getElementById('detPrice').innerText = formatPrice(p.price);
             document.getElementById('detailModal').style.display = 'flex';
+        }
+
+        /* BAYİLERİN ADET BELİRTEREK TALEP / SİPARİŞ OLUŞTURMASI */
+        function requestBayiOrder() {
+            const reqQty = document.getElementById('bayiReqQty').value;
+            if (!reqQty || reqQty <= 0) {
+                alert('Lütfen geçerli bir adet girin!');
+                return;
+            }
+            if (activeDetailProduct) {
+                alert(`Sipariş Talebiniz Alındı!\n\nÜrün: ${activeDetailProduct.brand} - ${activeDetailProduct.size}\nTalep Edilen Adet: ${reqQty} Adet\n\nBu talebiniz yöneticiye iletilmiştir.`);
+                closeModal('detailModal');
+            }
         }
 
         function openSettingsModal() { 
@@ -758,6 +815,7 @@
 
             localStorage.setItem('celebi_products', JSON.stringify(products));
             closeModal('productModal');
+            checkCriticalStocks();
             renderProducts();
         }
 
@@ -765,6 +823,7 @@
             if(confirm('Bu ürünü silmek istediğinize emin misiniz?')) {
                 products = products.filter(p => p.id !== id);
                 localStorage.setItem('celebi_products', JSON.stringify(products));
+                checkCriticalStocks();
                 renderProducts();
             }
         }
