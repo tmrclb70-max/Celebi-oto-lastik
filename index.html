@@ -10,6 +10,40 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
     
+    <!-- Firebase SDK (Bulut Senkronizasyon İçin) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDvTUGue6WpbYlGFMN7HEbQW7sq-_PfrnA",
+            authDomain: "celebi-oto-lastik.firebaseapp.com",
+            projectId: "celebi-oto-lastik",
+            storageBucket: "celebi-oto-lastik.firebasestorage.app",
+            messagingSenderId: "20655444321",
+            appId: "1:20655444321:web:cc13a01cf093b7d52a7520",
+            measurementId: "G-EFV1NKZK0F"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Global fonksiyonları dışarı aktar
+        window.db = db;
+        window.collection = collection;
+        window.getDocs = getDocs;
+        window.doc = doc;
+        window.setDoc = setDoc;
+        window.deleteDoc = deleteDoc;
+        window.updateDoc = updateDoc;
+        window.onSnapshot = onSnapshot;
+
+        // Firebase hazır olduğunda verileri çekmeye başla
+        if (typeof window.initFirebaseData === 'function') {
+            window.initFirebaseData();
+        }
+    </script>
+    
     <style>
         :root {
             --bg-color: #0f172a;
@@ -114,7 +148,6 @@
         
         .btn-add { background: var(--success-color); color: white; border: none; padding: 9px 16px; border-radius: 8px; cursor: pointer; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; font-size: 0.9rem; }
         
-        /* KİBAR ZAM BUTONLARI */
         .btn-bulk-item { 
             background: #1e293b; color: var(--text-main); border: 1px solid var(--card-border); 
             padding: 7px 12px; border-radius: 8px; cursor: pointer; font-weight: 600; 
@@ -523,16 +556,48 @@
             bayiPass: '1234'
         };
 
-        let products = JSON.parse(localStorage.getItem('celebi_products')) || [
-            { id: 1, group: 'Otomobil', brand: 'Lassa', pattern: 'SNOWAYS4', size: '195/65R15', season: 'Kış', dot: '2026', price: 1850, stock: 3, img: DEFAULT_TIRE_IMG },
-            { id: 2, group: 'Otomobil', brand: 'Petlas', pattern: 'Snowmaster 2', size: '205/55R16', season: 'Kış', dot: '2026', price: 2500, stock: 8, img: DEFAULT_TIRE_IMG },
-            { id: 3, group: 'Zirai', brand: 'Petlas', pattern: 'TA60 Traktör Ön', size: '6.00-16', season: 'Zirai', dot: '2026', price: 3200, stock: 3, img: DEFAULT_TIRE_IMG },
-            { id: 4, group: 'İç Lastik', brand: 'Petlas', pattern: 'Otomobil Şambrel', size: '175/185-14', season: 'İç Lastik', dot: '2026', price: 350, stock: 1, img: DEFAULT_TIRE_IMG }
-        ];
-
+        let products = [];
         let currentUser = null;
         let selectedCategory = 'all';
         let activeDetailProduct = null;
+
+        // Firebase Veri Senkronizasyonu
+        window.initFirebaseData = function() {
+            if (!window.db) return;
+            
+            // Canlı Dinleme (Real-time sync)
+            window.onSnapshot(window.collection(window.db, "products"), (snapshot) => {
+                products = [];
+                snapshot.forEach((docSnap) => {
+                    products.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                
+                // Eğer veritabanı boşsa varsayılan örnek ürünleri ekle
+                if (products.length === 0) {
+                    loadDefaultProductsToFirebase();
+                } else {
+                    if (currentUser) {
+                        checkCriticalStocks();
+                        renderProducts();
+                    }
+                }
+            }, (error) => {
+                console.error("Firebase bağlantı hatası:", error);
+            });
+        };
+
+        async function loadDefaultProductsToFirebase() {
+            const defaults = [
+                { id: '1', group: 'Otomobil', brand: 'Lassa', pattern: 'SNOWAYS4', size: '195/65R15', season: 'Kış', dot: '2026', price: 1850, stock: 3, img: DEFAULT_TIRE_IMG },
+                { id: '2', group: 'Otomobil', brand: 'Petlas', pattern: 'Snowmaster 2', size: '205/55R16', season: 'Kış', dot: '2026', price: 2500, stock: 8, img: DEFAULT_TIRE_IMG },
+                { id: '3', group: 'Zirai', brand: 'Petlas', pattern: 'TA60 Traktör Ön', size: '6.00-16', season: 'Zirai', dot: '2026', price: 3200, stock: 3, img: DEFAULT_TIRE_IMG },
+                { id: '4', group: 'İç Lastik', brand: 'Petlas', pattern: 'Otomobil Şambrel', size: '175/185-14', season: 'İç Lastik', dot: '2026', price: 350, stock: 1, img: DEFAULT_TIRE_IMG }
+            ];
+            
+            for (let p of defaults) {
+                await window.setDoc(window.doc(window.db, "products", p.id), p);
+            }
+        }
 
         function formatPrice(val) {
             let num = Number(val);
@@ -605,7 +670,6 @@
             document.getElementById('password').value = '';
         }
 
-        /* HEM 0 STOK (TÜKENMİŞ) HEM DE TEKLİ STOKLARI BİLDİRİMDE GÖSTER */
         function checkCriticalStocks() {
             const notifBadge = document.getElementById('notifBadge');
             if (currentUser && currentUser.role === 'admin') {
@@ -732,12 +796,12 @@
                 row.onclick = () => openDetailModal(p);
 
                 let stockHtml = '';
-                if (currentUser.role === 'admin') {
+                if (currentUser && currentUser.role === 'admin') {
                     stockHtml = `
                         <div class="admin-stock-control" onclick="event.stopPropagation();">
-                            <button class="btn-qty" onclick="changeStock(${p.id}, -1)">-</button>
+                            <button class="btn-qty" onclick="changeStock('${p.id}', -1)">-</button>
                             <span class="admin-stock-val">${p.stock} Adet</span>
-                            <button class="btn-qty" onclick="changeStock(${p.id}, 1)">+</button>
+                            <button class="btn-qty" onclick="changeStock('${p.id}', 1)">+</button>
                         </div>
                     `;
                 } else {
@@ -770,10 +834,10 @@
                         <div class="col-dot"><span class="tag">DOT ${p.dot || '2026'}</span></div>
                         <div class="col-price">${formatPrice(p.price)}</div>
                         <div>${stockHtml}</div>
-                        ${currentUser.role === 'admin' ? `
+                        ${currentUser && currentUser.role === 'admin' ? `
                             <div class="row-actions">
-                                <button class="btn-edit-price" onclick="event.stopPropagation(); openEditProductModal(${p.id})" title="Ürünü Tam Düzenle"><i class="fa-solid fa-pen"></i></button>
-                                <button class="btn-icon" onclick="event.stopPropagation(); deleteProduct(${p.id})" title="Ürünü Sil"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn-edit-price" onclick="event.stopPropagation(); openEditProductModal('${p.id}')" title="Ürünü Tam Düzenle"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn-icon" onclick="event.stopPropagation(); deleteProduct('${p.id}')" title="Ürünü Sil"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         ` : '<div></div>'}
                     `;
@@ -782,28 +846,27 @@
             });
         }
 
-        function changeStock(id, delta) {
+        async function changeStock(id, delta) {
             const product = products.find(p => p.id === id);
             if (product) {
-                product.stock = Math.max(0, Number(product.stock) + delta);
-                localStorage.setItem('celebi_products', JSON.stringify(products));
-                checkCriticalStocks();
-                renderProducts();
+                let newStock = Math.max(0, Number(product.stock) + delta);
+                try {
+                    await window.updateDoc(window.doc(window.db, "products", id), { stock: newStock });
+                } catch (e) {
+                    console.error("Stok güncellenemedi:", e);
+                }
             }
         }
 
-        /* SEÇİLEN KATEGORİYE ÖZEL ZAM MODALI AÇILIR */
         function openBulkPriceModal(targetCategory) {
             document.getElementById('bulkPercentInput').value = '';
             document.getElementById('bulkTargetCategory').value = targetCategory;
-            
             document.getElementById('bulkModalTitle').innerHTML = `<i class="fa-solid fa-percent"></i> % ${targetCategory} Grubu Zam/İndirim`;
             document.getElementById('bulkModalDesc').innerText = `* Sadece "${targetCategory}" kategorisinde yer alan ürünlerin fiyatı değişecektir.`;
-
             document.getElementById('bulkPriceModal').style.display = 'flex';
         }
 
-        function applyBulkPrice() {
+        async function applyBulkPrice() {
             const percentVal = document.getElementById('bulkPercentInput').value;
             const targetCategory = document.getElementById('bulkTargetCategory').value;
 
@@ -812,22 +875,26 @@
             const actionText = percent >= 0 ? `%${percent} zam` : `%${Math.abs(percent)} indirim`;
 
             if (confirm(`"${targetCategory}" grubundaki ürünlere ${actionText} uygulanacaktır. Emin misiniz?`)) {
-                products.forEach(p => {
-                    let isTarget = false;
-                    if (targetCategory === 'İç Lastik' && p.group === 'İç Lastik') isTarget = true;
-                    else if (targetCategory === 'Zirai' && p.group === 'Zirai') isTarget = true;
-                    else if ((targetCategory === 'Yaz' || targetCategory === 'Kış' || targetCategory === '4 Mevsim') && p.season === targetCategory && p.group !== 'İç Lastik') isTarget = true;
+                try {
+                    for (let p of products) {
+                        let isTarget = false;
+                        if (targetCategory === 'İç Lastik' && p.group === 'İç Lastik') isTarget = true;
+                        else if (targetCategory === 'Zirai' && p.group === 'Zirai') isTarget = true;
+                        else if ((targetCategory === 'Yaz' || targetCategory === 'Kış' || targetCategory === '4 Mevsim') && p.season === targetCategory && p.group !== 'İç Lastik') isTarget = true;
 
-                    if (isTarget) {
-                        let currentPrice = Number(p.price);
-                        let newPrice = currentPrice + (currentPrice * (percent / 100));
-                        p.price = Math.round(newPrice * 100) / 100;
+                        if (isTarget) {
+                            let currentPrice = Number(p.price);
+                            let newPrice = currentPrice + (currentPrice * (percent / 100));
+                            let roundedPrice = Math.round(newPrice * 100) / 100;
+                            await window.updateDoc(window.doc(window.db, "products", p.id), { price: roundedPrice });
+                        }
                     }
-                });
-                localStorage.setItem('celebi_products', JSON.stringify(products));
-                closeModal('bulkPriceModal');
-                renderProducts();
-                alert(`İşlem tamamlandı! ${targetCategory} grubuna ${actionText} uygulandı.`);
+                    closeModal('bulkPriceModal');
+                    alert(`İşlem tamamlandı! ${targetCategory} grubuna ${actionText} uygulandı.`);
+                } catch (e) {
+                    console.error("Toplu fiyat güncellenemedi:", e);
+                    alert("Güncelleme sırasında bir hata oluştu.");
+                }
             }
         }
 
@@ -902,7 +969,7 @@
             let detStockElem = document.getElementById('detStock');
             const bayiOrderArea = document.getElementById('bayiOrderArea');
 
-            if (currentUser.role === 'admin') {
+            if (currentUser && currentUser.role === 'admin') {
                 detStockElem.innerText = p.stock + " Adet";
                 detStockElem.style.color = "var(--text-main)";
                 bayiOrderArea.classList.add('hidden');
@@ -940,7 +1007,7 @@
 
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        function saveProduct() {
+        async function saveProduct() {
             const editId = document.getElementById('editingProductId').value;
             const group = document.getElementById('pGroupSelect').value;
             let sizeSelect = document.getElementById('pSizeSelect').value;
@@ -956,31 +1023,36 @@
 
             if(!brand || !size || !price || stock === '') { alert('Lütfen zorunlu alanları doldurun!'); return; }
 
-            if (editId) {
-                const idx = products.findIndex(p => p.id === Number(editId));
-                if (idx !== -1) products[idx] = { id: Number(editId), group, brand, pattern, size, season, dot, img, price: Number(price), stock: Number(stock) };
-            } else {
-                products.push({ id: Date.now(), group, brand, pattern, size, season, dot, img, price: Number(price), stock: Number(stock) });
-            }
+            const productData = { group, brand, pattern, size, season, dot, img, price: Number(price), stock: Number(stock) };
 
-            localStorage.setItem('celebi_products', JSON.stringify(products));
-            closeModal('productModal');
-            checkCriticalStocks();
-            renderProducts();
+            try {
+                if (editId) {
+                    await window.setDoc(window.doc(window.db, "products", String(editId)), productData);
+                } else {
+                    const newId = String(Date.now());
+                    await window.setDoc(window.doc(window.db, "products", newId), productData);
+                }
+                closeModal('productModal');
+            } catch (e) {
+                console.error("Ürün kaydedilemedi:", e);
+                alert("Kayıt sırasında bir hata oluştu.");
+            }
         }
 
-        function deleteProduct(id) {
+        async function deleteProduct(id) {
             if(confirm('Bu ürünü silmek istediğinize emin misiniz?')) {
-                products = products.filter(p => p.id !== id);
-                localStorage.setItem('celebi_products', JSON.stringify(products));
-                checkCriticalStocks();
-                renderProducts();
+                try {
+                    await window.deleteDoc(window.doc(window.db, "products", String(id)));
+                } catch (e) {
+                    console.error("Ürün silinemedi:", e);
+                    alert("Silme sırasında bir hata oluştu.");
+                }
             }
         }
 
         function saveSettings() {
             config.adminPass = document.getElementById('cfgAdminPass').value;
-            config.bayiUser = document.getElementById('cfgBayiUser').value;
+            config.bayiUser = document.getElementById('cfgBayiUser'].value;
             config.bayiPass = document.getElementById('cfgBayiPass').value;
             localStorage.setItem('celebi_config', JSON.stringify(config));
             alert('Ayarlar kaydedildi!');
