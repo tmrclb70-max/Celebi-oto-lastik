@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -22,7 +23,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // GitHub Secret Scanning engelini aşmak için parça birleştirme
         const p1 = "AIzaSyDvTUGue6WpbYlGFMN7HE";
         const p2 = "bQW7sq-_PfrnA";
 
@@ -39,7 +39,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Global fonksiyonları dışarı aktar
         window.db = db;
         window.collection = collection;
         window.getDocs = getDocs;
@@ -49,7 +48,6 @@
         window.updateDoc = updateDoc;
         window.onSnapshot = onSnapshot;
 
-        // Firebase hazır olduğunda verileri çekmeye başla
         if (typeof window.initFirebaseData === 'function') {
             window.initFirebaseData();
         }
@@ -71,7 +69,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding-bottom: 40px; overflow-x: hidden; }
 
-        /* HEADER */
         header { 
             position: relative;
             background: linear-gradient(90deg, rgba(2, 6, 23, 0.92) 0%, rgba(15, 23, 42, 0.85) 100%), 
@@ -101,10 +98,8 @@
         .user-badge { color: var(--accent-yellow); font-weight: 600; }
         .btn-logout { background: var(--danger-color); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 
-        /* MAIN CONTAINER */
         .main-container { max-width: 1350px; margin: 30px auto; padding: 0 20px; }
 
-        /* GİRİŞ EKRANI */
         .login-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(2, 6, 23, 0.88)), url('https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80');
@@ -137,7 +132,6 @@
         .btn-primary { width: 100%; padding: 14px; background: var(--accent-yellow); color: #000; font-weight: 800; border: none; border-radius: 10px; cursor: pointer; font-size: 1.1rem; transition: 0.2s; margin-top: 10px; box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4); }
         .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 6px 25px rgba(245, 158, 11, 0.6); }
 
-        /* ARAMA VE BİLDİRİM */
         .controls-section { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--card-border); margin-bottom: 25px; }
         .search-bar-row { display: flex; gap: 12px; margin-bottom: 15px; align-items: center; }
         .search-box { position: relative; flex: 1; }
@@ -152,7 +146,6 @@
         .filter-btn { flex: 1; min-width: 110px; padding: 10px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem; }
         .filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
 
-        /* YÖNETİCİ ÇUBUĞU VE ŞIK KİBAR ZAM BUTONLARI */
         .admin-bar { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; background: rgba(255,255,255,0.03); padding: 15px 20px; border-radius: 10px; border: 1px solid var(--card-border); }
         .admin-bar-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .admin-btn-group { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; width: 100%; }
@@ -166,7 +159,6 @@
         }
         .btn-bulk-item:hover { border-color: var(--accent-yellow); color: var(--accent-yellow); background: rgba(245, 158, 11, 0.08); }
 
-        /* BİLGİSAYAR MASAÜSTÜ TABLO YAPISI */
         .products-list { display: flex; flex-direction: column; gap: 12px; }
         
         .product-row { 
@@ -180,7 +172,6 @@
         .product-img { width: 70px; height: 55px; object-fit: contain; background: #ffffff; padding: 4px; border-radius: 8px; border: 1px solid var(--card-border); }
         .col-size { font-size: 1.25rem; font-weight: 800; color: #fff; }
         
-        /* MANUEL MARKA LOGO ALANI */
         .brand-logo-wrapper { display: flex; align-items: center; gap: 8px; }
         .brand-logo-img { height: 32px; max-width: 110px; object-fit: contain; background: #ffffff; padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); }
         .col-brand-text { font-size: 1.05rem; color: var(--accent-yellow); font-weight: 800; text-transform: uppercase; }
@@ -222,7 +213,6 @@
         .notif-stock-zero { background: rgba(239, 68, 68, 0.25); color: var(--danger-color); border: 1px solid var(--danger-color); }
         .notif-stock-odd { background: rgba(245, 158, 11, 0.25); color: var(--accent-yellow); border: 1px solid var(--accent-yellow); }
 
-        /* MODALLAR */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: flex-start; z-index: 3000; padding: 20px; overflow-y: auto; }
         .modal-content { background: var(--card-bg); border-radius: 12px; padding: 25px; width: 100%; max-width: 550px; border: 1px solid var(--card-border); margin: 30px auto; max-height: 85vh; overflow-y: auto; box-shadow: 0 15px 35px rgba(0,0,0,0.8); }
         
@@ -247,7 +237,6 @@
 
         .hidden { display: none !important; }
 
-        /* TELEFON İÇİN SIFIRDAN KUSURSUZ MOBİL KART DÜZENİ */
         @media screen and (max-width: 768px) {
             .main-container { padding: 0 10px; margin: 15px auto; }
             .header-title-area h1 { font-size: 1.4rem; }
@@ -263,7 +252,6 @@
             .admin-btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
             .btn-add, .btn-bulk-item { width: 100%; justify-content: center; text-align: center; }
 
-            /* MOBİL ÜRÜN KARTLARI */
             .products-list { gap: 10px; }
             .product-row { 
                 display: flex !important;
@@ -294,7 +282,6 @@
 </head>
 <body>
 
-    <!-- GİRİŞ EKRANI -->
     <div id="loginSection" class="login-wrapper">
         <div class="login-card">
             <h1 class="login-brand-title">Çelebi Oto Lastik</h1>
@@ -317,7 +304,6 @@
         </div>
     </div>
 
-    <!-- HEADER -->
     <header>
         <div class="header-container">
             <div class="header-title-area">
@@ -331,10 +317,8 @@
         </div>
     </header>
 
-    <!-- MAIN CONTAINER -->
     <div id="portalSection" class="main-container hidden">
 
-        <!-- ARAMA VE BİLDİRİM -->
         <div class="controls-section">
             <div class="search-bar-row">
                 <div class="search-box">
@@ -357,7 +341,6 @@
             </div>
         </div>
 
-        <!-- YÖNETİCİ ÇUBUĞU -->
         <div id="adminBar" class="admin-bar hidden">
             <div class="admin-bar-header">
                 <h3 style="color: var(--text-muted); font-size: 1rem;"><i class="fa-solid fa-boxes-stacked"></i> Stok Yönetimi</h3>
@@ -367,7 +350,6 @@
                 </div>
             </div>
             
-            <!-- AYRILMIŞ ŞIK KİBAR ZAM BUTONLARI -->
             <div class="admin-btn-group">
                 <span style="font-size: 0.8rem; color: var(--accent-yellow); font-weight:700; display:flex; align-items:center; gap:4px;"><i class="fa-solid fa-percent"></i> Toplu Zam/İndirim:</span>
                 <button class="btn-bulk-item" onclick="openBulkPriceModal('Yaz')"><i class="fa-solid fa-sun" style="color:#f59e0b;"></i> % Yaz</button>
@@ -378,14 +360,10 @@
             </div>
         </div>
 
-        <!-- STOK LİSTESİ -->
-        <div id="productsGrid" class="products-list">
-            <!-- Ürünler yükleniyor -->
-        </div>
+        <div id="productsGrid" class="products-list"></div>
 
     </div>
 
-    <!-- KRİTİK VE TÜKENEN STOK BİLDİRİM MODALI -->
     <div id="notifModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -397,7 +375,6 @@
         </div>
     </div>
 
-    <!-- ÜRÜN DETAY / BAYİ SİPARİŞ MODALI -->
     <div id="detailModal" class="modal">
         <div class="modal-content detail-modal-content">
             <div class="modal-header">
@@ -427,7 +404,6 @@
         </div>
     </div>
 
-    <!-- TOPLU ZAM MODALI -->
     <div id="bulkPriceModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -444,7 +420,6 @@
         </div>
     </div>
 
-    <!-- ÜRÜN EKLE MODALI -->
     <div id="productModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -452,7 +427,6 @@
                 <span class="close-btn" onclick="closeModal('productModal')">&times;</span>
             </div>
             
-            <!-- KAMERA İLE ETİKET TARAMA BUTONU VE GİZLİ DOSYA INPUTU -->
             <button type="button" class="btn-camera-ocr" onclick="document.getElementById('ocrFileInput').click()"><i class="fa-solid fa-camera"></i> 📷 Etiket Fotoğrafı Çek / Oku</button>
             <input type="file" id="ocrFileInput" accept="image/*" capture="environment" class="hidden" onchange="processOcrImage(this)">
             <p id="ocrStatusText" style="font-size:0.85rem; color:var(--accent-yellow); text-align:center; font-weight:700; margin-bottom:12px;" class="hidden"><i class="fa-solid fa-spinner fa-spin"></i> Etiket okunuyor, lütfen bekleyin...</p>
@@ -507,7 +481,6 @@
                 <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Kabat, BKT Vb.">
             </div>
 
-            <!-- MARKA LOGO URL KUTUSU -->
             <div class="form-group">
                 <label>Marka Logo Görsel URL (İsteğe Bağlı)</label>
                 <input type="text" id="pBrandLogo" class="form-control" placeholder="Logo resim linki yapıştırın (Boş bırakabilirsiniz)">
@@ -554,7 +527,6 @@
         </div>
     </div>
 
-    <!-- AYARLAR MODALI -->
     <div id="settingsModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -580,7 +552,6 @@
     <script>
         const DEFAULT_TIRE_IMG = "https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=300&auto=format&fit=crop&q=80";
 
-        // YÖNETİCİ GİRİŞİ: çelebi / çelebi166
         let config = JSON.parse(localStorage.getItem('celebi_config')) || {
             adminUser: 'çelebi',
             adminPass: 'çelebi166',
@@ -604,11 +575,9 @@
         let selectedCategory = 'all';
         let activeDetailProduct = null;
 
-        // Firebase Veri Senkronizasyonu
         window.initFirebaseData = function() {
             if (!window.db) return;
             
-            // Canlı Dinleme (Real-time sync)
             window.onSnapshot(window.collection(window.db, "products"), (snapshot) => {
                 products = [];
                 snapshot.forEach((docSnap) => {
@@ -698,7 +667,6 @@
             document.getElementById('password').value = '';
         }
 
-        /* FOTOĞRAFDAN ETİKET OKUMA (OCR) SİHRİ */
         async function processOcrImage(input) {
             if (!input.files || !input.files[0]) return;
             const file = input.files[0];
@@ -935,14 +903,29 @@
                         <div>${stockHtml}</div>
                         ${currentUser && currentUser.role === 'admin' ? `
                             <div class="row-actions">
-                                <button class="btn-edit-price" onclick="event.stopPropagation(); openEditProductModal('${p.id}')" title="Ürünü Tam Düzenle"><i class="fa-solid fa-pen"></i></button>
-                                <button class="btn-icon" onclick="event.stopPropagation(); deleteProduct('${p.id}')" title="Ürünü Sil"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn-edit-price btn-edit-trigger" data-id="${p.id}" title="Ürünü Tam Düzenle"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn-icon btn-del-trigger" data-id="${p.id}" title="Ürünü Sil"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         ` : '<div></div>'}
                     `;
                 }
                 grid.appendChild(row);
             });
+
+            if (currentUser && currentUser.role === 'admin') {
+                document.querySelectorAll('.btn-edit-trigger').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        openEditProductModal(btn.getAttribute('data-id'));
+                    });
+                });
+                document.querySelectorAll('.btn-del-trigger').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        deleteProduct(btn.getAttribute('data-id'));
+                    });
+                });
+            }
         }
 
         async function changeStock(id, delta) {
@@ -998,7 +981,7 @@
         }
 
         function openEditProductModal(id) {
-            const product = products.find(p => p.id === id);
+            const product = products.find(p => p.id === String(id));
             if (!product) return;
 
             document.getElementById('editingProductId').value = product.id;
@@ -1023,7 +1006,6 @@
             const brandSelect = document.getElementById('pBrandSelect');
             let brandExists = Array.from(brandSelect.options).some(opt => opt.value.toLowerCase() === (product.brand || '').toLowerCase());
             if (brandExists) {
-                // Seçenek adını bul ve eşle
                 for(let opt of brandSelect.options) {
                     if(opt.value.toLowerCase() === (product.brand || '').toLowerCase()) {
                         brandSelect.value = opt.value;
