@@ -307,7 +307,6 @@
 
             <div class="form-group">
                 <label><i class="fa-solid fa-user"></i> Kullanıcı Adı</label>
-                <!-- İSTEDİĞİNİZ GİBİ "Yönetici veya Bayi" YAZAN PLACEHOLDER -->
                 <input type="text" id="username" class="form-control" placeholder="Yönetici veya Bayi">
             </div>
             <div class="form-group">
@@ -508,7 +507,7 @@
                 <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Kabat, BKT Vb.">
             </div>
 
-            <!-- YENİ: MANUEL MARKA LOGO URL KUTUSU -->
+            <!-- MARKA LOGO URL KUTUSU -->
             <div class="form-group">
                 <label>Marka Logo Görsel URL (İsteğe Bağlı)</label>
                 <input type="text" id="pBrandLogo" class="form-control" placeholder="Logo resim linki yapıştırın (Boş bırakabilirsiniz)">
@@ -589,15 +588,14 @@
             bayiPass: '1234'
         };
 
-        // KULLANICI LİNK EKLERSE LOGO GÖSTER, EKLENMEZSE METİN GÖSTER
         function getBrandDisplayHtml(p) {
             if (p.brandLogo && p.brandLogo.trim() !== '') {
                 return `<div class="brand-logo-wrapper">
-                            <img src="${p.brandLogo}" class="brand-logo-img" alt="${p.brand}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                            <span class="col-brand-text" style="display:none;">${p.brand}</span>
+                            <img src="${p.brandLogo}" class="brand-logo-img" alt="${p.brand || ''}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                            <span class="col-brand-text" style="display:none;">${p.brand || ''}</span>
                         </div>`;
             } else {
-                return `<span class="col-brand-text">${p.brand}</span>`;
+                return `<span class="col-brand-text">${p.brand || ''}</span>`;
             }
         }
 
@@ -811,7 +809,7 @@
                         let stockText = Number(p.stock) === 0 ? '0 ADET (TÜKENDİ)' : `${p.stock} Adet (Tekli)`;
 
                         item.innerHTML = `
-                            <div class="notif-item-title">${p.brand} ${p.size} ${p.pattern ? `(${p.pattern})` : ''}</div>
+                            <div class="notif-item-title">${p.brand || ''} ${p.size || ''} ${p.pattern ? `(${p.pattern})` : ''}</div>
                             <div class="notif-item-stock ${stockBadgeClass}"><i class="fa-solid fa-triangle-exclamation"></i> ${stockText}</div>
                         `;
                         container.appendChild(item);
@@ -853,7 +851,7 @@
             if (p.season === 'Kış') return `<span class="tag"><i class="fa-solid fa-snowflake" style="color:#3b82f6;"></i> Kış</span>`;
             if (p.season === 'Yaz') return `<span class="tag"><i class="fa-solid fa-sun" style="color:#f59e0b;"></i> Yaz</span>`;
             if (p.season === '4 Mevsim') return `<span class="tag"><i class="fa-solid fa-cloud-sun-rain" style="color:#10b981;"></i> 4 Mevsim</span>`;
-            return `<span class="tag">${p.season || p.group}</span>`;
+            return `<span class="tag">${p.season || p.group || ''}</span>`;
         }
 
         function renderProducts() {
@@ -863,8 +861,10 @@
             grid.innerHTML = '';
 
             let filtered = products.filter(p => {
+                const brandStr = p.brand ? p.brand.toLowerCase() : '';
+                const sizeStr = p.size ? p.size.toLowerCase() : '';
                 const patternStr = p.pattern ? p.pattern.toLowerCase() : '';
-                const matchSearch = p.brand.toLowerCase().includes(search) || p.size.toLowerCase().includes(search) || patternStr.includes(search);
+                const matchSearch = brandStr.includes(search) || sizeStr.includes(search) || patternStr.includes(search);
                 let matchCat = true;
 
                 if (selectedCategory === 'all') matchCat = p.group !== 'İç Lastik';
@@ -893,12 +893,12 @@
                     stockHtml = `
                         <div class="admin-stock-control" onclick="event.stopPropagation();">
                             <button class="btn-qty" onclick="changeStock('${p.id}', -1)">-</button>
-                            <span class="admin-stock-val">${p.stock} Adet</span>
+                            <span class="admin-stock-val">${p.stock || 0} Adet</span>
                             <button class="btn-qty" onclick="changeStock('${p.id}', 1)">+</button>
                         </div>
                     `;
                 } else {
-                    let stCount = Number(p.stock);
+                    let stCount = Number(p.stock || 0);
                     if (stCount >= 4) {
                         stockHtml = `<div class="stock-badge-in"><i class="fa-solid fa-circle-check"></i> STOKTA VAR</div>`;
                     } else if (stCount > 0) {
@@ -913,7 +913,7 @@
                         <div class="mobile-card-top">
                             <img src="${imgSrc}" class="product-img" alt="Ürün" onerror="this.src='${DEFAULT_TIRE_IMG}'">
                             <div class="mobile-card-info">
-                                <div class="col-size">${p.size}</div>
+                                <div class="col-size">${p.size || ''}</div>
                                 <div>${getBrandDisplayHtml(p)}</div>
                                 <div style="margin-top:2px;">${getCategoryBadgeHtml(p)}</div>
                             </div>
@@ -926,7 +926,7 @@
                 } else {
                     row.innerHTML = `
                         <img src="${imgSrc}" class="product-img" alt="Ürün" onerror="this.src='${DEFAULT_TIRE_IMG}'">
-                        <div class="col-size">${p.size}</div>
+                        <div class="col-size">${p.size || ''}</div>
                         <div>${getBrandDisplayHtml(p)}</div>
                         <div class="col-pattern">${p.pattern ? `<span class="tag tag-pattern"><i class="fa-solid fa-grip"></i> ${p.pattern}</span>` : '-'}</div>
                         <div class="col-season">${getCategoryBadgeHtml(p)}</div>
@@ -948,7 +948,7 @@
         async function changeStock(id, delta) {
             const product = products.find(p => p.id === id);
             if (product) {
-                let newStock = Math.max(0, Number(product.stock) + delta);
+                let newStock = Math.max(0, Number(product.stock || 0) + delta);
                 try {
                     await window.updateDoc(window.doc(window.db, "products", id), { stock: newStock });
                 } catch (e) {
@@ -982,7 +982,7 @@
                         else if ((targetCategory === 'Yaz' || targetCategory === 'Kış' || targetCategory === '4 Mevsim') && p.season === targetCategory && p.group !== 'İç Lastik') isTarget = true;
 
                         if (isTarget) {
-                            let currentPrice = Number(p.price);
+                            let currentPrice = Number(p.price || 0);
                             let newPrice = currentPrice + (currentPrice * (percent / 100));
                             let roundedPrice = Math.round(newPrice * 100) / 100;
                             await window.updateDoc(window.doc(window.db, "products", p.id), { price: roundedPrice });
@@ -1005,29 +1005,36 @@
             document.getElementById('modalTitleText').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Ürünü Düzenle`;
             document.getElementById('saveProductBtn').innerHTML = `<i class="fa-solid fa-floppy-disk"></i> Değişiklikleri Kaydet`;
 
-            document.getElementById('pGroupSelect').value = product.group || 'Otomobil';
-            toggleGroupFields(product.group || 'Otomobil');
+            const groupVal = product.group || 'Otomobil';
+            document.getElementById('pGroupSelect').value = groupVal;
+            toggleGroupFields(groupVal);
 
             const sizeSelect = document.getElementById('pSizeSelect');
-            let sizeExists = Array.from(sizeSelect.options).some(opt => opt.value === product.size);
+            let sizeExists = Array.from(sizeSelect.options).some(opt => opt.value === (product.size || ''));
             if (sizeExists) {
                 sizeSelect.value = product.size;
                 document.getElementById('customSizeGroup').classList.add('hidden');
             } else {
                 sizeSelect.value = 'Diger';
                 document.getElementById('customSizeGroup').classList.remove('hidden');
-                document.getElementById('pCustomSize').value = product.size;
+                document.getElementById('pCustomSize').value = product.size || '';
             }
 
             const brandSelect = document.getElementById('pBrandSelect');
-            let brandExists = Array.from(brandSelect.options).some(opt => opt.value === product.brand);
+            let brandExists = Array.from(brandSelect.options).some(opt => opt.value.toLowerCase() === (product.brand || '').toLowerCase());
             if (brandExists) {
-                brandSelect.value = product.brand;
+                // Seçenek adını bul ve eşle
+                for(let opt of brandSelect.options) {
+                    if(opt.value.toLowerCase() === (product.brand || '').toLowerCase()) {
+                        brandSelect.value = opt.value;
+                        break;
+                    }
+                }
                 document.getElementById('customBrandGroup').classList.add('hidden');
             } else {
                 brandSelect.value = 'Diger';
                 document.getElementById('customBrandGroup').classList.remove('hidden');
-                document.getElementById('pCustomBrand').value = product.brand;
+                document.getElementById('pCustomBrand').value = product.brand || '';
             }
 
             document.getElementById('pBrandLogo').value = product.brandLogo || '';
@@ -1035,8 +1042,8 @@
             document.getElementById('pSeason').value = product.season || 'Yaz';
             document.getElementById('pDot').value = product.dot || '2026';
             document.getElementById('pImg').value = product.img || '';
-            document.getElementById('pPrice').value = product.price;
-            document.getElementById('pStock').value = product.stock;
+            document.getElementById('pPrice').value = product.price || '';
+            document.getElementById('pStock').value = product.stock !== undefined ? product.stock : '';
 
             document.getElementById('productModal').style.display = 'flex';
         }
@@ -1062,20 +1069,20 @@
             activeDetailProduct = p;
             document.getElementById('detImg').src = p.img && p.img.trim() !== '' ? p.img : DEFAULT_TIRE_IMG;
             document.getElementById('detBrand').innerHTML = getBrandDisplayHtml(p);
-            document.getElementById('detSize').innerText = p.size;
+            document.getElementById('detSize').innerText = p.size || '';
             document.getElementById('detPattern').innerText = p.pattern ? p.pattern : '--';
-            document.getElementById('detSeason').innerText = p.season || p.group;
+            document.getElementById('detSeason').innerText = p.season || p.group || '';
             document.getElementById('detDot').innerText = p.dot || '2026';
             
             let detStockElem = document.getElementById('detStock');
             const bayiOrderArea = document.getElementById('bayiOrderArea');
 
             if (currentUser && currentUser.role === 'admin') {
-                detStockElem.innerText = p.stock + " Adet";
+                detStockElem.innerText = (p.stock || 0) + " Adet";
                 detStockElem.style.color = "var(--text-main)";
                 bayiOrderArea.classList.add('hidden');
             } else {
-                let stCount = Number(p.stock);
+                let stCount = Number(p.stock || 0);
                 if (stCount >= 4) {
                     detStockElem.innerText = "STOKTA VAR";
                     detStockElem.style.color = "var(--success-color)";
@@ -1098,7 +1105,7 @@
             const reqQty = document.getElementById('bayiReqQty').value;
             if (!reqQty || reqQty <= 0) { alert('Lütfen geçerli bir adet girin!'); return; }
             if (activeDetailProduct) {
-                alert(`Sipariş Talebiniz Alındı!\n\nÜrün: ${activeDetailProduct.brand} - ${activeDetailProduct.size}\nTalep Edilen Adet: ${reqQty} Adet\n\nBu talebiniz yöneticiye iletilmiştir.`);
+                alert(`Sipariş Talebiniz Alındı!\n\nÜrün: ${activeDetailProduct.brand || ''} - ${activeDetailProduct.size || ''}\nTalep Edilen Adet: ${reqQty} Adet\n\nBu talebiniz yöneticiye iletilmiştir.`);
                 closeModal('detailModal');
             }
         }
