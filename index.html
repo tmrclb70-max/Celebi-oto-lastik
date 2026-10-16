@@ -180,9 +180,9 @@
         .product-img { width: 70px; height: 55px; object-fit: contain; background: #ffffff; padding: 4px; border-radius: 8px; border: 1px solid var(--card-border); }
         .col-size { font-size: 1.25rem; font-weight: 800; color: #fff; }
         
-        /* MARKA LOGO KUTUSU */
+        /* MANUEL MARKA LOGO ALANI */
         .brand-logo-wrapper { display: flex; align-items: center; gap: 8px; }
-        .brand-logo-img { height: 26px; max-width: 90px; object-fit: contain; background: #ffffff; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); }
+        .brand-logo-img { height: 32px; max-width: 110px; object-fit: contain; background: #ffffff; padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); }
         .col-brand-text { font-size: 1.05rem; color: var(--accent-yellow); font-weight: 800; text-transform: uppercase; }
 
         .col-pattern { font-size: 0.95rem; color: var(--text-main); font-weight: 600; }
@@ -279,7 +279,7 @@
             .mobile-card-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
 
             .col-size { font-size: 1.1rem !important; }
-            .brand-logo-img { height: 20px !important; }
+            .brand-logo-img { height: 24px !important; }
 
             .mobile-card-bottom {
                 display: flex; justify-content: space-between; align-items: center; width: 100%;
@@ -307,7 +307,8 @@
 
             <div class="form-group">
                 <label><i class="fa-solid fa-user"></i> Kullanıcı Adı</label>
-                <input type="text" id="username" class="form-control" placeholder="çelebi veya bayi">
+                <!-- İSTEDİĞİNİZ GİBİ "Yönetici veya Bayi" YAZAN PLACEHOLDER -->
+                <input type="text" id="username" class="form-control" placeholder="Yönetici veya Bayi">
             </div>
             <div class="form-group">
                 <label><i class="fa-solid fa-key"></i> Şifre</label>
@@ -507,6 +508,12 @@
                 <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Kabat, BKT Vb.">
             </div>
 
+            <!-- YENİ: MANUEL MARKA LOGO URL KUTUSU -->
+            <div class="form-group">
+                <label>Marka Logo Görsel URL (İsteğe Bağlı)</label>
+                <input type="text" id="pBrandLogo" class="form-control" placeholder="Logo resim linki yapıştırın (Boş bırakabilirsiniz)">
+            </div>
+
             <div class="form-group">
                 <label>Lastik Deseni / Model / Özellik</label>
                 <input type="text" id="pPattern" class="form-control" placeholder="Örn: Snowmaster, TA60, TR-60 İç Lastik">
@@ -582,30 +589,15 @@
             bayiPass: '1234'
         };
 
-        // MARKA LOGOLARI VERİBANU
-        const BRAND_LOGOS = {
-            'PETLAS': 'https://logo.clearbit.com/petlas.com.tr',
-            'LASSA': 'https://logo.clearbit.com/lassa.com.tr',
-            'BRIDGESTONE': 'https://logo.clearbit.com/bridgestone.com',
-            'MICHELIN': 'https://logo.clearbit.com/michelin.com',
-            'GOODYEAR': 'https://logo.clearbit.com/goodyear.com',
-            'STARMAXX': 'https://logo.clearbit.com/starmaxx.com',
-            'HANKOOK': 'https://logo.clearbit.com/hankooktire.com',
-            'PIRELLI': 'https://logo.clearbit.com/pirelli.com',
-            'CONTINENTAL': 'https://logo.clearbit.com/continental.com'
-        };
-
-        function getBrandLogoHtml(brandName) {
-            if (!brandName) return '';
-            let upperBrand = brandName.trim().toUpperCase();
-            let logoUrl = BRAND_LOGOS[upperBrand];
-            if (logoUrl) {
+        // KULLANICI LİNK EKLERSE LOGO GÖSTER, EKLENMEZSE METİN GÖSTER
+        function getBrandDisplayHtml(p) {
+            if (p.brandLogo && p.brandLogo.trim() !== '') {
                 return `<div class="brand-logo-wrapper">
-                            <img src="${logoUrl}" class="brand-logo-img" alt="${brandName}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                            <span class="col-brand-text" style="display:none;">${brandName}</span>
+                            <img src="${p.brandLogo}" class="brand-logo-img" alt="${p.brand}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                            <span class="col-brand-text" style="display:none;">${p.brand}</span>
                         </div>`;
             } else {
-                return `<span class="col-brand-text">${brandName}</span>`;
+                return `<span class="col-brand-text">${p.brand}</span>`;
             }
         }
 
@@ -922,7 +914,7 @@
                             <img src="${imgSrc}" class="product-img" alt="Ürün" onerror="this.src='${DEFAULT_TIRE_IMG}'">
                             <div class="mobile-card-info">
                                 <div class="col-size">${p.size}</div>
-                                <div>${getBrandLogoHtml(p.brand)}</div>
+                                <div>${getBrandDisplayHtml(p)}</div>
                                 <div style="margin-top:2px;">${getCategoryBadgeHtml(p)}</div>
                             </div>
                         </div>
@@ -935,7 +927,7 @@
                     row.innerHTML = `
                         <img src="${imgSrc}" class="product-img" alt="Ürün" onerror="this.src='${DEFAULT_TIRE_IMG}'">
                         <div class="col-size">${p.size}</div>
-                        <div>${getBrandLogoHtml(p.brand)}</div>
+                        <div>${getBrandDisplayHtml(p)}</div>
                         <div class="col-pattern">${p.pattern ? `<span class="tag tag-pattern"><i class="fa-solid fa-grip"></i> ${p.pattern}</span>` : '-'}</div>
                         <div class="col-season">${getCategoryBadgeHtml(p)}</div>
                         <div class="col-dot"><span class="tag">DOT ${p.dot || '2026'}</span></div>
@@ -1038,6 +1030,7 @@
                 document.getElementById('pCustomBrand').value = product.brand;
             }
 
+            document.getElementById('pBrandLogo').value = product.brandLogo || '';
             document.getElementById('pPattern').value = product.pattern || '';
             document.getElementById('pSeason').value = product.season || 'Yaz';
             document.getElementById('pDot').value = product.dot || '2026';
@@ -1052,6 +1045,7 @@
             document.getElementById('editingProductId').value = '';
             document.getElementById('modalTitleText').innerHTML = `<i class="fa-solid fa-plus-circle"></i> Yeni Ürün Ekle`;
             document.getElementById('saveProductBtn').innerHTML = `<i class="fa-solid fa-check"></i> Ürünü Kaydet`;
+            document.getElementById('pBrandLogo').value = '';
             document.getElementById('pPattern').value = '';
             document.getElementById('pDot').value = '2026';
             document.getElementById('pImg').value = '';
@@ -1067,7 +1061,7 @@
         function openDetailModal(p) {
             activeDetailProduct = p;
             document.getElementById('detImg').src = p.img && p.img.trim() !== '' ? p.img : DEFAULT_TIRE_IMG;
-            document.getElementById('detBrand').innerHTML = getBrandLogoHtml(p.brand);
+            document.getElementById('detBrand').innerHTML = getBrandDisplayHtml(p);
             document.getElementById('detSize').innerText = p.size;
             document.getElementById('detPattern').innerText = p.pattern ? p.pattern : '--';
             document.getElementById('detSeason').innerText = p.season || p.group;
@@ -1125,6 +1119,7 @@
             let size = sizeSelect === 'Diger' ? document.getElementById('pCustomSize').value.trim() : sizeSelect;
             let brandSelect = document.getElementById('pBrandSelect').value;
             let brand = brandSelect === 'Diger' ? document.getElementById('pCustomBrand').value.trim() : brandSelect;
+            let brandLogo = document.getElementById('pBrandLogo').value.trim();
             let pattern = document.getElementById('pPattern').value.trim();
             const season = group === 'Otomobil' ? document.getElementById('pSeason').value : group;
             const dot = document.getElementById('pDot').value;
@@ -1134,7 +1129,7 @@
 
             if(!brand || !size || !price || stock === '') { alert('Lütfen zorunlu alanları doldurun!'); return; }
 
-            const productData = { group, brand, pattern, size, season, dot, img, price: Number(price), stock: Number(stock) };
+            const productData = { group, brand, brandLogo, pattern, size, season, dot, img, price: Number(price), stock: Number(stock) };
 
             try {
                 if (editId) {
