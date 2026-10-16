@@ -14,6 +14,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
     
+    <!-- Tesseract.js (Kamera ile Etiket / Yazı Okuma Kütüphanesi) -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
     <!-- Firebase SDK (Bulut Senkronizasyon İçin) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -169,14 +172,19 @@
         .product-row { 
             background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; 
             padding: 12px 20px; display: grid; 
-            grid-template-columns: 75px 1.2fr 1fr 1fr 100px 90px 1.3fr auto auto; 
+            grid-template-columns: 80px 1.2fr 1.2fr 1fr 100px 90px 1.3fr auto auto; 
             align-items: center; gap: 15px; cursor: pointer; transition: 0.2s; 
         }
         .product-row:hover { border-color: var(--accent-yellow); transform: translateX(3px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
         
         .product-img { width: 70px; height: 55px; object-fit: contain; background: #ffffff; padding: 4px; border-radius: 8px; border: 1px solid var(--card-border); }
         .col-size { font-size: 1.25rem; font-weight: 800; color: #fff; }
-        .col-brand { font-size: 1.05rem; color: var(--accent-yellow); font-weight: 800; text-transform: uppercase; }
+        
+        /* MANUEL MARKA LOGO ALANI */
+        .brand-logo-wrapper { display: flex; align-items: center; gap: 8px; }
+        .brand-logo-img { height: 32px; max-width: 110px; object-fit: contain; background: #ffffff; padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); }
+        .col-brand-text { font-size: 1.05rem; color: var(--accent-yellow); font-weight: 800; text-transform: uppercase; }
+
         .col-pattern { font-size: 0.95rem; color: var(--text-main); font-weight: 600; }
         .col-season { display: inline-block; }
         .col-dot { display: inline-block; }
@@ -222,7 +230,7 @@
         .detail-left { flex: 1; min-width: 220px; text-align: center; background: #ffffff; padding: 20px; border-radius: 10px; }
         .detail-left img { width: 100%; height: 210px; object-fit: contain; }
         .detail-right { flex: 1.5; min-width: 250px; }
-        .detail-right h2 { color: var(--accent-yellow); font-size: 1.6rem; margin-bottom: 15px; }
+        .detail-right h2 { color: var(--accent-yellow); font-size: 1.6rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
         .detail-info-row { font-size: 1.05rem; margin-bottom: 10px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
         .detail-info-row span:first-child { color: var(--text-muted); }
         .detail-info-row span:last-child { font-weight: bold; color: #fff; }
@@ -233,6 +241,9 @@
 
         .input-with-btn { display: flex; gap: 8px; }
         .btn-search-img { background: #3b82f6; color: white; border: none; padding: 0 14px; border-radius: 6px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
+
+        .btn-camera-ocr { width: 100%; padding: 12px; background: #3b82f6; color: white; font-weight: 700; border: none; border-radius: 10px; cursor: pointer; font-size: 0.95rem; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); }
+        .btn-camera-ocr:hover { background: #2563eb; }
 
         .hidden { display: none !important; }
 
@@ -268,7 +279,7 @@
             .mobile-card-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
 
             .col-size { font-size: 1.1rem !important; }
-            .col-brand { font-size: 0.95rem !important; }
+            .brand-logo-img { height: 24px !important; }
 
             .mobile-card-bottom {
                 display: flex; justify-content: space-between; align-items: center; width: 100%;
@@ -296,7 +307,8 @@
 
             <div class="form-group">
                 <label><i class="fa-solid fa-user"></i> Kullanıcı Adı</label>
-                <input type="text" id="username" class="form-control" placeholder="admin veya bayi">
+                <!-- İSTEDİĞİNİZ GİBİ "Yönetici veya Bayi" YAZAN PLACEHOLDER -->
+                <input type="text" id="username" class="form-control" placeholder="Yönetici veya Bayi">
             </div>
             <div class="form-group">
                 <label><i class="fa-solid fa-key"></i> Şifre</label>
@@ -441,6 +453,11 @@
                 <span class="close-btn" onclick="closeModal('productModal')">&times;</span>
             </div>
             
+            <!-- KAMERA İLE ETİKET TARAMA BUTONU VE GİZLİ DOSYA INPUTU -->
+            <button type="button" class="btn-camera-ocr" onclick="document.getElementById('ocrFileInput').click()"><i class="fa-solid fa-camera"></i> 📷 Etiket Fotoğrafı Çek / Oku</button>
+            <input type="file" id="ocrFileInput" accept="image/*" capture="environment" class="hidden" onchange="processOcrImage(this)">
+            <p id="ocrStatusText" style="font-size:0.85rem; color:var(--accent-yellow); text-align:center; font-weight:700; margin-bottom:12px;" class="hidden"><i class="fa-solid fa-spinner fa-spin"></i> Etiket okunuyor, lütfen bekleyin...</p>
+
             <input type="hidden" id="editingProductId" value="">
 
             <div class="form-group">
@@ -489,6 +506,12 @@
             <div class="form-group hidden" id="customBrandGroup">
                 <label>Manuel Marka Adı</label>
                 <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Kabat, BKT Vb.">
+            </div>
+
+            <!-- YENİ: MANUEL MARKA LOGO URL KUTUSU -->
+            <div class="form-group">
+                <label>Marka Logo Görsel URL (İsteğe Bağlı)</label>
+                <input type="text" id="pBrandLogo" class="form-control" placeholder="Logo resim linki yapıştırın (Boş bırakabilirsiniz)">
             </div>
 
             <div class="form-group">
@@ -558,12 +581,25 @@
     <script>
         const DEFAULT_TIRE_IMG = "https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=300&auto=format&fit=crop&q=80";
 
+        // YÖNETİCİ GİRİŞİ: çelebi / çelebi166
         let config = JSON.parse(localStorage.getItem('celebi_config')) || {
-            adminUser: 'admin',
-            adminPass: '1234',
+            adminUser: 'çelebi',
+            adminPass: 'çelebi166',
             bayiUser: 'bayi',
             bayiPass: '1234'
         };
+
+        // KULLANICI LİNK EKLERSE LOGO GÖSTER, EKLENMEZSE METİN GÖSTER
+        function getBrandDisplayHtml(p) {
+            if (p.brandLogo && p.brandLogo.trim() !== '') {
+                return `<div class="brand-logo-wrapper">
+                            <img src="${p.brandLogo}" class="brand-logo-img" alt="${p.brand}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                            <span class="col-brand-text" style="display:none;">${p.brand}</span>
+                        </div>`;
+            } else {
+                return `<span class="col-brand-text">${p.brand}</span>`;
+            }
+        }
 
         let products = [];
         let currentUser = null;
@@ -623,12 +659,15 @@
         }
 
         function login() {
-            const u = document.getElementById('username').value.trim();
+            const u = document.getElementById('username').value.trim().toLowerCase();
             const p = document.getElementById('password').value.trim();
 
-            if (u === config.adminUser && p === config.adminPass) {
+            const isAdminUser = (u === 'çelebi' || u === 'celebi' || u === config.adminUser.toLowerCase());
+            const isAdminPass = (p === 'çelebi166' || p === 'celebi166' || p === config.adminPass);
+
+            if (isAdminUser && isAdminPass) {
                 currentUser = { role: 'admin', name: 'Yönetici' };
-            } else if (u === config.bayiUser && p === config.bayiPass) {
+            } else if (u === config.bayiUser.toLowerCase() && p === config.bayiPass) {
                 currentUser = { role: 'bayi', name: config.bayiUser };
             } else {
                 alert('Kullanıcı adı veya şifre hatalı!');
@@ -659,6 +698,69 @@
             document.getElementById('userInfoArea').classList.add('hidden');
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
+        }
+
+        /* FOTOĞRAFDAN ETİKET OKUMA (OCR) SİHRİ */
+        async function processOcrImage(input) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0];
+            const statusText = document.getElementById('ocrStatusText');
+            statusText.classList.remove('hidden');
+
+            try {
+                const worker = await Tesseract.createWorker('tur+eng');
+                const ret = await worker.recognize(file);
+                const text = ret.data.text;
+                await worker.terminate();
+
+                statusText.classList.add('hidden');
+
+                if (text) {
+                    const sizeMatch = text.match(/\b\d{3}\/\d{2}\s*R?\s*\d{2}\b|\b\d{1,2}\.\d{2}[-\/]\d{2}\b/i);
+                    if (sizeMatch) {
+                        let cleanSize = sizeMatch[0].replace(/\s+/g, '').toUpperCase();
+                        const sizeSelect = document.getElementById('pSizeSelect');
+                        let sizeExists = Array.from(sizeSelect.options).some(opt => opt.value === cleanSize);
+                        if (sizeExists) {
+                            sizeSelect.value = cleanSize;
+                            document.getElementById('customSizeGroup').classList.add('hidden');
+                        } else {
+                            sizeSelect.value = 'Diger';
+                            document.getElementById('customSizeGroup').classList.remove('hidden');
+                            document.getElementById('pCustomSize').value = cleanSize;
+                        }
+                    }
+
+                    const knownBrands = ['PETLAS', 'LASSA', 'BRIDGESTONE', 'MICHELIN', 'GOODYEAR', 'STARMAXX', 'HANKOOK', 'PIRELLI', 'CONTINENTAL', 'KABAT', 'BKT'];
+                    let foundBrand = knownBrands.find(b => text.toUpperCase().includes(b));
+                    if (foundBrand) {
+                        const brandSelect = document.getElementById('pBrandSelect');
+                        let brandExists = Array.from(brandSelect.options).some(opt => opt.value.toUpperCase() === foundBrand);
+                        if (brandExists) {
+                            brandSelect.value = foundBrand.charAt(0) + foundBrand.slice(1).toLowerCase();
+                            document.getElementById('customBrandGroup').classList.add('hidden');
+                        } else {
+                            brandSelect.value = 'Diger';
+                            document.getElementById('customBrandGroup').classList.remove('hidden');
+                            document.getElementById('pCustomBrand').value = foundBrand;
+                        }
+                    }
+
+                    const knownPatterns = ['SNOWMASTER', 'SNOWAYS', 'ELEGANCE', 'GREENWAYS', 'DRIVEWAYS', 'TA60', 'TR60', 'IMPACT', 'TURANZA', 'ALPIN', 'CINTURATO'];
+                    let foundPattern = knownPatterns.find(p => text.toUpperCase().includes(p));
+                    if (foundPattern) {
+                        document.getElementById('pPattern').value = foundPattern;
+                    }
+
+                    alert("Etiket okundu! Bilgiler kutulara yerleştirildi. Lütfen kontrol edin.");
+                } else {
+                    alert("Etiket okunamadı, lütfen daha net bir fotoğraf çekmeyi deneyin.");
+                }
+            } catch (err) {
+                console.error("OCR Hatası:", err);
+                statusText.classList.add('hidden');
+                alert("Fotoğraf taranırken bir hata oluştu.");
+            }
         }
 
         function checkCriticalStocks() {
@@ -796,7 +898,6 @@
                         </div>
                     `;
                 } else {
-                    // BAYİ GÖRÜNÜMÜ: 4 VE ÜSTÜ -> STOKTA VAR, 1-3 -> NET ADET, 0 -> REZERVE STOK
                     let stCount = Number(p.stock);
                     if (stCount >= 4) {
                         stockHtml = `<div class="stock-badge-in"><i class="fa-solid fa-circle-check"></i> STOKTA VAR</div>`;
@@ -813,7 +914,7 @@
                             <img src="${imgSrc}" class="product-img" alt="Ürün" onerror="this.src='${DEFAULT_TIRE_IMG}'">
                             <div class="mobile-card-info">
                                 <div class="col-size">${p.size}</div>
-                                <div class="col-brand">${p.brand} ${p.pattern ? `(${p.pattern})` : ''}</div>
+                                <div>${getBrandDisplayHtml(p)}</div>
                                 <div style="margin-top:2px;">${getCategoryBadgeHtml(p)}</div>
                             </div>
                         </div>
@@ -826,7 +927,7 @@
                     row.innerHTML = `
                         <img src="${imgSrc}" class="product-img" alt="Ürün" onerror="this.src='${DEFAULT_TIRE_IMG}'">
                         <div class="col-size">${p.size}</div>
-                        <div class="col-brand">${p.brand}</div>
+                        <div>${getBrandDisplayHtml(p)}</div>
                         <div class="col-pattern">${p.pattern ? `<span class="tag tag-pattern"><i class="fa-solid fa-grip"></i> ${p.pattern}</span>` : '-'}</div>
                         <div class="col-season">${getCategoryBadgeHtml(p)}</div>
                         <div class="col-dot"><span class="tag">DOT ${p.dot || '2026'}</span></div>
@@ -929,6 +1030,7 @@
                 document.getElementById('pCustomBrand').value = product.brand;
             }
 
+            document.getElementById('pBrandLogo').value = product.brandLogo || '';
             document.getElementById('pPattern').value = product.pattern || '';
             document.getElementById('pSeason').value = product.season || 'Yaz';
             document.getElementById('pDot').value = product.dot || '2026';
@@ -943,6 +1045,7 @@
             document.getElementById('editingProductId').value = '';
             document.getElementById('modalTitleText').innerHTML = `<i class="fa-solid fa-plus-circle"></i> Yeni Ürün Ekle`;
             document.getElementById('saveProductBtn').innerHTML = `<i class="fa-solid fa-check"></i> Ürünü Kaydet`;
+            document.getElementById('pBrandLogo').value = '';
             document.getElementById('pPattern').value = '';
             document.getElementById('pDot').value = '2026';
             document.getElementById('pImg').value = '';
@@ -958,7 +1061,7 @@
         function openDetailModal(p) {
             activeDetailProduct = p;
             document.getElementById('detImg').src = p.img && p.img.trim() !== '' ? p.img : DEFAULT_TIRE_IMG;
-            document.getElementById('detBrand').innerText = p.brand;
+            document.getElementById('detBrand').innerHTML = getBrandDisplayHtml(p);
             document.getElementById('detSize').innerText = p.size;
             document.getElementById('detPattern').innerText = p.pattern ? p.pattern : '--';
             document.getElementById('detSeason').innerText = p.season || p.group;
@@ -1016,6 +1119,7 @@
             let size = sizeSelect === 'Diger' ? document.getElementById('pCustomSize').value.trim() : sizeSelect;
             let brandSelect = document.getElementById('pBrandSelect').value;
             let brand = brandSelect === 'Diger' ? document.getElementById('pCustomBrand').value.trim() : brandSelect;
+            let brandLogo = document.getElementById('pBrandLogo').value.trim();
             let pattern = document.getElementById('pPattern').value.trim();
             const season = group === 'Otomobil' ? document.getElementById('pSeason').value : group;
             const dot = document.getElementById('pDot').value;
@@ -1025,7 +1129,7 @@
 
             if(!brand || !size || !price || stock === '') { alert('Lütfen zorunlu alanları doldurun!'); return; }
 
-            const productData = { group, brand, pattern, size, season, dot, img, price: Number(price), stock: Number(stock) };
+            const productData = { group, brand, brandLogo, pattern, size, season, dot, img, price: Number(price), stock: Number(stock) };
 
             try {
                 if (editId) {
