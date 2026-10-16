@@ -14,6 +14,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
     
+    <!-- Tesseract.js (Kamera ile Etiket / Yazı Okuma Kütüphanesi) -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
     <!-- Firebase SDK (Bulut Senkronizasyon İçin) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -234,6 +237,9 @@
         .input-with-btn { display: flex; gap: 8px; }
         .btn-search-img { background: #3b82f6; color: white; border: none; padding: 0 14px; border-radius: 6px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
 
+        .btn-camera-ocr { width: 100%; padding: 12px; background: #3b82f6; color: white; font-weight: 700; border: none; border-radius: 10px; cursor: pointer; font-size: 0.95rem; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); }
+        .btn-camera-ocr:hover { background: #2563eb; }
+
         .hidden { display: none !important; }
 
         /* TELEFON İÇİN SIFIRDAN KUSURSUZ MOBİL KART DÜZENİ */
@@ -296,7 +302,7 @@
 
             <div class="form-group">
                 <label><i class="fa-solid fa-user"></i> Kullanıcı Adı</label>
-                <input type="text" id="username" class="form-control" placeholder="admin veya bayi">
+                <input type="text" id="username" class="form-control" placeholder="çelebi veya bayi">
             </div>
             <div class="form-group">
                 <label><i class="fa-solid fa-key"></i> Şifre</label>
@@ -441,6 +447,11 @@
                 <span class="close-btn" onclick="closeModal('productModal')">&times;</span>
             </div>
             
+            <!-- KAMERA İLE ETİKET TARAMA BUTONU VE GİZLİ DOSYA INPUTU -->
+            <button type="button" class="btn-camera-ocr" onclick="document.getElementById('ocrFileInput').click()"><i class="fa-solid fa-camera"></i> 📷 Etiket Fotoğrafı Çek / Oku</button>
+            <input type="file" id="ocrFileInput" accept="image/*" capture="environment" class="hidden" onchange="processOcrImage(this)">
+            <p id="ocrStatusText" style="font-size:0.85rem; color:var(--accent-yellow); text-align:center; font-weight:700; margin-bottom:12px;" class="hidden"><i class="fa-solid fa-spinner fa-spin"></i> Etiket okunuyor, lütfen bekleyin...</p>
+
             <input type="hidden" id="editingProductId" value="">
 
             <div class="form-group">
@@ -558,9 +569,10 @@
     <script>
         const DEFAULT_TIRE_IMG = "https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=300&auto=format&fit=crop&q=80";
 
+        // YENİ YÖNETİCİ GİRİŞİ: çelebi / çelebi166
         let config = JSON.parse(localStorage.getItem('celebi_config')) || {
-            adminUser: 'admin',
-            adminPass: '1234',
+            adminUser: 'çelebi',
+            adminPass: 'çelebi166',
             bayiUser: 'bayi',
             bayiPass: '1234'
         };
@@ -623,12 +635,15 @@
         }
 
         function login() {
-            const u = document.getElementById('username').value.trim();
+            const u = document.getElementById('username').value.trim().toLowerCase();
             const p = document.getElementById('password').value.trim();
 
-            if (u === config.adminUser && p === config.adminPass) {
+            const isAdminUser = (u === 'çelebi' || u === 'celebi' || u === config.adminUser.toLowerCase());
+            const isAdminPass = (p === 'çelebi166' || p === 'celebi166' || p === config.adminPass);
+
+            if (isAdminUser && isAdminPass) {
                 currentUser = { role: 'admin', name: 'Yönetici' };
-            } else if (u === config.bayiUser && p === config.bayiPass) {
+            } else if (u === config.bayiUser.toLowerCase() && p === config.bayiPass) {
                 currentUser = { role: 'bayi', name: config.bayiUser };
             } else {
                 alert('Kullanıcı adı veya şifre hatalı!');
@@ -659,6 +674,72 @@
             document.getElementById('userInfoArea').classList.add('hidden');
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
+        }
+
+        /* FOTOĞRAFDAN ETİKET OKUMA (OCR) SİHRİ */
+        async function processOcrImage(input) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0];
+            const statusText = document.getElementById('ocrStatusText');
+            statusText.classList.remove('hidden');
+
+            try {
+                const worker = await Tesseract.createWorker('tur+eng');
+                const ret = await worker.recognize(file);
+                const text = ret.data.text;
+                await worker.terminate();
+
+                statusText.classList.add('hidden');
+
+                if (text) {
+                    // EBAT YAKALAMA (Örn: 205/55R16, 195/65 R15, 6.00-16 Vb.)
+                    const sizeMatch = text.match(/\b\d{3}\/\d{2}\s*R?\s*\d{2}\b|\b\d{1,2}\.\d{2}[-\/]\d{2}\b/i);
+                    if (sizeMatch) {
+                        let cleanSize = sizeMatch[0].replace(/\s+/g, '').toUpperCase();
+                        const sizeSelect = document.getElementById('pSizeSelect');
+                        let sizeExists = Array.from(sizeSelect.options).some(opt => opt.value === cleanSize);
+                        if (sizeExists) {
+                            sizeSelect.value = cleanSize;
+                            document.getElementById('customSizeGroup').classList.add('hidden');
+                        } else {
+                            sizeSelect.value = 'Diger';
+                            document.getElementById('customSizeGroup').classList.remove('hidden');
+                            document.getElementById('pCustomSize').value = cleanSize;
+                        }
+                    }
+
+                    // MARKA YAKALAMA
+                    const knownBrands = ['PETLAS', 'LASSA', 'BRIDGESTONE', 'MICHELIN', 'GOODYEAR', 'STARMAXX', 'HANKOOK', 'PIRELLI', 'CONTINENTAL', 'KABAT', 'BKT'];
+                    let foundBrand = knownBrands.find(b => text.toUpperCase().includes(b));
+                    if (foundBrand) {
+                        const brandSelect = document.getElementById('pBrandSelect');
+                        let brandExists = Array.from(brandSelect.options).some(opt => opt.value.toUpperCase() === foundBrand);
+                        if (brandExists) {
+                            brandSelect.value = foundBrand.charAt(0) + foundBrand.slice(1).toLowerCase();
+                            document.getElementById('customBrandGroup').classList.add('hidden');
+                        } else {
+                            brandSelect.value = 'Diger';
+                            document.getElementById('customBrandGroup').classList.remove('hidden');
+                            document.getElementById('pCustomBrand').value = foundBrand;
+                        }
+                    }
+
+                    // DESEN YAKALAMA
+                    const knownPatterns = ['SNOWMASTER', 'SNOWAYS', 'ELEGANCE', 'GREENWAYS', 'DRIVEWAYS', 'TA60', 'TR60', 'IMPACT', 'TURANZA', 'ALPIN', 'CINTURATO'];
+                    let foundPattern = knownPatterns.find(p => text.toUpperCase().includes(p));
+                    if (foundPattern) {
+                        document.getElementById('pPattern').value = foundPattern;
+                    }
+
+                    alert("Etiket okundu! Bilgiler kutulara yerleştirildi. Lütfen kontrol edin.");
+                } else {
+                    alert("Etiket okunamadı, lütfen daha net bir fotoğraf çekmeyi deneyin.");
+                }
+            } catch (err) {
+                console.error("OCR Hatası:", err);
+                statusText.classList.add('hidden');
+                alert("Fotoğraf taranırken bir hata oluştu.");
+            }
         }
 
         function checkCriticalStocks() {
