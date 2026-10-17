@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Çelebi Oto Lastik - Cari & Gelir-Gider Otomasyonu</title>
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='%23f59e0b' d='M256 0a256 256 0 1 0 0 512 256 256 0 1 0 0-512zm0 96a160 160 0 1 1 0 320 160 160 0 1 1 0-320zm0 64a96 96 0 1 0 0 192 96 96 0 1 0 0-192z'/></svg>">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const p1 = "AIzaSyDvTUGue6WpbYlGFMN7HE";
+        const p2 = "bQW7sq-_PfrnA";
+
+        const firebaseConfig = {
+            apiKey: p1 + p2,
+            authDomain: "celebi-oto-lastik.firebaseapp.com",
+            projectId: "celebi-oto-lastik",
+            storageBucket: "celebi-oto-lastik.firebasestorage.app",
+            messagingSenderId: "20655444321",
+            appId: "1:20655444321:web:cc13a01cf093b7d52a7520",
+            measurementId: "G-EFV1NKZK0F"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.db = db;
+        window.collection = collection;
+        window.getDocs = getDocs;
+        window.doc = doc;
+        window.setDoc = setDoc;
+        window.deleteDoc = deleteDoc;
+        window.updateDoc = updateDoc;
+        window.onSnapshot = onSnapshot;
+
+        if (typeof window.initCariData === 'function') {
+            window.initCariData();
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #151c2c;
+            --card-border: #2a364f;
+            --accent-yellow: #f59e0b;
+            --accent-purple: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --danger-color: #ef4444;
+            --success-color: #10b981;
+            --blue-color: #3b82f6;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding-bottom: 40px; overflow-x: hidden; }
+
+        header { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            border-bottom: 3px solid var(--accent-yellow); 
+            padding: 20px 0; 
+            box-shadow: 0 4px 25px rgba(0,0,0,0.7); 
+        }
+
+        .header-container { max-width: 1300px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .header-title h1 { font-size: 1.8rem; font-weight: 900; color: #ffffff; letter-spacing: 1px; text-transform: uppercase; }
+        .header-title p { font-size: 0.9rem; color: var(--accent-yellow); font-style: italic; font-weight: 600; }
+
+        .btn-logout { background: var(--danger-color); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+
+        .main-container { max-width: 1250px; margin: 25px auto; padding: 0 15px; }
+
+        /* GİRİŞ EKRANI */
+        .login-wrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(11, 15, 25, 0.88), rgba(15, 23, 42, 0.95)), url('https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80');
+            background-size: cover; background-position: center;
+            display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px;
+        }
+
+        .login-card { 
+            width: 100%; max-width: 450px; background: rgba(21, 28, 44, 0.85); 
+            padding: 40px 30px; border-radius: 20px; border: 1.5px solid var(--accent-purple); 
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9); text-align: center; 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+        }
+
+        .login-brand-title { font-family: 'Great Vibes', 'Alex Brush', cursive; font-size: 3.4rem; color: #ffffff; text-shadow: 0 4px 15px rgba(139, 92, 246, 0.6); line-height: 1.1; margin-bottom: 5px; }
+        .login-slogan { font-size: 0.9rem; color: var(--accent-yellow); font-style: italic; font-weight: 600; margin-bottom: 25px; }
+        .login-welcome-text { font-size: 0.9rem; color: var(--text-main); margin-bottom: 20px; background: rgba(255, 255, 255, 0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); }
+
+        .form-group { margin-bottom: 16px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
+        .form-control { width: 100%; padding: 13px; border-radius: 10px; border: 1px solid var(--card-border); background: #0b0f19; color: white; font-size: 1rem; }
+        .form-control:focus { outline: none; border-color: var(--accent-yellow); }
+
+        .btn-primary { width: 100%; padding: 14px; background: var(--accent-yellow); color: #000; font-weight: 800; border: none; border-radius: 10px; cursor: pointer; font-size: 1.05rem; transition: 0.2s; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); }
+
+        /* SEKMELER VE KARTLAR */
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .summary-card { background: var(--card-bg); border: 1px solid var(--card-border); padding: 18px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; }
+        .summary-card h4 { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-bottom: 5px; }
+        .summary-card .amount { font-size: 1.4rem; font-weight: 900; }
+
+        .tab-buttons { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 14px; background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-main); font-weight: 700; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem; }
+        .tab-btn.active { background: var(--accent-purple); border-color: var(--accent-purple); color: #fff; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4); }
+
+        .action-bar { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+        .search-box { flex: 1; min-width: 250px; position: relative; }
+        .search-box i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        .search-box input { width: 100%; padding: 12px 12px 12px 42px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; color: white; font-size: 0.95rem; }
+
+        .btn-add-customer { background: var(--success-color); color: white; border: none; padding: 0 20px; border-radius: 10px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.95rem; }
+
+        /* MÜŞTERİ LİSTESİ */
+        .customer-list { display: flex; flex-direction: column; gap: 10px; }
+        .customer-item { background: var(--card-bg); border: 1px solid var(--card-border); padding: 15px 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s; }
+        .customer-item:hover { border-color: var(--accent-yellow); transform: translateX(3px); }
+        .customer-name { font-size: 1.1rem; font-weight: 800; color: #fff; margin-bottom: 3px; }
+        .customer-phone { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
+        .customer-balance { font-size: 1.2rem; font-weight: 900; text-align: right; }
+
+        /* MODAL VE DETAY */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: flex-start; z-index: 3000; padding: 20px; overflow-y: auto; }
+        .modal-content { background: var(--card-bg); border-radius: 14px; padding: 25px; width: 100%; max-width: 650px; border: 1px solid var(--card-border); margin: 30px auto; max-height: 85vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; }
+        .modal-header h3 { color: var(--accent-yellow); font-size: 1.25rem; }
+        .close-btn { font-size: 1.6rem; cursor: pointer; color: var(--text-muted); }
+
+        .tx-history { margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .tx-item { background: #0b0f19; padding: 12px 15px; border-radius: 8px; border: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; }
+        .tx-desc { font-size: 0.95rem; font-weight: 700; color: #fff; }
+        .tx-date { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+        .tx-amount { font-weight: 900; font-size: 1rem; }
+
+        .hidden { display: none !important; }
+
+        @media (max-width: 768px) {
+            .header-title h1 { font-size: 1.3rem; }
+            .action-bar { flex-direction: column; }
+            .btn-add-customer { height: 45px; justify-content: center; }
+            .customer-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .customer-balance { align-self: flex-end; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GİRİŞ EKRANI -->
+    <div id="loginSection" class="login-wrapper">
+        <div class="login-card">
+            <h1 class="login-brand-title">Çelebi Oto Lastik</h1>
+            <p class="login-slogan">"Yolunuzda Güven, Lastiğinizde Kalite"</p>
+            
+            <div class="login-welcome-text">
+                <i class="fa-solid fa-file-invoice-dollar" style="color: var(--accent-purple);"></i>
+                Lütfen kullanıcı adınızı ve şifrenizi giriniz
+            </div>
+
+            <div class="form-group">
+                <label><i class="fa-solid fa-user"></i> Kullanıcı Adı</label>
+                <input type="text" id="username" class="form-control" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label><i class="fa-solid fa-key"></i> Şifre</label>
+                <input type="password" id="password" class="form-control" autocomplete="off">
+            </div>
+            <button class="btn-primary" onclick="login()"><i class="fa-solid fa-right-to-bracket"></i> Giriş Yap</button>
+        </div>
+    </div>
+
+    <!-- ÜST BİLGİ ALANI -->
+    <header>
+        <div class="header-container">
+            <div class="header-title">
+                <h1>ÇELEBİ OTO LASTİK - CARİ HESAP</h1>
+                <p>"Yolunuzda Güven, Lastiğinizde Kalite"</p>
+            </div>
+            <button class="btn-logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Çıkış</button>
+        </div>
+    </header>
+
+    <!-- ANA PORTAL ALANI -->
+    <div id="portalSection" class="main-container hidden">
+
+        <!-- SEKMELER -->
+        <div class="tab-buttons">
+            <button class="tab-btn active" id="tabCariBtn" onclick="switchTab('cari')"><i class="fa-solid fa-users"></i> Müşteri Cari Hesapları</button>
+            <button class="tab-btn" id="tabKasabtn" onclick="switchTab('kasa')"><i class="fa-solid fa-cash-register"></i> Günlük Gelir / Gider Portalı</button>
+        </div>
+
+        <!-- MÜŞTERİ CARİ SEKMESİ -->
+        <div id="cariView">
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div>
+                        <h4>TOPLAM ALACAĞIMIZ (MÜŞTERİ BORÇLARI)</h4>
+                        <div class="amount" id="totalAlacak" style="color: var(--success-color);">₺0.00</div>
+                    </div>
+                    <i class="fa-solid fa-hand-holding-dollar fa-2x" style="color: var(--success-color);"></i>
+                </div>
+                <div class="summary-card">
+                    <div>
+                        <h4>TOPLAM BORCUMUZ (TEDARİKÇİLERE)</h4>
+                        <div class="amount" id="totalBorc" style="color: var(--danger-color);">₺0.00</div>
+                    </div>
+                    <i class="fa-solid fa-file-circle-exclamation fa-2x" style="color: var(--danger-color);"></i>
+                </div>
+            </div>
+
+            <div class="action-bar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchCustomerInput" oninput="renderCustomers()" placeholder="Müşteri Adı veya Telefon Ara...">
+                </div>
+                <button class="btn-add-customer" onclick="openAddCustomerModal()"><i class="fa-solid fa-user-plus"></i> Yeni Müşteri / Cari Ekle</button>
+            </div>
+
+            <div id="customerList" class="customer-list"></div>
+        </div>
+
+        <!-- GELİR / GİDER SEKMESİ -->
+        <div id="kasaView" class="hidden">
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div>
+                        <h4>TOPLAM GÜNLÜK GELİR</h4>
+                        <div class="amount" id="kasaTotalGelir" style="color: var(--success-color);">₺0.00</div>
+                    </div>
+                    <i class="fa-solid fa-arrow-down-long fa-2x" style="color: var(--success-color);"></i>
+                </div>
+                <div class="summary-card">
+                    <div>
+                        <h4>TOPLAM GÜNLÜK GİDER</h4>
+                        <div class="amount" id="kasaTotalGider" style="color: var(--danger-color);">₺0.00</div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-long fa-2x" style="color: var(--danger-color);"></i>
+                </div>
+                <div class="summary-card">
+                    <div>
+                        <h4>NET KASA DURUMU</h4>
+                        <div class="amount" id="kasaNet" style="color: var(--accent-yellow);">₺0.00</div>
+                    </div>
+                    <i class="fa-solid fa-wallet fa-2x" style="color: var(--accent-yellow);"></i>
+                </div>
+            </div>
+
+            <div class="action-bar">
+                <button class="btn-add-customer" style="background: var(--blue-color);" onclick="openAddKasaModal()"><i class="fa-solid fa-plus-circle"></i> Yeni Gelir / Gider Kaydı Ekle</button>
+            </div>
+
+            <div id="kasaList" class="tx-history"></div>
+        </div>
+
+    </div>
+
+    <!-- MÜŞTERİ EKLEME MODAL -->
+    <div id="addCustomerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-user-plus"></i> Yeni Müşteri / Cari Ekle</h3>
+                <span class="close-btn" onclick="closeModal('addCustomerModal')">&times;</span>
+            </div>
+            <div class="form-group">
+                <label>Müşteri Adı Soyadı / Firma Adı</label>
+                <input type="text" id="newCustName" class="form-control" oninput="this.value = this.value.toLocaleUpperCase('tr-TR')" placeholder="ÖRN: AHMET YILMAZ">
+            </div>
+            <div class="form-group">
+                <label>Telefon Numarası</label>
+                <input type="text" id="newCustPhone" class="form-control" placeholder="ÖRN: 0532 000 00 00">
+            </div>
+            <button class="btn-primary" style="background: var(--success-color); color: white;" onclick="saveCustomer()"><i class="fa-solid fa-check"></i> Müşteriyi Oluştur</button>
+        </div>
+    </div>
+
+    <!-- MÜŞTERİ DETAY VE İŞLEM MODAL -->
+    <div id="customerDetailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="detCustName">--</h3>
+                <span class="close-btn" onclick="closeModal('customerDetailModal')">&times;</span>
+            </div>
+            <p id="detCustPhone" style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;"></p>
+
+            <div class="summary-grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                <div class="summary-card" style="padding: 10px;">
+                    <div>
+                        <h4 style="font-size: 0.75rem;">TOPLAM BORÇ</h4>
+                        <div class="amount" id="detTotalBorc" style="font-size: 1.1rem; color: var(--danger-color);">₺0</div>
+                    </div>
+                </div>
+                <div class="summary-card" style="padding: 10px;">
+                    <div>
+                        <h4 style="font-size: 0.75rem;">TAHSİLAT</h4>
+                        <div class="amount" id="detTotalOdeme" style="font-size: 1.1rem; color: var(--success-color);">₺0</div>
+                    </div>
+                </div>
+                <div class="summary-card" style="padding: 10px;">
+                    <div>
+                        <h4 style="font-size: 0.75rem;">NET BAKİYE</h4>
+                        <div class="amount" id="detNetBakiye" style="font-size: 1.1rem; color: var(--accent-yellow);">₺0</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="margin-top: 15px; background: var(--accent-purple); color: white;" onclick="openTxModal()"><i class="fa-solid fa-circle-plus"></i> Bu Müşteriye Yeni İşlem / Ödeme Ekle</button>
+
+            <h4 style="margin-top: 20px; font-size: 0.95rem; color: var(--accent-yellow);"><i class="fa-solid fa-clock-rotate-left"></i> Geçmiş Hesap Hareketleri</h4>
+            <div id="txHistoryList" class="tx-history"></div>
+        </div>
+    </div>
+
+    <!-- İŞLEM EKLEME MODAL -->
+    <div id="addTxModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-file-signature"></i> Yeni Cari İşlem Ekle</h3>
+                <span class="close-btn" onclick="closeModal('addTxModal')">&times;</span>
+            </div>
+            <div class="form-group">
+                <label>İşlem Türü</label>
+                <select id="txType" class="form-control">
+                    <option value="satis">Müşteriyi Borçlandır (Veresiye / Satış)</option>
+                    <option value="tahsilat">Müşteriden Tahsilat Al (Ödeme Aldık)</option>
+                    <option value="bizim_borc">Bizim Borcumuz (Tedarikçiye Borçlandık)</option>
+                    <option value="bizim_odeme">Bizim Ödememiz (Tedarikçiye Ödedik)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Açıklama / Yapılan İş</label>
+                <input type="text" id="txDesc" class="form-control" placeholder="Örn: 2 Adet Petlas Lastik Satışı, Tamir Bedeli vb.">
+            </div>
+            <div class="form-group">
+                <label>Ödeme Türü / Kanalı</label>
+                <select id="txPaymentMethod" class="form-control">
+                    <option value="Nakit">Nakit Para</option>
+                    <option value="İBAN/EFT">İBAN / Havale / EFT</option>
+                    <option value="Kredi Kartı">Kredi Kartı</option>
+                    <option value="Veresiye">Açık Hesap (Veresiye)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Tutar (TL)</label>
+                <input type="number" id="txAmount" class="form-control" placeholder="Örn: 1500">
+            </div>
+            <button class="btn-primary" style="background: var(--success-color); color: white;" onclick="saveTransaction()"><i class="fa-solid fa-check"></i> İşlemi Kaydet</button>
+        </div>
+    </div>
+
+    <!-- GELİR / GİDER EKLEME MODAL -->
+    <div id="addKasaModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-cash-register"></i> Günlük Gelir / Gider Kaydı</h3>
+                <span class="close-btn" onclick="closeModal('addKasaModal')">&times;</span>
+            </div>
+            <div class="form-group">
+                <label>Tür</label>
+                <select id="kasaType" class="form-control">
+                    <option value="gelir">GELİR (Nakit / İBAN Girişi)</option>
+                    <option value="gider">GİDER (Dükkan Harcaması / Yemek vb.)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Yapılan İş / Açıklama</label>
+                <input type="text" id="kasaDesc" class="form-control" placeholder="Örn: 1 Adet Tamir Yapıldı, Ekmek Yemek Alındı vb.">
+            </div>
+            <div class="form-group">
+                <label>Ödeme Yöntemi</label>
+                <select id="kasaMethod" class="form-control">
+                    <option value="Nakit">Nakit Para</option>
+                    <option value="İBAN / EFT">İBAN / EFT</option>
+                    <option value="Kredi Kartı">Kredi Kartı Çekimi</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Tutar (TL)</label>
+                <input type="number" id="kasaAmount" class="form-control" placeholder="Örn: 200">
+            </div>
+            <button class="btn-primary" style="background: var(--blue-color); color: white;" onclick="saveKasaRecord()"><i class="fa-solid fa-check"></i> Kaydet</button>
+        </div>
+    </div>
+
+    <script>
+        let customers = [];
+        let transactions = [];
+        let kasaRecords = [];
+        let activeCustomer = null;
+
+        window.initCariData = function() {
+            if (!window.db) return;
+
+            // Müşteriler Dinleyicisi
+            window.onSnapshot(window.collection(window.db, "customers"), (snap) => {
+                customers = [];
+                snap.forEach(d => customers.push({ id: d.id, ...d.data() }));
+                renderCustomers();
+            });
+
+            // Cari Hareketleri Dinleyicisi
+            window.onSnapshot(window.collection(window.db, "transactions"), (snap) => {
+                transactions = [];
+                snap.forEach(d => transactions.push({ id: d.id, ...d.data() }));
+                renderCustomers();
+                if (activeCustomer) openCustomerDetail(activeCustomer.id);
+            });
+
+            // Gelir Gider Dinleyicisi
+            window.onSnapshot(window.collection(window.db, "kasa"), (snap) => {
+                kasaRecords = [];
+                snap.forEach(d => kasaRecords.push({ id: d.id, ...d.data() }));
+                renderKasa();
+            });
+        };
+
+        function formatCurrency(val) {
+            return '₺' + Number(val || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function login() {
+            const u = document.getElementById('username').value.trim().toLowerCase();
+            const p = document.getElementById('password').value.trim();
+
+            if (u === 'celebiotolastik' && p === 'çelebi166') {
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('portalSection').classList.remove('hidden');
+            } else {
+                alert('Kullanıcı adı veya şifre hatalı!');
+            }
+        }
+
+        function logout() {
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('portalSection').classList.add('hidden');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        function switchTab(tab) {
+            if (tab === 'cari') {
+                document.getElementById('cariView').classList.remove('hidden');
+                document.getElementById('kasaView').classList.add('hidden');
+                document.getElementById('tabCariBtn').classList.add('active');
+                document.getElementById('tabKasabtn').classList.remove('active');
+            } else {
+                document.getElementById('cariView').classList.add('hidden');
+                document.getElementById('kasaView').classList.remove('hidden');
+                document.getElementById('tabCariBtn').classList.remove('active');
+                document.getElementById('tabKasabtn').classList.add('active');
+            }
+        }
+
+        function renderCustomers() {
+            const list = document.getElementById('customerList');
+            const search = document.getElementById('searchCustomerInput').value.toLowerCase();
+            list.innerHTML = '';
+
+            let totalAlacakSum = 0;
+            let totalBorcSum = 0;
+
+            let filtered = customers.filter(c => (c.name || '').toLowerCase().includes(search) || (c.phone || '').includes(search));
+
+            filtered.forEach(c => {
+                let cTx = transactions.filter(t => String(t.customerId) === String(c.id));
+                let satisBorc = cTx.filter(t => t.type === 'satis').reduce((a, b) => a + Number(b.amount || 0), 0);
+                let tahsilat = cTx.filter(t => t.type === 'tahsilat').reduce((a, b) => a + Number(b.amount || 0), 0);
+                let bizimBorc = cTx.filter(t => t.type === 'bizim_borc').reduce((a, b) => a + Number(b.amount || 0), 0);
+                let bizimOdeme = cTx.filter(t => t.type === 'bizim_odeme').reduce((a, b) => a + Number(b.amount || 0), 0);
+
+                let netMusteriBakiye = satisBorc - tahsilat;
+                let netBizimBakiye = bizimBorc - bizimOdeme;
+
+                if (netMusteriBakiye > 0) totalAlacakSum += netMusteriBakiye;
+                if (netBizimBakiye > 0) totalBorcSum += netBizimBakiye;
+
+                const item = document.createElement('div');
+                item.className = 'customer-item';
+                item.onclick = () => openCustomerDetail(c.id);
+
+                let bakiyeText = '';
+                let bakiyeColor = '';
+
+                if (netMusteriBakiye > 0) {
+                    bakiyeText = formatCurrency(netMusteriBakiye) + ' (Alacak)';
+                    bakiyeColor = 'var(--success-color)';
+                } else if (netBizimBakiye > 0) {
+                    bakiyeText = formatCurrency(netBizimBakiye) + ' (Borcumuz)';
+                    bakiyeColor = 'var(--danger-color)';
+                } else {
+                    bakiyeText = '₺0.00 (Hesap Kapalı)';
+                    bakiyeColor = 'var(--text-muted)';
+                }
+
+                item.innerHTML = `
+                    <div>
+                        <div class="customer-name"><i class="fa-solid fa-user-tie" style="color: var(--accent-purple);"></i> ${c.name}</div>
+                        <div class="customer-phone"><i class="fa-solid fa-phone"></i> ${c.phone || 'Telefon Yok'}</div>
+                    </div>
+                    <div class="customer-balance" style="color: ${bakiyeColor};">${bakiyeText}</div>
+                `;
+                list.appendChild(item);
+            });
+
+            document.getElementById('totalAlacak').innerText = formatCurrency(totalAlacakSum);
+            document.getElementById('totalBorc').innerText = formatCurrency(totalBorcSum);
+        }
+
+        function openCustomerDetail(id) {
+            activeCustomer = customers.find(c => String(c.id) === String(id));
+            if (!activeCustomer) return;
+
+            document.getElementById('detCustName').innerText = activeCustomer.name;
+            document.getElementById('detCustPhone').innerText = activeCustomer.phone ? `Tel: ${activeCustomer.phone}` : '';
+
+            let cTx = transactions.filter(t => String(t.customerId) === String(id));
+            let satisBorc = cTx.filter(t => t.type === 'satis').reduce((a, b) => a + Number(b.amount || 0), 0);
+            let tahsilat = cTx.filter(t => t.type === 'tahsilat').reduce((a, b) => a + Number(b.amount || 0), 0);
+
+            document.getElementById('detTotalBorc').innerText = formatCurrency(satisBorc);
+            document.getElementById('detTotalOdeme').innerText = formatCurrency(tahsilat);
+            document.getElementById('detNetBakiye').innerText = formatCurrency(satisBorc - tahsilat);
+
+            const txList = document.getElementById('txHistoryList');
+            txList.innerHTML = '';
+
+            cTx.sort((a,b) => b.timestamp - a.timestamp).forEach(t => {
+                const item = document.createElement('div');
+                item.className = 'tx-item';
+                let isAdd = t.type === 'satis' || t.type === 'bizim_borc';
+                let color = isAdd ? 'var(--danger-color)' : 'var(--success-color)';
+
+                item.innerHTML = `
+                    <div>
+                        <div class="tx-desc">${t.desc} (${t.method || 'Nakit'})</div>
+                        <div class="tx-date">${t.dateStr || ''}</div>
+                    </div>
+                    <div class="tx-amount" style="color: ${color};">${isAdd ? '+' : '-'}${formatCurrency(t.amount)}</div>
+                `;
+                txList.appendChild(item);
+            });
+
+            document.getElementById('customerDetailModal').style.display = 'flex';
+        }
+
+        async function saveCustomer() {
+            const name = document.getElementById('newCustName').value.trim().toLocaleUpperCase('tr-TR');
+            const phone = document.getElementById('newCustPhone').value.trim();
+
+            if (!name) { alert('Lütfen müşteri adını giriniz!'); return; }
+
+            const newId = String(Date.now());
+            await window.setDoc(window.doc(window.db, "customers", newId), { name, phone });
+
+            document.getElementById('newCustName').value = '';
+            document.getElementById('newCustPhone').value = '';
+            closeModal('addCustomerModal');
+        }
+
+        function openAddCustomerModal() { document.getElementById('addCustomerModal').style.display = 'flex'; }
+        function openTxModal() { document.getElementById('addTxModal').style.display = 'flex'; }
+        function openAddKasaModal() { document.getElementById('addKasaModal').style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        async function saveTransaction() {
+            if (!activeCustomer) return;
+            const type = document.getElementById('txType').value;
+            const desc = document.getElementById('txDesc').value.trim();
+            const method = document.getElementById('txPaymentMethod').value;
+            const amount = document.getElementById('txAmount').value;
+
+            if (!amount || Number(amount) <= 0) { alert('Lütfen geçerli bir tutar girin!'); return; }
+
+            const newTx = {
+                customerId: activeCustomer.id,
+                type,
+                desc: desc || (type === 'satis' ? 'Satış / İşlem' : 'Ödeme / Tahsilat'),
+                method,
+                amount: Number(amount),
+                timestamp: Date.now(),
+                dateStr: new Date().toLocaleString('tr-TR')
+            };
+
+            await window.setDoc(window.doc(window.db, "transactions", String(Date.now())), newTx);
+            document.getElementById('txDesc').value = '';
+            document.getElementById('txAmount').value = '';
+            closeModal('addTxModal');
+        }
+
+        async function saveKasaRecord() {
+            const type = document.getElementById('kasaType').value;
+            const desc = document.getElementById('kasaDesc').value.trim();
+            const method = document.getElementById('kasaMethod').value;
+            const amount = document.getElementById('kasaAmount').value;
+
+            if (!amount || Number(amount) <= 0) { alert('Lütfen geçerli bir tutar girin!'); return; }
+
+            const newRecord = {
+                type,
+                desc: desc || (type === 'gelir' ? 'Gelir Kaydı' : 'Gider Kaydı'),
+                method,
+                amount: Number(amount),
+                timestamp: Date.now(),
+                dateStr: new Date().toLocaleString('tr-TR')
+            };
+
+            await window.setDoc(window.doc(window.db, "kasa", String(Date.now())), newRecord);
+            document.getElementById('kasaDesc').value = '';
+            document.getElementById('kasaAmount').value = '';
+            closeModal('addKasaModal');
+        }
+
+        function renderKasa() {
+            const list = document.getElementById('kasaList');
+            list.innerHTML = '';
+
+            let totalGelir = 0;
+            let totalGider = 0;
+
+            kasaRecords.sort((a,b) => b.timestamp - a.timestamp).forEach(k => {
+                if (k.type === 'gelir') totalGelir += Number(k.amount);
+                else totalGider += Number(k.amount);
+
+                const item = document.createElement('div');
+                item.className = 'tx-item';
+                let isGelir = k.type === 'gelir';
+
+                item.innerHTML = `
+                    <div>
+                        <div class="tx-desc">${k.desc} (${k.method})</div>
+                        <div class="tx-date">${k.dateStr}</div>
+                    </div>
+                    <div class="tx-amount" style="color: ${isGelir ? 'var(--success-color)' : 'var(--danger-color)'};">
+                        ${isGelir ? '+' : '-'}${formatCurrency(k.amount)}
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+
+            document.getElementById('kasaTotalGelir').innerText = formatCurrency(totalGelir);
+            document.getElementById('kasaTotalGider').innerText = formatCurrency(totalGider);
+            document.getElementById('kasaNet').innerText = formatCurrency(totalGelir - totalGider);
+        }
+    </script>
+</body>
+</html>
