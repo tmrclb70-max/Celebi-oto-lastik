@@ -525,7 +525,6 @@
         let transactions = [];
         let kasaRecords = [];
         let activeCustomer = null;
-
         let currentPassword = localStorage.getItem('celebi_cari_pass') || 'çelebi166';
 
         window.initCariData = function() {
@@ -561,7 +560,6 @@
 
         function login() {
             const p = document.getElementById('password').value.trim();
-
             if (p === currentPassword || p === 'çelebi166' || p === 'celebi166') {
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('portalSection').classList.remove('hidden');
@@ -582,12 +580,16 @@
         }
 
         function saveNewPassword() {
-            const newP = document.getElementById('newPassInput').value.trim();
-            if (!newP) { alert('Lütfen geçerli bir şifre girin!'); return; }
-            currentPassword = newP;
-            localStorage.setItem('celebi_cari_pass', newP);
-            alert('Giriş şifreniz başarıyla güncellendi!');
+            const p = document.getElementById('newPassInput').value.trim();
+            if (!p) { alert('Lütfen şifre girin'); return; }
+            currentPassword = p;
+            localStorage.setItem('celebi_cari_pass', p);
+            alert('Şifre başarıyla değiştirildi!');
             closeModal('passModal');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
         }
 
         function switchTab(tab) {
@@ -612,354 +614,255 @@
             }
         }
 
-        function togglePaymentMethodField(type) {
-            const pmGroup = document.getElementById('paymentMethodGroup');
-            if (type === 'tahsilat' || type === 'bizim_odeme') {
-                pmGroup.classList.remove('hidden');
-            } else {
-                pmGroup.classList.add('hidden');
-            }
-        }
-
-        function checkVadeDates() {
-            const todayStr = new Date().toISOString().split('T')[0];
-            const dueList = transactions.filter(t => t.dueDate && t.dueDate <= todayStr && t.type === 'satis');
-            
-            const badge = document.getElementById('vadeBadge');
-            badge.innerText = dueList.length;
-
-            const container = document.getElementById('vadeListContainer');
-            container.innerHTML = '';
-
-            if (dueList.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: var(--success-color); padding: 15px;"><i class="fa-solid fa-circle-check"></i> Vadesi gelen veya ödeme sözü geçen işlem yok!</p>';
-                return;
-            }
-
-            dueList.forEach(t => {
-                const cust = customers.find(c => String(c.id) === String(t.customerId));
-                const item = document.createElement('div');
-                item.className = 'tx-item';
-                item.innerHTML = `
-                    <div>
-                        <div class="tx-desc" style="color: var(--accent-yellow);">${cust ? cust.name : 'Bilinmeyen Müşteri'}</div>
-                        <div class="tx-sub-info">İşlem: ${t.desc}</div>
-                        <div class="tx-date" style="color: var(--danger-color); font-weight: bold;"><i class="fa-solid fa-calendar-xmark"></i> Vade Tarihi: ${t.dueDate}</div>
-                    </div>
-                    <div class="tx-amount" style="color: var(--danger-color);">${formatCurrency(t.amount)}</div>
-                `;
-                container.appendChild(item);
-            });
-        }
-
-        function openVadeModal() {
-            document.getElementById('vadeModal').style.display = 'flex';
-        }
-
-        function renderCustomers() {
-            const list = document.getElementById('customerList');
-            const search = document.getElementById('searchCustomerInput').value.toLowerCase();
-            list.innerHTML = '';
-
-            let totalAlacakSum = 0;
-            let totalBorcSum = 0;
-
-            let filtered = customers.filter(c => (c.name || '').toLowerCase().includes(search) || (c.phone || '').includes(search));
-
-            filtered.forEach(c => {
-                let cTx = transactions.filter(t => String(t.customerId) === String(c.id));
-                let satisBorc = cTx.filter(t => t.type === 'satis').reduce((a, b) => a + Number(b.amount || 0), 0);
-                let tahsilat = cTx.filter(t => t.type === 'tahsilat').reduce((a, b) => a + Number(b.amount || 0), 0);
-                let bizimBorc = cTx.filter(t => t.type === 'bizim_borc').reduce((a, b) => a + Number(b.amount || 0), 0);
-                let bizimOdeme = cTx.filter(t => t.type === 'bizim_odeme').reduce((a, b) => a + Number(b.amount || 0), 0);
-
-                let netMusteriBakiye = satisBorc - tahsilat;
-                let netBizimBakiye = bizimBorc - bizimOdeme;
-
-                if (netMusteriBakiye > 0) totalAlacakSum += netMusteriBakiye;
-                if (netBizimBakiye > 0) totalBorcSum += netBizimBakiye;
-
-                const item = document.createElement('div');
-                item.className = 'customer-item';
-
-                let bakiyeText = '';
-                let bakiyeColor = '';
-
-                if (netMusteriBakiye > 0) {
-                    bakiyeText = formatCurrency(netMusteriBakiye) + ' (Alacak)';
-                    bakiyeColor = 'var(--success-color)';
-                } else if (netBizimBakiye > 0) {
-                    bakiyeText = formatCurrency(netBizimBakiye) + ' (Borcumuz)';
-                    bakiyeColor = 'var(--danger-color)';
-                } else {
-                    bakiyeText = '₺0.00 (Kapalı)';
-                    bakiyeColor = 'var(--text-muted)';
-                }
-
-                item.innerHTML = `
-                    <div class="customer-info-area" onclick="openCustomerDetail('${c.id}')">
-                        <div class="customer-name"><i class="fa-solid fa-user-tie" style="color: var(--accent-purple);"></i> ${c.name}</div>
-                        <div class="customer-phone"><i class="fa-solid fa-phone"></i> ${c.phone || 'Telefon Yok'}</div>
-                    </div>
-                    <div class="customer-right-area">
-                        <div class="customer-balance" style="color: ${bakiyeColor};" onclick="openCustomerDetail('${c.id}')">${bakiyeText}</div>
-                        <div class="cust-action-btns">
-                            <button class="btn-sm-icon" onclick="openEditCustomerModal('${c.id}')" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn-sm-icon btn-sm-del" onclick="deleteCustomer('${c.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    </div>
-                `;
-                list.appendChild(item);
-            });
-
-            document.getElementById('totalAlacak').innerText = formatCurrency(totalAlacakSum);
-            document.getElementById('totalBorc').innerText = formatCurrency(totalBorcSum);
-        }
-
-        function openAddCustomerModal() { 
+        function openAddCustomerModal() {
             document.getElementById('editingCustId').value = '';
-            document.getElementById('custModalTitle').innerHTML = `<i class="fa-solid fa-user-plus"></i> Yeni Müşteri / Cari Ekle`;
             document.getElementById('newCustName').value = '';
             document.getElementById('newCustPhone').value = '';
-            document.getElementById('addCustomerModal').style.display = 'flex'; 
-        }
-
-        function openEditCustomerModal(id) {
-            const c = customers.find(x => String(x.id) === String(id));
-            if (!c) return;
-
-            document.getElementById('editingCustId').value = c.id;
-            document.getElementById('custModalTitle').innerHTML = `<i class="fa-solid fa-user-pen"></i> Müşteriyi Düzenle`;
-            document.getElementById('newCustName').value = c.name || '';
-            document.getElementById('newCustPhone').value = c.phone || '';
+            document.getElementById('custModalTitle').innerHTML = '<i class="fa-solid fa-user-plus"></i> Yeni Müşteri / Cari Ekle';
             document.getElementById('addCustomerModal').style.display = 'flex';
         }
 
         async function saveCustomer() {
-            const editId = document.getElementById('editingCustId').value;
-            const name = document.getElementById('newCustName').value.trim().toLocaleUpperCase('tr-TR');
+            const name = document.getElementById('newCustName').value.trim();
             const phone = document.getElementById('newCustPhone').value.trim();
+            if (!name) { alert('Müşteri adı zorunludur!'); return; }
 
-            if (!name) { alert('Lütfen müşteri adını giriniz!'); return; }
-
-            const custData = { name, phone };
-
-            if (editId) {
-                await window.setDoc(window.doc(window.db, "customers", String(editId)), custData, { merge: true });
-            } else {
-                const newId = String(Date.now());
-                await window.setDoc(window.doc(window.db, "customers", newId), custData);
-            }
-
+            const id = document.getElementById('editingCustId').value || 'cust_' + Date.now();
+            await window.setDoc(window.doc(window.db, "customers", id), { name, phone }, { merge: true });
             closeModal('addCustomerModal');
         }
 
-        async function deleteCustomer(id) {
-            if (confirm('Bu müşteriyi ve tüm cari hareketlerini silmek istediğinize emin misiniz?')) {
-                await window.deleteDoc(window.doc(window.db, "customers", String(id)));
-            }
+        function renderCustomers() {
+            const search = document.getElementById('searchCustomerInput').value.toLowerCase();
+            const listEl = document.getElementById('customerList');
+            listEl.innerHTML = '';
+
+            let totalAlacak = 0;
+            let totalBorc = 0;
+
+            const filtered = customers.filter(c => c.name.toLowerCase().includes(search) || (c.phone && c.phone.includes(search)));
+            filtered.sort((a,b) => a.name.localeCompare(b.name));
+
+            filtered.forEach(c => {
+                const custTx = transactions.filter(t => t.customerId === c.id);
+                let bakiye = 0;
+                custTx.forEach(t => {
+                    if (t.type === 'satis') bakiye += Number(t.amount);
+                    else if (t.type === 'tahsilat') bakiye -= Number(t.amount);
+                });
+
+                if (bakiye > 0) totalAlacak += bakiye;
+                else if (bakiye < 0) totalBorc += Math.abs(bakiye);
+
+                const item = document.createElement('div');
+                item.className = 'customer-item';
+                item.innerHTML = `
+                    <div class="customer-info-area" onclick="openCustomerDetail('${c.id}')">
+                        <div class="customer-name">${c.name}</div>
+                        <div class="customer-phone"><i class="fa-solid fa-phone"></i> ${c.phone || 'Telefon yok'}</div>
+                    </div>
+                    <div class="customer-right-area">
+                        <div class="customer-balance" onclick="openCustomerDetail('${c.id}')" style="color: ${bakiye >= 0 ? 'var(--success-color)' : 'var(--danger-color)'};">
+                            ${formatCurrency(bakiye)}
+                        </div>
+                        <div class="cust-action-btns">
+                            <button class="btn-sm-icon" onclick="editCustomer('${c.id}')"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn-sm-icon btn-sm-del" onclick="deleteCustomer('${c.id}')"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+                listEl.appendChild(item);
+            });
+
+            document.getElementById('totalAlacak').innerText = formatCurrency(totalAlacak);
+            document.getElementById('totalBorc').innerText = formatCurrency(totalBorc);
         }
 
         function openCustomerDetail(id) {
-            activeCustomer = customers.find(c => String(c.id) === String(id));
+            activeCustomer = customers.find(c => c.id === id);
             if (!activeCustomer) return;
 
             document.getElementById('detCustName').innerText = activeCustomer.name;
-            document.getElementById('detCustPhone').innerText = activeCustomer.phone ? `Tel: ${activeCustomer.phone}` : 'Telefon Yok';
+            document.getElementById('detCustPhone').innerText = activeCustomer.phone ? 'Tel: ' + activeCustomer.phone : '';
 
-            let cTx = transactions.filter(t => String(t.customerId) === String(id));
-            let satisBorc = cTx.filter(t => t.type === 'satis').reduce((a, b) => a + Number(b.amount || 0), 0);
-            let tahsilat = cTx.filter(t => t.type === 'tahsilat').reduce((a, b) => a + Number(b.amount || 0), 0);
+            const custTx = transactions.filter(t => t.customerId === id);
+            let bakiye = 0, toplamBorc = 0, toplamOdeme = 0;
 
-            document.getElementById('detTotalBorc').innerText = formatCurrency(satisBorc);
-            document.getElementById('detTotalOdeme').innerText = formatCurrency(tahsilat);
-            document.getElementById('detNetBakiye').innerText = formatCurrency(satisBorc - tahsilat);
+            const histEl = document.getElementById('txHistoryList');
+            histEl.innerHTML = '';
 
-            const txList = document.getElementById('txHistoryList');
-            txList.innerHTML = '';
+            custTx.sort((a,b) => new Date(b.date) - new Date(a.date));
 
-            cTx.sort((a,b) => b.timestamp - a.timestamp).forEach(t => {
-                const item = document.createElement('div');
-                item.className = 'tx-item';
-                let isAdd = t.type === 'satis' || t.type === 'bizim_borc';
-                let color = isAdd ? 'var(--danger-color)' : 'var(--success-color)';
+            custTx.forEach(t => {
+                if (t.type === 'satis') {
+                    toplamBorc += Number(t.amount);
+                    bakiye += Number(t.amount);
+                } else if (t.type === 'tahsilat') {
+                    toplamOdeme += Number(t.amount);
+                    bakiye -= Number(t.amount);
+                }
 
-                item.innerHTML = `
-                    <div style="flex: 1;">
+                const row = document.createElement('div');
+                row.className = 'tx-item';
+                row.innerHTML = `
+                    <div>
                         <div class="tx-desc">${t.desc}</div>
                         <div class="tx-sub-info">
-                            ${t.method ? `<span><i class="fa-solid fa-credit-card"></i> ${t.method}</span>` : ''}
-                            ${t.dueDate ? `<span style="color:var(--danger-color);"><i class="fa-solid fa-calendar-day"></i> Vade: ${t.dueDate}</span>` : ''}
+                            <span><i class="fa-solid fa-tag"></i> ${t.type === 'satis' ? 'Satış / Borç' : 'Tahsilat'}</span>
+                            ${t.paymentMethod ? '<span>• Ödeme: ' + t.paymentMethod + '</span>' : ''}
+                            ${t.dueDate ? '<span>• Vade: ' + t.dueDate + '</span>' : ''}
                         </div>
-                        <div class="tx-date">${t.dateStr || ''}</div>
+                        <div class="tx-date">${t.date || ''}</div>
                     </div>
                     <div class="tx-right">
-                        <div class="tx-amount" style="color: ${color};">${isAdd ? '+' : '-'}${formatCurrency(t.amount)}</div>
-                        <button class="btn-sm-icon" onclick="editTransaction('${t.id}')"><i class="fa-solid fa-pen"></i></button>
-                        <button class="btn-sm-icon btn-sm-del" onclick="deleteTransaction('${t.id}')"><i class="fa-solid fa-trash"></i></button>
+                        <div class="tx-amount" style="color: ${t.type === 'satis' ? 'var(--danger-color)' : 'var(--success-color)'};">
+                            ${t.type === 'satis' ? '+' : '-'}${formatCurrency(t.amount)}
+                        </div>
+                        <button class="btn-sm-icon btn-sm-del" onclick="deleteTx('${t.id}')"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 `;
-                txList.appendChild(item);
+                histEl.appendChild(row);
             });
+
+            document.getElementById('detTotalBorc').innerText = formatCurrency(toplamBorc);
+            document.getElementById('detTotalOdeme').innerText = formatCurrency(toplamOdeme);
+            document.getElementById('detNetBakiye').innerText = formatCurrency(bakiye);
 
             document.getElementById('customerDetailModal').style.display = 'flex';
         }
 
-        function openTxModal() { 
-            document.getElementById('editingTxId').value = '';
-            document.getElementById('txModalTitle').innerHTML = `<i class="fa-solid fa-file-signature"></i> Yeni Cari İşlem Ekle`;
-            document.getElementById('txType').value = 'satis';
-            togglePaymentMethodField('satis');
-            document.getElementById('txDesc').value = '';
-            document.getElementById('txPaymentMethod').value = '';
-            document.getElementById('txDueDate').value = '';
-            document.getElementById('txAmount').value = '';
-            document.getElementById('addTxModal').style.display = 'flex'; 
+        function editCustomer(id) {
+            const c = customers.find(x => x.id === id);
+            if (!c) return;
+            document.getElementById('editingCustId').value = c.id;
+            document.getElementById('newCustName').value = c.name;
+            document.getElementById('newCustPhone').value = c.phone || '';
+            document.getElementById('custModalTitle').innerHTML = '<i class="fa-solid fa-pen"></i> Müşteri Düzenle';
+            document.getElementById('addCustomerModal').style.display = 'flex';
         }
 
-        function editTransaction(txId) {
-            const t = transactions.find(x => String(x.id) === String(txId));
-            if (!t) return;
+        async function deleteCustomer(id) {
+            if (confirm("Bu müşteriyi ve tüm hareketlerini silmek istediğinize emin misiniz?")) {
+                await window.deleteDoc(window.doc(window.db, "customers", id));
+                const custTx = transactions.filter(t => t.customerId === id);
+                for (let t of custTx) {
+                    await window.deleteDoc(window.doc(window.db, "transactions", t.id));
+                }
+                closeModal('customerDetailModal');
+            }
+        }
 
-            document.getElementById('editingTxId').value = t.id;
-            document.getElementById('txModalTitle').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> İşlemi Düzenle`;
-            document.getElementById('txType').value = t.type;
-            togglePaymentMethodField(t.type);
-            document.getElementById('txDesc').value = t.desc || '';
-            document.getElementById('txPaymentMethod').value = t.method || '';
-            document.getElementById('txDueDate').value = t.dueDate || '';
-            document.getElementById('txAmount').value = t.amount || '';
-
+        function openTxModal() {
+            document.getElementById('editingTxId').value = '';
+            document.getElementById('txDesc').value = '';
+            document.getElementById('txAmount').value = '';
+            document.getElementById('txDueDate').value = '';
+            document.getElementById('txType').value = 'satis';
+            togglePaymentMethodField('satis');
             document.getElementById('addTxModal').style.display = 'flex';
         }
 
-        async function deleteTransaction(txId) {
-            if (confirm('Bu hesap hareketini silmek istediğinize emin misiniz?')) {
-                await window.deleteDoc(window.doc(window.db, "transactions", String(txId)));
+        function togglePaymentMethodField(type) {
+            const methodGroup = document.getElementById('paymentMethodGroup');
+            if (type === 'tahsilat' || type === 'bizim_odeme') {
+                methodGroup.classList.remove('hidden');
+            } else {
+                methodGroup.classList.add('hidden');
             }
         }
 
         async function saveTransaction() {
             if (!activeCustomer) return;
-            const editId = document.getElementById('editingTxId').value;
             const type = document.getElementById('txType').value;
             const desc = document.getElementById('txDesc').value.trim();
-            const method = document.getElementById('txPaymentMethod').value;
+            const amount = parseFloat(document.getElementById('txAmount').value);
+            const paymentMethod = document.getElementById('txPaymentMethod').value;
             const dueDate = document.getElementById('txDueDate').value;
-            const amount = document.getElementById('txAmount').value;
 
-            if (!desc) { alert('Lütfen yapılan işin açıklamasını giriniz!'); return; }
-            if ((type === 'tahsilat' || type === 'bizim_odeme') && !method) { alert('Lütfen Ödeme Yöntemini seçiniz!'); return; }
-            if (!amount || Number(amount) <= 0) { alert('Lütfen geçerli bir tutar girin!'); return; }
+            if (!desc) { alert('Açıklama / Yapılan iş zorunludur!'); return; }
+            if (!amount || amount <= 0) { alert('Geçerli bir tutar girin!'); return; }
+            if ((type === 'tahsilat' || type === 'bizim_odeme') && !paymentMethod) { alert('Lütfen ödeme yöntemi seçin!'); return; }
 
-            const txData = {
+            const id = 'tx_' + Date.now();
+            const now = new Date().toLocaleString('tr-TR');
+
+            await window.setDoc(window.doc(window.db, "transactions", id), {
                 customerId: activeCustomer.id,
-                type,
-                desc,
-                method: (type === 'tahsilat' || type === 'bizim_odeme') ? method : '',
-                dueDate: dueDate || '',
-                amount: Number(amount),
-                timestamp: Date.now(),
-                dateStr: new Date().toLocaleString('tr-TR')
-            };
-
-            if (editId) {
-                await window.setDoc(window.doc(window.db, "transactions", String(editId)), txData, { merge: true });
-            } else {
-                await window.setDoc(window.doc(window.db, "transactions", String(Date.now())), txData);
-            }
+                type, desc, amount, paymentMethod, dueDate, date: now
+            });
 
             closeModal('addTxModal');
         }
 
-        function openAddKasaModal() { 
-            document.getElementById('editingKasaId').value = '';
-            document.getElementById('kasaModalTitle').innerHTML = `<i class="fa-solid fa-cash-register"></i> Günlük Gelir / Gider Kaydı`;
-            document.getElementById('kasaDesc').value = '';
-            document.getElementById('kasaMethod').value = '';
-            document.getElementById('kasaAmount').value = '';
-            document.getElementById('addKasaModal').style.display = 'flex'; 
+        async function deleteTx(id) {
+            if (confirm("Bu işlemi silmek istediğinize emin misiniz?")) {
+                await window.deleteDoc(window.doc(window.db, "transactions", id));
+            }
         }
 
-        function editKasaRecord(kId) {
-            const k = kasaRecords.find(x => String(x.id) === String(kId));
-            if (!k) return;
-
-            document.getElementById('editingKasaId').value = k.id;
-            document.getElementById('kasaModalTitle').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Gelir/Gider Kaydını Düzenle`;
-            document.getElementById('kasaType').value = k.type;
-            document.getElementById('kasaDesc').value = k.desc || '';
-            document.getElementById('kasaMethod').value = k.method || '';
-            document.getElementById('kasaAmount').value = k.amount || '';
-
+        function openAddKasaModal() {
+            document.getElementById('editingKasaId').value = '';
+            document.getElementById('kasaDesc').value = '';
+            document.getElementById('kasaAmount').value = '';
+            document.getElementById('kasaType').value = 'gelir';
+            document.getElementById('kasaMethod').value = '';
             document.getElementById('addKasaModal').style.display = 'flex';
         }
 
-        async function deleteKasaRecord(kId) {
-            if (confirm('Bu gelir/gider kaydını silmek istediğinize emin misiniz?')) {
-                await window.deleteDoc(window.doc(window.db, "kasa", String(kId)));
-            }
-        }
-
         async function saveKasaRecord() {
-            const editId = document.getElementById('editingKasaId').value;
             const type = document.getElementById('kasaType').value;
             const desc = document.getElementById('kasaDesc').value.trim();
             const method = document.getElementById('kasaMethod').value;
-            const amount = document.getElementById('kasaAmount').value;
+            const amount = parseFloat(document.getElementById('kasaAmount').value);
 
-            if (!desc) { alert('Lütfen açıklamayı giriniz!'); return; }
-            if (!method) { alert('Lütfen ödeme yöntemini seçiniz!'); return; }
-            if (!amount || Number(amount) <= 0) { alert('Lütfen geçerli bir tutar girin!'); return; }
+            if (!desc) { alert('Açıklama zorunludur!'); return; }
+            if (!method) { alert('Ödeme yöntemi seçin!'); return; }
+            if (!amount || amount <= 0) { alert('Tutar girin!'); return; }
 
-            const recordData = {
-                type,
-                desc,
-                method,
-                amount: Number(amount),
-                timestamp: Date.now(),
-                dateStr: new Date().toLocaleString('tr-TR')
-            };
+            const id = 'kasa_' + Date.now();
+            const now = new Date().toLocaleString('tr-TR');
 
-            if (editId) {
-                await window.setDoc(window.doc(window.db, "kasa", String(editId)), recordData, { merge: true });
-            } else {
-                await window.setDoc(window.doc(window.db, "kasa", String(Date.now())), recordData);
-            }
-
+            await window.setDoc(window.doc(window.db, "kasa", id), { type, desc, method, amount, date: now });
             closeModal('addKasaModal');
         }
 
-        function renderKasa() {
-            const list = document.getElementById('kasaList');
-            list.innerHTML = '';
+        async function deleteKasaRecord(id) {
+            if (confirm("Bu kasa kaydını silmek istiyor musunuz?")) {
+                await window.deleteDoc(window.doc(window.db, "kasa", id));
+            }
+        }
 
+        function renderKasa() {
+            const listEl = document.getElementById('kasaList');
+            listEl.innerHTML = '';
             let totalGelir = 0;
             let totalGider = 0;
 
-            kasaRecords.sort((a,b) => b.timestamp - a.timestamp).forEach(k => {
+            kasaRecords.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+            kasaRecords.forEach(k => {
                 if (k.type === 'gelir') totalGelir += Number(k.amount);
                 else totalGider += Number(k.amount);
 
-                const item = document.createElement('div');
-                item.className = 'tx-item';
-                let isGelir = k.type === 'gelir';
-
-                item.innerHTML = `
-                    <div style="flex: 1;">
+                const row = document.createElement('div');
+                row.className = 'tx-item';
+                row.innerHTML = `
+                    <div>
                         <div class="tx-desc">${k.desc}</div>
-                        <div class="tx-sub-info"><i class="fa-solid fa-credit-card"></i> ${k.method}</div>
-                        <div class="tx-date">${k.dateStr}</div>
+                        <div class="tx-sub-info">
+                            <span><i class="fa-solid fa-tag"></i> ${k.type === 'gelir' ? 'Gelir' : 'Gider'}</span>
+                            <span>• ${k.method || ''}</span>
+                        </div>
+                        <div class="tx-date">${k.date || ''}</div>
                     </div>
                     <div class="tx-right">
-                        <div class="tx-amount" style="color: ${isGelir ? 'var(--success-color)' : 'var(--danger-color)'};">
-                            ${isGelir ? '+' : '-'}${formatCurrency(k.amount)}
+                        <div class="tx-amount" style="color: ${k.type === 'gelir' ? 'var(--success-color)' : 'var(--danger-color)'};">
+                            ${k.type === 'gelir' ? '+' : '-'}${formatCurrency(k.amount)}
                         </div>
-                        <button class="btn-sm-icon" onclick="editKasaRecord('${k.id}')"><i class="fa-solid fa-pen"></i></button>
                         <button class="btn-sm-icon btn-sm-del" onclick="deleteKasaRecord('${k.id}')"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 `;
-                list.appendChild(item);
+                listEl.appendChild(row);
             });
 
             document.getElementById('kasaTotalGelir').innerText = formatCurrency(totalGelir);
@@ -968,22 +871,92 @@
         }
 
         function renderAnaliz() {
-            let totalTahsilat = transactions.filter(t => t.type === 'tahsilat').reduce((a, b) => a + Number(b.amount || 0), 0);
-            let totalAlacak = transactions.filter(t => t.type === 'satis').reduce((a, b) => a + Number(b.amount || 0), 0) - totalTahsilat;
-            
-            let totalKasaGelir = kasaRecords.filter(k => k.type === 'gelir').reduce((a, b) => a + Number(b.amount || 0), 0);
-            let totalKasaGider = kasaRecords.filter(k => k.type === 'gider').reduce((a, b) => a + Number(b.amount || 0), 0);
+            let toplamCiro = 0;
+            let toplamAlacak = 0;
+            let toplamHarcama = 0;
 
-            let toplamCiro = totalTahsilat + totalKasaGelir;
-            let netKar = toplamCiro - totalKasaGider;
+            // Tahsilatlar ciroya yansır
+            transactions.forEach(t => {
+                if (t.type === 'tahsilat') {
+                    toplamCiro += Number(t.amount);
+                }
+            });
+
+            // Kasa gelirleri de ciroya eklenir
+            kasaRecords.forEach(k => {
+                if (k.type === 'gelir') {
+                    toplamCiro += Number(k.amount);
+                }
+                if (k.type === 'gider') {
+                    toplamHarcama += Number(k.amount);
+                }
+            });
+
+            // Müşteri alacakları bakiye toplamı
+            customers.forEach(c => {
+                const custTx = transactions.filter(t => t.customerId === c.id);
+                let bakiye = 0;
+                custTx.forEach(t => {
+                    if (t.type === 'satis') bakiye += Number(t.amount);
+                    else if (t.type === 'tahsilat') bakiye -= Number(t.amount);
+                });
+                if (bakiye > 0) toplamAlacak += bakiye;
+            });
+
+            const netKarZarar = toplamCiro - toplamHarcama;
 
             document.getElementById('anCiro').innerText = formatCurrency(toplamCiro);
-            document.getElementById('anAlacak').innerText = formatCurrency(Math.max(0, totalAlacak));
-            document.getElementById('anGider').innerText = formatCurrency(totalKasaGider);
-            document.getElementById('anNetKar').innerText = formatCurrency(netKar);
+            document.getElementById('anAlacak').innerText = formatCurrency(toplamAlacak);
+            document.getElementById('anGider').innerText = formatCurrency(toplamHarcama);
+            
+            const netEl = document.getElementById('anNetKar');
+            netEl.innerText = formatCurrency(netKarZarar);
+            netEl.style.color = netKarZarar >= 0 ? 'var(--success-color)' : 'var(--danger-color)';
         }
 
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function checkVadeDates() {
+            const today = new Date().toISOString().split('T')[0];
+            const vadeList = [];
+
+            transactions.forEach(t => {
+                if (t.dueDate) {
+                    const c = customers.find(x => x.id === t.customerId);
+                    vadeList.push({ ...t, customerName: c ? c.name : 'Bilinmeyen Müşteri' });
+                }
+            });
+
+            document.getElementById('vadeBadge').innerText = vadeList.length;
+            const container = document.getElementById('vadeListContainer');
+            container.innerHTML = '';
+
+            if (vadeList.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 10px;">Vadesi yaklaşan kayıt bulunmuyor.</div>';
+                return;
+            }
+
+            vadeList.sort((a,b) => new Date(a.dueDate) - new Date(b.dueDate));
+
+            vadeList.forEach(v => {
+                const row = document.createElement('div');
+                row.className = 'tx-item';
+                row.innerHTML = `
+                    <div>
+                        <div class="tx-desc">${v.customerName} - ${v.desc}</div>
+                        <div class="tx-sub-info">
+                            <span><i class="fa-solid fa-calendar"></i> Vade Tarihi: ${v.dueDate}</span>
+                        </div>
+                    </div>
+                    <div class="tx-right">
+                        <div class="tx-amount" style="color: var(--accent-yellow);">${formatCurrency(v.amount)}</div>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function openVadeModal() {
+            document.getElementById('vadeModal').style.display = 'flex';
+        }
     </script>
 </body>
 </html>
