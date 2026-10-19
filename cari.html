@@ -177,7 +177,7 @@
 
         .cust-action-btns { display: flex; gap: 6px; }
 
-        /* MODAL VE DETAY (BİLGİSAYAR İÇİN GENİŞLETİLDİ) */
+        /* MODAL VE DETAY (BİLGİSAYAR İÇİN GENİŞ) */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: flex-start; z-index: 3000; padding: 15px; overflow-y: auto; }
         .modal-content { background: var(--card-bg); border-radius: 14px; padding: 22px; width: 100%; max-width: 900px; border: 1.5px solid var(--card-border); margin: 20px auto; max-height: 88vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; }
@@ -394,19 +394,19 @@
             <div class="summary-grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 6px;">
                 <div class="summary-card" style="padding: 10px;">
                     <div>
-                        <h4 style="font-size: 0.75rem;">BORÇ 🔴</h4>
-                        <div class="amount" id="detTotalBorc" style="font-size: 1.1rem; color: var(--danger-color);">₺0,00</div>
+                        <h4 style="font-size: 0.75rem;">MÜŞTERİ BORCU (ALACAK) 🟢</h4>
+                        <div class="amount" id="detTotalBorc" style="font-size: 1.1rem; color: var(--success-color);">₺0,00</div>
                     </div>
                 </div>
                 <div class="summary-card" style="padding: 10px;">
                     <div>
-                        <h4 style="font-size: 0.75rem;">TAHSİLAT 🟢</h4>
-                        <div class="amount" id="detTotalOdeme" style="font-size: 1.1rem; color: var(--success-color);">₺0,00</div>
+                        <h4 style="font-size: 0.75rem;">ÖDEME / BİZİM BORÇ 🔴</h4>
+                        <div class="amount" id="detTotalOdeme" style="font-size: 1.1rem; color: var(--danger-color);">₺0,00</div>
                     </div>
                 </div>
                 <div class="summary-card" style="padding: 10px;">
                     <div>
-                        <h4 style="font-size: 0.75rem;">BAKİYE 🟡</h4>
+                        <h4 style="font-size: 0.75rem;">NET BAKİYE 🟡</h4>
                         <div class="amount" id="detNetBakiye" style="font-size: 1.1rem; color: var(--accent-yellow);">₺0,00</div>
                     </div>
                 </div>
@@ -709,24 +709,36 @@
             custTx.sort((a,b) => new Date(b.date) - new Date(a.date));
 
             custTx.forEach(t => {
+                let displayAmount = Number(t.amount);
+                let colorStyle = 'var(--success-color)';
+                let sign = '+';
+                let typeLabel = 'Satış / Veresiye (Alacak)';
+
                 if (t.type === 'satis') {
                     toplamBorc += Number(t.amount);
                     bakiye += Number(t.amount);
+                    colorStyle = 'var(--success-color)'; // Müşterinin bize borcu -> Bizim Alacağımız (YEŞİL)
+                    sign = '+';
+                    typeLabel = 'Müşteri Borçlandırıldı (Alacak)';
                 } else if (t.type === 'tahsilat') {
                     toplamOdeme += Number(t.amount);
                     bakiye -= Number(t.amount);
+                    colorStyle = 'var(--success-color)';
+                    sign = '-';
+                    typeLabel = 'Müşteriden Tahsilat Alındı';
                 } else if (t.type === 'bizim_borc') {
                     toplamBorc += Number(t.amount);
                     bakiye -= Number(t.amount);
+                    colorStyle = 'var(--danger-color)'; // Tedarikçiye borcumuz -> Cebimizden Çıkacak (KIRMIZI)
+                    sign = '-';
+                    typeLabel = 'Bizim Borcumuz (Tedarikçi)';
                 } else if (t.type === 'bizim_odeme') {
                     toplamOdeme += Number(t.amount);
                     bakiye += Number(t.amount);
+                    colorStyle = 'var(--danger-color)';
+                    sign = '+';
+                    typeLabel = 'Bizim Ödememiz (Tedarikçiye Ödedik)';
                 }
-
-                let typeLabel = 'Satış / Borç';
-                if (t.type === 'tahsilat') typeLabel = 'Tahsilat (Ödeme Aldık)';
-                else if (t.type === 'bizim_borc') typeLabel = 'Bizim Borcumuz (Tedarikçi)';
-                else if (t.type === 'bizim_odeme') typeLabel = 'Bizim Ödememiz (Tedarikçi)';
 
                 const row = document.createElement('div');
                 row.className = 'tx-item';
@@ -741,8 +753,8 @@
                         <div class="tx-date">${t.date || ''}</div>
                     </div>
                     <div class="tx-right">
-                        <div class="tx-amount" style="color: ${t.type === 'satis' || t.type === 'bizim_odeme' ? 'var(--danger-color)' : 'var(--success-color)'};">
-                            ${t.type === 'satis' || t.type === 'bizim_borc' ? '+' : '-'}${formatCurrency(t.amount)}
+                        <div class="tx-amount" style="color: ${colorStyle};">
+                            ${sign}${formatCurrency(displayAmount)}
                         </div>
                         <button class="btn-sm-icon btn-sm-del" onclick="deleteTx('${t.id}')"><i class="fa-solid fa-trash"></i></button>
                     </div>
@@ -1003,7 +1015,6 @@
             document.getElementById('vadeModal').style.display = 'flex';
         }
 
-        // EXCEL / YEDEK İNDİRME FONKSİYONU
         function exportToExcel() {
             if (customers.length === 0) {
                 alert("Yedeklenecek müşteri kaydı bulunmuyor.");
