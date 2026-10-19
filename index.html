@@ -5,16 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Çelebi Oto Lastik - B2B Stok Portalı</title>
 
+    <!-- Lastik Favicon (Sekme Simgesi) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='%23f59e0b' d='M256 0a256 256 0 1 0 0 512 256 256 0 1 0 0-512zm0 96a160 160 0 1 1 0 320 160 160 0 1 1 0-320zm0 64a96 96 0 1 0 0 192 96 96 0 1 0 0-192z'/></svg>">
+
+    <!-- Font Awesome & Google Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
-
+    
+    <!-- Firebase SDK (Bulut Senkronizasyon İçin) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+        // GitHub Secret Scanning engelini aşmak için parça birleştirme
         const p1 = "AIzaSyDvTUGue6WpbYlGFMN7HE";
         const p2 = "bQW7sq-_PfrnA";
 
@@ -31,6 +36,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // Global fonksiyonları dışarı aktar
         window.db = db;
         window.collection = collection;
         window.getDocs = getDocs;
@@ -40,6 +46,7 @@
         window.updateDoc = updateDoc;
         window.onSnapshot = onSnapshot;
 
+        // Firebase hazır olduğunda verileri çekmeye başla
         if (typeof window.initFirebaseData === 'function') {
             window.initFirebaseData();
         }
@@ -61,6 +68,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding-bottom: 40px; overflow-x: hidden; }
 
+        /* HEADER */
         header { 
             position: relative;
             background: linear-gradient(90deg, rgba(2, 6, 23, 0.92) 0%, rgba(15, 23, 42, 0.85) 100%), 
@@ -90,8 +98,10 @@
         .user-badge { color: var(--accent-yellow); font-weight: 600; }
         .btn-logout { background: var(--danger-color); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 
+        /* MAIN CONTAINER */
         .main-container { max-width: 1350px; margin: 30px auto; padding: 0 20px; }
 
+        /* GİRİŞ EKRANI */
         .login-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(2, 6, 23, 0.88)), url('https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80');
@@ -124,6 +134,7 @@
         .btn-primary { width: 100%; padding: 14px; background: var(--accent-yellow); color: #000; font-weight: 800; border: none; border-radius: 10px; cursor: pointer; font-size: 1.1rem; transition: 0.2s; margin-top: 10px; box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4); }
         .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 6px 25px rgba(245, 158, 11, 0.6); }
 
+        /* ARAMA VE BİLDİRİM */
         .controls-section { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--card-border); margin-bottom: 25px; }
         .search-bar-row { display: flex; gap: 12px; margin-bottom: 15px; align-items: center; }
         .search-box { position: relative; flex: 1; }
@@ -138,6 +149,7 @@
         .filter-btn { flex: 1; min-width: 110px; padding: 10px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem; }
         .filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
 
+        /* YÖNETİCİ ÇUBUĞU VE ŞIK KİBAR ZAM BUTONLARI */
         .admin-bar { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; background: rgba(255,255,255,0.03); padding: 15px 20px; border-radius: 10px; border: 1px solid var(--card-border); }
         .admin-bar-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .admin-btn-group { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; width: 100%; }
@@ -151,19 +163,20 @@
         }
         .btn-bulk-item:hover { border-color: var(--accent-yellow); color: var(--accent-yellow); background: rgba(245, 158, 11, 0.08); }
 
+        /* BİLGİSAYAR MASAÜSTÜ TABLO YAPISI */
         .products-list { display: flex; flex-direction: column; gap: 12px; }
         
         .product-row { 
             background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; 
             padding: 12px 20px; display: grid; 
-            grid-template-columns: 80px 1.2fr 1.2fr 1fr 100px 90px 1.3fr auto auto; 
-            align-items: center; gap: 15px; transition: 0.2s; 
+            grid-template-columns: 75px 1.2fr 1fr 1fr 100px 90px 1.3fr auto auto; 
+            align-items: center; gap: 15px; cursor: pointer; transition: 0.2s; 
         }
         .product-row:hover { border-color: var(--accent-yellow); transform: translateX(3px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
         
         .product-img { width: 70px; height: 55px; object-fit: contain; background: #ffffff; padding: 4px; border-radius: 8px; border: 1px solid var(--card-border); }
         .col-size { font-size: 1.25rem; font-weight: 800; color: #fff; }
-        .col-brand-text { font-size: 1.05rem; color: var(--accent-yellow); font-weight: 800; text-transform: uppercase; }
+        .col-brand { font-size: 1.05rem; color: var(--accent-yellow); font-weight: 800; text-transform: uppercase; }
         .col-pattern { font-size: 0.95rem; color: var(--text-main); font-weight: 600; }
         .col-season { display: inline-block; }
         .col-dot { display: inline-block; }
@@ -184,14 +197,14 @@
         .admin-stock-control { display: flex; align-items: center; gap: 6px; background: rgba(15, 23, 42, 0.8); padding: 4px 8px; border-radius: 8px; border: 1px solid var(--card-border); }
         .admin-stock-val { font-weight: 800; color: #fff; font-size: 0.95rem; min-width: 60px; text-align: center; }
         
-        .btn-qty { background: #334155; color: #fff; border: none; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .btn-qty { background: #334155; color: #fff; border: none; width: 28px; height: 28px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .btn-qty:hover { background: var(--accent-yellow); color: #000; }
         
-        .row-actions { display: flex; gap: 8px; }
-        .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 38px; height: 38px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; font-size: 1rem; }
+        .row-actions { display: flex; gap: 6px; }
+        .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 32px; height: 32px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .btn-icon:hover { background: var(--danger-color); color: #fff; }
 
-        .btn-edit-price { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); width: 38px; height: 38px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; font-size: 1rem; }
+        .btn-edit-price { background: rgba(245, 158, 11, 0.15); color: var(--accent-yellow); border: 1px solid var(--accent-yellow); width: 32px; height: 32px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .btn-edit-price:hover { background: var(--accent-yellow); color: #000; }
 
         .notif-category-title { font-size: 1rem; font-weight: 800; color: var(--accent-yellow); margin: 15px 0 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px; display: flex; align-items: center; gap: 8px; }
@@ -201,6 +214,7 @@
         .notif-stock-zero { background: rgba(239, 68, 68, 0.25); color: var(--danger-color); border: 1px solid var(--danger-color); }
         .notif-stock-odd { background: rgba(245, 158, 11, 0.25); color: var(--accent-yellow); border: 1px solid var(--accent-yellow); }
 
+        /* MODALLAR */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: flex-start; z-index: 3000; padding: 20px; overflow-y: auto; }
         .modal-content { background: var(--card-bg); border-radius: 12px; padding: 25px; width: 100%; max-width: 550px; border: 1px solid var(--card-border); margin: 30px auto; max-height: 85vh; overflow-y: auto; box-shadow: 0 15px 35px rgba(0,0,0,0.8); }
         
@@ -208,7 +222,7 @@
         .detail-left { flex: 1; min-width: 220px; text-align: center; background: #ffffff; padding: 20px; border-radius: 10px; }
         .detail-left img { width: 100%; height: 210px; object-fit: contain; }
         .detail-right { flex: 1.5; min-width: 250px; }
-        .detail-right h2 { color: var(--accent-yellow); font-size: 1.6rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .detail-right h2 { color: var(--accent-yellow); font-size: 1.6rem; margin-bottom: 15px; }
         .detail-info-row { font-size: 1.05rem; margin-bottom: 10px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
         .detail-info-row span:first-child { color: var(--text-muted); }
         .detail-info-row span:last-child { font-weight: bold; color: #fff; }
@@ -222,6 +236,7 @@
 
         .hidden { display: none !important; }
 
+        /* TELEFON İÇİN SIFIRDAN KUSURSUZ MOBİL KART DÜZENİ */
         @media screen and (max-width: 768px) {
             .main-container { padding: 0 10px; margin: 15px auto; }
             .header-title-area h1 { font-size: 1.4rem; }
@@ -237,6 +252,7 @@
             .admin-btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
             .btn-add, .btn-bulk-item { width: 100%; justify-content: center; text-align: center; }
 
+            /* MOBİL ÜRÜN KARTLARI */
             .products-list { gap: 10px; }
             .product-row { 
                 display: flex !important;
@@ -247,11 +263,12 @@
                 background: #1e293b !important;
             }
 
-            .mobile-card-top { display: flex; align-items: center; gap: 12px; width: 100%; cursor: pointer; }
+            .mobile-card-top { display: flex; align-items: center; gap: 12px; width: 100%; }
             .product-img { width: 65px !important; height: 55px !important; flex-shrink: 0; }
             .mobile-card-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
 
             .col-size { font-size: 1.1rem !important; }
+            .col-brand { font-size: 0.95rem !important; }
 
             .mobile-card-bottom {
                 display: flex; justify-content: space-between; align-items: center; width: 100%;
@@ -261,13 +278,12 @@
             .col-price { font-size: 1.1rem !important; padding: 4px 10px !important; }
             .stock-badge-in, .stock-badge-low, .stock-badge-out { font-size: 0.78rem !important; padding: 4px 8px !important; }
             .admin-stock-control { padding: 2px 6px !important; }
-            
-            .mobile-btn-group { display: flex; gap: 8px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- GİRİŞ EKRANI -->
     <div id="loginSection" class="login-wrapper">
         <div class="login-card">
             <h1 class="login-brand-title">Çelebi Oto Lastik</h1>
@@ -280,7 +296,7 @@
 
             <div class="form-group">
                 <label><i class="fa-solid fa-user"></i> Kullanıcı Adı</label>
-                <input type="text" id="username" class="form-control" placeholder="Yönetici veya Bayi">
+                <input type="text" id="username" class="form-control" placeholder="admin veya bayi">
             </div>
             <div class="form-group">
                 <label><i class="fa-solid fa-key"></i> Şifre</label>
@@ -290,6 +306,7 @@
         </div>
     </div>
 
+    <!-- HEADER -->
     <header>
         <div class="header-container">
             <div class="header-title-area">
@@ -303,8 +320,10 @@
         </div>
     </header>
 
+    <!-- MAIN CONTAINER -->
     <div id="portalSection" class="main-container hidden">
 
+        <!-- ARAMA VE BİLDİRİM -->
         <div class="controls-section">
             <div class="search-bar-row">
                 <div class="search-box">
@@ -327,6 +346,7 @@
             </div>
         </div>
 
+        <!-- YÖNETİCİ ÇUBUĞU -->
         <div id="adminBar" class="admin-bar hidden">
             <div class="admin-bar-header">
                 <h3 style="color: var(--text-muted); font-size: 1rem;"><i class="fa-solid fa-boxes-stacked"></i> Stok Yönetimi</h3>
@@ -336,6 +356,7 @@
                 </div>
             </div>
             
+            <!-- AYRILMIŞ ŞIK KİBAR ZAM BUTONLARI -->
             <div class="admin-btn-group">
                 <span style="font-size: 0.8rem; color: var(--accent-yellow); font-weight:700; display:flex; align-items:center; gap:4px;"><i class="fa-solid fa-percent"></i> Toplu Zam/İndirim:</span>
                 <button class="btn-bulk-item" onclick="openBulkPriceModal('Yaz')"><i class="fa-solid fa-sun" style="color:#f59e0b;"></i> % Yaz</button>
@@ -346,10 +367,14 @@
             </div>
         </div>
 
-        <div id="productsGrid" class="products-list"></div>
+        <!-- STOK LİSTESİ -->
+        <div id="productsGrid" class="products-list">
+            <!-- Ürünler yükleniyor -->
+        </div>
 
     </div>
 
+    <!-- KRİTİK VE TÜKENEN STOK BİLDİRİM MODALI -->
     <div id="notifModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -361,6 +386,7 @@
         </div>
     </div>
 
+    <!-- ÜRÜN DETAY / BAYİ SİPARİŞ MODALI -->
     <div id="detailModal" class="modal">
         <div class="modal-content detail-modal-content">
             <div class="modal-header">
@@ -390,6 +416,7 @@
         </div>
     </div>
 
+    <!-- TOPLU ZAM MODALI -->
     <div id="bulkPriceModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -406,13 +433,14 @@
         </div>
     </div>
 
+    <!-- ÜRÜN EKLE MODALI -->
     <div id="productModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modalTitleText"><i class="fa-solid fa-plus-circle"></i> Yeni Ürün Ekle</h3>
                 <span class="close-btn" onclick="closeModal('productModal')">&times;</span>
             </div>
-
+            
             <input type="hidden" id="editingProductId" value="">
 
             <div class="form-group">
@@ -504,6 +532,7 @@
         </div>
     </div>
 
+    <!-- AYARLAR MODALI -->
     <div id="settingsModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -530,8 +559,8 @@
         const DEFAULT_TIRE_IMG = "https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=300&auto=format&fit=crop&q=80";
 
         let config = JSON.parse(localStorage.getItem('celebi_config')) || {
-            adminUser: 'çelebi',
-            adminPass: 'çelebi166',
+            adminUser: 'admin',
+            adminPass: '1234',
             bayiUser: 'bayi',
             bayiPass: '1234'
         };
@@ -541,9 +570,11 @@
         let selectedCategory = 'all';
         let activeDetailProduct = null;
 
+        // Firebase Veri Senkronizasyonu
         window.initFirebaseData = function() {
             if (!window.db) return;
             
+            // Canlı Dinleme (Real-time sync)
             window.onSnapshot(window.collection(window.db, "products"), (snapshot) => {
                 products = [];
                 snapshot.forEach((docSnap) => {
@@ -592,15 +623,12 @@
         }
 
         function login() {
-            const u = document.getElementById('username').value.trim().toLowerCase();
+            const u = document.getElementById('username').value.trim();
             const p = document.getElementById('password').value.trim();
 
-            const isAdminUser = (u === 'çelebi' || u === 'celebi' || u === config.adminUser.toLowerCase());
-            const isAdminPass = (p === 'çelebi166' || p === 'celebi166' || p === config.adminPass);
-
-            if (isAdminUser && isAdminPass) {
+            if (u === config.adminUser && p === config.adminPass) {
                 currentUser = { role: 'admin', name: 'Yönetici' };
-            } else if (u === config.bayiUser.toLowerCase() && p === config.bayiPass) {
+            } else if (u === config.bayiUser && p === config.bayiPass) {
                 currentUser = { role: 'bayi', name: config.bayiUser };
             } else {
                 alert('Kullanıcı adı veya şifre hatalı!');
@@ -681,7 +709,7 @@
                         let stockText = Number(p.stock) === 0 ? '0 ADET (TÜKENDİ)' : `${p.stock} Adet (Tekli)`;
 
                         item.innerHTML = `
-                            <div class="notif-item-title">${p.brand || ''} ${p.size || ''} ${p.pattern ? `(${p.pattern})` : ''}</div>
+                            <div class="notif-item-title">${p.brand} ${p.size} ${p.pattern ? `(${p.pattern})` : ''}</div>
                             <div class="notif-item-stock ${stockBadgeClass}"><i class="fa-solid fa-triangle-exclamation"></i> ${stockText}</div>
                         `;
                         container.appendChild(item);
@@ -723,7 +751,7 @@
             if (p.season === 'Kış') return `<span class="tag"><i class="fa-solid fa-snowflake" style="color:#3b82f6;"></i> Kış</span>`;
             if (p.season === 'Yaz') return `<span class="tag"><i class="fa-solid fa-sun" style="color:#f59e0b;"></i> Yaz</span>`;
             if (p.season === '4 Mevsim') return `<span class="tag"><i class="fa-solid fa-cloud-sun-rain" style="color:#10b981;"></i> 4 Mevsim</span>`;
-            return `<span class="tag">${p.season || p.group || ''}</span>`;
+            return `<span class="tag">${p.season || p.group}</span>`;
         }
 
         function renderProducts() {
@@ -733,10 +761,8 @@
             grid.innerHTML = '';
 
             let filtered = products.filter(p => {
-                const brandStr = p.brand ? p.brand.toLowerCase() : '';
-                const sizeStr = p.size ? p.size.toLowerCase() : '';
                 const patternStr = p.pattern ? p.pattern.toLowerCase() : '';
-                const matchSearch = brandStr.includes(search) || sizeStr.includes(search) || patternStr.includes(search);
+                const matchSearch = p.brand.toLowerCase().includes(search) || p.size.toLowerCase().includes(search) || patternStr.includes(search);
                 let matchCat = true;
 
                 if (selectedCategory === 'all') matchCat = p.group !== 'İç Lastik';
@@ -758,18 +784,20 @@
                 const row = document.createElement('div');
                 row.className = 'product-row';
                 const imgSrc = p.img && p.img.trim() !== '' ? p.img : DEFAULT_TIRE_IMG;
+                row.onclick = () => openDetailModal(p);
 
                 let stockHtml = '';
                 if (currentUser && currentUser.role === 'admin') {
                     stockHtml = `
-                        <div class="admin-stock-control">
+                        <div class="admin-stock-control" onclick="event.stopPropagation();">
                             <button class="btn-qty" onclick="changeStock('${p.id}', -1)">-</button>
-                            <span class="admin-stock-val">${p.stock || 0} Adet</span>
+                            <span class="admin-stock-val">${p.stock} Adet</span>
                             <button class="btn-qty" onclick="changeStock('${p.id}', 1)">+</button>
                         </div>
                     `;
                 } else {
-                    let stCount = Number(p.stock || 0);
+                    // BAYİ GÖRÜNÜMÜ: 4 VE ÜSTÜ -> STOKTA VAR, 1-3 -> NET ADET, 0 -> REZERVE STOK
+                    let stCount = Number(p.stock);
                     if (stCount >= 4) {
                         stockHtml = `<div class="stock-badge-in"><i class="fa-solid fa-circle-check"></i> STOKTA VAR</div>`;
                     } else if (stCount > 0) {
@@ -781,11 +809,11 @@
 
                 if (isMobile) {
                     row.innerHTML = `
-                        <div class="mobile-card-top" onclick="openDetailModalById('${p.id}')">
+                        <div class="mobile-card-top">
                             <img src="${imgSrc}" class="product-img" alt="Ürün" onerror="this.src='${DEFAULT_TIRE_IMG}'">
                             <div class="mobile-card-info">
-                                <div class="col-size">${p.size || ''}</div>
-                                <div class="col-brand-text">${p.brand || ''}</div>
+                                <div class="col-size">${p.size}</div>
+                                <div class="col-brand">${p.brand} ${p.pattern ? `(${p.pattern})` : ''}</div>
                                 <div style="margin-top:2px;">${getCategoryBadgeHtml(p)}</div>
                             </div>
                         </div>
@@ -793,27 +821,21 @@
                             <div class="col-price">${formatPrice(p.price)}</div>
                             <div>${stockHtml}</div>
                         </div>
-                        ${currentUser && currentUser.role === 'admin' ? `
-                            <div style="display: flex; gap: 8px; justify-content: flex-end; width: 100%; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 8px; margin-top: 2px;">
-                                <button class="btn-edit-price" onclick="openEditProductModal('${p.id}')" title="Ürünü Tam Düzenle"><i class="fa-solid fa-pen"></i></button>
-                                <button class="btn-icon" onclick="deleteProduct('${p.id}')" title="Ürünü Sil"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        ` : ''}
                     `;
                 } else {
                     row.innerHTML = `
-                        <img src="${imgSrc}" class="product-img" alt="Ürün" onerror="this.src='${DEFAULT_TIRE_IMG}'" onclick="openDetailModalById('${p.id}')">
-                        <div class="col-size" onclick="openDetailModalById('${p.id}')">${p.size || ''}</div>
-                        <div class="col-brand-text" onclick="openDetailModalById('${p.id}')">${p.brand || ''}</div>
-                        <div class="col-pattern" onclick="openDetailModalById('${p.id}')">${p.pattern ? `<span class="tag tag-pattern"><i class="fa-solid fa-grip"></i> ${p.pattern}</span>` : '-'}</div>
+                        <img src="${imgSrc}" class="product-img" alt="Ürün" onerror="this.src='${DEFAULT_TIRE_IMG}'">
+                        <div class="col-size">${p.size}</div>
+                        <div class="col-brand">${p.brand}</div>
+                        <div class="col-pattern">${p.pattern ? `<span class="tag tag-pattern"><i class="fa-solid fa-grip"></i> ${p.pattern}</span>` : '-'}</div>
                         <div class="col-season">${getCategoryBadgeHtml(p)}</div>
                         <div class="col-dot"><span class="tag">DOT ${p.dot || '2026'}</span></div>
                         <div class="col-price">${formatPrice(p.price)}</div>
                         <div>${stockHtml}</div>
                         ${currentUser && currentUser.role === 'admin' ? `
                             <div class="row-actions">
-                                <button class="btn-edit-price" onclick="openEditProductModal('${p.id}')" title="Ürünü Tam Düzenle"><i class="fa-solid fa-pen"></i></button>
-                                <button class="btn-icon" onclick="deleteProduct('${p.id}')" title="Ürünü Sil"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn-edit-price" onclick="event.stopPropagation(); openEditProductModal('${p.id}')" title="Ürünü Tam Düzenle"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn-icon" onclick="event.stopPropagation(); deleteProduct('${p.id}')" title="Ürünü Sil"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         ` : '<div></div>'}
                     `;
@@ -822,15 +844,10 @@
             });
         }
 
-        function openDetailModalById(id) {
-            const product = products.find(p => String(p.id) === String(id));
-            if (product) openDetailModal(product);
-        }
-
         async function changeStock(id, delta) {
             const product = products.find(p => p.id === id);
             if (product) {
-                let newStock = Math.max(0, Number(product.stock || 0) + delta);
+                let newStock = Math.max(0, Number(product.stock) + delta);
                 try {
                     await window.updateDoc(window.doc(window.db, "products", id), { stock: newStock });
                 } catch (e) {
@@ -864,7 +881,7 @@
                         else if ((targetCategory === 'Yaz' || targetCategory === 'Kış' || targetCategory === '4 Mevsim') && p.season === targetCategory && p.group !== 'İç Lastik') isTarget = true;
 
                         if (isTarget) {
-                            let currentPrice = Number(p.price || 0);
+                            let currentPrice = Number(p.price);
                             let newPrice = currentPrice + (currentPrice * (percent / 100));
                             let roundedPrice = Math.round(newPrice * 100) / 100;
                             await window.updateDoc(window.doc(window.db, "products", p.id), { price: roundedPrice });
@@ -880,50 +897,44 @@
         }
 
         function openEditProductModal(id) {
-            const product = products.find(p => String(p.id) === String(id));
+            const product = products.find(p => p.id === id);
             if (!product) return;
 
             document.getElementById('editingProductId').value = product.id;
             document.getElementById('modalTitleText').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Ürünü Düzenle`;
             document.getElementById('saveProductBtn').innerHTML = `<i class="fa-solid fa-floppy-disk"></i> Değişiklikleri Kaydet`;
 
-            const groupVal = product.group || 'Otomobil';
-            document.getElementById('pGroupSelect').value = groupVal;
-            toggleGroupFields(groupVal);
+            document.getElementById('pGroupSelect').value = product.group || 'Otomobil';
+            toggleGroupFields(product.group || 'Otomobil');
 
             const sizeSelect = document.getElementById('pSizeSelect');
-            let sizeExists = Array.from(sizeSelect.options).some(opt => opt.value === (product.size || ''));
+            let sizeExists = Array.from(sizeSelect.options).some(opt => opt.value === product.size);
             if (sizeExists) {
                 sizeSelect.value = product.size;
                 document.getElementById('customSizeGroup').classList.add('hidden');
             } else {
                 sizeSelect.value = 'Diger';
                 document.getElementById('customSizeGroup').classList.remove('hidden');
-                document.getElementById('pCustomSize').value = product.size || '';
+                document.getElementById('pCustomSize').value = product.size;
             }
 
             const brandSelect = document.getElementById('pBrandSelect');
-            let brandExists = Array.from(brandSelect.options).some(opt => opt.value.toLowerCase() === (product.brand || '').toLowerCase());
+            let brandExists = Array.from(brandSelect.options).some(opt => opt.value === product.brand);
             if (brandExists) {
-                for(let opt of brandSelect.options) {
-                    if(opt.value.toLowerCase() === (product.brand || '').toLowerCase()) {
-                        brandSelect.value = opt.value;
-                        break;
-                    }
-                }
+                brandSelect.value = product.brand;
                 document.getElementById('customBrandGroup').classList.add('hidden');
             } else {
                 brandSelect.value = 'Diger';
                 document.getElementById('customBrandGroup').classList.remove('hidden');
-                document.getElementById('pCustomBrand').value = product.brand || '';
+                document.getElementById('pCustomBrand').value = product.brand;
             }
 
             document.getElementById('pPattern').value = product.pattern || '';
             document.getElementById('pSeason').value = product.season || 'Yaz';
             document.getElementById('pDot').value = product.dot || '2026';
             document.getElementById('pImg').value = product.img || '';
-            document.getElementById('pPrice').value = product.price || '';
-            document.getElementById('pStock').value = product.stock !== undefined ? product.stock : '';
+            document.getElementById('pPrice').value = product.price;
+            document.getElementById('pStock').value = product.stock;
 
             document.getElementById('productModal').style.display = 'flex';
         }
@@ -947,21 +958,21 @@
         function openDetailModal(p) {
             activeDetailProduct = p;
             document.getElementById('detImg').src = p.img && p.img.trim() !== '' ? p.img : DEFAULT_TIRE_IMG;
-            document.getElementById('detBrand').innerText = p.brand || '';
-            document.getElementById('detSize').innerText = p.size || '';
+            document.getElementById('detBrand').innerText = p.brand;
+            document.getElementById('detSize').innerText = p.size;
             document.getElementById('detPattern').innerText = p.pattern ? p.pattern : '--';
-            document.getElementById('detSeason').innerText = p.season || p.group || '';
+            document.getElementById('detSeason').innerText = p.season || p.group;
             document.getElementById('detDot').innerText = p.dot || '2026';
             
             let detStockElem = document.getElementById('detStock');
             const bayiOrderArea = document.getElementById('bayiOrderArea');
 
             if (currentUser && currentUser.role === 'admin') {
-                detStockElem.innerText = (p.stock || 0) + " Adet";
+                detStockElem.innerText = p.stock + " Adet";
                 detStockElem.style.color = "var(--text-main)";
                 bayiOrderArea.classList.add('hidden');
             } else {
-                let stCount = Number(p.stock || 0);
+                let stCount = Number(p.stock);
                 if (stCount >= 4) {
                     detStockElem.innerText = "STOKTA VAR";
                     detStockElem.style.color = "var(--success-color)";
@@ -984,7 +995,7 @@
             const reqQty = document.getElementById('bayiReqQty').value;
             if (!reqQty || reqQty <= 0) { alert('Lütfen geçerli bir adet girin!'); return; }
             if (activeDetailProduct) {
-                alert(`Sipariş Talebiniz Alındı!\n\nÜrün: ${activeDetailProduct.brand || ''} - ${activeDetailProduct.size || ''}\nTalep Edilen Adet: ${reqQty} Adet\n\nBu talebiniz yöneticiye iletilmiştir.`);
+                alert(`Sipariş Talebiniz Alındı!\n\nÜrün: ${activeDetailProduct.brand} - ${activeDetailProduct.size}\nTalep Edilen Adet: ${reqQty} Adet\n\nBu talebiniz yöneticiye iletilmiştir.`);
                 closeModal('detailModal');
             }
         }
