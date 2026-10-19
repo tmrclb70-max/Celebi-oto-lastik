@@ -18,6 +18,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
 
+    <!-- PDF Oluşturucu Kütüphanesi -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -200,7 +203,16 @@
         .btn-sm-icon:hover { border-color: var(--accent-yellow); color: var(--accent-yellow); background: rgba(245, 158, 11, 0.15); }
         .btn-sm-del:hover { border-color: var(--danger-color); color: var(--danger-color); background: rgba(239, 68, 68, 0.15); }
 
+        .btn-pdf { background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: white; border: none; padding: 10px 16px; border-radius: 8px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 0.88rem; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4); }
+
         .hidden { display: none !important; }
+
+        /* PDF YAZDIRMA TASARIMI (BEYAZ ZEMİN, ŞIK ŞABLON) */
+        #pdfExportTemplate { display: none; background: #ffffff; color: #000000; padding: 30px; font-family: 'Montserrat', sans-serif; }
+        #pdfExportTemplate h2 { color: #1e1b4b; margin-bottom: 2px; }
+        #pdfExportTemplate table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        #pdfExportTemplate th, #pdfExportTemplate td { border: 1px solid #cbd5e1; padding: 8px 12px; text-align: left; font-size: 0.85rem; }
+        #pdfExportTemplate th { background: #1e1b4b; color: #ffffff; }
 
         @media (max-width: 768px) {
             .header-title h1 { font-size: 1.2rem; }
@@ -334,7 +346,7 @@
             <div id="kasaList" class="tx-history"></div>
         </div>
 
-        <!-- ANALİZ SEKMESİ (TÜM ZAMANLAR BİRİKİMLİ) -->
+        <!-- ANALİZ SEKMESİ -->
         <div id="analizView" class="hidden">
             <div class="summary-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
                 <div class="summary-card">
@@ -395,7 +407,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="detCustName">--</h3>
-                <span class="close-btn" onclick="closeModal('customerDetailModal')">&times;</span>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <button class="btn-pdf" onclick="generateCustomerPDF()"><i class="fa-solid fa-file-pdf"></i> PDF Ekstre İndir / Paylaş</button>
+                    <span class="close-btn" onclick="closeModal('customerDetailModal')">&times;</span>
+                </div>
             </div>
             <p id="detCustPhone" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;"></p>
 
@@ -537,6 +552,9 @@
             <div id="vadeListContainer" class="tx-history"></div>
         </div>
     </div>
+
+    <!-- GİZLİ PDF ŞABLONU -->
+    <div id="pdfExportTemplate"></div>
 
     <script>
         let customers = [];
@@ -725,25 +743,25 @@
                 if (t.type === 'satis') {
                     toplamBorc += Number(t.amount);
                     bakiye += Number(t.amount);
-                    colorStyle = 'var(--success-color)'; // Müşteri borcu -> YEŞİL
+                    colorStyle = 'var(--success-color)'; // YEŞİL
                     sign = '+';
                     typeLabel = 'Müşteri Borçlandırıldı (Alacak)';
                 } else if (t.type === 'tahsilat') {
                     toplamOdeme += Number(t.amount);
                     bakiye -= Number(t.amount);
-                    colorStyle = 'var(--danger-color)'; // Müşteri ödeme yaptı -> KIRMIZI
+                    colorStyle = 'var(--danger-color)'; // KIRMIZI
                     sign = '-';
                     typeLabel = 'Müşteriden Tahsilat Alındı';
                 } else if (t.type === 'bizim_borc') {
                     toplamBorc += Number(t.amount);
                     bakiye -= Number(t.amount);
-                    colorStyle = 'var(--danger-color)'; // Bizim borcumuz -> KIRMIZI
+                    colorStyle = 'var(--danger-color)'; // KIRMIZI
                     sign = '-';
                     typeLabel = 'Bizim Borcumuz (Tedarikçi)';
                 } else if (t.type === 'bizim_odeme') {
                     toplamOdeme += Number(t.amount);
                     bakiye += Number(t.amount);
-                    colorStyle = 'var(--success-color)'; // Bizim ödememiz -> YEŞİL
+                    colorStyle = 'var(--success-color)'; // YEŞİL
                     sign = '+';
                     typeLabel = 'Bizim Ödememiz (Tedarikçiye Ödedik)';
                 }
@@ -775,6 +793,129 @@
             document.getElementById('detNetBakiye').innerText = formatCurrency(bakiye);
 
             document.getElementById('customerDetailModal').style.display = 'flex';
+        }
+
+        // PDF OLUŞTURMA VE WHATSAPP İÇİN İNDİRME
+        function generateCustomerPDF() {
+            if (!activeCustomer) return;
+
+            const custTx = transactions.filter(t => t.customerId === activeCustomer.id);
+            custTx.sort((a,b) => new Date(a.date) - new Date(b.date));
+
+            let bakiye = 0, toplamBorc = 0, toplamOdeme = 0;
+
+            let rowsHtml = '';
+            custTx.forEach((t, index) => {
+                let sign = '+';
+                let typeLabel = '';
+
+                if (t.type === 'satis') {
+                    toplamBorc += Number(t.amount);
+                    bakiye += Number(t.amount);
+                    sign = '+';
+                    typeLabel = 'Satış / Veresiye';
+                } else if (t.type === 'tahsilat') {
+                    toplamOdeme += Number(t.amount);
+                    bakiye -= Number(t.amount);
+                    sign = '-';
+                    typeLabel = 'Tahsilat (Ödeme Aldık)';
+                } else if (t.type === 'bizim_borc') {
+                    toplamBorc += Number(t.amount);
+                    bakiye -= Number(t.amount);
+                    sign = '-';
+                    typeLabel = 'Bizim Borcumuz';
+                } else if (t.type === 'bizim_odeme') {
+                    toplamOdeme += Number(t.amount);
+                    bakiye += Number(t.amount);
+                    sign = '+';
+                    typeLabel = 'Bizim Ödememiz';
+                }
+
+                rowsHtml += `
+                    <tr>
+                        <td style="text-align:center;">${index + 1}</td>
+                        <td>${t.date || ''}</td>
+                        <td><b>${t.desc}</b></td>
+                        <td>${typeLabel} ${t.paymentMethod ? ' (' + t.paymentMethod + ')' : ''}</td>
+                        <td style="text-align:right; font-weight:bold; color: ${sign === '+' ? '#16a34a' : '#dc2626'};">
+                            ${sign}${formatCurrency(t.amount)}
+                        </td>
+                        <td style="text-align:right; font-weight:bold;">${formatCurrency(bakiye)}</td>
+                    </tr>
+                `;
+            });
+
+            const pdfContainer = document.getElementById('pdfExportTemplate');
+            const todayStr = new Date().toLocaleDateString('tr-TR');
+
+            pdfContainer.innerHTML = `
+                <div style="border-bottom: 3px solid #f59e0b; padding-bottom: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h1 style="color: #1e1b4b; font-size: 22px; font-weight: 900; margin: 0;">ÇELEBİ OTO LASTİK</h1>
+                        <p style="color: #d97706; font-size: 12px; font-weight: bold; margin-top: 2px;">"Yolunuzda Güven, Lastiğinizde Kalite"</p>
+                    </div>
+                    <div style="text-align: right; font-size: 12px; color: #475569;">
+                        <b>Ekstre Tarihi:</b> ${todayStr}<br>
+                        <b>Cari Tipi:</b> Müşteri Hesabı
+                    </div>
+                </div>
+
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 8px; margin-bottom: 15px;">
+                    <h3 style="margin: 0 0 5px 0; color: #0f172a; font-size: 16px;">MÜŞTERİ BİLGİLERİ</h3>
+                    <p style="margin: 0; font-size: 14px; font-weight: bold; color: #1e293b;">Müşteri / Firma Adı: ${activeCustomer.name}</p>
+                    <p style="margin: 3px 0 0 0; font-size: 13px; color: #64748b;">Telefon: ${activeCustomer.phone || 'Belirtilmedi'}</p>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <div style="flex:1; background: #ecfdf5; border: 1px solid #10b981; padding: 10px; border-radius: 6px; text-align: center;">
+                        <span style="font-size: 11px; color: #047857; font-weight: bold;">TOPLAM BORÇ / ALACAK</span><br>
+                        <b style="font-size: 16px; color: #047857;">${formatCurrency(toplamBorc)}</b>
+                    </div>
+                    <div style="flex:1; background: #fef2f2; border: 1px solid #ef4444; padding: 10px; border-radius: 6px; text-align: center;">
+                        <span style="font-size: 11px; color: #b91c1c; font-weight: bold;">TOPLAM ÖDEME</span><br>
+                        <b style="font-size: 16px; color: #b91c1c;">${formatCurrency(toplamOdeme)}</b>
+                    </div>
+                    <div style="flex:1; background: #fffbeb; border: 1px solid #f59e0b; padding: 10px; border-radius: 6px; text-align: center;">
+                        <span style="font-size: 11px; color: #b45309; font-weight: bold;">GÜNCEL NET BAKİYE</span><br>
+                        <b style="font-size: 16px; color: #b45309;">${formatCurrency(bakiye)}</b>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 14px; color: #1e1b4b; margin-bottom: 8px;">HESAP HAREKETLERİ DETAYI</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30px; text-align:center;">#</th>
+                            <th style="width: 110px;">Tarih</th>
+                            <th>Açıklama / Yapılan İş</th>
+                            <th style="width: 140px;">İşlem Türü</th>
+                            <th style="width: 100px; text-align:right;">Tutar</th>
+                            <th style="width: 100px; text-align:right;">Bakiye</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rowsHtml || '<tr><td colspan="6" style="text-align:center;">Kayıtlı hareket yok.</td></tr>'}
+                    </tbody>
+                </table>
+
+                <div style="margin-top: 30px; border-top: 1px solid #e2e8f0; padding-top: 10px; text-align: center; font-size: 11px; color: #94a3b8;">
+                    Bu ekstre Çelebi Oto Lastik Cari Hesap Sistemi tarafından otomatik oluşturulmuştur.
+                </div>
+            `;
+
+            pdfContainer.style.display = 'block';
+
+            const opt = {
+                margin:       10,
+                filename:     `Celebi_Oto_Lastik_${activeCustomer.name.replace(/\s+/g, '_')}_Ekstre.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(pdfContainer).save().then(() => {
+                pdfContainer.style.display = 'none';
+            });
         }
 
         function editCustomer(id) {
@@ -897,7 +1038,6 @@
             }
         }
 
-        // GELİR / GİDERİ TAM GÜNE (SADECE TARİHE) GÖRE TEK BAŞLIKTA TOPLAYAN FONKSİYON
         function renderKasa() {
             const listEl = document.getElementById('kasaList');
             const dateSearchInput = document.getElementById('searchKasaDateInput') ? document.getElementById('searchKasaDateInput').value.toLowerCase().trim() : '';
@@ -912,17 +1052,15 @@
                 if (k.type === 'gelir') totalGelir += Number(k.amount);
                 else totalGider += Number(k.amount);
 
-                // Tarihten SAATİ TEMİZLE, sadece 'DD.MM.YYYY' kısmını al (Örn: 19.10.2026)
                 let dateOnly = "Tarihsiz";
                 if (k.date) {
                     const parts = k.date.split(' ');
                     dateOnly = parts[0] ? parts[0].replace(',', '') : k.date;
                 }
 
-                // Arama filtresi kontrolü (Tarih veya Açıklama)
                 const fullText = (dateOnly + " " + (k.desc || '') + " " + (k.user || '')).toLowerCase();
                 if (dateSearchInput && !fullText.includes(dateSearchInput)) {
-                    return; // Filtreye uymuyorsa atla
+                    return;
                 }
 
                 if (!grouped[dateOnly]) {
@@ -934,12 +1072,10 @@
                 else grouped[dateOnly].dayGider += Number(k.amount);
             });
 
-            // Üst Kasa Özet Kartları
             document.getElementById('kasaTotalGelir').innerText = formatCurrency(totalGelir);
             document.getElementById('kasaTotalGider').innerText = formatCurrency(totalGider);
             document.getElementById('kasaNet').innerText = formatCurrency(totalGelir - totalGider);
 
-            // Tarihleri Gün Olarak Yeniden Eskiye Sırala
             const sortedDates = Object.keys(grouped).sort((a,b) => {
                 const pA = a.split('.').reverse().join('-');
                 const pB = b.split('.').reverse().join('-');
@@ -955,7 +1091,6 @@
                 const group = grouped[dateKey];
                 const dayNet = group.dayGelir - group.dayGider;
 
-                // O GÜNÜN TEK VE TOPLU BAŞLIĞI
                 const groupHeader = document.createElement('div');
                 groupHeader.className = 'day-group-title';
                 groupHeader.innerHTML = `
@@ -968,7 +1103,6 @@
                 `;
                 listEl.appendChild(groupHeader);
 
-                // O Güne Ait Tüm İşlemler
                 group.items.forEach(k => {
                     const row = document.createElement('div');
                     row.className = 'tx-item';
@@ -995,7 +1129,6 @@
             });
         }
 
-        // ANALİZ SEKMESİ (TÜM ZAMANLAR TOPLAMI - DOKUNULMADI)
         function renderAnaliz() {
             let toplamCiro = 0;
             let toplamAlacak = 0;
