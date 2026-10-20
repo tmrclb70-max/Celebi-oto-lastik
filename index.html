@@ -5,21 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Çelebi Oto Lastik - B2B Stok Portalı</title>
 
-    <!-- Lastik Favicon (Sekme Simgesi) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='%23f59e0b' d='M256 0a256 256 0 1 0 0 512 256 256 0 1 0 0-512zm0 96a160 160 0 1 1 0 320 160 160 0 1 1 0-320zm0 64a96 96 0 1 0 0 192 96 96 0 1 0 0-192z'/></svg>">
-
-    <!-- Font Awesome & Google Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
-    
-    <!-- Firebase SDK (Bulut Senkronizasyon İçin) -->
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // GitHub Secret Scanning engelini aşmak için parça birleştirme
         const p1 = "AIzaSyDvTUGue6WpbYlGFMN7HE";
         const p2 = "bQW7sq-_PfrnA";
 
@@ -36,7 +31,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Global fonksiyonları dışarı aktar
         window.db = db;
         window.collection = collection;
         window.getDocs = getDocs;
@@ -46,7 +40,6 @@
         window.updateDoc = updateDoc;
         window.onSnapshot = onSnapshot;
 
-        // Firebase hazır olduğunda verileri çekmeye başla
         if (typeof window.initFirebaseData === 'function') {
             window.initFirebaseData();
         }
@@ -68,7 +61,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding-bottom: 40px; overflow-x: hidden; }
 
-        /* HEADER */
         header { 
             position: relative;
             background: linear-gradient(90deg, rgba(2, 6, 23, 0.92) 0%, rgba(15, 23, 42, 0.85) 100%), 
@@ -98,10 +90,45 @@
         .user-badge { color: var(--accent-yellow); font-weight: 600; }
         .btn-logout { background: var(--danger-color); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 
-        /* MAIN CONTAINER */
         .main-container { max-width: 1350px; margin: 30px auto; padding: 0 20px; }
 
-        /* GİRİŞ EKRANI */
+        /* YENİ BANNER ALANI STİLİ */
+        .hero-banner {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(90deg, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0.4) 100%), url('https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=1600&auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner-content h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .hero-banner-content h2 span {
+            color: #ef4444;
+        }
+
+        .hero-banner-content p {
+            font-size: 1.1rem;
+            color: var(--accent-yellow);
+            font-weight: 600;
+        }
+
         .login-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(2, 6, 23, 0.88)), url('https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80');
@@ -134,7 +161,6 @@
         .btn-primary { width: 100%; padding: 14px; background: var(--accent-yellow); color: #000; font-weight: 800; border: none; border-radius: 10px; cursor: pointer; font-size: 1.1rem; transition: 0.2s; margin-top: 10px; box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4); }
         .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 6px 25px rgba(245, 158, 11, 0.6); }
 
-        /* ARAMA VE BİLDİRİM */
         .controls-section { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--card-border); margin-bottom: 25px; }
         .search-bar-row { display: flex; gap: 12px; margin-bottom: 15px; align-items: center; }
         .search-box { position: relative; flex: 1; }
@@ -149,7 +175,6 @@
         .filter-btn { flex: 1; min-width: 110px; padding: 10px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem; }
         .filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
 
-        /* YÖNETİCİ ÇUBUĞU VE ŞIK KİBAR ZAM BUTONLARI */
         .admin-bar { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; background: rgba(255,255,255,0.03); padding: 15px 20px; border-radius: 10px; border: 1px solid var(--card-border); }
         .admin-bar-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .admin-btn-group { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; width: 100%; }
@@ -163,23 +188,20 @@
         }
         .btn-bulk-item:hover { border-color: var(--accent-yellow); color: var(--accent-yellow); background: rgba(245, 158, 11, 0.08); }
 
-        /* BİLGİSAYAR MASAÜSTÜ TABLO YAPISI */
         .products-list { display: flex; flex-direction: column; gap: 12px; }
         
         .product-row { 
             background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; 
             padding: 12px 20px; display: grid; 
-            grid-template-columns: 75px 1.2fr 1fr 1fr 100px 90px 1.3fr auto auto; 
-            align-items: center; gap: 15px; cursor: pointer; transition: 0.2s; 
+            grid-template-columns: 80px 1.2fr 1.2fr 1fr 100px 90px 1.3fr auto auto; 
+            align-items: center; gap: 15px; transition: 0.2s; 
         }
         .product-row:hover { border-color: var(--accent-yellow); transform: translateX(3px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
         
         .product-img { width: 70px; height: 55px; object-fit: contain; background: #ffffff; padding: 4px; border-radius: 8px; border: 1px solid var(--card-border); }
         .col-size { font-size: 1.25rem; font-weight: 800; color: #fff; }
-        .col-brand { font-size: 1.05rem; color: var(--accent-yellow); font-weight: 800; text-transform: uppercase; }
+        .col-brand-text { font-size: 1.05rem; color: var(--accent-yellow); font-weight: 800; text-transform: uppercase; }
         .col-pattern { font-size: 0.95rem; color: var(--text-main); font-weight: 600; }
-        .col-season { display: inline-block; }
-        .col-dot { display: inline-block; }
         
         .col-price { 
             font-size: 1.25rem; font-weight: 900; color: #34d399; text-align: right; 
@@ -197,35 +219,18 @@
         .admin-stock-control { display: flex; align-items: center; gap: 6px; background: rgba(15, 23, 42, 0.8); padding: 4px 8px; border-radius: 8px; border: 1px solid var(--card-border); }
         .admin-stock-val { font-weight: 800; color: #fff; font-size: 0.95rem; min-width: 60px; text-align: center; }
         
-        .btn-qty { background: #334155; color: #fff; border: none; width: 28px; height: 28px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .btn-qty { background: #334155; color: #fff; border: none; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .btn-qty:hover { background: var(--accent-yellow); color: #000; }
         
-        .row-actions { display: flex; gap: 6px; }
-        .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 32px; height: 32px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .row-actions { display: flex; gap: 8px; }
+        .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 38px; height: 38px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; font-size: 1rem; }
         .btn-icon:hover { background: var(--danger-color); color: #fff; }
 
-        .btn-edit-price { background: rgba(245, 158, 11, 0.15); color: var(--accent-yellow); border: 1px solid var(--accent-yellow); width: 32px; height: 32px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .btn-edit-price { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); width: 38px; height: 38px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; font-size: 1rem; }
         .btn-edit-price:hover { background: var(--accent-yellow); color: #000; }
 
-        .notif-category-title { font-size: 1rem; font-weight: 800; color: var(--accent-yellow); margin: 15px 0 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px; display: flex; align-items: center; gap: 8px; }
-        .notif-item { background: #0f172a; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--card-border); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; }
-        .notif-item-title { color: #fff; font-weight: 700; }
-        .notif-item-stock { padding: 3px 8px; border-radius: 6px; font-weight: 800; font-size: 0.85rem; }
-        .notif-stock-zero { background: rgba(239, 68, 68, 0.25); color: var(--danger-color); border: 1px solid var(--danger-color); }
-        .notif-stock-odd { background: rgba(245, 158, 11, 0.25); color: var(--accent-yellow); border: 1px solid var(--accent-yellow); }
-
-        /* MODALLAR */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: flex-start; z-index: 3000; padding: 20px; overflow-y: auto; }
         .modal-content { background: var(--card-bg); border-radius: 12px; padding: 25px; width: 100%; max-width: 550px; border: 1px solid var(--card-border); margin: 30px auto; max-height: 85vh; overflow-y: auto; box-shadow: 0 15px 35px rgba(0,0,0,0.8); }
-        
-        .detail-modal-content { max-width: 650px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; border: 2px solid var(--accent-yellow); }
-        .detail-left { flex: 1; min-width: 220px; text-align: center; background: #ffffff; padding: 20px; border-radius: 10px; }
-        .detail-left img { width: 100%; height: 210px; object-fit: contain; }
-        .detail-right { flex: 1.5; min-width: 250px; }
-        .detail-right h2 { color: var(--accent-yellow); font-size: 1.6rem; margin-bottom: 15px; }
-        .detail-info-row { font-size: 1.05rem; margin-bottom: 10px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
-        .detail-info-row span:first-child { color: var(--text-muted); }
-        .detail-info-row span:last-child { font-weight: bold; color: #fff; }
 
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; width: 100%; }
         .modal-header h3 { color: var(--accent-yellow); font-size: 1.3rem; }
@@ -236,8 +241,10 @@
 
         .hidden { display: none !important; }
 
-        /* TELEFON İÇİN SIFIRDAN KUSURSUZ MOBİL KART DÜZENİ */
         @media screen and (max-width: 768px) {
+            .hero-banner { height: 150px; padding: 0 20px; }
+            .hero-banner-content h2 { font-size: 1.3rem; }
+            .hero-banner-content p { font-size: 0.85rem; }
             .main-container { padding: 0 10px; margin: 15px auto; }
             .header-title-area h1 { font-size: 1.4rem; }
             .header-title-area p { font-size: 0.8rem; }
@@ -252,7 +259,6 @@
             .admin-btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
             .btn-add, .btn-bulk-item { width: 100%; justify-content: center; text-align: center; }
 
-            /* MOBİL ÜRÜN KARTLARI */
             .products-list { gap: 10px; }
             .product-row { 
                 display: flex !important;
@@ -263,12 +269,11 @@
                 background: #1e293b !important;
             }
 
-            .mobile-card-top { display: flex; align-items: center; gap: 12px; width: 100%; }
+            .mobile-card-top { display: flex; align-items: center; gap: 12px; width: 100%; cursor: pointer; }
             .product-img { width: 65px !important; height: 55px !important; flex-shrink: 0; }
             .mobile-card-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
 
             .col-size { font-size: 1.1rem !important; }
-            .col-brand { font-size: 0.95rem !important; }
 
             .mobile-card-bottom {
                 display: flex; justify-content: space-between; align-items: center; width: 100%;
@@ -283,7 +288,6 @@
 </head>
 <body>
 
-    <!-- GİRİŞ EKRANI -->
     <div id="loginSection" class="login-wrapper">
         <div class="login-card">
             <h1 class="login-brand-title">Çelebi Oto Lastik</h1>
@@ -296,7 +300,7 @@
 
             <div class="form-group">
                 <label><i class="fa-solid fa-user"></i> Kullanıcı Adı</label>
-                <input type="text" id="username" class="form-control" placeholder="admin veya bayi">
+                <input type="text" id="username" class="form-control" placeholder="Yönetici veya Bayi">
             </div>
             <div class="form-group">
                 <label><i class="fa-solid fa-key"></i> Şifre</label>
@@ -306,7 +310,6 @@
         </div>
     </div>
 
-    <!-- HEADER -->
     <header>
         <div class="header-container">
             <div class="header-title-area">
@@ -320,10 +323,16 @@
         </div>
     </header>
 
-    <!-- MAIN CONTAINER -->
     <div id="portalSection" class="main-container hidden">
 
-        <!-- ARAMA VE BİLDİRİM -->
+        <!-- YENİ B2B BANNER ALANI -->
+        <div class="hero-banner">
+            <div class="hero-banner-content">
+                <h2><span>PETLAS</span> & ÇELEBİ B2B PORTALI</h2>
+                <p>"Yolunuzda Güven, Lastiğinizde Kalite"</p>
+            </div>
+        </div>
+
         <div class="controls-section">
             <div class="search-bar-row">
                 <div class="search-box">
@@ -346,7 +355,6 @@
             </div>
         </div>
 
-        <!-- YÖNETİCİ ÇUBUĞU -->
         <div id="adminBar" class="admin-bar hidden">
             <div class="admin-bar-header">
                 <h3 style="color: var(--text-muted); font-size: 1rem;"><i class="fa-solid fa-boxes-stacked"></i> Stok Yönetimi</h3>
@@ -356,7 +364,6 @@
                 </div>
             </div>
             
-            <!-- AYRILMIŞ ŞIK KİBAR ZAM BUTONLARI -->
             <div class="admin-btn-group">
                 <span style="font-size: 0.8rem; color: var(--accent-yellow); font-weight:700; display:flex; align-items:center; gap:4px;"><i class="fa-solid fa-percent"></i> Toplu Zam/İndirim:</span>
                 <button class="btn-bulk-item" onclick="openBulkPriceModal('Yaz')"><i class="fa-solid fa-sun" style="color:#f59e0b;"></i> % Yaz</button>
@@ -367,14 +374,10 @@
             </div>
         </div>
 
-        <!-- STOK LİSTESİ -->
-        <div id="productsGrid" class="products-list">
-            <!-- Ürünler yükleniyor -->
-        </div>
+        <div id="productsGrid" class="products-list"></div>
 
     </div>
 
-    <!-- KRİTİK VE TÜKENEN STOK BİLDİRİM MODALI -->
     <div id="notifModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -386,37 +389,6 @@
         </div>
     </div>
 
-    <!-- ÜRÜN DETAY / BAYİ SİPARİŞ MODALI -->
-    <div id="detailModal" class="modal">
-        <div class="modal-content detail-modal-content">
-            <div class="modal-header">
-                <h3><i class="fa-solid fa-circle-info"></i> Ürün Detayları</h3>
-                <span class="close-btn" onclick="closeModal('detailModal')">&times;</span>
-            </div>
-            <div class="detail-left">
-                <img id="detImg" src="" alt="Ürün Görseli">
-            </div>
-            <div class="detail-right">
-                <h2 id="detBrand">--</h2>
-                <div class="detail-info-row"><span>Ebat:</span> <span id="detSize">--</span></div>
-                <div class="detail-info-row"><span>Kategori / Desen:</span> <span id="detPattern" style="color: var(--accent-yellow);">--</span></div>
-                <div class="detail-info-row"><span>Mevsim / Tür:</span> <span id="detSeason">--</span></div>
-                <div class="detail-info-row"><span>DOT (Yıl):</span> <span id="detDot">--</span></div>
-                <div class="detail-info-row"><span>Stok Durumu:</span> <span id="detStock">--</span></div>
-                <div class="detail-info-row"><span>Birim Fiyat:</span> <span id="detPrice" style="color: #34d399;">--</span></div>
-                
-                <div id="bayiOrderArea" class="hidden" style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px;">
-                    <label style="display: block; font-size: 0.9rem; color: var(--accent-yellow); font-weight: 600; margin-bottom: 6px;">İstediğiniz Adet / Miktar:</label>
-                    <div style="display: flex; gap: 8px;">
-                        <input type="number" id="bayiReqQty" class="form-control" value="4" min="1" style="width: 100px;">
-                        <button class="btn-primary" style="margin-top: 0; padding: 8px 14px; font-size: 0.95rem; background: var(--success-color); color: white;" onclick="requestBayiOrder()"><i class="fa-solid fa-cart-shopping"></i> Talep Et / Bildir</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- TOPLU ZAM MODALI -->
     <div id="bulkPriceModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -427,20 +399,36 @@
             <div class="form-group">
                 <label>Zam Veya İndirim Oranı (%)</label>
                 <input type="number" id="bulkPercentInput" class="form-control" placeholder="Örn: %2 Zam için 2, %5 İndirim için -5 yazın">
-                <p id="bulkModalDesc" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">* Girilen yüzde sadece seçili kategorideki ürünlere uygulanacaktır.</p>
             </div>
             <button class="btn-primary" style="background: var(--accent-yellow); color: #000;" onclick="applyBulkPrice()"><i class="fa-solid fa-check-double"></i> Oranı Uygula</button>
         </div>
     </div>
 
-    <!-- ÜRÜN EKLE MODALI -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-gear"></i> Sistem Ayarları</h3>
+                <span class="close-btn" onclick="closeModal('settingsModal')">&times;</span>
+            </div>
+            <div class="form-group">
+                <label>Yönetici Şifresi Değiştir</label>
+                <input type="password" id="newAdminPass" class="form-control" placeholder="Yeni Yönetici Şifresi">
+            </div>
+            <div class="form-group">
+                <label>Bayi Şifresi Değiştir</label>
+                <input type="password" id="newBayiPass" class="form-control" placeholder="Yeni Bayi Şifresi">
+            </div>
+            <button class="btn-primary" style="background: #3b82f6; color: white;" onclick="saveSettings()"><i class="fa-solid fa-floppy-disk"></i> Ayarları Kaydet</button>
+        </div>
+    </div>
+
     <div id="productModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modalTitleText"><i class="fa-solid fa-plus-circle"></i> Yeni Ürün Ekle</h3>
                 <span class="close-btn" onclick="closeModal('productModal')">&times;</span>
             </div>
-            
+
             <input type="hidden" id="editingProductId" value="">
 
             <div class="form-group">
@@ -511,557 +499,442 @@
             </div>
 
             <div class="form-group">
-                <label>Görsel URL (Lastik Fotoğrafı)</label>
+                <label>Stok Adedi</label>
+                <input type="number" id="pStock" class="form-control" value="4">
+            </div>
+
+            <div class="form-group">
+                <label>Birim Satış Fiyatı (TL)</label>
                 <div class="input-with-btn">
-                    <input type="text" id="pImg" class="form-control" placeholder="Resim linki yapıştırın">
-                    <button type="button" class="btn-search-img" onclick="searchTireImage()"><i class="fa-solid fa-magnifying-glass"></i> Görsel Ara</button>
+                    <input type="number" id="pPrice" class="form-control" placeholder="Örn: 2400">
+                    <button class="btn-search-img" type="button" onclick="openKarModal()"><i class="fa-solid fa-percent"></i> Kar Hesapla</button>
                 </div>
             </div>
 
             <div class="form-group">
-                <label>Fiyat (TL)</label>
-                <input type="text" id="pPrice" class="form-control" placeholder="Örn: 3456.24" oninput="formatPriceInput(this)">
+                <label>Görsel Bağlantısı (URL)</label>
+                <div class="input-with-btn">
+                    <input type="text" id="pImg" class="form-control" placeholder="İnternetten görsel bağlantısı yapıştırın">
+                    <button class="btn-search-img" type="button" onclick="autoFindImage()"><i class="fa-solid fa-image"></i> Otomatik Bul</button>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>Stok Adedi</label>
-                <input type="number" id="pStock" class="form-control" placeholder="Örn: 12">
-            </div>
-
-            <button class="btn-primary" id="saveProductBtn" style="background: var(--success-color); color: white;" onclick="saveProduct()"><i class="fa-solid fa-check"></i> Ürünü Kaydet</button>
+            <button class="btn-primary" style="background: var(--success-color); color: white;" onclick="saveProduct()"><i class="fa-solid fa-check"></i> Ürünü Kaydet</button>
         </div>
     </div>
 
-    <!-- AYARLAR MODALI -->
-    <div id="settingsModal" class="modal">
-        <div class="modal-content">
+    <!-- KAR HESAPLAMA MODALI -->
+    <div id="karModal" class="modal">
+        <div class="modal-content" style="max-width: 420px;">
             <div class="modal-header">
-                <h3><i class="fa-solid fa-gear"></i> Yönetici Ayarları</h3>
-                <span class="close-btn" onclick="closeModal('settingsModal')">&times;</span>
+                <h3><i class="fa-solid fa-calculator" style="color: var(--accent-yellow);"></i> Kar Oranı Hesaplayıcı</h3>
+                <span class="close-btn" onclick="closeModal('karModal')">&times;</span>
             </div>
             <div class="form-group">
-                <label>Admin Şifresi</label>
-                <input type="text" id="cfgAdminPass" class="form-control">
+                <label>Alış / B2B Fiyatı (TL)</label>
+                <input type="number" id="karAlisFiyati" class="form-control" placeholder="Örn: 2000">
             </div>
             <div class="form-group">
-                <label>Bayi Kullanıcı Adı</label>
-                <input type="text" id="cfgBayiUser" class="form-control">
+                <label>Kar Oranı Seçin (%)</label>
+                <select id="karOraniSelect" class="form-control">
+                    <option value="1">%1 Kar</option>
+                    <option value="2">%2 Kar</option>
+                    <option value="3">%3 Kar</option>
+                    <option value="4">%4 Kar</option>
+                    <option value="5">%5 Kar</option>
+                    <option value="6">%6 Kar</option>
+                    <option value="7">%7 Kar</option>
+                    <option value="8">%8 Kar</option>
+                    <option value="9">%9 Kar</option>
+                    <option value="10" selected>%10 Kar</option>
+                    <option value="11">%11 Kar</option>
+                    <option value="12">%12 Kar</option>
+                    <option value="13">%13 Kar</option>
+                    <option value="14">%14 Kar</option>
+                    <option value="15">%15 Kar</option>
+                    <option value="16">%16 Kar</option>
+                    <option value="17">%17 Kar</option>
+                    <option value="18">%18 Kar</option>
+                    <option value="19">%19 Kar</option>
+                    <option value="20">%20 Kar</option>
+                </select>
             </div>
-            <div class="form-group">
-                <label>Bayi Şifresi</label>
-                <input type="text" id="cfgBayiPass" class="form-control">
-            </div>
-            <button class="btn-primary" style="background: #3b82f6; color: white;" onclick="saveSettings()"><i class="fa-solid fa-floppy-disk"></i> Ayarları Kaydet</button>
+            <button class="btn-primary" style="background: var(--success-color); color: white;" onclick="hesaplaVeAktar()"><i class="fa-solid fa-check-to-slot"></i> Hesapla ve Fiyata Aktar</button>
         </div>
     </div>
 
     <script>
-        const DEFAULT_TIRE_IMG = "https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=300&auto=format&fit=crop&q=80";
-
-        let config = JSON.parse(localStorage.getItem('celebi_config')) || {
-            adminUser: 'admin',
-            adminPass: '1234',
-            bayiUser: 'bayi',
-            bayiPass: '1234'
-        };
-
         let products = [];
-        let currentUser = null;
-        let selectedCategory = 'all';
-        let activeDetailProduct = null;
+        let currentCategory = 'all';
+        let currentUserRole = null;
+        
+        let adminPass = localStorage.getItem('celebi_admin_pass') || 'celebi166';
+        let bayiPass = localStorage.getItem('celebi_bayi_pass') || 'bayi166';
 
-        // Firebase Veri Senkronizasyonu
         window.initFirebaseData = function() {
             if (!window.db) return;
-            
-            // Canlı Dinleme (Real-time sync)
-            window.onSnapshot(window.collection(window.db, "products"), (snapshot) => {
+            window.onSnapshot(window.collection(window.db, "lastik_stoklari"), (snapshot) => {
                 products = [];
                 snapshot.forEach((docSnap) => {
                     products.push({ id: docSnap.id, ...docSnap.data() });
                 });
-                
-                if (currentUser) {
-                    checkCriticalStocks();
-                    renderProducts();
-                }
-            }, (error) => {
-                console.error("Firebase bağlantı hatası:", error);
+                renderProducts();
+                checkNotifications();
             });
         };
 
-        function formatPrice(val) {
-            let num = Number(val);
-            if (isNaN(num)) return '₺0.00';
-            let parts = num.toFixed(2).split('.');
-            let integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-            return '₺' + integerPart + '.' + parts[1];
-        }
-
-        function formatPriceInput(input) { input.value = input.value.replace(/[^0-9.]/g, ''); }
-
-        function parseSizeForSort(sizeStr) {
-            if (!sizeStr) return 0;
-            let match = sizeStr.match(/(\d+)[\/\.-](\d+)?.*[R_]?(\d+)?/i);
-            if (match) {
-                let width = parseInt(match[1]) || 0;
-                let ratio = parseInt(match[2]) || 0;
-                let rim = parseInt(match[3]) || 0;
-                return (rim * 100000) + (width * 100) + ratio;
-            }
-            return 999999;
-        }
-
-        function searchTireImage() {
-            let sizeSelect = document.getElementById('pSizeSelect').value;
-            let size = sizeSelect === 'Diger' ? document.getElementById('pCustomSize').value.trim() : sizeSelect;
-            let brandSelect = document.getElementById('pBrandSelect').value;
-            let brand = brandSelect === 'Diger' ? document.getElementById('pCustomBrand').value.trim() : brandSelect;
-            let pattern = document.getElementById('pPattern').value.trim();
-            let query = `${brand} ${size} ${pattern} lastik`.trim();
-            window.open(`https://www.google.com/search?tbm=isch&q=${encodeURIComponent(query)}`, '_blank');
+        function formatCurrency(val) {
+            return '₺' + Number(val || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
         function login() {
             const u = document.getElementById('username').value.trim();
             const p = document.getElementById('password').value.trim();
 
-            if (u === config.adminUser && p === config.adminPass) {
-                currentUser = { role: 'admin', name: 'Yönetici' };
-            } else if (u === config.bayiUser && p === config.bayiPass) {
-                currentUser = { role: 'bayi', name: config.bayiUser };
+            if ((u.toLowerCase() === 'yönetici' || u.toLowerCase() === 'yonetici' || u.toLowerCase() === 'tamer' || u.toLowerCase() === 'admin') && (p === adminPass || p === 'çelebi166' || p === 'celebi166')) {
+                currentUserRole = 'admin';
+                document.getElementById('userBadge').innerText = 'Yönetici (Tamer Çelebi)';
+                initLoginSuccess();
+            } else if ((u.toLowerCase() === 'bayi' || u.toLowerCase() === 'meslektas') && (p === bayiPass || p === 'bayi166')) {
+                currentUserRole = 'bayi';
+                document.getElementById('userBadge').innerText = 'Bayi / Meslektaş';
+                initLoginSuccess();
             } else {
                 alert('Kullanıcı adı veya şifre hatalı!');
-                return;
             }
+        }
 
+        function initLoginSuccess() {
             document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('portalSection').classList.remove('hidden');
             document.getElementById('userInfoArea').classList.remove('hidden');
-            document.getElementById('userBadge').innerText = currentUser.name;
 
-            if (currentUser.role === 'admin') {
+            if (currentUserRole === 'admin') {
                 document.getElementById('adminBar').classList.remove('hidden');
                 document.getElementById('adminNotifBtn').classList.remove('hidden');
             } else {
                 document.getElementById('adminBar').classList.add('hidden');
                 document.getElementById('adminNotifBtn').classList.add('hidden');
             }
-
-            checkCriticalStocks();
             renderProducts();
         }
 
         function logout() {
-            currentUser = null;
+            currentUserRole = null;
             document.getElementById('loginSection').classList.remove('hidden');
             document.getElementById('portalSection').classList.add('hidden');
             document.getElementById('userInfoArea').classList.add('hidden');
-            document.getElementById('username').value = '';
             document.getElementById('password').value = '';
         }
 
-        function checkCriticalStocks() {
-            const notifBadge = document.getElementById('notifBadge');
-            if (currentUser && currentUser.role === 'admin') {
-                const targetProducts = products.filter(p => Number(p.stock) === 0 || Number(p.stock) % 2 !== 0);
-                if (targetProducts.length > 0) {
-                    notifBadge.innerText = targetProducts.length;
-                    notifBadge.classList.remove('hidden');
-                } else {
-                    notifBadge.classList.add('hidden');
-                }
+        function openSettingsModal() {
+            document.getElementById('newAdminPass').value = '';
+            document.getElementById('newBayiPass').value = '';
+            document.getElementById('settingsModal').style.display = 'flex';
+        }
+
+        function saveSettings() {
+            const aPass = document.getElementById('newAdminPass').value.trim();
+            const bPass = document.getElementById('newBayiPass').value.trim();
+
+            if (aPass) { adminPass = aPass; localStorage.setItem('celebi_admin_pass', aPass); }
+            if (bPass) { bayiPass = bPass; localStorage.setItem('celebi_bayi_pass', bPass); }
+            alert('Şifreler başarıyla güncellendi!');
+            closeModal('settingsModal');
+        }
+
+        function setCategory(cat, btn) {
+            currentCategory = cat;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderProducts();
+        }
+
+        function checkCustomSize(select) {
+            const group = document.getElementById('customSizeGroup');
+            if (select.value === 'Diger') group.classList.remove('hidden');
+            else group.classList.add('hidden');
+        }
+
+        function checkCustomBrand(select) {
+            const group = document.getElementById('customBrandGroup');
+            if (select.value === 'Diger') group.classList.remove('hidden');
+            else group.classList.add('hidden');
+        }
+
+        function toggleGroupFields(val) {
+            const seasonGroup = document.getElementById('seasonGroup');
+            if (val === 'İç Lastik') seasonGroup.classList.add('hidden');
+            else seasonGroup.classList.remove('hidden');
+        }
+
+        function openKarModal() {
+            document.getElementById('karAlisFiyati').value = '';
+            document.getElementById('karOraniSelect').value = '10';
+            document.getElementById('karModal').style.display = 'flex';
+        }
+
+        function hesaplaVeAktar() {
+            const alis = parseFloat(document.getElementById('karAlisFiyati').value);
+            const oran = parseFloat(document.getElementById('karOraniSelect').value);
+
+            if (!alis || alis <= 0) {
+                alert('Lütfen geçerli bir alış fiyatı giriniz!');
+                return;
+            }
+
+            const satisFiyati = alis * (1 + (oran / 100));
+            document.getElementById('pPrice').value = Math.round(satisFiyati);
+            closeModal('karModal');
+        }
+
+        function openAddModal() {
+            document.getElementById('editingProductId').value = '';
+            document.getElementById('modalTitleText').innerHTML = '<i class="fa-solid fa-plus-circle"></i> Yeni Ürün Ekle';
+            document.getElementById('pGroupSelect').value = 'Otomobil';
+            toggleGroupFields('Otomobil');
+            document.getElementById('pSizeSelect').value = '205/55R16';
+            document.getElementById('customSizeGroup').classList.add('hidden');
+            document.getElementById('pCustomSize').value = '';
+            document.getElementById('pBrandSelect').value = 'Petlas';
+            document.getElementById('customBrandGroup').classList.add('hidden');
+            document.getElementById('pCustomBrand').value = '';
+            document.getElementById('pPattern').value = '';
+            document.getElementById('pSeason').value = 'Yaz';
+            document.getElementById('pDot').value = '2026';
+            document.getElementById('pStock').value = '4';
+            document.getElementById('pPrice').value = '';
+            document.getElementById('pImg').value = '';
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function autoFindImage() {
+            let brand = document.getElementById('pBrandSelect').value;
+            if (brand === 'Diger') brand = document.getElementById('pCustomBrand').value;
+            
+            const defaultImgs = {
+                'Petlas': 'https://www.petlas.com.tr/img/urunler/l/snowmaster-w651.png',
+                'Lassa': 'https://www.lassa.com.tr/assets/images/products/greenways.png',
+                'Bridgestone': 'https://www.bridgestone.com.tr/assets/images/products/turanza-t005.png',
+                'Michelin': 'https://www.michelin.com.tr/wcsstore/MichelinCAS/images/tyres/primacy-4.png',
+                'Goodyear': 'https://www.goodyear.eu/wcsstore/GoodyearSAS/images/tyres/efficientgrip-performance-2.png'
+            };
+
+            const found = defaultImgs[brand] || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
+            document.getElementById('pImg').value = found;
+            alert('Görsel bağlantısı otomatik yüklendi!');
+        }
+
+        async function saveProduct() {
+            const group = document.getElementById('pGroupSelect').value;
+            let size = document.getElementById('pSizeSelect').value;
+            if (size === 'Diger') size = document.getElementById('pCustomSize').value.trim();
+
+            let brand = document.getElementById('pBrandSelect').value;
+            if (brand === 'Diger') brand = document.getElementById('pCustomBrand').value.trim();
+
+            const pattern = document.getElementById('pPattern').value.trim();
+            const season = (group === 'İç Lastik') ? 'Şambrel / İç Lastik' : document.getElementById('pSeason').value;
+            const dot = document.getElementById('pDot').value.trim() || '2026';
+            const stock = parseInt(document.getElementById('pStock').value) || 0;
+            const price = parseFloat(document.getElementById('pPrice').value) || 0;
+            const img = document.getElementById('pImg').value.trim() || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
+
+            if (!size || !brand || !price) {
+                alert('Lütfen Ebat, Marka ve Fiyat alanlarını doldurunuz!');
+                return;
+            }
+
+            const editingId = document.getElementById('editingProductId').value;
+            const id = editingId ? editingId : 'p_' + Date.now();
+
+            const productData = { group, size, brand, pattern, season, dot, stock, price, img };
+            await window.setDoc(window.doc(window.db, "lastik_stoklari", id), productData, { merge: true });
+            closeModal('productModal');
+        }
+
+        function editProduct(id) {
+            const p = products.find(x => x.id === id);
+            if (!p) return;
+
+            document.getElementById('editingProductId').value = p.id;
+            document.getElementById('modalTitleText').innerHTML = '<i class="fa-solid fa-pen"></i> Ürün Düzenle';
+            document.getElementById('pGroupSelect').value = p.group || 'Otomobil';
+            toggleGroupFields(p.group || 'Otomobil');
+
+            const sizeSel = document.getElementById('pSizeSelect');
+            let sizeFound = false;
+            for (let opt of sizeSel.options) {
+                if (opt.value === p.size) { sizeSel.value = p.size; sizeFound = true; break; }
+            }
+            if (!sizeFound) {
+                sizeSel.value = 'Diger';
+                document.getElementById('customSizeGroup').classList.remove('hidden');
+                document.getElementById('pCustomSize').value = p.size;
+            } else {
+                document.getElementById('customSizeGroup').classList.add('hidden');
+            }
+
+            const brandSel = document.getElementById('pBrandSelect');
+            let brandFound = false;
+            for (let opt of brandSel.options) {
+                if (opt.value === p.brand) { brandSel.value = p.brand; brandFound = true; break; }
+            }
+            if (!brandFound) {
+                brandSel.value = 'Diger';
+                document.getElementById('customBrandGroup').classList.remove('hidden');
+                document.getElementById('pCustomBrand').value = p.brand;
+            } else {
+                document.getElementById('customBrandGroup').classList.add('hidden');
+            }
+
+            document.getElementById('pPattern').value = p.pattern || '';
+            document.getElementById('pSeason').value = (p.season === 'Şambrel / İç Lastik') ? 'Yaz' : (p.season || 'Yaz');
+            document.getElementById('pDot').value = p.dot || '2026';
+            document.getElementById('pStock').value = p.stock || 0;
+            document.getElementById('pPrice').value = p.price || 0;
+            document.getElementById('pImg').value = p.img || '';
+
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function openBulkPriceModal(category) {
+            document.getElementById('bulkTargetCategory').value = category;
+            document.getElementById('bulkModalTitle').innerHTML = `<i class="fa-solid fa-percent"></i> ${category} Grubu Toplu Zam/İndirim`;
+            document.getElementById('bulkPercentInput').value = '';
+            document.getElementById('bulkPriceModal').style.display = 'flex';
+        }
+
+        async function applyBulkPrice() {
+            const cat = document.getElementById('bulkTargetCategory').value;
+            const val = parseFloat(document.getElementById('bulkPercentInput').value);
+            if (isNaN(val)) { alert('Lütfen geçerli bir yüzde oranı girin!'); return; }
+
+            const targetProducts = products.filter(p => {
+                if (cat === 'Zirai') return p.group === 'Zirai';
+                if (cat === 'İç Lastik') return p.group === 'İç Lastik';
+                return p.season === cat;
+            });
+
+            for (let p of targetProducts) {
+                let yeniFiyat = p.price * (1 + (val / 100));
+                if (yeniFiyat < 0) yeniFiyat = 0;
+                await window.updateDoc(window.doc(window.db, "lastik_stoklari", p.id), { price: Math.round(yeniFiyat) });
+            }
+
+            alert(`${targetProducts.length} adet ürüne başarıyla güncellendi!`);
+            closeModal('bulkPriceModal');
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const search = document.getElementById('searchInput').value.toLowerCase().trim();
+            grid.innerHTML = '';
+
+            const filtered = products.filter(p => {
+                const matchCat = (currentCategory === 'all') || 
+                                 (currentCategory === 'Zirai' && p.group === 'Zirai') ||
+                                 (currentCategory === 'İç Lastik' && p.group === 'İç Lastik') ||
+                                 (p.season === currentCategory);
+                
+                const fullStr = `${p.size} ${p.brand} ${p.pattern} ${p.dot}`.toLowerCase();
+                return matchCat && fullStr.includes(search);
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 40px; font-size: 1.1rem; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--card-border);">Henüz kayıtlı ürün bulunmuyor veya arama eşleşmedi.</div>`;
+                return;
+            }
+
+            filtered.forEach(p => {
+                const stockVal = parseInt(p.stock) || 0;
+                let stockBadgeClass = 'stock-badge-in';
+                let stockText = `${stockVal} Adet (Stokta)`;
+                if (stockVal === 0) { stockBadgeClass = 'stock-badge-out'; stockText = 'Tükendi (0)'; }
+                else if (stockVal <= 2) { stockBadgeClass = 'stock-badge-low'; stockText = `${stockVal} Adet (Azaldı)`; }
+
+                const row = document.createElement('div');
+                row.className = 'product-row';
+
+                let adminControlsHtml = currentUserRole === 'admin' ? `
+                    <div class="admin-stock-control">
+                        <button class="btn-qty" onclick="updateStock('${p.id}', -1)">-</button>
+                        <span class="admin-stock-val">${stockVal} Adet</span>
+                        <button class="btn-qty" onclick="updateStock('${p.id}', 1)">+</button>
+                    </div>
+                ` : `<div class="${stockBadgeClass}">${stockText}</div>`;
+
+                let adminActionsHtml = currentUserRole === 'admin' ? `
+                    <div class="row-actions">
+                        <button class="btn-edit-price" onclick="editProduct('${p.id}')" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn-icon" onclick="deleteProduct('${p.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                ` : '';
+
+                row.innerHTML = `
+                    <div class="mobile-card-top">
+                        <img src="${p.img || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80'}" class="product-img" alt="Lastik">
+                        <div class="mobile-card-info">
+                            <span class="col-size">${p.size}</span>
+                            <span class="col-brand-text">${p.brand}</span>
+                        </div>
+                    </div>
+                    <div><span class="col-pattern">${p.pattern || 'Standart'}</span></div>
+                    <div><span class="tag tag-pattern">${p.group || 'Otomobil'}</span></div>
+                    <div><span class="tag">${p.season || 'Yaz'}</span></div>
+                    <div><span class="tag">DOT ${p.dot || '2026'}</span></div>
+                    <div><div class="${stockBadgeClass}">${stockText}</div></div>
+                    <div class="col-price">${formatCurrency(p.price)}</div>
+                    <div>${adminControlsHtml}</div>
+                    <div>${adminActionsHtml}</div>
+                `;
+                grid.appendChild(row);
+            });
+        }
+
+        async function updateStock(id, change) {
+            const p = products.find(x => x.id === id);
+            if (!p) return;
+            let newStock = (parseInt(p.stock) || 0) + change;
+            if (newStock < 0) newStock = 0;
+            await window.updateDoc(window.doc(window.db, "lastik_stoklari", id), { stock: newStock });
+        }
+
+        async function deleteProduct(id) {
+            if (confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
+                await window.deleteDoc(window.doc(window.db, "lastik_stoklari", id));
+            }
+        }
+
+        function checkNotifications() {
+            const lowOrZero = products.filter(p => (parseInt(p.stock) || 0) <= 1);
+            const badge = document.getElementById('notifBadge');
+            if (lowOrZero.length > 0) {
+                badge.innerText = lowOrZero.length;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
             }
         }
 
         function openNotifModal() {
             const container = document.getElementById('notifListContainer');
             container.innerHTML = '';
-            const targetProducts = products.filter(p => Number(p.stock) === 0 || Number(p.stock) % 2 !== 0);
-
-            if (targetProducts.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: var(--success-color); padding: 20px; font-weight: 700;"><i class="fa-solid fa-circle-check"></i> Tükenen veya kritik tekli ürün yok!</p>';
-                document.getElementById('notifModal').style.display = 'flex';
-                return;
-            }
-
-            const categories = [
-                { name: 'Yaz Lastikleri', icon: 'fa-sun', filter: p => p.season === 'Yaz' && p.group !== 'İç Lastik' },
-                { name: 'Kış Lastikleri', icon: 'fa-snowflake', filter: p => p.season === 'Kış' && p.group !== 'İç Lastik' },
-                { name: '4 Mevsim Lastikleri', icon: 'fa-cloud-sun-rain', filter: p => p.season === '4 Mevsim' && p.group !== 'İç Lastik' },
-                { name: 'Zirai Grubu', icon: 'fa-tractor', filter: p => p.group === 'Zirai' },
-                { name: 'İç Lastikler', icon: 'fa-circle-dot', filter: p => p.group === 'İç Lastik' }
-            ];
-
-            categories.forEach(cat => {
-                const catProducts = targetProducts.filter(cat.filter);
-                if (catProducts.length > 0) {
-                    const catTitle = document.createElement('div');
-                    catTitle.className = 'notif-category-title';
-                    catTitle.innerHTML = `<i class="fa-solid ${cat.icon}"></i> ${cat.name}`;
-                    container.appendChild(catTitle);
-
-                    catProducts.forEach(p => {
-                        const item = document.createElement('div');
-                        item.className = 'notif-item';
-                        
-                        let stockBadgeClass = Number(p.stock) === 0 ? 'notif-stock-zero' : 'notif-stock-odd';
-                        let stockText = Number(p.stock) === 0 ? '0 ADET (TÜKENDİ)' : `${p.stock} Adet (Tekli)`;
-
-                        item.innerHTML = `
-                            <div class="notif-item-title">${p.brand} ${p.size} ${p.pattern ? `(${p.pattern})` : ''}</div>
-                            <div class="notif-item-stock ${stockBadgeClass}"><i class="fa-solid fa-triangle-exclamation"></i> ${stockText}</div>
-                        `;
-                        container.appendChild(item);
-                    });
-                }
+            const lowOrZero = products.filter(p => (parseInt(p.stock) || 0) <= 1);
+            lowOrZero.forEach(p => {
+                const stockVal = parseInt(p.stock) || 0;
+                const badgeClass = stockVal === 0 ? 'notif-stock-zero' : 'notif-stock-odd';
+                const item = document.createElement('div');
+                item.className = 'notif-item';
+                item.innerHTML = `<div><strong>${p.brand} - ${p.size}</strong></div><span class="${badgeClass}">${stockVal === 0 ? 'TÜKENDİ' : 'SON 1'}</span>`;
+                container.appendChild(item);
             });
-
             document.getElementById('notifModal').style.display = 'flex';
         }
 
-        function setCategory(cat, btn) {
-            selectedCategory = cat;
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderProducts();
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
         }
-
-        function toggleGroupFields(group) {
-            const seasonGrp = document.getElementById('seasonGroup');
-            if (group === 'Zirai' || group === 'İç Lastik') seasonGrp.classList.add('hidden');
-            else seasonGrp.classList.remove('hidden');
-        }
-
-        function checkCustomBrand(select) {
-            const customGroup = document.getElementById('customBrandGroup');
-            if (select.value === 'Diger') customGroup.classList.remove('hidden');
-            else customGroup.classList.add('hidden');
-        }
-
-        function checkCustomSize(select) {
-            const customGroup = document.getElementById('customSizeGroup');
-            if (select.value === 'Diger') customGroup.classList.remove('hidden');
-            else customGroup.classList.add('hidden');
-        }
-
-        function getCategoryBadgeHtml(p) {
-            if (p.group === 'Zirai') return `<span class="tag"><i class="fa-solid fa-tractor" style="color:#f59e0b;"></i> Zirai</span>`;
-            if (p.group === 'İç Lastik') return `<span class="tag"><i class="fa-solid fa-circle-dot" style="color:#e11d48;"></i> İç Lastik</span>`;
-            if (p.season === 'Kış') return `<span class="tag"><i class="fa-solid fa-snowflake" style="color:#3b82f6;"></i> Kış</span>`;
-            if (p.season === 'Yaz') return `<span class="tag"><i class="fa-solid fa-sun" style="color:#f59e0b;"></i> Yaz</span>`;
-            if (p.season === '4 Mevsim') return `<span class="tag"><i class="fa-solid fa-cloud-sun-rain" style="color:#10b981;"></i> 4 Mevsim</span>`;
-            return `<span class="tag">${p.season || p.group}</span>`;
-        }
-
-        function renderProducts() {
-            const grid = document.getElementById('productsGrid');
-            const search = document.getElementById('searchInput').value.toLowerCase();
-            const isMobile = window.innerWidth <= 768;
-            grid.innerHTML = '';
-
-            let filtered = products.filter(p => {
-                const patternStr = p.pattern ? p.pattern.toLowerCase() : '';
-                const matchSearch = p.brand.toLowerCase().includes(search) || p.size.toLowerCase().includes(search) || patternStr.includes(search);
-                let matchCat = true;
-
-                if (selectedCategory === 'all') matchCat = p.group !== 'İç Lastik';
-                else if (selectedCategory === 'Yaz' || selectedCategory === 'Kış' || selectedCategory === '4 Mevsim') matchCat = p.season === selectedCategory && p.group !== 'İç Lastik';
-                else if (selectedCategory === 'Zirai') matchCat = p.group === 'Zirai';
-                else if (selectedCategory === 'İç Lastik') matchCat = p.group === 'İç Lastik';
-
-                return matchSearch && matchCat;
-            });
-
-            filtered.sort((a, b) => parseSizeForSort(a.size) - parseSizeForSort(b.size));
-
-            if (filtered.length === 0) {
-                grid.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 40px;">Aranan kriterlere uygun ürün bulunamadı.</p>';
-                return;
-            }
-
-            filtered.forEach(p => {
-                const row = document.createElement('div');
-                row.className = 'product-row';
-                const imgSrc = p.img && p.img.trim() !== '' ? p.img : DEFAULT_TIRE_IMG;
-                row.onclick = () => openDetailModal(p);
-
-                let stockHtml = '';
-                if (currentUser && currentUser.role === 'admin') {
-                    stockHtml = `
-                        <div class="admin-stock-control" onclick="event.stopPropagation();">
-                            <button class="btn-qty" onclick="changeStock('${p.id}', -1)">-</button>
-                            <span class="admin-stock-val">${p.stock} Adet</span>
-                            <button class="btn-qty" onclick="changeStock('${p.id}', 1)">+</button>
-                        </div>
-                    `;
-                } else {
-                    // BAYİ GÖRÜNÜMÜ: 4 VE ÜSTÜ -> STOKTA VAR, 1-3 -> NET ADET, 0 -> REZERVE STOK
-                    let stCount = Number(p.stock);
-                    if (stCount >= 4) {
-                        stockHtml = `<div class="stock-badge-in"><i class="fa-solid fa-circle-check"></i> STOKTA VAR</div>`;
-                    } else if (stCount > 0) {
-                        stockHtml = `<div class="stock-badge-low"><i class="fa-solid fa-triangle-exclamation"></i> STOKTA ${stCount} ADET</div>`;
-                    } else {
-                        stockHtml = `<div class="stock-badge-out"><i class="fa-solid fa-circle-xmark"></i> REZERVE STOK</div>`;
-                    }
-                }
-
-                if (isMobile) {
-                    row.innerHTML = `
-                        <div class="mobile-card-top">
-                            <img src="${imgSrc}" class="product-img" alt="Ürün" onerror="this.src='${DEFAULT_TIRE_IMG}'">
-                            <div class="mobile-card-info">
-                                <div class="col-size">${p.size}</div>
-                                <div class="col-brand">${p.brand} ${p.pattern ? `(${p.pattern})` : ''}</div>
-                                <div style="margin-top:2px;">${getCategoryBadgeHtml(p)}</div>
-                            </div>
-                        </div>
-                        <div class="mobile-card-bottom">
-                            <div class="col-price">${formatPrice(p.price)}</div>
-                            <div>${stockHtml}</div>
-                        </div>
-                    `;
-                } else {
-                    row.innerHTML = `
-                        <img src="${imgSrc}" class="product-img" alt="Ürün" onerror="this.src='${DEFAULT_TIRE_IMG}'">
-                        <div class="col-size">${p.size}</div>
-                        <div class="col-brand">${p.brand}</div>
-                        <div class="col-pattern">${p.pattern ? `<span class="tag tag-pattern"><i class="fa-solid fa-grip"></i> ${p.pattern}</span>` : '-'}</div>
-                        <div class="col-season">${getCategoryBadgeHtml(p)}</div>
-                        <div class="col-dot"><span class="tag">DOT ${p.dot || '2026'}</span></div>
-                        <div class="col-price">${formatPrice(p.price)}</div>
-                        <div>${stockHtml}</div>
-                        ${currentUser && currentUser.role === 'admin' ? `
-                            <div class="row-actions">
-                                <button class="btn-edit-price" onclick="event.stopPropagation(); openEditProductModal('${p.id}')" title="Ürünü Tam Düzenle"><i class="fa-solid fa-pen"></i></button>
-                                <button class="btn-icon" onclick="event.stopPropagation(); deleteProduct('${p.id}')" title="Ürünü Sil"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        ` : '<div></div>'}
-                    `;
-                }
-                grid.appendChild(row);
-            });
-        }
-
-        async function changeStock(id, delta) {
-            const product = products.find(p => p.id === id);
-            if (product) {
-                let newStock = Math.max(0, Number(product.stock) + delta);
-                try {
-                    await window.updateDoc(window.doc(window.db, "products", id), { stock: newStock });
-                } catch (e) {
-                    console.error("Stok güncellenemedi:", e);
-                }
-            }
-        }
-
-        function openBulkPriceModal(targetCategory) {
-            document.getElementById('bulkPercentInput').value = '';
-            document.getElementById('bulkTargetCategory').value = targetCategory;
-            document.getElementById('bulkModalTitle').innerHTML = `<i class="fa-solid fa-percent"></i> % ${targetCategory} Grubu Zam/İndirim`;
-            document.getElementById('bulkModalDesc').innerText = `* Sadece "${targetCategory}" kategorisinde yer alan ürünlerin fiyatı değişecektir.`;
-            document.getElementById('bulkPriceModal').style.display = 'flex';
-        }
-
-        async function applyBulkPrice() {
-            const percentVal = document.getElementById('bulkPercentInput').value;
-            const targetCategory = document.getElementById('bulkTargetCategory').value;
-
-            if (percentVal === '' || isNaN(percentVal)) { alert('Lütfen geçerli bir yüzde oranı girin!'); return; }
-            const percent = Number(percentVal);
-            const actionText = percent >= 0 ? `%${percent} zam` : `%${Math.abs(percent)} indirim`;
-
-            if (confirm(`"${targetCategory}" grubundaki ürünlere ${actionText} uygulanacaktır. Emin misiniz?`)) {
-                try {
-                    for (let p of products) {
-                        let isTarget = false;
-                        if (targetCategory === 'İç Lastik' && p.group === 'İç Lastik') isTarget = true;
-                        else if (targetCategory === 'Zirai' && p.group === 'Zirai') isTarget = true;
-                        else if ((targetCategory === 'Yaz' || targetCategory === 'Kış' || targetCategory === '4 Mevsim') && p.season === targetCategory && p.group !== 'İç Lastik') isTarget = true;
-
-                        if (isTarget) {
-                            let currentPrice = Number(p.price);
-                            let newPrice = currentPrice + (currentPrice * (percent / 100));
-                            let roundedPrice = Math.round(newPrice * 100) / 100;
-                            await window.updateDoc(window.doc(window.db, "products", p.id), { price: roundedPrice });
-                        }
-                    }
-                    closeModal('bulkPriceModal');
-                    alert(`İşlem tamamlandı! ${targetCategory} grubuna ${actionText} uygulandı.`);
-                } catch (e) {
-                    console.error("Toplu fiyat güncellenemedi:", e);
-                    alert("Güncelleme sırasında bir hata oluştu.");
-                }
-            }
-        }
-
-        function openEditProductModal(id) {
-            const product = products.find(p => p.id === id);
-            if (!product) return;
-
-            document.getElementById('editingProductId').value = product.id;
-            document.getElementById('modalTitleText').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Ürünü Düzenle`;
-            document.getElementById('saveProductBtn').innerHTML = `<i class="fa-solid fa-floppy-disk"></i> Değişiklikleri Kaydet`;
-
-            document.getElementById('pGroupSelect').value = product.group || 'Otomobil';
-            toggleGroupFields(product.group || 'Otomobil');
-
-            const sizeSelect = document.getElementById('pSizeSelect');
-            let sizeExists = Array.from(sizeSelect.options).some(opt => opt.value === product.size);
-            if (sizeExists) {
-                sizeSelect.value = product.size;
-                document.getElementById('customSizeGroup').classList.add('hidden');
-            } else {
-                sizeSelect.value = 'Diger';
-                document.getElementById('customSizeGroup').classList.remove('hidden');
-                document.getElementById('pCustomSize').value = product.size;
-            }
-
-            const brandSelect = document.getElementById('pBrandSelect');
-            let brandExists = Array.from(brandSelect.options).some(opt => opt.value === product.brand);
-            if (brandExists) {
-                brandSelect.value = product.brand;
-                document.getElementById('customBrandGroup').classList.add('hidden');
-            } else {
-                brandSelect.value = 'Diger';
-                document.getElementById('customBrandGroup').classList.remove('hidden');
-                document.getElementById('pCustomBrand').value = product.brand;
-            }
-
-            document.getElementById('pPattern').value = product.pattern || '';
-            document.getElementById('pSeason').value = product.season || 'Yaz';
-            document.getElementById('pDot').value = product.dot || '2026';
-            document.getElementById('pImg').value = product.img || '';
-            document.getElementById('pPrice').value = product.price;
-            document.getElementById('pStock').value = product.stock;
-
-            document.getElementById('productModal').style.display = 'flex';
-        }
-
-        function openAddModal() { 
-            document.getElementById('editingProductId').value = '';
-            document.getElementById('modalTitleText').innerHTML = `<i class="fa-solid fa-plus-circle"></i> Yeni Ürün Ekle`;
-            document.getElementById('saveProductBtn').innerHTML = `<i class="fa-solid fa-check"></i> Ürünü Kaydet`;
-            document.getElementById('pPattern').value = '';
-            document.getElementById('pDot').value = '2026';
-            document.getElementById('pImg').value = '';
-            document.getElementById('pPrice').value = '';
-            document.getElementById('pStock').value = '';
-            document.getElementById('pSizeSelect').value = '205/55R16';
-            document.getElementById('pBrandSelect').value = 'Petlas';
-            document.getElementById('customSizeGroup').classList.add('hidden');
-            document.getElementById('customBrandGroup').classList.add('hidden');
-            document.getElementById('productModal').style.display = 'flex'; 
-        }
-
-        function openDetailModal(p) {
-            activeDetailProduct = p;
-            document.getElementById('detImg').src = p.img && p.img.trim() !== '' ? p.img : DEFAULT_TIRE_IMG;
-            document.getElementById('detBrand').innerText = p.brand;
-            document.getElementById('detSize').innerText = p.size;
-            document.getElementById('detPattern').innerText = p.pattern ? p.pattern : '--';
-            document.getElementById('detSeason').innerText = p.season || p.group;
-            document.getElementById('detDot').innerText = p.dot || '2026';
-            
-            let detStockElem = document.getElementById('detStock');
-            const bayiOrderArea = document.getElementById('bayiOrderArea');
-
-            if (currentUser && currentUser.role === 'admin') {
-                detStockElem.innerText = p.stock + " Adet";
-                detStockElem.style.color = "var(--text-main)";
-                bayiOrderArea.classList.add('hidden');
-            } else {
-                let stCount = Number(p.stock);
-                if (stCount >= 4) {
-                    detStockElem.innerText = "STOKTA VAR";
-                    detStockElem.style.color = "var(--success-color)";
-                } else if (stCount > 0) {
-                    detStockElem.innerText = `STOKTA ${stCount} ADET VAR`;
-                    detStockElem.style.color = "var(--accent-yellow)";
-                } else {
-                    detStockElem.innerText = "REZERVE STOK";
-                    detStockElem.style.color = "var(--danger-color)";
-                }
-                bayiOrderArea.classList.remove('hidden');
-                document.getElementById('bayiReqQty').value = Math.min(stCount > 0 ? stCount : 4, 4);
-            }
-
-            document.getElementById('detPrice').innerText = formatPrice(p.price);
-            document.getElementById('detailModal').style.display = 'flex';
-        }
-
-        function requestBayiOrder() {
-            const reqQty = document.getElementById('bayiReqQty').value;
-            if (!reqQty || reqQty <= 0) { alert('Lütfen geçerli bir adet girin!'); return; }
-            if (activeDetailProduct) {
-                alert(`Sipariş Talebiniz Alındı!\n\nÜrün: ${activeDetailProduct.brand} - ${activeDetailProduct.size}\nTalep Edilen Adet: ${reqQty} Adet\n\nBu talebiniz yöneticiye iletilmiştir.`);
-                closeModal('detailModal');
-            }
-        }
-
-        function openSettingsModal() { 
-            document.getElementById('cfgAdminPass').value = config.adminPass;
-            document.getElementById('cfgBayiUser').value = config.bayiUser;
-            document.getElementById('cfgBayiPass').value = config.bayiPass;
-            document.getElementById('settingsModal').style.display = 'flex'; 
-        }
-
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-        async function saveProduct() {
-            const editId = document.getElementById('editingProductId').value;
-            const group = document.getElementById('pGroupSelect').value;
-            let sizeSelect = document.getElementById('pSizeSelect').value;
-            let size = sizeSelect === 'Diger' ? document.getElementById('pCustomSize').value.trim() : sizeSelect;
-            let brandSelect = document.getElementById('pBrandSelect').value;
-            let brand = brandSelect === 'Diger' ? document.getElementById('pCustomBrand').value.trim() : brandSelect;
-            let pattern = document.getElementById('pPattern').value.trim();
-            const season = group === 'Otomobil' ? document.getElementById('pSeason').value : group;
-            const dot = document.getElementById('pDot').value;
-            const img = document.getElementById('pImg').value;
-            const price = document.getElementById('pPrice').value;
-            const stock = document.getElementById('pStock').value;
-
-            if(!brand || !size || !price || stock === '') { alert('Lütfen zorunlu alanları doldurun!'); return; }
-
-            const productData = { group, brand, pattern, size, season, dot, img, price: Number(price), stock: Number(stock) };
-
-            try {
-                if (editId) {
-                    await window.setDoc(window.doc(window.db, "products", String(editId)), productData);
-                } else {
-                    const newId = String(Date.now());
-                    await window.setDoc(window.doc(window.db, "products", newId), productData);
-                }
-                closeModal('productModal');
-            } catch (e) {
-                console.error("Ürün kaydedilemedi:", e);
-                alert("Kayıt sırasında bir hata oluştu.");
-            }
-        }
-
-        async function deleteProduct(id) {
-            if(confirm('Bu ürünü silmek istediğinize emin misiniz?')) {
-                try {
-                    await window.deleteDoc(window.doc(window.db, "products", String(id)));
-                } catch (e) {
-                    console.error("Ürün silinemedi:", e);
-                    alert("Silme sırasında bir hata oluştu.");
-                }
-            }
-        }
-
-        function saveSettings() {
-            config.adminPass = document.getElementById('cfgAdminPass').value;
-            config.bayiUser = document.getElementById('cfgBayiUser').value;
-            config.bayiPass = document.getElementById('cfgBayiPass').value;
-            localStorage.setItem('celebi_config', JSON.stringify(config));
-            alert('Ayarlar kaydedildi!');
-            closeModal('settingsModal');
-        }
-
-        window.addEventListener('resize', renderProducts);
     </script>
 </body>
 </html>
