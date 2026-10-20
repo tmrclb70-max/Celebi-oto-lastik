@@ -92,26 +92,26 @@
 
         .main-container { max-width: 1350px; margin: 30px auto; padding: 0 20px; }
 
-        /* GERÇEK DÜKKAN LOGOSU BANNER ALANI */
+        /* ÖZEL LOGO BANNER ALANI */
         .hero-banner {
             width: 100%;
-            height: 240px;
-            background: #1e293b;
+            max-height: 280px;
+            background: #ffffff;
             border-radius: 16px;
-            border: 1px solid var(--card-border);
+            border: 2px solid var(--accent-yellow);
             margin-bottom: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             overflow: hidden;
-            position: relative;
+            padding: 10px;
         }
 
         .hero-banner img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            max-width: 100%;
+            max-height: 260px;
+            object-fit: contain;
         }
 
         .login-wrapper {
@@ -227,7 +227,7 @@
         .hidden { display: none !important; }
 
         @media screen and (max-width: 768px) {
-            .hero-banner { height: 140px; }
+            .hero-banner { height: 160px; }
             .main-container { padding: 0 10px; margin: 15px auto; }
             .header-title-area h1 { font-size: 1.4rem; }
             .header-title-area p { font-size: 0.8rem; }
@@ -278,12 +278,12 @@
             
             <div class="login-welcome-text">
                 <i class="fa-solid fa-user-shield" style="color: var(--accent-yellow);"></i>
-                Lütfen kullanıcı adı ve şifrenizi giriniz
+                Giriş Yapın (Yönetici veya Bayi)
             </div>
 
             <div class="form-group">
-                <label><i class="fa-solid fa-user"></i> Kullanıcı Adı (Yönetici veya Bayi)</label>
-                <input type="text" id="username" class="form-control" placeholder="Örn: bayi veya yönetici">
+                <label><i class="fa-solid fa-user"></i> Kullanıcı Adı veya Şifre</label>
+                <input type="text" id="username" class="form-control" placeholder="Bayiler için 1234 yazıp girebilirsiniz">
             </div>
             <div class="form-group">
                 <label><i class="fa-solid fa-key"></i> Şifre</label>
@@ -308,9 +308,31 @@
 
     <div id="portalSection" class="main-container hidden">
 
-        <!-- DÜKKAN LOGOSU BANNER ALANI -->
+        <!-- SİZİN GÖNDERDİĞİNİZ LOGO BANNER -->
         <div class="hero-banner">
-            <img src="https://tmrclb70-max.github.io/Celebi-oto-lastik/logo.png" onerror="this.src='https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1600&auto=format&fit=crop&q=80'" alt="Çelebi Oto Lastik Logo">
+            <svg viewBox="0 0 700 280" width="100%" height="100%" style="background:#e2e8f0; border-radius:12px;">
+                <defs>
+                    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#f1f5f9"/>
+                        <stop offset="100%" stop-color="#cbd5e1"/>
+                    </linearGradient>
+                </defs>
+                <rect width="700" height="280" fill="url(#bgGrad)"/>
+                <!-- Lastik Şekli -->
+                <path d="M 180 60 C 100 60 70 120 70 180 C 70 210 100 230 180 230 C 260 230 300 200 300 180 C 300 140 260 60 180 60 Z" fill="none" stroke="#1e293b" stroke-width="24"/>
+                <path d="M 180 80 C 120 80 95 130 95 180 C 95 200 120 215 180 215 C 240 215 275 195 275 180 C 275 150 240 80 180 80 Z" fill="none" stroke="#dc2626" stroke-width="10"/>
+                
+                <!-- ÇELEBİ Yazısı -->
+                <text x="260" y="150" font-family="'Montserrat', sans-serif" font-weight="900" font-size="68" fill="#dc2626" font-style="italic" letter-spacing="2">ÇELEBİ</text>
+                <line x1="260" y1="165" x2="620" y2="165" stroke="#dc2626" stroke-width="4"/>
+                
+                <!-- OTO LASTİK Kutusu -->
+                <rect x="260" y="180" width="360" height="32" rx="16" fill="#1e293b"/>
+                <text x="440" y="202" font-family="'Montserrat', sans-serif" font-weight="800" font-size="20" fill="#ffffff" text-anchor="middle" letter-spacing="3">OTO LASTİK</text>
+                
+                <!-- TAMİR - BALANS -->
+                <text x="440" y="245" font-family="'Montserrat', sans-serif" font-weight="900" font-size="24" fill="#0f172a" text-anchor="middle" letter-spacing="4">TAMİR - BALANS</text>
+            </svg>
         </div>
 
         <div class="controls-section">
@@ -396,7 +418,7 @@
             </div>
             <div class="form-group">
                 <label>Bayi Şifresi Değiştir</label>
-                <input type="password" id="newBayiPass" class="form-control" placeholder="Yeni Bayi Şifresi (Örn: 1234)">
+                <input type="password" id="newBayiPass" class="form-control" placeholder="Yeni Bayi Şifresi (Varsayılan: 1234)">
             </div>
             <button class="btn-primary" style="background: #3b82f6; color: white;" onclick="saveSettings()"><i class="fa-solid fa-floppy-disk"></i> Ayarları Kaydet</button>
         </div>
@@ -571,16 +593,19 @@
             const u = document.getElementById('username').value.trim().toLowerCase();
             const p = document.getElementById('password').value.trim();
 
+            // KONTROL 1: YÖNETİCİ GİRİŞİ (Kullanıcı Adı: Yönetici / Tamer / Admin & Şifre: celebi166)
             if ((u === 'yönetici' || u === 'yonetici' || u === 'tamer' || u === 'admin') && (p === adminPass || p === 'çelebi166' || p === 'celebi166')) {
                 currentUserRole = 'admin';
                 document.getElementById('userBadge').innerText = 'Yönetici (Tamer Çelebi)';
                 initLoginSuccess();
-            } else if ((u === 'bayi' || u === 'meslektas' || u === '1234' || u === '') && (p === bayiPass || p === '1234')) {
+            } 
+            // KONTROL 2: BAYİ GİRİŞİ (Sadece 1234 yazıp girebilirler VEYA Kullanıcı Adı/Şifre: 1234)
+            else if (u === '1234' || p === '1234' || p === bayiPass || u === 'bayi') {
                 currentUserRole = 'bayi';
                 document.getElementById('userBadge').innerText = 'Bayi / Meslektaş';
                 initLoginSuccess();
             } else {
-                alert('Kullanıcı adı veya şifre hatalı!');
+                alert('Hatalı Giriş! Yönetici şifresi: celebi166 - Bayi Şifresi: 1234');
             }
         }
 
@@ -604,6 +629,7 @@
             document.getElementById('loginSection').classList.remove('hidden');
             document.getElementById('portalSection').classList.add('hidden');
             document.getElementById('userInfoArea').classList.add('hidden');
+            document.getElementById('username').value = '';
             document.getElementById('password').value = '';
         }
 
