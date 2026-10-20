@@ -161,32 +161,46 @@
 
         .products-list { display: flex; flex-direction: column; gap: 12px; }
         
-        /* FOTOĞRAFTAKİ ORİJİNAL DÜZEN (EBAT - MARKA - DESEN - KATEGORİ - DOT - FİYAT - STOK - AKSİYONLAR) */
+        /* DÜZEN: GÖRSEL - EBAT - MARKA/LOGO - DESEN - KATEGORİ - DOT - FİYAT - STOK - AKSİYONLAR */
         .product-row { 
             background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; 
             padding: 12px 20px; display: grid; 
-            grid-template-columns: 70px 1.1fr 1fr 1.5fr 110px 100px 1.2fr auto auto; 
+            grid-template-columns: 80px 1.2fr 1.3fr 1.5fr 110px 100px 1.2fr auto auto; 
             align-items: center; gap: 15px; transition: 0.2s; 
         }
         .product-row:hover { border-color: var(--accent-yellow); transform: translateX(3px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
         
+        /* SOL KISIMDAKİ SADE / ÇERÇEVESİZ BEYAZ GÖRSEL KUTUSU */
         .product-img-box {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 65px;
-            height: 50px;
+            width: 75px;
+            height: 55px;
             background: #ffffff;
-            padding: 4px;
             border-radius: 8px;
-            border: 1px solid var(--card-border);
+            overflow: hidden;
         }
         .product-img { width: 100%; height: 100%; object-fit: contain; }
 
+        /* BÜYÜK OKUNAKLI ŞIK MARKA LOGO/YAZI ALANI */
+        .brand-display-box {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            max-height: 55px;
+        }
+        .brand-logo-img {
+            max-width: 140px;
+            max-height: 50px;
+            object-fit: contain;
+            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5));
+        }
+
         .col-size { font-size: 1.25rem; font-weight: 800; color: #fff; }
-        .col-brand-text { font-size: 1.1rem; color: var(--accent-yellow); font-weight: 800; text-transform: uppercase; }
+        .col-brand-text { font-size: 1.15rem; color: var(--accent-yellow); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        /* FOTOĞRAFTAKİ DESEN KUTUSU (TURUNCU ÇERÇEVELİ) */
+        /* DESEN KUTUSU */
         .pattern-box {
             display: inline-flex;
             align-items: center;
@@ -473,6 +487,15 @@
                 <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Kabat, BKT Vb.">
             </div>
 
+            <!-- MARKA LOGOSU YAPIŞTIRMA VE ARAMA ALANI -->
+            <div class="form-group">
+                <label><i class="fa-solid fa-copyright" style="color: var(--accent-yellow);"></i> Marka Logosu Bağlantısı (URL)</label>
+                <div class="input-with-btn">
+                    <input type="text" id="pLogoUrl" class="form-control" placeholder="Marka logosunun URL adresini kopyalayıp yapıştırın">
+                    <button class="btn-search-img" type="button" onclick="openGoogleSearch('logo')"><i class="fa-solid fa-arrow-up-right-from-square"></i> Logo Ara</button>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label>Lastik Deseni / Model / Özellik</label>
                 <input type="text" id="pPattern" class="form-control" placeholder="Örn: 8PR TRAKTÖR ÖN, SNOWMASTER Vb.">
@@ -505,11 +528,11 @@
                 </div>
             </div>
 
-            <!-- RESİM VE LOGO ARAMA VE YAPIŞTIRMA ALANI -->
+            <!-- LASTİK RESMİ YAPIŞTIRMA VE ARAMA ALANI -->
             <div class="form-group">
-                <label>Görsel Bağlantısı (URL)</label>
+                <label>Ürün Görsel Bağlantısı (URL)</label>
                 <div class="input-with-btn">
-                    <input type="text" id="pImg" class="form-control" placeholder="Resim URL yapıştırın">
+                    <input type="text" id="pImg" class="form-control" placeholder="Lastik resminin URL adresini kopyalayıp yapıştırın">
                     <button class="btn-search-img" type="button" onclick="openGoogleSearch('resim')"><i class="fa-solid fa-arrow-up-right-from-square"></i> Resim Ara</button>
                 </div>
             </div>
@@ -695,6 +718,7 @@
             document.getElementById('pBrandSelect').value = 'Petlas';
             document.getElementById('customBrandGroup').classList.add('hidden');
             document.getElementById('pCustomBrand').value = '';
+            document.getElementById('pLogoUrl').value = '';
             document.getElementById('pPattern').value = '';
             document.getElementById('pSeason').value = 'Yaz';
             document.getElementById('pDot').value = '2026';
@@ -713,7 +737,13 @@
 
             let pattern = document.getElementById('pPattern').value.trim();
 
-            let query = `${brand} ${size} ${pattern} lastik`.trim();
+            let query = '';
+            if (type === 'logo') {
+                query = `${brand} logo png transparent`;
+            } else {
+                query = `${brand} ${size} ${pattern} lastik`.trim();
+            }
+
             const googleUrl = `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(query)}`;
             window.open(googleUrl, '_blank');
         }
@@ -726,6 +756,7 @@
             let brand = document.getElementById('pBrandSelect').value;
             if (brand === 'Diger') brand = document.getElementById('pCustomBrand').value.trim();
 
+            const logoUrl = document.getElementById('pLogoUrl').value.trim();
             const pattern = document.getElementById('pPattern').value.trim();
             const season = (group === 'İç Lastik') ? 'Şambrel / İç Lastik' : document.getElementById('pSeason').value;
             const dot = document.getElementById('pDot').value.trim() || '2026';
@@ -741,7 +772,7 @@
             const editingId = document.getElementById('editingProductId').value;
             const id = editingId ? editingId : 'p_' + Date.now();
 
-            const productData = { group, size, brand, pattern, season, dot, stock, price, img };
+            const productData = { group, size, brand, logoUrl, pattern, season, dot, stock, price, img };
             await window.setDoc(window.doc(window.db, "lastik_stoklari", id), productData, { merge: true });
             closeModal('productModal');
         }
@@ -781,6 +812,7 @@
                 document.getElementById('customBrandGroup').classList.add('hidden');
             }
 
+            document.getElementById('pLogoUrl').value = p.logoUrl || '';
             document.getElementById('pPattern').value = p.pattern || '';
             document.getElementById('pSeason').value = (p.season === 'Şambrel / İç Lastik') ? 'Yaz' : (p.season || 'Yaz');
             document.getElementById('pDot').value = p.dot || '2026';
@@ -848,7 +880,7 @@
 
                 const displayImg = p.img || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
 
-                // KATEGORİ SİMGELERİ VE ETİKETİ (FOTOĞRAFTAKİ GİBİ)
+                // KATEGORİ ETİKETİ
                 let catTag = '';
                 if (p.group === 'Zirai') {
                     catTag = `<span class="tag tag-category"><i class="fa-solid fa-tractor"></i> Zirai</span>`;
@@ -859,6 +891,14 @@
                     if (p.season === 'Kış') icon = 'fa-snowflake';
                     else if (p.season === '4 Mevsim') icon = 'fa-cloud-sun-rain';
                     catTag = `<span class="tag tag-category"><i class="fa-solid ${icon}"></i> ${p.season || 'Yaz'}</span>`;
+                }
+
+                // MARKA LOGOSU / YAZISI ALANI
+                let brandHtml = '';
+                if (p.logoUrl) {
+                    brandHtml = `<div class="brand-display-box"><img src="${p.logoUrl}" class="brand-logo-img" alt="${p.brand}"></div>`;
+                } else {
+                    brandHtml = `<span class="col-brand-text">${p.brand}</span>`;
                 }
 
                 const row = document.createElement('div');
@@ -879,7 +919,6 @@
                     </div>
                 ` : '';
 
-                // FOTOĞRAFTAKİ TAM DÜZEN
                 row.innerHTML = `
                     <div class="mobile-card-top">
                         <div class="product-img-box">
@@ -887,7 +926,7 @@
                         </div>
                     </div>
                     <div><span class="col-size">${p.size}</span></div>
-                    <div><span class="col-brand-text">${p.brand}</span></div>
+                    <div>${brandHtml}</div>
                     <div>
                         <div class="pattern-box">
                             <i class="fa-solid fa-border-all"></i>
