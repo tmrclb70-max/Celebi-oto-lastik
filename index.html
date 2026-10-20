@@ -61,12 +61,15 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding-bottom: 40px; overflow-x: hidden; }
 
+        /* 3. FOTOĞRAF: EN ÜST HEADER ARKA PLANI (PETLAS LOGOLU) */
         header { 
             position: relative;
-            background-size: cover;
+            background-image: linear-gradient(90deg, rgba(15, 23, 42, 0.88) 0%, rgba(2, 6, 23, 0.82) 100%), url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Petlas_logo.svg/1200px-Petlas_logo.svg.png');
+            background-size: contain;
+            background-repeat: no-repeat;
             background-position: center;
             border-bottom: 3px solid #dc2626; 
-            padding: 18px 0; 
+            padding: 22px 0; 
             box-shadow: 0 4px 25px rgba(0,0,0,0.6); 
             overflow: hidden;
         }
@@ -75,15 +78,16 @@
         .header-title-area h1 { font-size: 1.8rem; font-weight: 900; color: #ffffff; letter-spacing: 1px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
         .header-title-area p { font-size: 0.85rem; color: var(--accent-yellow); font-style: italic; font-weight: 600; margin-top: 2px; }
 
-        .user-info { display: flex; align-items: center; gap: 10px; background: rgba(15, 23, 42, 0.7); padding: 6px 12px; border-radius: 8px; border: 1px solid var(--card-border); backdrop-filter: blur(8px); }
+        .user-info { display: flex; align-items: center; gap: 10px; background: rgba(15, 23, 42, 0.85); padding: 6px 12px; border-radius: 8px; border: 1px solid var(--card-border); backdrop-filter: blur(8px); }
         .user-badge { color: var(--accent-yellow); font-weight: 600; font-size: 0.9rem; }
         .btn-logout { background: var(--danger-color); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
 
         .main-container { max-width: 1400px; margin: 20px auto; padding: 0 15px; }
 
+        /* 2. FOTOĞRAF: ORTAK BÖLÜM BANNERI */
         .hero-banner {
             width: 100%;
-            height: 180px;
+            height: 200px;
             background: #1e293b;
             border-radius: 12px;
             border: 2px solid var(--accent-yellow);
@@ -98,12 +102,14 @@
         .hero-banner img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            background: #ffffff;
+            object-fit: cover;
+            object-position: center;
         }
 
+        /* 1. FOTOĞRAF: GİRİŞ EKRANI ARKA PLANI */
         .login-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(15, 23, 42, 0.82), rgba(2, 6, 23, 0.90)), url('https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80');
             background-size: cover; background-position: center;
             display: flex; justify-content: center; align-items: center; z-index: 2000;
             padding: 20px;
@@ -157,7 +163,7 @@
             display: inline-flex; align-items: center; gap: 5px; font-size: 0.8rem; transition: 0.2s; 
         }
 
-        /* LİSTELEME ALANI (HER İKİ CİHAZDA DA SOLDAN SAĞA YATAY SATIR) */
+        /* LİSTELEME ALANI (SOLDAN SAĞA YATAY SATIR) */
         .products-list-wrapper { width: 100%; overflow-x: auto; }
         .products-list { display: flex; flex-direction: column; gap: 10px; min-width: 820px; }
         
@@ -204,7 +210,6 @@
         .tag { font-size: 0.78rem; padding: 5px 10px; border-radius: 6px; background: #0f172a; color: var(--text-main); border: 1px solid var(--card-border); font-weight: 700; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; }
         .tag-category { color: var(--accent-yellow); border-color: rgba(245, 158, 11, 0.4); }
 
-        /* YENİ STOK ETİKETLERİ */
         .stock-badge-in { background: rgba(16, 185, 129, 0.15); color: var(--success-color); border: 1.5px solid var(--success-color); font-weight: 800; padding: 5px 10px; border-radius: 6px; font-size: 0.82rem; text-align: center; white-space: nowrap; }
         .stock-badge-low { background: rgba(245, 158, 11, 0.15); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); font-weight: 800; padding: 5px 10px; border-radius: 6px; font-size: 0.82rem; text-align: center; white-space: nowrap; }
         .stock-badge-out { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1.5px solid var(--danger-color); font-weight: 800; padding: 5px 10px; border-radius: 6px; font-size: 0.82rem; text-align: center; white-space: nowrap; }
@@ -231,7 +236,6 @@
 
         .notif-item { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--card-border); padding: 10px 14px; border-radius: 8px; margin-bottom: 8px; font-size: 0.9rem; }
 
-        /* BAYİ DETAY MODAL İÇERİĞİ */
         .detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.95rem; }
         .detail-label { color: var(--text-muted); font-weight: 600; }
         .detail-val { color: var(--text-main); font-weight: 800; }
@@ -242,7 +246,7 @@
 <body>
 
     <!-- GİRİŞ EKRANI -->
-    <div id="loginSection" class="login-wrapper" style="background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(2, 6, 23, 0.92)), url('https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80');">
+    <div id="loginSection" class="login-wrapper">
         <div class="login-card">
             <h1 class="login-brand-title">Çelebi Oto Lastik</h1>
             <p class="login-slogan">"Yolunuzda Güven, Lastiğinizde Kalite"</p>
@@ -265,7 +269,7 @@
     </div>
 
     <!-- EN ÜST HEADER -->
-    <header style="background-image: linear-gradient(90deg, rgba(2, 6, 23, 0.9) 0%, rgba(15, 23, 42, 0.8) 100%), url('HEADER_ARKA_PLAN_RESIM_URLSINI_YAZIN');">
+    <header>
         <div class="header-container">
             <div class="header-title-area">
                 <h1>ÇELEBİ OTO LASTİK</h1>
@@ -280,9 +284,9 @@
 
     <div id="portalSection" class="main-container hidden">
 
-        <!-- ORTA LOGO BANNER -->
+        <!-- ORTA LOGO BANNER (2. FOTOĞRAF) -->
         <div class="hero-banner">
-            <img src="https://tmrclb70-max.github.io/Celebi-oto-lastik/logo.png" alt="Çelebi Oto Lastik Logo" onerror="this.src='https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1600&auto=format&fit=crop&q=80'">
+            <img src="https://araclo-bucket.sfo3.cdn.digitaloceanspaces.com/blog/1233242a-ea59-497c-b3c9-83f339a50e40.jpg" alt="Lastik Banner">
         </div>
 
         <div class="controls-section">
@@ -326,7 +330,6 @@
             </div>
         </div>
 
-        <!-- ÜRÜN LİSTESİ WRAPPER (TELEFONDA SOLDAN SAĞA KAYDIRILABİLİR YATAY DÜZEN) -->
         <div class="products-list-wrapper">
             <div id="productsGrid" class="products-list"></div>
         </div>
@@ -356,7 +359,7 @@
         </div>
     </div>
 
-    <!-- BİLDİRİM MODALI (YÖNETİCİ) -->
+    <!-- BİLDİRİM MODALI -->
     <div id="notifModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -823,11 +826,6 @@
             closeModal('bulkPriceModal');
         }
 
-        /* YENİ STOK KURALLARI: 
-           >= 4 -> "Stokta Var" (Yeşil)
-           0    -> "Rezerve Stok" (Kırmızı)
-           1, 2, 3 -> "1 Adet", "2 Adet", "3 Adet" (Turuncu)
-        */
         function getStockBadgeHtml(stockVal) {
             if (stockVal >= 4) {
                 return `<div class="stock-badge-in"><i class="fa-solid fa-check"></i> Stokta Var</div>`;
@@ -839,7 +837,7 @@
         }
 
         function openDetailModal(id) {
-            if (currentUserRole === 'admin') return; // Yöneticiye tıklayınca modal açılmaz
+            if (currentUserRole === 'admin') return; 
             const p = products.find(x => x.id === id);
             if (!p) return;
 
@@ -902,7 +900,6 @@
                 const row = document.createElement('div');
                 row.className = 'product-row';
                 row.onclick = (e) => {
-                    // Eğer admin butonlarına tıklanmadıysa detayı aç
                     if (!e.target.closest('.btn-qty') && !e.target.closest('.btn-edit-price') && !e.target.closest('.btn-icon')) {
                         openDetailModal(p.id);
                     }
@@ -923,7 +920,6 @@
                     </div>
                 ` : '';
 
-                // SOLDAN SAĞA TAM HİZALANMIŞ YATAY SATIR
                 row.innerHTML = `
                     <div class="product-img-box">
                         <img src="${displayImg}" class="product-img" alt="Görsel">
@@ -960,7 +956,6 @@
             }
         }
 
-        /* YÖNETİCİ BİLDİRİM SİSTEMİ (0 Rezerve Stok veya 1, 2, 3 Adede Düşenler) */
         function checkNotifications() {
             const alertProducts = products.filter(p => (parseInt(p.stock) || 0) <= 3);
             const badge = document.getElementById('notifBadge');
