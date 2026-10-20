@@ -73,15 +73,6 @@
             overflow: hidden;
         }
 
-        header::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/tire-tread.png');
-            opacity: 0.25;
-            pointer-events: none;
-        }
-
         .header-container { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         .header-title-area h1 { font-size: 2.1rem; font-weight: 900; color: #ffffff; letter-spacing: 1.5px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
         .header-title-area p { font-size: 0.95rem; color: var(--accent-yellow); font-style: italic; font-weight: 600; margin-top: 2px; letter-spacing: 0.5px; }
@@ -92,11 +83,11 @@
 
         .main-container { max-width: 1350px; margin: 30px auto; padding: 0 20px; }
 
-        /* ÖZEL LOGO BANNER ALANI */
+        /* BANNER ALANI (URL BURAYA YAPIŞTIRILABİLİR) */
         .hero-banner {
             width: 100%;
-            max-height: 280px;
-            background: #ffffff;
+            height: 240px;
+            background: #1e293b;
             border-radius: 16px;
             border: 2px solid var(--accent-yellow);
             margin-bottom: 25px;
@@ -105,18 +96,20 @@
             justify-content: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             overflow: hidden;
-            padding: 10px;
         }
 
         .hero-banner img {
-            max-width: 100%;
-            max-height: 260px;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
+            background: #ffffff;
         }
 
+        /* GİRİŞ EKRANI ARKA PLANI (URL BURAYA YAPIŞTIRILABİLİR) */
         .login-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(2, 6, 23, 0.88)), url('https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80');
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(2, 6, 23, 0.9)), 
+                        url('https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80');
             background-size: cover; background-position: center;
             display: flex; justify-content: center; align-items: center; z-index: 2000;
             padding: 20px;
@@ -124,14 +117,13 @@
         
         .login-card { 
             width: 100%; max-width: 480px; 
-            background: rgba(15, 23, 42, 0.65); 
+            background: rgba(15, 23, 42, 0.75); 
             padding: 40px 35px; 
             border-radius: 20px; 
             border: 1.5px solid rgba(245, 158, 11, 0.4); 
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8); 
             text-align: center; 
             backdrop-filter: blur(16px); 
-            -webkit-backdrop-filter: blur(16px);
         }
         
         .login-brand-title { font-family: 'Great Vibes', 'Alex Brush', cursive; font-size: 3.2rem; color: #ffffff; text-shadow: 0 4px 15px rgba(245, 158, 11, 0.5); line-height: 1.1; margin-bottom: 5px; }
@@ -271,7 +263,10 @@
 </head>
 <body>
 
-    <div id="loginSection" class="login-wrapper">
+    <!-- ======================================================== -->
+    <!-- GİRİŞ EKRANI ARKA PLANI (İstediğiniz resmi buraya koyabilirsiniz) -->
+    <!-- ======================================================== -->
+    <div id="loginSection" class="login-wrapper" style="background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(2, 6, 23, 0.92)), url('BURAYA_GIRIS_ARKA_PLAN_RESIM_URLSINI_YAZIN');">
         <div class="login-card">
             <h1 class="login-brand-title">Çelebi Oto Lastik</h1>
             <p class="login-slogan">"Yolunuzda Güven, Lastiğinizde Kalite"</p>
@@ -308,31 +303,12 @@
 
     <div id="portalSection" class="main-container hidden">
 
-        <!-- SİZİN GÖNDERDİĞİNİZ LOGO BANNER -->
+        <!-- ======================================================== -->
+        <!-- BANNER LOGO ALANI (İstediğiniz resmi buraya koyabilirsiniz) -->
+        <!-- ======================================================== -->
         <div class="hero-banner">
-            <svg viewBox="0 0 700 280" width="100%" height="100%" style="background:#e2e8f0; border-radius:12px;">
-                <defs>
-                    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#f1f5f9"/>
-                        <stop offset="100%" stop-color="#cbd5e1"/>
-                    </linearGradient>
-                </defs>
-                <rect width="700" height="280" fill="url(#bgGrad)"/>
-                <!-- Lastik Şekli -->
-                <path d="M 180 60 C 100 60 70 120 70 180 C 70 210 100 230 180 230 C 260 230 300 200 300 180 C 300 140 260 60 180 60 Z" fill="none" stroke="#1e293b" stroke-width="24"/>
-                <path d="M 180 80 C 120 80 95 130 95 180 C 95 200 120 215 180 215 C 240 215 275 195 275 180 C 275 150 240 80 180 80 Z" fill="none" stroke="#dc2626" stroke-width="10"/>
-                
-                <!-- ÇELEBİ Yazısı -->
-                <text x="260" y="150" font-family="'Montserrat', sans-serif" font-weight="900" font-size="68" fill="#dc2626" font-style="italic" letter-spacing="2">ÇELEBİ</text>
-                <line x1="260" y1="165" x2="620" y2="165" stroke="#dc2626" stroke-width="4"/>
-                
-                <!-- OTO LASTİK Kutusu -->
-                <rect x="260" y="180" width="360" height="32" rx="16" fill="#1e293b"/>
-                <text x="440" y="202" font-family="'Montserrat', sans-serif" font-weight="800" font-size="20" fill="#ffffff" text-anchor="middle" letter-spacing="3">OTO LASTİK</text>
-                
-                <!-- TAMİR - BALANS -->
-                <text x="440" y="245" font-family="'Montserrat', sans-serif" font-weight="900" font-size="24" fill="#0f172a" text-anchor="middle" letter-spacing="4">TAMİR - BALANS</text>
-            </svg>
+            <!-- src kısmına tırnak içine dilediğiniz resmin internet/GitHub linkini yapıştırabilirsiniz -->
+            <img src="https://tmrclb70-max.github.io/Celebi-oto-lastik/logo.png" alt="Çelebi Oto Lastik Logo" onerror="this.src='https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1600&auto=format&fit=crop&q=80'">
         </div>
 
         <div class="controls-section">
@@ -593,14 +569,11 @@
             const u = document.getElementById('username').value.trim().toLowerCase();
             const p = document.getElementById('password').value.trim();
 
-            // KONTROL 1: YÖNETİCİ GİRİŞİ (Kullanıcı Adı: Yönetici / Tamer / Admin & Şifre: celebi166)
             if ((u === 'yönetici' || u === 'yonetici' || u === 'tamer' || u === 'admin') && (p === adminPass || p === 'çelebi166' || p === 'celebi166')) {
                 currentUserRole = 'admin';
                 document.getElementById('userBadge').innerText = 'Yönetici (Tamer Çelebi)';
                 initLoginSuccess();
-            } 
-            // KONTROL 2: BAYİ GİRİŞİ (Sadece 1234 yazıp girebilirler VEYA Kullanıcı Adı/Şifre: 1234)
-            else if (u === '1234' || p === '1234' || p === bayiPass || u === 'bayi') {
+            } else if (u === '1234' || p === '1234' || p === bayiPass || u === 'bayi') {
                 currentUserRole = 'bayi';
                 document.getElementById('userBadge').innerText = 'Bayi / Meslektaş';
                 initLoginSuccess();
@@ -872,7 +845,7 @@
 
                 let adminActionsHtml = currentUserRole === 'admin' ? `
                     <div class="row-actions">
-                        <button class="btn-edit-price" onclick="editProduct('${p.id}')" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn-edit-percent btn-edit-price" onclick="editProduct('${p.id}')" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
                         <button class="btn-icon" onclick="deleteProduct('${p.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 ` : '';
