@@ -66,28 +66,28 @@
             background-size: cover;
             background-position: center;
             border-bottom: 3px solid #dc2626; 
-            padding: 22px 0; 
+            padding: 18px 0; 
             box-shadow: 0 4px 25px rgba(0,0,0,0.6); 
             overflow: hidden;
         }
 
-        .header-container { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-        .header-title-area h1 { font-size: 2.1rem; font-weight: 900; color: #ffffff; letter-spacing: 1.5px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
-        .header-title-area p { font-size: 0.95rem; color: var(--accent-yellow); font-style: italic; font-weight: 600; margin-top: 2px; letter-spacing: 0.5px; }
+        .header-container { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 0 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .header-title-area h1 { font-size: 1.8rem; font-weight: 900; color: #ffffff; letter-spacing: 1px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .header-title-area p { font-size: 0.85rem; color: var(--accent-yellow); font-style: italic; font-weight: 600; margin-top: 2px; }
 
-        .user-info { display: flex; align-items: center; gap: 15px; background: rgba(15, 23, 42, 0.7); padding: 8px 16px; border-radius: 8px; border: 1px solid var(--card-border); backdrop-filter: blur(8px); }
-        .user-badge { color: var(--accent-yellow); font-weight: 600; }
-        .btn-logout { background: var(--danger-color); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .user-info { display: flex; align-items: center; gap: 10px; background: rgba(15, 23, 42, 0.7); padding: 6px 12px; border-radius: 8px; border: 1px solid var(--card-border); backdrop-filter: blur(8px); }
+        .user-badge { color: var(--accent-yellow); font-weight: 600; font-size: 0.9rem; }
+        .btn-logout { background: var(--danger-color); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
 
-        .main-container { max-width: 1400px; margin: 30px auto; padding: 0 20px; }
+        .main-container { max-width: 1400px; margin: 20px auto; padding: 0 15px; }
 
         .hero-banner {
             width: 100%;
-            height: 240px;
+            height: 180px;
             background: #1e293b;
-            border-radius: 16px;
+            border-radius: 12px;
             border: 2px solid var(--accent-yellow);
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -110,189 +110,138 @@
         }
         
         .login-card { 
-            width: 100%; max-width: 480px; 
-            background: rgba(15, 23, 42, 0.85); 
-            padding: 40px 35px; 
-            border-radius: 20px; 
+            width: 100%; max-width: 440px; 
+            background: rgba(15, 23, 42, 0.88); 
+            padding: 30px 25px; 
+            border-radius: 16px; 
             border: 1.5px solid rgba(245, 158, 11, 0.4); 
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8); 
             text-align: center; 
             backdrop-filter: blur(16px); 
         }
         
-        .login-brand-title { font-family: 'Great Vibes', 'Alex Brush', cursive; font-size: 3.2rem; color: #ffffff; text-shadow: 0 4px 15px rgba(245, 158, 11, 0.5); line-height: 1.1; margin-bottom: 5px; }
-        .login-slogan { font-size: 0.95rem; color: var(--accent-yellow); font-style: italic; font-weight: 600; margin-bottom: 25px; letter-spacing: 0.5px; }
-        .login-welcome-text { font-size: 0.95rem; color: var(--text-main); margin-bottom: 20px; background: rgba(255, 255, 255, 0.06); padding: 10px 15px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .login-brand-title { font-family: 'Great Vibes', 'Alex Brush', cursive; font-size: 2.8rem; color: #ffffff; text-shadow: 0 4px 15px rgba(245, 158, 11, 0.5); line-height: 1.1; margin-bottom: 5px; }
+        .login-slogan { font-size: 0.88rem; color: var(--accent-yellow); font-style: italic; font-weight: 600; margin-bottom: 20px; }
+        .login-welcome-text { font-size: 0.90rem; color: var(--text-main); margin-bottom: 18px; background: rgba(255, 255, 255, 0.06); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-        .form-group { margin-bottom: 18px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 6px; font-size: 0.88rem; color: var(--text-muted); font-weight: 600; }
-        .form-control { width: 100%; padding: 13px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); background: rgba(15, 23, 42, 0.8); color: white; font-size: 1rem; transition: 0.2s; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 5px; font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
+        .form-control { width: 100%; padding: 11px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: rgba(15, 23, 42, 0.8); color: white; font-size: 0.95rem; transition: 0.2s; }
         .form-control:focus { outline: none; border-color: var(--accent-yellow); box-shadow: 0 0 10px rgba(245, 158, 11, 0.3); }
         
-        .btn-primary { width: 100%; padding: 14px; background: var(--accent-yellow); color: #000; font-weight: 800; border: none; border-radius: 10px; cursor: pointer; font-size: 1.1rem; transition: 0.2s; margin-top: 10px; box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4); }
-        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 6px 25px rgba(245, 158, 11, 0.6); }
+        .btn-primary { width: 100%; padding: 12px; background: var(--accent-yellow); color: #000; font-weight: 800; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; transition: 0.2s; margin-top: 8px; box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4); }
+        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); }
 
-        .controls-section { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--card-border); margin-bottom: 25px; }
-        .search-bar-row { display: flex; gap: 12px; margin-bottom: 15px; align-items: center; }
+        .controls-section { background: var(--card-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--card-border); margin-bottom: 20px; }
+        .search-bar-row { display: flex; gap: 10px; margin-bottom: 12px; align-items: center; }
         .search-box { position: relative; flex: 1; }
-        .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.2rem; }
-        .search-box input { width: 100%; padding: 14px 14px 14px 45px; background: #0f172a; border: 1px solid var(--card-border); border-radius: 8px; color: white; font-size: 1.1rem; }
+        .search-box i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.1rem; }
+        .search-box input { width: 100%; padding: 12px 12px 12px 40px; background: #0f172a; border: 1px solid var(--card-border); border-radius: 8px; color: white; font-size: 1rem; }
         
-        .btn-notification { position: relative; background: #0f172a; border: 1px solid var(--card-border); color: var(--accent-yellow); padding: 0 20px; height: 50px; border-radius: 8px; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 8px; font-size: 1.05rem; white-space: nowrap; transition: 0.2s; }
-        .btn-notification:hover { border-color: var(--accent-yellow); background: rgba(245, 158, 11, 0.1); }
-        .notif-badge { position: absolute; top: -6px; right: -6px; background: var(--danger-color); color: white; font-size: 0.75rem; font-weight: 800; padding: 3px 8px; border-radius: 10px; border: 2px solid var(--card-bg); }
+        .btn-notification { position: relative; background: #0f172a; border: 1px solid var(--card-border); color: var(--accent-yellow); padding: 0 16px; height: 45px; border-radius: 8px; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 8px; font-size: 0.95rem; white-space: nowrap; }
+        .notif-badge { position: absolute; top: -5px; right: -5px; background: var(--danger-color); color: white; font-size: 0.72rem; font-weight: 800; padding: 2px 7px; border-radius: 10px; border: 2px solid var(--card-bg); }
 
-        .filter-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
-        .filter-btn { flex: 1; min-width: 110px; padding: 10px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem; }
+        .filter-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+        .filter-btn { flex: 1; min-width: 100px; padding: 8px 10px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.82rem; }
         .filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
 
-        .admin-bar { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; background: rgba(255,255,255,0.03); padding: 15px 20px; border-radius: 10px; border: 1px solid var(--card-border); }
-        .admin-bar-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .admin-btn-group { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; width: 100%; }
+        .admin-bar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; background: rgba(255,255,255,0.03); padding: 12px 15px; border-radius: 10px; border: 1px solid var(--card-border); }
+        .admin-bar-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .admin-btn-group { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; width: 100%; }
         
-        .btn-add { background: var(--success-color); color: white; border: none; padding: 9px 16px; border-radius: 8px; cursor: pointer; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; font-size: 0.9rem; }
+        .btn-add { background: var(--success-color); color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; }
         
         .btn-bulk-item { 
             background: #1e293b; color: var(--text-main); border: 1px solid var(--card-border); 
-            padding: 7px 12px; border-radius: 8px; cursor: pointer; font-weight: 600; 
-            display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; transition: 0.2s; 
+            padding: 6px 10px; border-radius: 6px; cursor: pointer; font-weight: 600; 
+            display: inline-flex; align-items: center; gap: 5px; font-size: 0.8rem; transition: 0.2s; 
         }
-        .btn-bulk-item:hover { border-color: var(--accent-yellow); color: var(--accent-yellow); background: rgba(245, 158, 11, 0.08); }
 
-        .products-list { display: flex; flex-direction: column; gap: 12px; }
+        /* LİSTELEME ALANI (HER İKİ CİHAZDA DA SOLDAN SAĞA YATAY SATIR) */
+        .products-list-wrapper { width: 100%; overflow-x: auto; }
+        .products-list { display: flex; flex-direction: column; gap: 10px; min-width: 820px; }
         
         .product-row { 
-            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; 
-            padding: 12px 20px; display: grid; 
-            grid-template-columns: 80px 1.2fr 1.3fr 1.5fr 110px 100px 1.2fr auto auto; 
-            align-items: center; gap: 15px; transition: 0.2s; 
+            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; 
+            padding: 10px 15px; display: grid; 
+            grid-template-columns: 75px 1.2fr 1.3fr 1.4fr 110px 90px 1.2fr 110px auto; 
+            align-items: center; gap: 12px; transition: 0.2s; cursor: pointer;
         }
-        .product-row:hover { border-color: var(--accent-yellow); transform: translateX(3px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
+        .product-row:hover { border-color: var(--accent-yellow); transform: translateX(2px); box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
         
         .product-img-box {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 75px;
-            height: 55px;
+            width: 65px;
+            height: 48px;
             background: #ffffff;
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
+            flex-shrink: 0;
         }
         .product-img { width: 100%; height: 100%; object-fit: contain; }
 
-        .brand-display-box {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            max-height: 55px;
-        }
-        .brand-logo-img {
-            max-width: 140px;
-            max-height: 50px;
-            object-fit: contain;
-            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5));
-        }
+        .brand-display-box { display: flex; align-items: center; justify-content: flex-start; max-height: 48px; }
+        .brand-logo-img { max-width: 120px; max-height: 42px; object-fit: contain; }
 
-        .col-size { font-size: 1.25rem; font-weight: 800; color: #fff; }
-        .col-brand-text { font-size: 1.15rem; color: var(--accent-yellow); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+        .col-size { font-size: 1.15rem; font-weight: 800; color: #fff; white-space: nowrap; }
+        .col-brand-text { font-size: 1.05rem; color: var(--accent-yellow); font-weight: 800; text-transform: uppercase; white-space: nowrap; }
         
         .pattern-box {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(245, 158, 11, 0.5);
-            color: var(--accent-yellow);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            text-align: center;
+            display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+            background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(245, 158, 11, 0.5);
+            color: var(--accent-yellow); padding: 5px 10px; border-radius: 6px;
+            font-size: 0.8rem; font-weight: 700; text-transform: uppercase; text-align: center; white-space: nowrap;
         }
 
         .col-price { 
-            font-size: 1.25rem; font-weight: 900; color: #34d399; text-align: right; 
-            background: rgba(16, 185, 129, 0.08); padding: 6px 14px; border-radius: 8px; 
-            border: 1px solid rgba(16, 185, 129, 0.2); letter-spacing: 0.5px;
+            font-size: 1.15rem; font-weight: 900; color: #34d399; text-align: right; 
+            background: rgba(16, 185, 129, 0.08); padding: 5px 10px; border-radius: 6px; 
+            border: 1px solid rgba(16, 185, 129, 0.2); white-space: nowrap;
         }
         
-        .tag { font-size: 0.82rem; padding: 6px 12px; border-radius: 8px; background: #0f172a; color: var(--text-main); border: 1px solid var(--card-border); font-weight: 700; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+        .tag { font-size: 0.78rem; padding: 5px 10px; border-radius: 6px; background: #0f172a; color: var(--text-main); border: 1px solid var(--card-border); font-weight: 700; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; }
         .tag-category { color: var(--accent-yellow); border-color: rgba(245, 158, 11, 0.4); }
 
-        .stock-badge-in { background: rgba(16, 185, 129, 0.15); color: var(--success-color); border: 1.5px solid var(--success-color); font-weight: 800; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; text-align: center; }
-        .stock-badge-low { background: rgba(245, 158, 11, 0.15); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); font-weight: 800; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; text-align: center; }
-        .stock-badge-out { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1.5px solid var(--danger-color); font-weight: 800; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; text-align: center; }
+        /* YENİ STOK ETİKETLERİ */
+        .stock-badge-in { background: rgba(16, 185, 129, 0.15); color: var(--success-color); border: 1.5px solid var(--success-color); font-weight: 800; padding: 5px 10px; border-radius: 6px; font-size: 0.82rem; text-align: center; white-space: nowrap; }
+        .stock-badge-low { background: rgba(245, 158, 11, 0.15); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); font-weight: 800; padding: 5px 10px; border-radius: 6px; font-size: 0.82rem; text-align: center; white-space: nowrap; }
+        .stock-badge-out { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1.5px solid var(--danger-color); font-weight: 800; padding: 5px 10px; border-radius: 6px; font-size: 0.82rem; text-align: center; white-space: nowrap; }
         
-        .admin-stock-control { display: flex; align-items: center; gap: 6px; background: rgba(15, 23, 42, 0.8); padding: 4px 8px; border-radius: 8px; border: 1px solid var(--card-border); }
-        .admin-stock-val { font-weight: 800; color: #fff; font-size: 0.95rem; min-width: 55px; text-align: center; }
+        .admin-stock-control { display: flex; align-items: center; gap: 5px; background: rgba(15, 23, 42, 0.8); padding: 3px 6px; border-radius: 6px; border: 1px solid var(--card-border); }
+        .admin-stock-val { font-weight: 800; color: #fff; font-size: 0.88rem; min-width: 45px; text-align: center; }
         
-        .btn-qty { background: #334155; color: #fff; border: none; width: 30px; height: 30px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .btn-qty { background: #334155; color: #fff; border: none; width: 28px; height: 28px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .btn-qty:hover { background: var(--accent-yellow); color: #000; }
         
-        .row-actions { display: flex; gap: 8px; }
-        .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 38px; height: 38px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; font-size: 1rem; }
-        .btn-icon:hover { background: var(--danger-color); color: #fff; }
+        .row-actions { display: flex; gap: 6px; }
+        .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 34px; height: 34px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+        .btn-edit-price { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); width: 34px; height: 34px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
 
-        .btn-edit-price { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); width: 38px; height: 38px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; font-size: 1rem; }
-        .btn-edit-price:hover { background: var(--accent-yellow); color: #000; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: flex-start; z-index: 3000; padding: 15px; overflow-y: auto; }
+        .modal-content { background: var(--card-bg); border-radius: 12px; padding: 20px; width: 100%; max-width: 500px; border: 1px solid var(--card-border); margin: 20px auto; max-height: 85vh; overflow-y: auto; box-shadow: 0 15px 35px rgba(0,0,0,0.8); }
 
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: flex-start; z-index: 3000; padding: 20px; overflow-y: auto; }
-        .modal-content { background: var(--card-bg); border-radius: 12px; padding: 25px; width: 100%; max-width: 550px; border: 1px solid var(--card-border); margin: 30px auto; max-height: 85vh; overflow-y: auto; box-shadow: 0 15px 35px rgba(0,0,0,0.8); }
-
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; width: 100%; }
-        .modal-header h3 { color: var(--accent-yellow); font-size: 1.3rem; }
-        .close-btn { font-size: 1.6rem; cursor: pointer; color: var(--text-muted); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; width: 100%; }
+        .modal-header h3 { color: var(--accent-yellow); font-size: 1.2rem; }
+        .close-btn { font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
 
         .input-with-btn { display: flex; gap: 8px; }
-        .btn-search-img { background: #3b82f6; color: white; border: none; padding: 0 14px; border-radius: 6px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
-        .btn-search-img:hover { background: #2563eb; }
+        .btn-search-img { background: #3b82f6; color: white; border: none; padding: 0 12px; border-radius: 6px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 0.82rem; display: flex; align-items: center; gap: 5px; }
+
+        .notif-item { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--card-border); padding: 10px 14px; border-radius: 8px; margin-bottom: 8px; font-size: 0.9rem; }
+
+        /* BAYİ DETAY MODAL İÇERİĞİ */
+        .detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.95rem; }
+        .detail-label { color: var(--text-muted); font-weight: 600; }
+        .detail-val { color: var(--text-main); font-weight: 800; }
 
         .hidden { display: none !important; }
-
-        @media screen and (max-width: 768px) {
-            .hero-banner { height: 160px; }
-            .main-container { padding: 0 10px; margin: 15px auto; }
-            .header-title-area h1 { font-size: 1.4rem; }
-            .header-title-area p { font-size: 0.8rem; }
-            .controls-section { padding: 12px; }
-            .search-bar-row { flex-direction: column; gap: 8px; }
-            .btn-notification { width: 100%; justify-content: center; height: 42px; font-size: 0.95rem; }
-            
-            .filter-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-            .filter-btn { font-size: 0.8rem; padding: 8px 4px; min-width: unset; }
-
-            .admin-bar { padding: 12px; }
-            .admin-btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-            .btn-add, .btn-bulk-item { width: 100%; justify-content: center; text-align: center; }
-
-            .products-list { gap: 10px; }
-            .product-row { 
-                display: flex !important;
-                flex-direction: column !important;
-                padding: 12px !important;
-                border-radius: 10px !important;
-                gap: 8px !important;
-                background: #1e293b !important;
-            }
-
-            .mobile-card-top { display: flex; align-items: center; gap: 12px; width: 100%; cursor: pointer; }
-            .product-img-box { width: 65px !important; height: 50px !important; flex-shrink: 0; }
-            .mobile-card-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
-
-            .col-size { font-size: 1.1rem !important; }
-
-            .col-price { font-size: 1.1rem !important; padding: 4px 10px !important; }
-            .stock-badge-in, .stock-badge-low, .stock-badge-out { font-size: 0.78rem !important; padding: 4px 8px !important; }
-            .admin-stock-control { padding: 2px 6px !important; }
-        }
     </style>
 </head>
 <body>
 
-    <!-- GİRİŞ EKRANI ARKA PLANI -->
+    <!-- GİRİŞ EKRANI -->
     <div id="loginSection" class="login-wrapper" style="background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(2, 6, 23, 0.92)), url('https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80');">
         <div class="login-card">
             <h1 class="login-brand-title">Çelebi Oto Lastik</h1>
@@ -315,7 +264,7 @@
         </div>
     </div>
 
-    <!-- EN ÜST BAŞLIK ALANI (HEADER) ARKA PLAN RESMİ -->
+    <!-- EN ÜST HEADER -->
     <header style="background-image: linear-gradient(90deg, rgba(2, 6, 23, 0.9) 0%, rgba(15, 23, 42, 0.8) 100%), url('HEADER_ARKA_PLAN_RESIM_URLSINI_YAZIN');">
         <div class="header-container">
             <div class="header-title-area">
@@ -331,7 +280,7 @@
 
     <div id="portalSection" class="main-container hidden">
 
-        <!-- ORTA BANNER / LOGO ALANI -->
+        <!-- ORTA LOGO BANNER -->
         <div class="hero-banner">
             <img src="https://tmrclb70-max.github.io/Celebi-oto-lastik/logo.png" alt="Çelebi Oto Lastik Logo" onerror="this.src='https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1600&auto=format&fit=crop&q=80'">
         </div>
@@ -360,7 +309,7 @@
 
         <div id="adminBar" class="admin-bar hidden">
             <div class="admin-bar-header">
-                <h3 style="color: var(--text-muted); font-size: 1rem;"><i class="fa-solid fa-boxes-stacked"></i> Stok Yönetimi</h3>
+                <h3 style="color: var(--text-muted); font-size: 0.95rem;"><i class="fa-solid fa-boxes-stacked"></i> Stok Yönetimi</h3>
                 <div style="display: flex; gap: 8px;">
                     <button class="btn-add" onclick="openAddModal()"><i class="fa-solid fa-plus"></i> Yeni Ürün Ekle</button>
                     <button class="btn-add" style="background: #3b82f6;" onclick="openSettingsModal()"><i class="fa-solid fa-gear"></i> Ayarlar</button>
@@ -377,21 +326,49 @@
             </div>
         </div>
 
-        <div id="productsGrid" class="products-list"></div>
+        <!-- ÜRÜN LİSTESİ WRAPPER (TELEFONDA SOLDAN SAĞA KAYDIRILABİLİR YATAY DÜZEN) -->
+        <div class="products-list-wrapper">
+            <div id="productsGrid" class="products-list"></div>
+        </div>
 
     </div>
 
+    <!-- BAYİ İÇİN ÜRÜN DETAY MODALI -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-circle-info" style="color: var(--accent-yellow);"></i> Ürün Detayı</h3>
+                <span class="close-btn" onclick="closeModal('detailModal')">&times;</span>
+            </div>
+            <div style="text-align: center; margin-bottom: 15px; background: #fff; padding: 10px; border-radius: 10px;">
+                <img id="dImg" src="" style="max-height: 140px; object-fit: contain;">
+            </div>
+            <div class="detail-row"><span class="detail-label">Ebat:</span><span id="dSize" class="detail-val">--</span></div>
+            <div class="detail-row"><span class="detail-label">Marka:</span><span id="dBrand" class="detail-val">--</span></div>
+            <div class="detail-row"><span class="detail-label">Desen:</span><span id="dPattern" class="detail-val">--</span></div>
+            <div class="detail-row"><span class="detail-label">Mevsim / Grup:</span><span id="dCategory" class="detail-val">--</span></div>
+            <div class="detail-row"><span class="detail-label">Üretim Yılı (DOT):</span><span id="dDot" class="detail-val">--</span></div>
+            <div class="detail-row"><span class="detail-label">Stok Durumu:</span><span id="dStock" class="detail-val">--</span></div>
+            <div class="detail-row" style="border:none; margin-top:8px; background:rgba(16,185,129,0.1); padding:10px; border-radius:8px;">
+                <span class="detail-label" style="color:#10b981; font-size:1.1rem;">Satış Fiyatı:</span>
+                <span id="dPrice" class="detail-val" style="color:#10b981; font-size:1.3rem;">--</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- BİLDİRİM MODALI (YÖNETİCİ) -->
     <div id="notifModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3><i class="fa-solid fa-bell" style="color: var(--accent-yellow);"></i> Stok Uyarı Bildirimleri</h3>
                 <span class="close-btn" onclick="closeModal('notifModal')">&times;</span>
             </div>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Aşağıda stoğu 0 (Tükenmiş) veya tekli kalmış ürünler listelenmiştir:</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Aşağıda Rezerve Stok (0) veya tekli/azalmış stokta (1, 2, 3 Adet) olan ürünler listelenmiştir:</p>
             <div id="notifListContainer"></div>
         </div>
     </div>
 
+    <!-- TOPLU ZAM MODALI -->
     <div id="bulkPriceModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -407,8 +384,9 @@
         </div>
     </div>
 
+    <!-- AYARLAR MODALI -->
     <div id="settingsModal" class="modal">
-        <div class="modal-content" style="max-width: 450px;">
+        <div class="modal-content" style="max-width: 420px;">
             <div class="modal-header">
                 <h3><i class="fa-solid fa-gear"></i> Sistem Ayarları</h3>
                 <span class="close-btn" onclick="closeModal('settingsModal')">&times;</span>
@@ -425,7 +403,7 @@
         </div>
     </div>
 
-    <!-- ÜRÜN / STOK EKLEME PANELİ -->
+    <!-- YENİ ÜRÜN EKLE MODALI -->
     <div id="productModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -483,11 +461,10 @@
                 <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Kabat, BKT Vb.">
             </div>
 
-            <!-- MARKA LOGOSU YAPIŞTIRMA VE ARAMA ALANI -->
             <div class="form-group">
                 <label><i class="fa-solid fa-copyright" style="color: var(--accent-yellow);"></i> Marka Logosu Bağlantısı (URL)</label>
                 <div class="input-with-btn">
-                    <input type="text" id="pLogoUrl" class="form-control" placeholder="Marka logosunun URL adresini kopyalayıp yapıştırın">
+                    <input type="text" id="pLogoUrl" class="form-control" placeholder="Logo URL kopyalayıp yapıştırın">
                     <button class="btn-search-img" type="button" onclick="openGoogleSearch('logo')"><i class="fa-solid fa-arrow-up-right-from-square"></i> Logo Ara</button>
                 </div>
             </div>
@@ -524,11 +501,10 @@
                 </div>
             </div>
 
-            <!-- LASTİK RESMİ YAPIŞTIRMA VE ARAMA ALANI -->
             <div class="form-group">
                 <label>Ürün Görsel Bağlantısı (URL)</label>
                 <div class="input-with-btn">
-                    <input type="text" id="pImg" class="form-control" placeholder="Lastik resminin URL adresini kopyalayıp yapıştırın">
+                    <input type="text" id="pImg" class="form-control" placeholder="Ürün resmi URL kopyalayıp yapıştırın">
                     <button class="btn-search-img" type="button" onclick="openGoogleSearch('resim')"><i class="fa-solid fa-arrow-up-right-from-square"></i> Resim Ara</button>
                 </div>
             </div>
@@ -539,7 +515,7 @@
 
     <!-- KAR HESAPLAMA MODALI -->
     <div id="karModal" class="modal">
-        <div class="modal-content" style="max-width: 420px;">
+        <div class="modal-content" style="max-width: 400px;">
             <div class="modal-header">
                 <h3><i class="fa-solid fa-calculator" style="color: var(--accent-yellow);"></i> Kar Oranı Hesaplayıcı</h3>
                 <span class="close-btn" onclick="closeModal('karModal')">&times;</span>
@@ -601,7 +577,6 @@
             return '₺' + Number(val || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
-        /* GÜVENLİ GİRİŞ KONTROLÜ (ŞİFRE SIZDIRMAYAN HATA MESAJI) */
         function login() {
             const u = document.getElementById('username').value.trim().toLowerCase();
             const p = document.getElementById('password').value.trim();
@@ -848,6 +823,39 @@
             closeModal('bulkPriceModal');
         }
 
+        /* YENİ STOK KURALLARI: 
+           >= 4 -> "Stokta Var" (Yeşil)
+           0    -> "Rezerve Stok" (Kırmızı)
+           1, 2, 3 -> "1 Adet", "2 Adet", "3 Adet" (Turuncu)
+        */
+        function getStockBadgeHtml(stockVal) {
+            if (stockVal >= 4) {
+                return `<div class="stock-badge-in"><i class="fa-solid fa-check"></i> Stokta Var</div>`;
+            } else if (stockVal === 0) {
+                return `<div class="stock-badge-out"><i class="fa-solid fa-lock"></i> Rezerve Stok</div>`;
+            } else {
+                return `<div class="stock-badge-low"><i class="fa-solid fa-triangle-exclamation"></i> ${stockVal} Adet</div>`;
+            }
+        }
+
+        function openDetailModal(id) {
+            if (currentUserRole === 'admin') return; // Yöneticiye tıklayınca modal açılmaz
+            const p = products.find(x => x.id === id);
+            if (!p) return;
+
+            const stockVal = parseInt(p.stock) || 0;
+            document.getElementById('dImg').src = p.img || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
+            document.getElementById('dSize').innerText = p.size || '-';
+            document.getElementById('dBrand').innerText = p.brand || '-';
+            document.getElementById('dPattern').innerText = p.pattern || 'STANDART';
+            document.getElementById('dCategory').innerText = (p.group === 'İç Lastik') ? 'İç Lastik' : `${p.group || 'Otomobil'} (${p.season || 'Yaz'})`;
+            document.getElementById('dDot').innerText = p.dot || '2026';
+            document.getElementById('dStock').innerHTML = getStockBadgeHtml(stockVal);
+            document.getElementById('dPrice').innerText = formatCurrency(p.price);
+
+            document.getElementById('detailModal').style.display = 'flex';
+        }
+
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             const search = document.getElementById('searchInput').value.toLowerCase().trim();
@@ -864,17 +872,12 @@
             });
 
             if (filtered.length === 0) {
-                grid.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 40px; font-size: 1.1rem; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--card-border);">Henüz kayıtlı ürün bulunmuyor veya arama eşleşmedi.</div>`;
+                grid.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 30px; font-size: 1rem; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--card-border);">Henüz kayıtlı ürün bulunmuyor veya arama eşleşmedi.</div>`;
                 return;
             }
 
             filtered.forEach(p => {
                 const stockVal = parseInt(p.stock) || 0;
-                let stockBadgeClass = 'stock-badge-in';
-                let stockText = `${stockVal} Adet`;
-                if (stockVal === 0) { stockBadgeClass = 'stock-badge-out'; stockText = '0 Adet'; }
-                else if (stockVal <= 2) { stockBadgeClass = 'stock-badge-low'; stockText = `${stockVal} Adet`; }
-
                 const displayImg = p.img || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
 
                 let catTag = '';
@@ -898,6 +901,12 @@
 
                 const row = document.createElement('div');
                 row.className = 'product-row';
+                row.onclick = (e) => {
+                    // Eğer admin butonlarına tıklanmadıysa detayı aç
+                    if (!e.target.closest('.btn-qty') && !e.target.closest('.btn-edit-price') && !e.target.closest('.btn-icon')) {
+                        openDetailModal(p.id);
+                    }
+                };
 
                 let adminControlsHtml = currentUserRole === 'admin' ? `
                     <div class="admin-stock-control">
@@ -905,7 +914,7 @@
                         <span class="admin-stock-val">${stockVal} Adet</span>
                         <button class="btn-qty" onclick="updateStock('${p.id}', 1)">+</button>
                     </div>
-                ` : `<div class="${stockBadgeClass}">${stockText}</div>`;
+                ` : getStockBadgeHtml(stockVal);
 
                 let adminActionsHtml = currentUserRole === 'admin' ? `
                     <div class="row-actions">
@@ -914,11 +923,10 @@
                     </div>
                 ` : '';
 
+                // SOLDAN SAĞA TAM HİZALANMIŞ YATAY SATIR
                 row.innerHTML = `
-                    <div class="mobile-card-top">
-                        <div class="product-img-box">
-                            <img src="${displayImg}" class="product-img" alt="Görsel">
-                        </div>
+                    <div class="product-img-box">
+                        <img src="${displayImg}" class="product-img" alt="Görsel">
                     </div>
                     <div><span class="col-size">${p.size}</span></div>
                     <div>${brandHtml}</div>
@@ -952,11 +960,12 @@
             }
         }
 
+        /* YÖNETİCİ BİLDİRİM SİSTEMİ (0 Rezerve Stok veya 1, 2, 3 Adede Düşenler) */
         function checkNotifications() {
-            const lowOrZero = products.filter(p => (parseInt(p.stock) || 0) <= 1);
+            const alertProducts = products.filter(p => (parseInt(p.stock) || 0) <= 3);
             const badge = document.getElementById('notifBadge');
-            if (lowOrZero.length > 0) {
-                badge.innerText = lowOrZero.length;
+            if (alertProducts.length > 0) {
+                badge.innerText = alertProducts.length;
                 badge.classList.remove('hidden');
             } else {
                 badge.classList.add('hidden');
@@ -966,15 +975,26 @@
         function openNotifModal() {
             const container = document.getElementById('notifListContainer');
             container.innerHTML = '';
-            const lowOrZero = products.filter(p => (parseInt(p.stock) || 0) <= 1);
-            lowOrZero.forEach(p => {
-                const stockVal = parseInt(p.stock) || 0;
-                const badgeClass = stockVal === 0 ? 'notif-stock-zero' : 'notif-stock-odd';
-                const item = document.createElement('div');
-                item.className = 'notif-item';
-                item.innerHTML = `<div><strong>${p.brand} - ${p.size}</strong></div><span class="${badgeClass}">${stockVal === 0 ? 'TÜKENDİ' : 'SON 1'}</span>`;
-                container.appendChild(item);
-            });
+            const alertProducts = products.filter(p => (parseInt(p.stock) || 0) <= 3);
+
+            if (alertProducts.length === 0) {
+                container.innerHTML = `<div style="text-align:center; color: var(--text-muted); padding:20px;">Tüm ürün stokları yeterli seviyede.</div>`;
+            } else {
+                alertProducts.forEach(p => {
+                    const stockVal = parseInt(p.stock) || 0;
+                    let badgeHtml = '';
+                    if (stockVal === 0) {
+                        badgeHtml = `<span class="stock-badge-out">Rezerve Stok (0)</span>`;
+                    } else {
+                        badgeHtml = `<span class="stock-badge-low">${stockVal} Adet Kaldı</span>`;
+                    }
+
+                    const item = document.createElement('div');
+                    item.className = 'notif-item';
+                    item.innerHTML = `<div><strong>${p.brand} ${p.size}</strong> <br><small style="color: var(--text-muted);">${p.pattern || 'Standart'}</small></div><div>${badgeHtml}</div>`;
+                    container.appendChild(item);
+                });
+            }
             document.getElementById('notifModal').style.display = 'flex';
         }
 
