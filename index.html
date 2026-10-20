@@ -92,41 +92,26 @@
 
         .main-container { max-width: 1350px; margin: 30px auto; padding: 0 20px; }
 
-        /* YENİ BANNER ALANI STİLİ */
+        /* GERÇEK DÜKKAN LOGOSU BANNER ALANI */
         .hero-banner {
             width: 100%;
-            height: 220px;
-            background: linear-gradient(90deg, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0.4) 100%), url('https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=1600&auto=format&fit=crop&q=80');
-            background-size: cover;
-            background-position: center;
+            height: 240px;
+            background: #1e293b;
             border-radius: 16px;
             border: 1px solid var(--card-border);
             margin-bottom: 25px;
             display: flex;
             align-items: center;
-            padding: 0 40px;
+            justify-content: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            position: relative;
             overflow: hidden;
+            position: relative;
         }
 
-        .hero-banner-content h2 {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: #ffffff;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .hero-banner-content h2 span {
-            color: #ef4444;
-        }
-
-        .hero-banner-content p {
-            font-size: 1.1rem;
-            color: var(--accent-yellow);
-            font-weight: 600;
+        .hero-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .login-wrapper {
@@ -242,9 +227,7 @@
         .hidden { display: none !important; }
 
         @media screen and (max-width: 768px) {
-            .hero-banner { height: 150px; padding: 0 20px; }
-            .hero-banner-content h2 { font-size: 1.3rem; }
-            .hero-banner-content p { font-size: 0.85rem; }
+            .hero-banner { height: 140px; }
             .main-container { padding: 0 10px; margin: 15px auto; }
             .header-title-area h1 { font-size: 1.4rem; }
             .header-title-area p { font-size: 0.8rem; }
@@ -299,8 +282,8 @@
             </div>
 
             <div class="form-group">
-                <label><i class="fa-solid fa-user"></i> Kullanıcı Adı</label>
-                <input type="text" id="username" class="form-control" placeholder="Yönetici veya Bayi">
+                <label><i class="fa-solid fa-user"></i> Kullanıcı Adı (Yönetici veya Bayi)</label>
+                <input type="text" id="username" class="form-control" placeholder="Örn: bayi veya yönetici">
             </div>
             <div class="form-group">
                 <label><i class="fa-solid fa-key"></i> Şifre</label>
@@ -325,12 +308,9 @@
 
     <div id="portalSection" class="main-container hidden">
 
-        <!-- YENİ B2B BANNER ALANI -->
+        <!-- DÜKKAN LOGOSU BANNER ALANI -->
         <div class="hero-banner">
-            <div class="hero-banner-content">
-                <h2><span>PETLAS</span> & ÇELEBİ B2B PORTALI</h2>
-                <p>"Yolunuzda Güven, Lastiğinizde Kalite"</p>
-            </div>
+            <img src="https://tmrclb70-max.github.io/Celebi-oto-lastik/logo.png" onerror="this.src='https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1600&auto=format&fit=crop&q=80'" alt="Çelebi Oto Lastik Logo">
         </div>
 
         <div class="controls-section">
@@ -416,7 +396,7 @@
             </div>
             <div class="form-group">
                 <label>Bayi Şifresi Değiştir</label>
-                <input type="password" id="newBayiPass" class="form-control" placeholder="Yeni Bayi Şifresi">
+                <input type="password" id="newBayiPass" class="form-control" placeholder="Yeni Bayi Şifresi (Örn: 1234)">
             </div>
             <button class="btn-primary" style="background: #3b82f6; color: white;" onclick="saveSettings()"><i class="fa-solid fa-floppy-disk"></i> Ayarları Kaydet</button>
         </div>
@@ -569,7 +549,7 @@
         let currentUserRole = null;
         
         let adminPass = localStorage.getItem('celebi_admin_pass') || 'celebi166';
-        let bayiPass = localStorage.getItem('celebi_bayi_pass') || 'bayi166';
+        let bayiPass = localStorage.getItem('celebi_bayi_pass') || '1234';
 
         window.initFirebaseData = function() {
             if (!window.db) return;
@@ -588,14 +568,14 @@
         }
 
         function login() {
-            const u = document.getElementById('username').value.trim();
+            const u = document.getElementById('username').value.trim().toLowerCase();
             const p = document.getElementById('password').value.trim();
 
-            if ((u.toLowerCase() === 'yönetici' || u.toLowerCase() === 'yonetici' || u.toLowerCase() === 'tamer' || u.toLowerCase() === 'admin') && (p === adminPass || p === 'çelebi166' || p === 'celebi166')) {
+            if ((u === 'yönetici' || u === 'yonetici' || u === 'tamer' || u === 'admin') && (p === adminPass || p === 'çelebi166' || p === 'celebi166')) {
                 currentUserRole = 'admin';
                 document.getElementById('userBadge').innerText = 'Yönetici (Tamer Çelebi)';
                 initLoginSuccess();
-            } else if ((u.toLowerCase() === 'bayi' || u.toLowerCase() === 'meslektas') && (p === bayiPass || p === 'bayi166')) {
+            } else if ((u === 'bayi' || u === 'meslektas' || u === '1234' || u === '') && (p === bayiPass || p === '1234')) {
                 currentUserRole = 'bayi';
                 document.getElementById('userBadge').innerText = 'Bayi / Meslektaş';
                 initLoginSuccess();
