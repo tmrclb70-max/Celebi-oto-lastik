@@ -61,10 +61,9 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding-bottom: 40px; overflow-x: hidden; }
 
+        /* EN ÜST ÜST BAŞLIK / HEADER ALANI */
         header { 
             position: relative;
-            background: linear-gradient(90deg, rgba(2, 6, 23, 0.92) 0%, rgba(15, 23, 42, 0.85) 100%), 
-                        url('https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1600&auto=format&fit=crop&q=80');
             background-size: cover;
             background-position: center;
             border-bottom: 3px solid #dc2626; 
@@ -83,7 +82,7 @@
 
         .main-container { max-width: 1350px; margin: 30px auto; padding: 0 20px; }
 
-        /* BANNER ALANI (URL BURAYA YAPIŞTIRILABİLİR) */
+        /* ORTA BANNER LOGO ALANI */
         .hero-banner {
             width: 100%;
             height: 240px;
@@ -105,11 +104,9 @@
             background: #ffffff;
         }
 
-        /* GİRİŞ EKRANI ARKA PLANI (URL BURAYA YAPIŞTIRILABİLİR) */
+        /* GİRİŞ EKRANI ARKA PLANI */
         .login-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(2, 6, 23, 0.9)), 
-                        url('https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80');
             background-size: cover; background-position: center;
             display: flex; justify-content: center; align-items: center; z-index: 2000;
             padding: 20px;
@@ -117,7 +114,7 @@
         
         .login-card { 
             width: 100%; max-width: 480px; 
-            background: rgba(15, 23, 42, 0.75); 
+            background: rgba(15, 23, 42, 0.85); 
             padding: 40px 35px; 
             border-radius: 20px; 
             border: 1.5px solid rgba(245, 158, 11, 0.4); 
@@ -263,22 +260,20 @@
 </head>
 <body>
 
-    <!-- ======================================================== -->
-    <!-- GİRİŞ EKRANI ARKA PLANI (İstediğiniz resmi buraya koyabilirsiniz) -->
-    <!-- ======================================================== -->
-    <div id="loginSection" class="login-wrapper" style="background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(2, 6, 23, 0.92)), url('BURAYA_GIRIS_ARKA_PLAN_RESIM_URLSINI_YAZIN');">
+    <!-- 1. GİRİŞ EKRANI ARKA PLANI RESMİ -->
+    <div id="loginSection" class="login-wrapper" style="background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(2, 6, 23, 0.92)), url('https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80');">
         <div class="login-card">
             <h1 class="login-brand-title">Çelebi Oto Lastik</h1>
             <p class="login-slogan">"Yolunuzda Güven, Lastiğinizde Kalite"</p>
             
             <div class="login-welcome-text">
                 <i class="fa-solid fa-user-shield" style="color: var(--accent-yellow);"></i>
-                Giriş Yapın (Yönetici veya Bayi)
+                Giriş Yapın
             </div>
 
             <div class="form-group">
-                <label><i class="fa-solid fa-user"></i> Kullanıcı Adı veya Şifre</label>
-                <input type="text" id="username" class="form-control" placeholder="Bayiler için 1234 yazıp girebilirsiniz">
+                <label><i class="fa-solid fa-user"></i> Kullanıcı Adı</label>
+                <input type="text" id="username" class="form-control" placeholder="Yönetici veya Bayi">
             </div>
             <div class="form-group">
                 <label><i class="fa-solid fa-key"></i> Şifre</label>
@@ -288,7 +283,8 @@
         </div>
     </div>
 
-    <header>
+    <!-- 2. EN ÜST BAŞLIK ALANI (HEADER) ARKA PLAN RESMİ -->
+    <header style="background-image: linear-gradient(90deg, rgba(2, 6, 23, 0.9) 0%, rgba(15, 23, 42, 0.8) 100%), url('HEADER_ARKA_PLAN_RESIM_URLSINI_YAZIN');">
         <div class="header-container">
             <div class="header-title-area">
                 <h1>ÇELEBİ OTO LASTİK</h1>
@@ -303,11 +299,8 @@
 
     <div id="portalSection" class="main-container hidden">
 
-        <!-- ======================================================== -->
-        <!-- BANNER LOGO ALANI (İstediğiniz resmi buraya koyabilirsiniz) -->
-        <!-- ======================================================== -->
+        <!-- 3. ORTA BANNER / LOGO ALANI -->
         <div class="hero-banner">
-            <!-- src kısmına tırnak içine dilediğiniz resmin internet/GitHub linkini yapıştırabilirsiniz -->
             <img src="https://tmrclb70-max.github.io/Celebi-oto-lastik/logo.png" alt="Çelebi Oto Lastik Logo" onerror="this.src='https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1600&auto=format&fit=crop&q=80'">
         </div>
 
@@ -845,7 +838,7 @@
 
                 let adminActionsHtml = currentUserRole === 'admin' ? `
                     <div class="row-actions">
-                        <button class="btn-edit-percent btn-edit-price" onclick="editProduct('${p.id}')" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn-edit-price" onclick="editProduct('${p.id}')" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
                         <button class="btn-icon" onclick="deleteProduct('${p.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 ` : '';
