@@ -170,8 +170,17 @@
             display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem; transition: 0.2s; 
         }
 
-        .products-list-wrapper { width: 100%; overflow-x: auto; }
-        .products-list { display: flex; flex-direction: column; gap: 8px; min-width: 780px; }
+        .products-list-wrapper { width: 100%; }
+        
+        /* BİLGİSAYARDA KAYDIRMAYI KALDIR, TELEFONDA KAYDIRMAYI KORU */
+        @media (max-width: 768px) {
+            .products-list-wrapper { overflow-x: auto; }
+            .products-list { display: flex; flex-direction: column; gap: 8px; min-width: 780px; }
+        }
+        @media (min-width: 769px) {
+            .products-list-wrapper { overflow-x: hidden; }
+            .products-list { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+        }
         
         .product-row { 
             background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; 
@@ -213,7 +222,6 @@
             box-shadow: none !important; 
         }
 
-        /* TELEFON İÇİN TASARLANAN NARİN MARKA KUTULARI (DESEN GİBİ) */
         .brand-text-box {
             display: inline-flex; align-items: center; justify-content: center;
             background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(245, 158, 11, 0.6);
@@ -221,7 +229,6 @@
             font-size: 0.82rem; font-weight: 800; text-transform: uppercase; text-align: center; white-space: nowrap;
         }
 
-        /* TELEFON EKRANINDA OTOMATİK OLARAK YAZI KUTUSUNA DÖNÜŞTÜR */
         @media (max-width: 768px) {
             .brand-logo-img { display: none !important; }
             .brand-text-mobile { display: inline-flex !important; }
@@ -269,6 +276,19 @@
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; width: 100%; }
         .modal-header h3 { color: var(--accent-yellow); font-size: 1.1rem; }
         .close-btn { font-size: 1.3rem; cursor: pointer; color: var(--text-muted); }
+
+        /* BİLGİSAYAR İÇİN ÖZEL GENİŞ AÇILIR ŞIK DETAY DÜZENİ */
+        .detail-body-container { display: flex; flex-direction: column; gap: 15px; }
+        .detail-img-box { text-align: center; background: #ffffff; padding: 12px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .detail-img-box img { max-height: 140px; width: 100%; object-fit: contain; }
+        .detail-info-box { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+
+        @media (min-width: 769px) {
+            #detailModal .modal-content { max-width: 650px; }
+            .detail-body-container { flex-direction: row; align-items: center; }
+            .detail-img-box { width: 240px; height: 240px; flex-shrink: 0; }
+            .detail-img-box img { max-height: 210px; }
+        }
 
         .input-with-btn { display: flex; gap: 6px; }
         .btn-search-img { background: #3b82f6; color: white; border: none; padding: 0 10px; border-radius: 5px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 0.78rem; display: flex; align-items: center; gap: 4px; }
@@ -390,25 +410,30 @@
 
     </div>
 
-    <!-- BAYİ VE YÖNETİCİ İÇİN ÜRÜN DETAY MODALI -->
+    <!-- BİLGİSAYARDA YAN YANA GÖRÜNEN YENİLENMİŞ ŞIK DETAY MODALI -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3><i class="fa-solid fa-circle-info" style="color: var(--accent-yellow);"></i> Ürün Detayı</h3>
                 <span class="close-btn" onclick="closeModal('detailModal')">&times;</span>
             </div>
-            <div style="text-align: center; margin-bottom: 12px; background: #fff; padding: 8px; border-radius: 8px;">
-                <img id="dImg" src="" style="max-height: 120px; object-fit: contain;">
-            </div>
-            <div class="detail-row"><span class="detail-label">Ebat:</span><span id="dSize" class="detail-val">--</span></div>
-            <div class="detail-row"><span class="detail-label">Marka:</span><span id="dBrand" class="detail-val">--</span></div>
-            <div class="detail-row"><span class="detail-label">Desen:</span><span id="dPattern" class="detail-val">--</span></div>
-            <div class="detail-row"><span class="detail-label">Mevsim:</span><span id="dCategory" class="detail-val">--</span></div>
-            <div class="detail-row"><span class="detail-label">Üretim Yılı (DOT):</span><span id="dDot" class="detail-val">--</span></div>
-            <div class="detail-row"><span class="detail-label">Stok Durumu:</span><span id="dStock" class="detail-val">--</span></div>
-            <div class="detail-row" style="border:none; margin-top:6px; background:rgba(16,185,129,0.1); padding:8px; border-radius:6px;">
-                <span class="detail-label" style="color:#10b981; font-size:1rem;">Birim Fiyatı:</span>
-                <span id="dPrice" class="detail-val" style="color:#10b981; font-size:1.15rem;">--</span>
+            
+            <div class="detail-body-container">
+                <div class="detail-img-box">
+                    <img id="dImg" src="" alt="Lastik Görseli">
+                </div>
+                <div class="detail-info-box">
+                    <div class="detail-row"><span class="detail-label">Ebat:</span><span id="dSize" class="detail-val">--</span></div>
+                    <div class="detail-row"><span class="detail-label">Marka:</span><span id="dBrand" class="detail-val">--</span></div>
+                    <div class="detail-row"><span class="detail-label">Desen:</span><span id="dPattern" class="detail-val">--</span></div>
+                    <div class="detail-row"><span class="detail-label">Mevsim:</span><span id="dCategory" class="detail-val">--</span></div>
+                    <div class="detail-row"><span class="detail-label">Üretim Yılı (DOT):</span><span id="dDot" class="detail-val">--</span></div>
+                    <div class="detail-row"><span class="detail-label">Stok Durumu:</span><span id="dStock" class="detail-val">--</span></div>
+                    <div class="detail-row" style="border:none; margin-top:10px; background:rgba(16,185,129,0.1); padding:10px; border-radius:6px;">
+                        <span class="detail-label" style="color:#10b981; font-size:1.05rem;">Birim Fiyatı:</span>
+                        <span id="dPrice" class="detail-val" style="color:#10b981; font-size:1.25rem;">--</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -540,7 +565,7 @@
                 <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Kabat, BKT Vb.">
             </div>
 
-            <!-- BİLGİSAYARDAN BİLGİSAYARA ÖZEL PNG LOGO YÜKLEME ALANI -->
+            <!-- BİLGİSAYAR İÇİN ÖZEL LOGO YÜKLEME ALANI -->
             <div class="form-group">
                 <label><i class="fa-solid fa-file-image" style="color: var(--accent-yellow);"></i> Bilgisayar İçin Marka Logosu (Şeffaf PNG)</label>
                 <div class="file-upload-box" onclick="document.getElementById('logoFileInput').click()">
@@ -1010,7 +1035,6 @@
             }
         }
 
-        // AKILLI SİSTEM: HEM YÖNETİCİ HEM BAYİ İÇİN ÜRÜN DETAY MODALI
         function openDetailModal(id) {
             const p = products.find(x => x.id === id);
             if (!p) return;
@@ -1069,7 +1093,6 @@
                     catTag = `<span class="tag tag-category"><i class="fa-solid ${iconClass}"></i> ${p.season || 'Yaz'}</span>`;
                 }
 
-                // BİLGİSAYAR İÇİN LOGO, TELEFON İÇİN ŞIK YAZI KUTUSU ALANI
                 let brandHtml = '';
                 const brandUpper = (p.brand || 'STANDART').toUpperCase();
 
@@ -1087,7 +1110,6 @@
                 const row = document.createElement('div');
                 row.className = 'product-row';
                 
-                // SATIRA TIKLANDIĞINDA (YÖNETİCİ DÜZENLE/SİL VEYA + - BUTONLARINA BASTIYSA PENCERE AÇILMAZ, DİĞER BOŞLUKLARA BASTIYSA AÇILIR)
                 row.onclick = (e) => {
                     if (!e.target.closest('.btn-qty') && !e.target.closest('.btn-edit-price') && !e.target.closest('.btn-icon')) {
                         openDetailModal(p.id);
