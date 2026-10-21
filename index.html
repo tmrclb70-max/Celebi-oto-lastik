@@ -61,11 +61,9 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding-bottom: 40px; overflow-x: hidden; }
 
-        /* 3. FOTOĞRAF: EN ÜST HEADER ARKA PLANI (PETLAS LOGOLU) */
         header { 
             position: relative;
-            background-image: linear-gradient(90deg, rgba(15, 23, 42, 0.88) 0%, rgba(2, 6, 23, 0.82) 100%), url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Petlas_logo.svg/1200px-Petlas_logo.svg.png');
-            background-size: contain;
+            background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
             border-bottom: 3px solid #dc2626; 
@@ -84,7 +82,6 @@
 
         .main-container { max-width: 1400px; margin: 20px auto; padding: 0 15px; }
 
-        /* 2. FOTOĞRAF: ORTAK BÖLÜM BANNERI */
         .hero-banner {
             width: 100%;
             height: 200px;
@@ -106,10 +103,8 @@
             object-position: center;
         }
 
-        /* 1. FOTOĞRAF: GİRİŞ EKRANI ARKA PLANI */
         .login-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(15, 23, 42, 0.82), rgba(2, 6, 23, 0.90)), url('https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80');
             background-size: cover; background-position: center;
             display: flex; justify-content: center; align-items: center; z-index: 2000;
             padding: 20px;
@@ -163,7 +158,6 @@
             display: inline-flex; align-items: center; gap: 5px; font-size: 0.8rem; transition: 0.2s; 
         }
 
-        /* LİSTELEME ALANI (SOLDAN SAĞA YATAY SATIR) */
         .products-list-wrapper { width: 100%; overflow-x: auto; }
         .products-list { display: flex; flex-direction: column; gap: 10px; min-width: 820px; }
         
@@ -240,6 +234,8 @@
         .detail-label { color: var(--text-muted); font-weight: 600; }
         .detail-val { color: var(--text-main); font-weight: 800; }
 
+        .settings-section-title { font-size: 0.9rem; color: var(--accent-yellow); font-weight: 700; margin: 15px 0 10px 0; border-bottom: 1px dashed var(--card-border); padding-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+
         .hidden { display: none !important; }
     </style>
 </head>
@@ -269,7 +265,7 @@
     </div>
 
     <!-- EN ÜST HEADER -->
-    <header>
+    <header id="mainHeader">
         <div class="header-container">
             <div class="header-title-area">
                 <h1>ÇELEBİ OTO LASTİK</h1>
@@ -284,9 +280,9 @@
 
     <div id="portalSection" class="main-container hidden">
 
-        <!-- ORTA LOGO BANNER (2. FOTOĞRAF) -->
+        <!-- ORTA LOGO BANNER -->
         <div class="hero-banner">
-            <img src="https://araclo-bucket.sfo3.cdn.digitaloceanspaces.com/blog/1233242a-ea59-497c-b3c9-83f339a50e40.jpg" alt="Lastik Banner">
+            <img id="mainBannerImg" src="https://araclo-bucket.sfo3.cdn.digitaloceanspaces.com/blog/1233242a-ea59-497c-b3c9-83f339a50e40.jpg" alt="Lastik Banner">
         </div>
 
         <div class="controls-section">
@@ -387,13 +383,15 @@
         </div>
     </div>
 
-    <!-- AYARLAR MODALI -->
+    <!-- AYARLAR VE RESİM DÜZENLEME MODALI -->
     <div id="settingsModal" class="modal">
-        <div class="modal-content" style="max-width: 420px;">
+        <div class="modal-content" style="max-width: 480px;">
             <div class="modal-header">
-                <h3><i class="fa-solid fa-gear"></i> Sistem Ayarları</h3>
+                <h3><i class="fa-solid fa-gear"></i> Sistem ve Görsel Ayarları</h3>
                 <span class="close-btn" onclick="closeModal('settingsModal')">&times;</span>
             </div>
+            
+            <div class="settings-section-title"><i class="fa-solid fa-lock"></i> Şifre Değiştirme</div>
             <div class="form-group">
                 <label>Yönetici Şifresi Değiştir</label>
                 <input type="password" id="newAdminPass" class="form-control" placeholder="Yeni Yönetici Şifresi">
@@ -402,6 +400,21 @@
                 <label>Bayi Şifresi Değiştir</label>
                 <input type="password" id="newBayiPass" class="form-control" placeholder="Yeni Bayi Şifresi (Varsayılan: 1234)">
             </div>
+
+            <div class="settings-section-title"><i class="fa-solid fa-image"></i> Site Görsellerini Değiştirme</div>
+            <div class="form-group">
+                <label>Giriş Ekranı Arka Plan Resmi (URL)</label>
+                <input type="text" id="cfgLoginBg" class="form-control" placeholder="Resim URL yapıştırın">
+            </div>
+            <div class="form-group">
+                <label>En Üst Header Arka Plan Resmi (URL)</label>
+                <input type="text" id="cfgHeaderBg" class="form-control" placeholder="Resim URL yapıştırın">
+            </div>
+            <div class="form-group">
+                <label>Orta Bölüm Banner Resmi (URL)</label>
+                <input type="text" id="cfgBannerImg" class="form-control" placeholder="Resim URL yapıştırın">
+            </div>
+
             <button class="btn-primary" style="background: #3b82f6; color: white;" onclick="saveSettings()"><i class="fa-solid fa-floppy-disk"></i> Ayarları Kaydet</button>
         </div>
     </div>
@@ -564,8 +577,30 @@
         let adminPass = localStorage.getItem('celebi_admin_pass') || 'celebi166';
         let bayiPass = localStorage.getItem('celebi_bayi_pass') || '1234';
 
+        // Varsayılan Görseller
+        let siteImages = {
+            loginBg: localStorage.getItem('cfg_loginBg') || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80',
+            headerBg: localStorage.getItem('cfg_headerBg') || 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Petlas_logo.svg/1200px-Petlas_logo.svg.png',
+            bannerImg: localStorage.getItem('cfg_bannerImg') || 'https://araclo-bucket.sfo3.cdn.digitaloceanspaces.com/blog/1233242a-ea59-497c-b3c9-83f339a50e40.jpg'
+        };
+
         window.initFirebaseData = function() {
+            applySiteImages();
+
             if (!window.db) return;
+
+            // Site görsellerini veritabanından çek (varsa)
+            window.onSnapshot(window.doc(window.db, "site_ayarlari", "gorseller"), (docSnap) => {
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if (data.loginBg) siteImages.loginBg = data.loginBg;
+                    if (data.headerBg) siteImages.headerBg = data.headerBg;
+                    if (data.bannerImg) siteImages.bannerImg = data.bannerImg;
+                    applySiteImages();
+                }
+            });
+
+            // Stokları çek
             window.onSnapshot(window.collection(window.db, "lastik_stoklari"), (snapshot) => {
                 products = [];
                 snapshot.forEach((docSnap) => {
@@ -575,6 +610,23 @@
                 checkNotifications();
             });
         };
+
+        function applySiteImages() {
+            const loginElem = document.getElementById('loginSection');
+            if (loginElem) {
+                loginElem.style.backgroundImage = `linear-gradient(rgba(15, 23, 42, 0.82), rgba(2, 6, 23, 0.90)), url('${siteImages.loginBg}')`;
+            }
+
+            const headerElem = document.getElementById('mainHeader');
+            if (headerElem) {
+                headerElem.style.backgroundImage = `linear-gradient(90deg, rgba(15, 23, 42, 0.88) 0%, rgba(2, 6, 23, 0.82) 100%), url('${siteImages.headerBg}')`;
+            }
+
+            const bannerImgElem = document.getElementById('mainBannerImg');
+            if (bannerImgElem) {
+                bannerImgElem.src = siteImages.bannerImg;
+            }
+        }
 
         function formatCurrency(val) {
             return '₺' + Number(val || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -624,16 +676,37 @@
         function openSettingsModal() {
             document.getElementById('newAdminPass').value = '';
             document.getElementById('newBayiPass').value = '';
+            
+            document.getElementById('cfgLoginBg').value = siteImages.loginBg || '';
+            document.getElementById('cfgHeaderBg').value = siteImages.headerBg || '';
+            document.getElementById('cfgBannerImg').value = siteImages.bannerImg || '';
+
             document.getElementById('settingsModal').style.display = 'flex';
         }
 
-        function saveSettings() {
+        async function saveSettings() {
             const aPass = document.getElementById('newAdminPass').value.trim();
             const bPass = document.getElementById('newBayiPass').value.trim();
 
             if (aPass) { adminPass = aPass; localStorage.setItem('celebi_admin_pass', aPass); }
             if (bPass) { bayiPass = bPass; localStorage.setItem('celebi_bayi_pass', bPass); }
-            alert('Şifreler başarıyla güncellendi!');
+
+            const lBg = document.getElementById('cfgLoginBg').value.trim();
+            const hBg = document.getElementById('cfgHeaderBg').value.trim();
+            const bImg = document.getElementById('cfgBannerImg').value.trim();
+
+            if (lBg) { siteImages.loginBg = lBg; localStorage.setItem('cfg_loginBg', lBg); }
+            if (hBg) { siteImages.headerBg = hBg; localStorage.setItem('cfg_headerBg', hBg); }
+            if (bImg) { siteImages.bannerImg = bImg; localStorage.setItem('cfg_bannerImg', bImg); }
+
+            applySiteImages();
+
+            // Firebase veritabanına kalıcı olarak kaydet
+            if (window.db) {
+                await window.setDoc(window.doc(window.db, "site_ayarlari", "gorseller"), siteImages, { merge: true });
+            }
+
+            alert('Tüm şifre ve görsel ayarları kalıcı olarak kaydedildi!');
             closeModal('settingsModal');
         }
 
