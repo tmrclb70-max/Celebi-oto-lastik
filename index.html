@@ -172,7 +172,6 @@
 
         .products-list-wrapper { width: 100%; }
         
-        /* BİLGİSAYARDA KAYDIRMAYI KALDIR, TELEFONDA KAYDIRMAYI KORU */
         @media (max-width: 768px) {
             .products-list-wrapper { overflow-x: auto; }
             .products-list { display: flex; flex-direction: column; gap: 8px; min-width: 780px; }
@@ -277,7 +276,6 @@
         .modal-header h3 { color: var(--accent-yellow); font-size: 1.1rem; }
         .close-btn { font-size: 1.3rem; cursor: pointer; color: var(--text-muted); }
 
-        /* BİLGİSAYAR İÇİN ÖZEL GENİŞ AÇILIR ŞIK DETAY DÜZENİ */
         .detail-body-container { display: flex; flex-direction: column; gap: 15px; }
         .detail-img-box { text-align: center; background: #ffffff; padding: 12px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
         .detail-img-box img { max-height: 140px; width: 100%; object-fit: contain; }
@@ -410,7 +408,7 @@
 
     </div>
 
-    <!-- BİLGİSAYARDA YAN YANA GÖRÜNEN YENİLENMİŞ ŞIK DETAY MODALI -->
+    <!-- BİLGİSAYARDA YAN YANA GÖRÜNEN ŞİK DETAY MODALI -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -466,7 +464,7 @@
         </div>
     </div>
 
-    <!-- AYARLAR VE RESİM DÜZENLEME MODALI -->
+    <!-- AYARLAR MODALI -->
     <div id="settingsModal" class="modal">
         <div class="modal-content" style="max-width: 440px;">
             <div class="modal-header">
@@ -1057,20 +1055,43 @@
             document.getElementById('detailModal').style.display = 'flex';
         }
 
+        // AKILLI EBAT SIRA HESAPLAMA (KÜÇÜKTEN BÜYÜĞE)
+        function getSortableSize(sizeStr) {
+            if (!sizeStr) return 0;
+            const numbers = sizeStr.match(/\d+/g);
+            if (!numbers) return 0;
+            const w = parseInt(numbers[0]) || 0;
+            const h = numbers[1] ? parseInt(numbers[1]) : 0;
+            const r = numbers[2] ? parseInt(numbers[2]) : (numbers[1] ? parseInt(numbers[1]) : 0);
+            return (r * 100000) + (w * 100) + h;
+        }
+
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             const search = document.getElementById('searchInput').value.toLowerCase().trim();
             grid.innerHTML = '';
 
-            const filtered = products.filter(p => {
-                const matchCat = (currentCategory === 'all') || 
-                                 (currentCategory === 'Zirai' && p.group === 'Zirai') ||
-                                 (currentCategory === 'İç Lastik' && p.group === 'İç Lastik') ||
-                                 (p.season === currentCategory);
+            // FİLTRELEME: TÜM ÜRÜNLER SEÇİLİYSE İÇ LASTİKLERİ HARİÇ TUT
+            let filtered = products.filter(p => {
+                const isInnerTube = (p.group === 'İç Lastik' || p.season === 'İç Lastik');
+
+                let matchCat = false;
+                if (currentCategory === 'all') {
+                    matchCat = !isInnerTube; // Tüm ürünlerde iç lastikler OLMAYACAK!
+                } else if (currentCategory === 'İç Lastik') {
+                    matchCat = isInnerTube; // Sadece İç Lastik sekmesinde görünecek!
+                } else if (currentCategory === 'Zirai') {
+                    matchCat = (p.group === 'Zirai');
+                } else {
+                    matchCat = (p.season === currentCategory && !isInnerTube);
+                }
                 
                 const fullStr = `${p.size} ${p.brand} ${p.pattern} ${p.dot}`.toLowerCase();
                 return matchCat && fullStr.includes(search);
             });
+
+            // AKILLI SIRALAMA: KÜÇÜKTEN BÜYÜĞE (YUKARIDAN AŞAĞIYA)
+            filtered.sort((a, b) => getSortableSize(a.size) - getSortableSize(b.size));
 
             if (filtered.length === 0) {
                 grid.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 25px; font-size: 0.9rem; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--card-border);">Henüz kayıtlı ürün bulunmuyor veya arama eşleşmedi.</div>`;
@@ -1084,7 +1105,7 @@
                 let catTag = '';
                 if (p.group === 'Zirai') {
                     catTag = `<span class="tag tag-category"><i class="fa-solid fa-tractor icon-tractor"></i> Zirai</span>`;
-                } else if (p.group === 'İç Lastik') {
+                } else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') {
                     catTag = `<span class="tag tag-category"><i class="fa-solid fa-circle-dot icon-tube"></i> İç Lastik</span>`;
                 } else {
                     let iconClass = 'fa-sun icon-sun';
