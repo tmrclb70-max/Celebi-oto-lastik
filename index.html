@@ -194,7 +194,6 @@
         }
         .product-img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* STANDART KUTUSUNA UYGUN BÜYÜTÜLMÜŞ LOGO ALANI */
         .brand-display-box { 
             display: flex; 
             align-items: center; 
@@ -524,13 +523,18 @@
                 <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Kabat, BKT Vb.">
             </div>
 
-            <!-- BİLGİSAYARDAN PNG LOGO YÜKLEME ALANI -->
+            <!-- MARKA LOGO SİSTEMİ (URL VEYA DOSYA) -->
             <div class="form-group">
-                <label><i class="fa-solid fa-file-image" style="color: var(--accent-yellow);"></i> Marka Logosu Yükle (Şeffaf PNG Dosyası)</label>
+                <label><i class="fa-solid fa-link" style="color: var(--accent-yellow);"></i> Marka Logo Adresi (Resim URL Yapıştır)</label>
+                <input type="text" id="pLogoUrl" class="form-control" placeholder="Örn: https://i.hizliresim.com/logo.png" oninput="document.getElementById('pCustomLogoBase64').value = this.value">
+            </div>
+
+            <div class="form-group">
+                <label><i class="fa-solid fa-file-image" style="color: var(--accent-yellow);"></i> Veya Bilgisayardan Şeffaf PNG Logo Yükle</label>
                 <div class="file-upload-box" onclick="document.getElementById('logoFileInput').click()">
                     <i class="fa-solid fa-cloud-arrow-up" style="font-size: 1.5rem; color: var(--accent-yellow); margin-bottom: 5px;"></i>
-                    <p id="fileUploadText" style="font-size: 0.85rem; color: var(--text-muted);">Bilgisayarınızdan şeffaf PNG logosu seçmek için tıklayın</p>
-                    <input type="file" id="logoFileInput" accept="image/png, image/webp, image/svg+xml" style="display:none;" onchange="handleLogoUpload(this)">
+                    <p id="fileUploadText" style="font-size: 0.85rem; color: var(--text-muted);">PNG dosyası seçin (Sistem otomatik küçültür)</p>
+                    <input type="file" id="logoFileInput" accept="image/*" style="display:none;" onchange="handleLogoUpload(this)">
                 </div>
                 <div id="logoPreviewContainer" style="margin-top: 8px; text-align: center; display: none;">
                     <img id="logoPreviewImg" src="" style="max-height: 48px; background: rgba(255,255,255,0.1); padding: 5px; border-radius: 4px;">
@@ -759,26 +763,42 @@
             closeModal('settingsModal');
         }
 
+        // OTOMATİK BOYUT KÜÇÜLTEN GÜVENLİ FOTOĞRAF YÜKLEYİCİ
         function handleLogoUpload(input) {
             const file = input.files[0];
             if (!file) return;
 
             const reader = new FileReader();
             reader.onload = function(e) {
-                const base64Data = e.target.result;
-                document.getElementById('pCustomLogoBase64').value = base64Data;
-                document.getElementById('logoPreviewImg').src = base64Data;
-                document.getElementById('logoPreviewContainer').style.display = 'block';
-                document.getElementById('fileUploadText').innerText = `Yüklendi: ${file.name}`;
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 250;
+                    const scaleSize = MAX_WIDTH / img.width;
+                    canvas.width = MAX_WIDTH;
+                    canvas.height = img.height * scaleSize;
+
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                    const compressedBase64 = canvas.toDataURL('image/png');
+                    document.getElementById('pCustomLogoBase64').value = compressedBase64;
+                    document.getElementById('pLogoUrl').value = '';
+                    document.getElementById('logoPreviewImg').src = compressedBase64;
+                    document.getElementById('logoPreviewContainer').style.display = 'block';
+                    document.getElementById('fileUploadText').innerText = `Yüklendi (Sıkıştırıldı): ${file.name}`;
+                };
+                img.src = e.target.result;
             };
             reader.readAsDataURL(file);
         }
 
         function clearUploadedLogo() {
             document.getElementById('pCustomLogoBase64').value = '';
+            document.getElementById('pLogoUrl').value = '';
             document.getElementById('logoFileInput').value = '';
             document.getElementById('logoPreviewContainer').style.display = 'none';
-            document.getElementById('fileUploadText').innerText = 'Bilgisayarınızdan şeffaf PNG logosu seçmek için tıklayın';
+            document.getElementById('fileUploadText').innerText = 'PNG dosyası seçin (Sistem otomatik küçültür)';
         }
 
         function setCategory(cat, btn) {
@@ -869,7 +889,7 @@
             let brand = document.getElementById('pBrandSelect').value;
             if (brand === 'Diger') brand = document.getElementById('pCustomBrand').value.trim();
 
-            const customLogo = document.getElementById('pCustomLogoBase64').value;
+            const customLogo = document.getElementById('pCustomLogoBase64').value.trim();
             const pattern = document.getElementById('pPattern').value.trim();
             const season = (group === 'İç Lastik') ? 'İç Lastik' : document.getElementById('pSeason').value;
             const dot = document.getElementById('pDot').value.trim() || '2026';
@@ -927,6 +947,9 @@
 
             if (p.customLogo) {
                 document.getElementById('pCustomLogoBase64').value = p.customLogo;
+                if (p.customLogo.startsWith('http')) {
+                    document.getElementById('pLogoUrl').value = p.customLogo;
+                }
                 document.getElementById('logoPreviewImg').src = p.customLogo;
                 document.getElementById('logoPreviewContainer').style.display = 'block';
             } else {
@@ -1040,7 +1063,6 @@
                     catTag = `<span class="tag tag-category"><i class="fa-solid ${iconClass}"></i> ${p.season || 'Yaz'}</span>`;
                 }
 
-                // YÜKLENEN ÖZEL PNG LOGO VARSA TAM BOYUTTA BÜYÜK GÖSTER
                 let brandHtml = '';
                 if (p.customLogo) {
                     brandHtml = `<div class="brand-display-box"><img src="${p.customLogo}" class="brand-logo-img" alt="${p.brand}"></div>`;
