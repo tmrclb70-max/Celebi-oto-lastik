@@ -57,7 +57,6 @@
             --danger-color: #ef4444;
             --success-color: #10b981;
             
-            /* RENKLİ EMOJİ RENKLERİ */
             --icon-sun: #f59e0b;
             --icon-snow: #3b82f6;
             --icon-all: #10b981;
@@ -153,7 +152,6 @@
         .filter-btn { flex: 1; min-width: 100px; padding: 8px 10px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.82rem; }
         .filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
 
-        /* CANLI VE RENKLİ EMOJİLER */
         .icon-sun { color: var(--icon-sun) !important; filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.6)); }
         .icon-snow { color: var(--icon-snow) !important; filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.6)); }
         .icon-all { color: var(--icon-all) !important; filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.6)); }
@@ -196,23 +194,21 @@
         }
         .product-img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* OTOMATİK ARKA PLANSIZ / ŞEFFAF MARKA LOGO ALANI */
+        /* MÜKEMMEL ŞEFFAF MARKA LOGO ALANI */
         .brand-display-box { 
             display: flex; 
             align-items: center; 
             justify-content: flex-start; 
-            max-height: 48px; 
+            max-height: 42px; 
+            background: transparent;
         }
         .brand-logo-img { 
-            max-width: 130px; 
-            max-height: 42px; 
+            max-width: 120px; 
+            max-height: 38px; 
             object-fit: contain; 
             background: transparent !important; 
             border: none !important; 
             box-shadow: none !important; 
-            /* BEYAZ ARKA PLANI OTOMATİK TEMİZLEME MODU (MIX BLEND) */
-            mix-blend-mode: screen;
-            filter: brightness(1.1) contrast(1.1);
         }
 
         .col-size { font-size: 1.15rem; font-weight: 800; color: #fff; white-space: nowrap; }
@@ -495,24 +491,38 @@
                     <option value="Bridgestone">Bridgestone</option>
                     <option value="Michelin">Michelin</option>
                     <option value="Goodyear">Goodyear</option>
-                    <option value="Starmaxx">Starmaxx</option>
-                    <option value="Hankook">Hankook</option>
                     <option value="Pirelli">Pirelli</option>
                     <option value="Continental">Continental</option>
+                    <option value="Starmaxx">Starmaxx</option>
+                    <option value="Hankook">Hankook</option>
+                    <option value="Laufenn">Laufenn</option>
+                    <option value="Milestone">Milestone</option>
+                    <option value="Jantsa">Jantsa</option>
+                    <option value="Dunlop">Dunlop</option>
+                    <option value="Falken">Falken</option>
+                    <option value="Yokohama">Yokohama</option>
+                    <option value="Kumho">Kumho</option>
+                    <option value="Nexen">Nexen</option>
+                    <option value="Özka">Özka</option>
+                    <option value="Seha">Seha</option>
+                    <option value="Kormoran">Kormoran</option>
+                    <option value="Sava">Sava</option>
+                    <option value="Barum">Barum</option>
+                    <option value="Debica">Debica</option>
+                    <option value="Fulda">Fulda</option>
+                    <option value="Nokian">Nokian</option>
+                    <option value="Toyo">Toyo</option>
+                    <option value="BFGoodrich">BFGoodrich</option>
+                    <option value="Firestone">Firestone</option>
+                    <option value="Triangle">Triangle</option>
+                    <option value="Sailun">Sailun</option>
+                    <option value="Linglong">Linglong</option>
                     <option value="Diger">Diğer (Manuel Yaz)</option>
                 </select>
             </div>
             <div class="form-group hidden" id="customBrandGroup">
                 <label>Manuel Marka Adı</label>
                 <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Kabat, BKT Vb.">
-            </div>
-
-            <div class="form-group">
-                <label><i class="fa-solid fa-copyright" style="color: var(--accent-yellow);"></i> Marka Logosu Bağlantısı (URL)</label>
-                <div class="input-with-btn">
-                    <input type="text" id="pLogoUrl" class="form-control" placeholder="Logo URL kopyalayıp yapıştırın">
-                    <button class="btn-search-img" type="button" onclick="openGoogleSearch('logo')"><i class="fa-solid fa-arrow-up-right-from-square"></i> Logo Ara</button>
-                </div>
             </div>
 
             <div class="form-group">
@@ -606,6 +616,35 @@
         
         let adminPass = localStorage.getItem('celebi_admin_pass') || 'celebi166';
         let bayiPass = localStorage.getItem('celebi_bayi_pass') || '1234';
+
+        // OTOMATİK MARKA LOGO VERİTABANI (SİZ LİNKLE UĞRAŞMAYIN DİYE!)
+        const AUTO_BRAND_LOGOS = {
+            "petlas": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Petlas_logo.svg/1200px-Petlas_logo.svg.png",
+            "lassa": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Lassa_logo.svg/1200px-Lassa_logo.svg.png",
+            "bridgestone": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Bridgestone_logo.svg/1200px-Bridgestone_logo.svg.png",
+            "michelin": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Michelin_logo.svg/1200px-Michelin_logo.svg.png",
+            "goodyear": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Goodyear_logo.svg/1200px-Goodyear_logo.svg.png",
+            "pirelli": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Pirelli_logo.svg/1200px-Pirelli_logo.svg.png",
+            "continental": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Continental_AG_logo.svg/1200px-Continental_AG_logo.svg.png",
+            "starmaxx": "https://raw.githubusercontent.com/celebi-oto/logos/main/starmaxx.png",
+            "hankook": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Hankook_Tire_logo.svg/1200px-Hankook_Tire_logo.svg.png",
+            "laufenn": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Laufenn_logo.svg/1200px-Laufenn_logo.svg.png",
+            "dunlop": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Dunlop_logo.svg/1200px-Dunlop_logo.svg.png",
+            "falken": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Falken_Tyres_logo.svg/1200px-Falken_Tyres_logo.svg.png",
+            "yokohama": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Yokohama_Rubber_Company_logo.svg/1200px-Yokohama_Rubber_Company_logo.svg.png",
+            "kumho": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Kumho_Tire_logo.svg/1200px-Kumho_Tire_logo.svg.png",
+            "nexen": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Nexen_Tire_logo.svg/1200px-Nexen_Tire_logo.svg.png",
+            "nokian": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Nokian_Tyres_logo.svg/1200px-Nokian_Tyres_logo.svg.png",
+            "toyo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Toyo_Tires_logo.svg/1200px-Toyo_Tires_logo.svg.png",
+            "bfgoodrich": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/BFGoodrich_logo.svg/1200px-BFGoodrich_logo.svg.png",
+            "firestone": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Firestone_Logo.svg/1200px-Firestone_Logo.svg.png",
+            "barum": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Barum_logo.svg/1200px-Barum_logo.svg.png",
+            "sava": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Sava_Tyres_logo.svg/1200px-Sava_Tyres_logo.svg.png",
+            "debica": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Debica_logo.svg/1200px-Debica_logo.svg.png",
+            "fulda": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Fulda_Tyres_logo.svg/1200px-Fulda_Tyres_logo.svg.png",
+            "kormoran": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Kormoran_logo.svg/1200px-Kormoran_logo.svg.png",
+            "jantsa": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Jantsa_logo.svg/1200px-Jantsa_logo.svg.png"
+        };
 
         let siteImages = {
             loginBg: localStorage.getItem('cfg_loginBg') || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80',
@@ -792,7 +831,6 @@
             document.getElementById('pBrandSelect').value = 'Petlas';
             document.getElementById('customBrandGroup').classList.add('hidden');
             document.getElementById('pCustomBrand').value = '';
-            document.getElementById('pLogoUrl').value = '';
             document.getElementById('pPattern').value = '';
             document.getElementById('pSeason').value = 'Yaz';
             document.getElementById('pDot').value = '2026';
@@ -811,13 +849,7 @@
 
             let pattern = document.getElementById('pPattern').value.trim();
 
-            let query = '';
-            if (type === 'logo') {
-                query = `${brand} logo png transparent`;
-            } else {
-                query = `${brand} ${size} ${pattern} lastik`.trim();
-            }
-
+            let query = `${brand} ${size} ${pattern} lastik`.trim();
             const googleUrl = `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(query)}`;
             window.open(googleUrl, '_blank');
         }
@@ -830,7 +862,6 @@
             let brand = document.getElementById('pBrandSelect').value;
             if (brand === 'Diger') brand = document.getElementById('pCustomBrand').value.trim();
 
-            const logoUrl = document.getElementById('pLogoUrl').value.trim();
             const pattern = document.getElementById('pPattern').value.trim();
             const season = (group === 'İç Lastik') ? 'İç Lastik' : document.getElementById('pSeason').value;
             const dot = document.getElementById('pDot').value.trim() || '2026';
@@ -846,7 +877,7 @@
             const editingId = document.getElementById('editingProductId').value;
             const id = editingId ? editingId : 'p_' + Date.now();
 
-            const productData = { group, size, brand, logoUrl, pattern, season, dot, stock, price, img };
+            const productData = { group, size, brand, pattern, season, dot, stock, price, img };
             await window.setDoc(window.doc(window.db, "lastik_stoklari", id), productData, { merge: true });
             closeModal('productModal');
         }
@@ -886,7 +917,6 @@
                 document.getElementById('customBrandGroup').classList.add('hidden');
             }
 
-            document.getElementById('pLogoUrl').value = p.logoUrl || '';
             document.getElementById('pPattern').value = p.pattern || '';
             document.getElementById('pSeason').value = (p.season === 'İç Lastik') ? 'Yaz' : (p.season || 'Yaz');
             document.getElementById('pDot').value = p.dot || '2026';
@@ -935,7 +965,6 @@
             }
         }
 
-        /* SADECE MEVSİM İSMİ VE "BİRİM FİYATI" GÖSTEREN YENİ BAYİ MODALI */
         function openDetailModal(id) {
             if (currentUserRole === 'admin') return; 
             const p = products.find(x => x.id === id);
@@ -947,7 +976,6 @@
             document.getElementById('dBrand').innerText = p.brand || '-';
             document.getElementById('dPattern').innerText = p.pattern || 'STANDART';
             
-            // SADECE MEVSİM VEYA GRUP ADI
             let categoryText = p.season || 'Yaz';
             if (p.group === 'Zirai') categoryText = 'Zirai Grubu';
             if (p.group === 'İç Lastik') categoryText = 'İç Lastik';
@@ -984,7 +1012,6 @@
                 const stockVal = parseInt(p.stock) || 0;
                 const displayImg = p.img || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
 
-                // CANLI VE RENKLİ MEVSİM / KATEGORİ İKONLARI
                 let catTag = '';
                 if (p.group === 'Zirai') {
                     catTag = `<span class="tag tag-category"><i class="fa-solid fa-tractor icon-tractor"></i> Zirai</span>`;
@@ -997,9 +1024,13 @@
                     catTag = `<span class="tag tag-category"><i class="fa-solid ${iconClass}"></i> ${p.season || 'Yaz'}</span>`;
                 }
 
+                // MARKA LOGO OTOMATİK SEÇİCİ (FOTOĞRAFTAKİ GİBİ ŞEFFAF VE ORİJİNAL)
                 let brandHtml = '';
-                if (p.logoUrl) {
-                    brandHtml = `<div class="brand-display-box"><img src="${p.logoUrl}" class="brand-logo-img" alt="${p.brand}"></div>`;
+                const brandKey = (p.brand || '').toLowerCase().trim();
+                const autoLogoUrl = AUTO_BRAND_LOGOS[brandKey] || p.logoUrl;
+
+                if (autoLogoUrl) {
+                    brandHtml = `<div class="brand-display-box"><img src="${autoLogoUrl}" class="brand-logo-img" alt="${p.brand}"></div>`;
                 } else {
                     brandHtml = `<span class="col-brand-text">${p.brand}</span>`;
                 }
