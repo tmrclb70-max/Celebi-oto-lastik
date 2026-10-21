@@ -194,17 +194,17 @@
         }
         .product-img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* FOTOĞRAFTAKİ YAZILIMLA BİREBİR AYNI GERÇEK MARKA LOGO ALANI */
+        /* AÇIK ERİŞİMLİ %100 YÜKLENEN LOGO KUTUSU */
         .brand-display-box { 
             display: flex; 
             align-items: center; 
             justify-content: flex-start; 
-            height: 45px; 
+            height: 42px; 
             background: transparent;
         }
         .brand-logo-img { 
-            max-width: 110px; 
-            max-height: 40px; 
+            max-width: 120px; 
+            max-height: 38px; 
             object-fit: contain; 
             background: transparent !important; 
             border: none !important; 
@@ -494,11 +494,10 @@
                     <option value="Pirelli">Pirelli</option>
                     <option value="Continental">Continental</option>
                     <option value="Starmaxx">Starmaxx</option>
+                    <option value="Milestone">Milestone</option>
                     <option value="Hankook">Hankook</option>
                     <option value="Laufenn">Laufenn</option>
                     <option value="Falken">Falken</option>
-                    <option value="Milestone">Milestone</option>
-                    <option value="Jantsa">Jantsa</option>
                     <option value="Dunlop">Dunlop</option>
                     <option value="Yokohama">Yokohama</option>
                     <option value="Kumho">Kumho</option>
@@ -613,6 +612,35 @@
         
         let adminPass = localStorage.getItem('celebi_admin_pass') || 'celebi166';
         let bayiPass = localStorage.getItem('celebi_bayi_pass') || '1234';
+
+        // AÇIK ERİŞİMLİ ŞEFFAF DÜNYA MARKA LOGO KÜTÜPHANESİ
+        const DIRECT_BRAND_LOGOS = {
+            "petlas": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Petlas_logo.svg/1200px-Petlas_logo.svg.png",
+            "lassa": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Lassa_logo.svg/1200px-Lassa_logo.svg.png",
+            "bridgestone": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Bridgestone_logo.svg/1200px-Bridgestone_logo.svg.png",
+            "michelin": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Michelin_logo.svg/1200px-Michelin_logo.svg.png",
+            "goodyear": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Goodyear_logo.svg/1200px-Goodyear_logo.svg.png",
+            "pirelli": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Pirelli_logo.svg/1200px-Pirelli_logo.svg.png",
+            "continental": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Continental_AG_logo.svg/1200px-Continental_AG_logo.svg.png",
+            "hankook": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Hankook_Tire_logo.svg/1200px-Hankook_Tire_logo.svg.png",
+            "laufenn": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Laufenn_logo.svg/1200px-Laufenn_logo.svg.png",
+            "dunlop": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Dunlop_logo.svg/1200px-Dunlop_logo.svg.png",
+            "falken": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Falken_Tyres_logo.svg/1200px-Falken_Tyres_logo.svg.png",
+            "yokohama": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Yokohama_Rubber_Company_logo.svg/1200px-Yokohama_Rubber_Company_logo.svg.png",
+            "kumho": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Kumho_Tire_logo.svg/1200px-Kumho_Tire_logo.svg.png",
+            "nexen": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Nexen_Tire_logo.svg/1200px-Nexen_Tire_logo.svg.png",
+            "nokian": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Nokian_Tyres_logo.svg/1200px-Nokian_Tyres_logo.svg.png",
+            "toyo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Toyo_Tires_logo.svg/1200px-Toyo_Tires_logo.svg.png",
+            "bfgoodrich": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/BFGoodrich_logo.svg/1200px-BFGoodrich_logo.svg.png",
+            "firestone": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Firestone_Logo.svg/1200px-Firestone_Logo.svg.png",
+            "barum": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Barum_logo.svg/1200px-Barum_logo.svg.png",
+            "sava": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Sava_Tyres_logo.svg/1200px-Sava_Tyres_logo.svg.png",
+            "debica": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Debica_logo.svg/1200px-Debica_logo.svg.png",
+            "fulda": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Fulda_Tyres_logo.svg/1200px-Fulda_Tyres_logo.svg.png",
+            "kormoran": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Kormoran_logo.svg/1200px-Kormoran_logo.svg.png",
+            "milestone": "https://www.svgrepo.com/show/331488/milestone.svg",
+            "starmaxx": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Petlas_logo.svg/1200px-Petlas_logo.svg.png"
+        };
 
         let siteImages = {
             loginBg: localStorage.getItem('cfg_loginBg') || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80',
@@ -956,18 +984,22 @@
             document.getElementById('detailModal').style.display = 'flex';
         }
 
-        // FOTOĞRAFTAKİ YAZILIMIN KULLANDIĞI DİREKT ORİJİNAL LOGO SUNUCUSU HİZMETİ
+        // ENGELLENMEYEN AÇIK LOGO SERVİSİ
         function getBrandLogoHtml(brandName) {
             if (!brandName) return `<span class="col-brand-text">--</span>`;
             
-            const bUpper = brandName.trim().toUpperCase();
-            const logoServerUrl = `https://s3.isiksoftyazilim.com/shared/brands/${bUpper}.png`;
+            const bKey = brandName.trim().toLowerCase();
+            const logoUrl = DIRECT_BRAND_LOGOS[bKey];
 
-            return `
-                <div class="brand-display-box">
-                    <img src="${logoServerUrl}" class="brand-logo-img" alt="${brandName}" onerror="this.onerror=null; this.outerHTML='<span class=\\'col-brand-text\\'>${brandName}</span>';">
-                </div>
-            `;
+            if (logoUrl) {
+                return `
+                    <div class="brand-display-box">
+                        <img src="${logoUrl}" class="brand-logo-img" alt="${brandName}">
+                    </div>
+                `;
+            }
+
+            return `<span class="col-brand-text">${brandName}</span>`;
         }
 
         function renderProducts() {
