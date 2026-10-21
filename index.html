@@ -176,7 +176,7 @@
         .product-row { 
             background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; 
             padding: 10px 15px; display: grid; 
-            grid-template-columns: 75px 1.2fr 1.3fr 1.4fr 110px 90px 1.2fr 110px auto; 
+            grid-template-columns: 75px 1.2fr 1.5fr 1.4fr 110px 90px 1.2fr 110px auto; 
             align-items: center; gap: 12px; transition: 0.2s; cursor: pointer;
         }
         .product-row:hover { border-color: var(--accent-yellow); transform: translateX(2px); box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
@@ -194,30 +194,34 @@
         }
         .product-img { width: 100%; height: 100%; object-fit: contain; }
 
+        /* STANDART KUTUSUNA UYGUN BÜYÜTÜLMÜŞ LOGO ALANI */
         .brand-display-box { 
             display: flex; 
             align-items: center; 
             justify-content: flex-start; 
-            height: 42px; 
+            height: 48px; 
+            width: 100%;
             background: transparent;
         }
         .brand-logo-img { 
-            max-width: 120px; 
-            max-height: 38px; 
+            width: 100%;
+            max-width: 160px; 
+            height: 42px; 
             object-fit: contain; 
+            object-position: left center;
             background: transparent !important; 
             border: none !important; 
             box-shadow: none !important; 
         }
 
         .col-size { font-size: 1.15rem; font-weight: 800; color: #fff; white-space: nowrap; }
-        .col-brand-text { font-size: 1.05rem; color: var(--accent-yellow); font-weight: 800; text-transform: uppercase; white-space: nowrap; }
+        .col-brand-text { font-size: 1.15rem; color: var(--accent-yellow); font-weight: 900; text-transform: uppercase; white-space: nowrap; }
         
         .pattern-box {
             display: inline-flex; align-items: center; justify-content: center; gap: 5px;
             background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(245, 158, 11, 0.5);
-            color: var(--accent-yellow); padding: 5px 10px; border-radius: 6px;
-            font-size: 0.8rem; font-weight: 700; text-transform: uppercase; text-align: center; white-space: nowrap;
+            color: var(--accent-yellow); padding: 6px 12px; border-radius: 6px;
+            font-size: 0.85rem; font-weight: 700; text-transform: uppercase; text-align: center; white-space: nowrap;
         }
 
         .col-price { 
@@ -253,7 +257,6 @@
         .input-with-btn { display: flex; gap: 8px; }
         .btn-search-img { background: #3b82f6; color: white; border: none; padding: 0 12px; border-radius: 6px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 0.82rem; display: flex; align-items: center; gap: 5px; }
 
-        /* ÖZEL DOSYA YÜKLEME ALANI STİLİ */
         .file-upload-box {
             border: 2px dashed var(--accent-yellow);
             padding: 12px;
@@ -513,7 +516,6 @@
                     <option value="Laufenn">Laufenn</option>
                     <option value="Falken">Falken</option>
                     <option value="Dunlop">Dunlop</option>
-
                     <option value="Diger">Diğer (Manuel Yaz)</option>
                 </select>
             </div>
@@ -531,7 +533,7 @@
                     <input type="file" id="logoFileInput" accept="image/png, image/webp, image/svg+xml" style="display:none;" onchange="handleLogoUpload(this)">
                 </div>
                 <div id="logoPreviewContainer" style="margin-top: 8px; text-align: center; display: none;">
-                    <img id="logoPreviewImg" src="" style="max-height: 40px; background: rgba(255,255,255,0.1); padding: 5px; border-radius: 4px;">
+                    <img id="logoPreviewImg" src="" style="max-height: 48px; background: rgba(255,255,255,0.1); padding: 5px; border-radius: 4px;">
                     <button type="button" style="background: var(--danger-color); color: white; border: none; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 10px; cursor: pointer;" onclick="clearUploadedLogo()">Kaldır</button>
                 </div>
             </div>
@@ -1038,7 +1040,7 @@
                     catTag = `<span class="tag tag-category"><i class="fa-solid ${iconClass}"></i> ${p.season || 'Yaz'}</span>`;
                 }
 
-                // YÜKLENEN ÖZEL PNG LOGO VARSA ONU GÖSTER
+                // YÜKLENEN ÖZEL PNG LOGO VARSA TAM BOYUTTA BÜYÜK GÖSTER
                 let brandHtml = '';
                 if (p.customLogo) {
                     brandHtml = `<div class="brand-display-box"><img src="${p.customLogo}" class="brand-logo-img" alt="${p.brand}"></div>`;
