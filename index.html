@@ -56,6 +56,13 @@
             --text-muted: #94a3b8;
             --danger-color: #ef4444;
             --success-color: #10b981;
+            
+            /* RENKLİ EMOJİ RENKLERİ */
+            --icon-sun: #f59e0b;
+            --icon-snow: #3b82f6;
+            --icon-all: #10b981;
+            --icon-tractor: #f97316;
+            --icon-tube: #ef4444;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -146,6 +153,13 @@
         .filter-btn { flex: 1; min-width: 100px; padding: 8px 10px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.82rem; }
         .filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
 
+        /* CANLI VE RENKLİ EMOJİLER */
+        .icon-sun { color: var(--icon-sun) !important; filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.6)); }
+        .icon-snow { color: var(--icon-snow) !important; filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.6)); }
+        .icon-all { color: var(--icon-all) !important; filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.6)); }
+        .icon-tractor { color: var(--icon-tractor) !important; filter: drop-shadow(0 0 5px rgba(249, 115, 22, 0.6)); }
+        .icon-tube { color: var(--icon-tube) !important; filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.6)); }
+
         .admin-bar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; background: rgba(255,255,255,0.03); padding: 12px 15px; border-radius: 10px; border: 1px solid var(--card-border); }
         .admin-bar-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
         .admin-btn-group { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; width: 100%; }
@@ -182,7 +196,7 @@
         }
         .product-img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* MARKA LOGOSU (ÇERÇEVESİZ, ŞEFFAF, DOĞAL GÖRÜNÜM) */
+        /* OTOMATİK ARKA PLANSIZ / ŞEFFAF MARKA LOGO ALANI */
         .brand-display-box { 
             display: flex; 
             align-items: center; 
@@ -196,6 +210,9 @@
             background: transparent !important; 
             border: none !important; 
             box-shadow: none !important; 
+            /* BEYAZ ARKA PLANI OTOMATİK TEMİZLEME MODU (MIX BLEND) */
+            mix-blend-mode: screen;
+            filter: brightness(1.1) contrast(1.1);
         }
 
         .col-size { font-size: 1.15rem; font-weight: 800; color: #fff; white-space: nowrap; }
@@ -214,7 +231,7 @@
             border: 1px solid rgba(16, 185, 129, 0.2); white-space: nowrap;
         }
         
-        .tag { font-size: 0.78rem; padding: 5px 10px; border-radius: 6px; background: #0f172a; color: var(--text-main); border: 1px solid var(--card-border); font-weight: 700; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; }
+        .tag { font-size: 0.78rem; padding: 5px 10px; border-radius: 6px; background: #0f172a; color: var(--text-main); border: 1px solid var(--card-border); font-weight: 700; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; }
         .tag-category { color: var(--accent-yellow); border-color: rgba(245, 158, 11, 0.4); }
 
         .stock-badge-in { background: rgba(16, 185, 129, 0.15); color: var(--success-color); border: 1.5px solid var(--success-color); font-weight: 800; padding: 5px 10px; border-radius: 6px; font-size: 0.82rem; text-align: center; white-space: nowrap; }
@@ -312,11 +329,11 @@
 
             <div class="filter-buttons">
                 <button class="filter-btn active" onclick="setCategory('all', this)"><i class="fa-solid fa-border-all"></i> Tüm Ürünler</button>
-                <button class="filter-btn" onclick="setCategory('Yaz', this)"><i class="fa-solid fa-sun"></i> Yaz Lastikleri</button>
-                <button class="filter-btn" onclick="setCategory('Kış', this)"><i class="fa-solid fa-snowflake"></i> Kış Lastikleri</button>
-                <button class="filter-btn" onclick="setCategory('4 Mevsim', this)"><i class="fa-solid fa-cloud-sun-rain"></i> 4 Mevsim</button>
-                <button class="filter-btn" onclick="setCategory('Zirai', this)"><i class="fa-solid fa-tractor"></i> Zirai Grubu</button>
-                <button class="filter-btn" onclick="setCategory('İç Lastik', this)"><i class="fa-solid fa-circle-dot"></i> İç Lastikler</button>
+                <button class="filter-btn" onclick="setCategory('Yaz', this)"><i class="fa-solid fa-sun icon-sun"></i> Yaz Lastikleri</button>
+                <button class="filter-btn" onclick="setCategory('Kış', this)"><i class="fa-solid fa-snowflake icon-snow"></i> Kış Lastikleri</button>
+                <button class="filter-btn" onclick="setCategory('4 Mevsim', this)"><i class="fa-solid fa-cloud-sun-rain icon-all"></i> 4 Mevsim</button>
+                <button class="filter-btn" onclick="setCategory('Zirai', this)"><i class="fa-solid fa-tractor icon-tractor"></i> Zirai Grubu</button>
+                <button class="filter-btn" onclick="setCategory('İç Lastik', this)"><i class="fa-solid fa-circle-dot icon-tube"></i> İç Lastikler</button>
             </div>
         </div>
 
@@ -331,11 +348,11 @@
             
             <div class="admin-btn-group">
                 <span style="font-size: 0.8rem; color: var(--accent-yellow); font-weight:700; display:flex; align-items:center; gap:4px;"><i class="fa-solid fa-percent"></i> Toplu Zam/İndirim:</span>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('Yaz')"><i class="fa-solid fa-sun" style="color:#f59e0b;"></i> % Yaz</button>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('Kış')"><i class="fa-solid fa-snowflake" style="color:#3b82f6;"></i> % Kış</button>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('4 Mevsim')"><i class="fa-solid fa-cloud-sun-rain" style="color:#10b981;"></i> % 4 Mevsim</button>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('Zirai')"><i class="fa-solid fa-tractor" style="color:#f59e0b;"></i> % Zirai</button>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('İç Lastik')"><i class="fa-solid fa-circle-dot" style="color:#e11d48;"></i> % İç Lastik</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('Yaz')"><i class="fa-solid fa-sun icon-sun"></i> % Yaz</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('Kış')"><i class="fa-solid fa-snowflake icon-snow"></i> % Kış</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('4 Mevsim')"><i class="fa-solid fa-cloud-sun-rain icon-all"></i> % 4 Mevsim</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('Zirai')"><i class="fa-solid fa-tractor icon-tractor"></i> % Zirai</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('İç Lastik')"><i class="fa-solid fa-circle-dot icon-tube"></i> % İç Lastik</button>
             </div>
         </div>
 
@@ -358,11 +375,11 @@
             <div class="detail-row"><span class="detail-label">Ebat:</span><span id="dSize" class="detail-val">--</span></div>
             <div class="detail-row"><span class="detail-label">Marka:</span><span id="dBrand" class="detail-val">--</span></div>
             <div class="detail-row"><span class="detail-label">Desen:</span><span id="dPattern" class="detail-val">--</span></div>
-            <div class="detail-row"><span class="detail-label">Mevsim / Grup:</span><span id="dCategory" class="detail-val">--</span></div>
+            <div class="detail-row"><span class="detail-label">Mevsim:</span><span id="dCategory" class="detail-val">--</span></div>
             <div class="detail-row"><span class="detail-label">Üretim Yılı (DOT):</span><span id="dDot" class="detail-val">--</span></div>
             <div class="detail-row"><span class="detail-label">Stok Durumu:</span><span id="dStock" class="detail-val">--</span></div>
             <div class="detail-row" style="border:none; margin-top:8px; background:rgba(16,185,129,0.1); padding:10px; border-radius:8px;">
-                <span class="detail-label" style="color:#10b981; font-size:1.1rem;">Satış Fiyatı:</span>
+                <span class="detail-label" style="color:#10b981; font-size:1.1rem;">Birim Fiyatı:</span>
                 <span id="dPrice" class="detail-val" style="color:#10b981; font-size:1.3rem;">--</span>
             </div>
         </div>
@@ -815,7 +832,7 @@
 
             const logoUrl = document.getElementById('pLogoUrl').value.trim();
             const pattern = document.getElementById('pPattern').value.trim();
-            const season = (group === 'İç Lastik') ? 'Şambrel / İç Lastik' : document.getElementById('pSeason').value;
+            const season = (group === 'İç Lastik') ? 'İç Lastik' : document.getElementById('pSeason').value;
             const dot = document.getElementById('pDot').value.trim() || '2026';
             const stock = parseInt(document.getElementById('pStock').value) || 0;
             const price = parseFloat(document.getElementById('pPrice').value) || 0;
@@ -871,7 +888,7 @@
 
             document.getElementById('pLogoUrl').value = p.logoUrl || '';
             document.getElementById('pPattern').value = p.pattern || '';
-            document.getElementById('pSeason').value = (p.season === 'Şambrel / İç Lastik') ? 'Yaz' : (p.season || 'Yaz');
+            document.getElementById('pSeason').value = (p.season === 'İç Lastik') ? 'Yaz' : (p.season || 'Yaz');
             document.getElementById('pDot').value = p.dot || '2026';
             document.getElementById('pStock').value = p.stock || 0;
             document.getElementById('pPrice').value = p.price || 0;
@@ -918,6 +935,7 @@
             }
         }
 
+        /* SADECE MEVSİM İSMİ VE "BİRİM FİYATI" GÖSTEREN YENİ BAYİ MODALI */
         function openDetailModal(id) {
             if (currentUserRole === 'admin') return; 
             const p = products.find(x => x.id === id);
@@ -928,7 +946,13 @@
             document.getElementById('dSize').innerText = p.size || '-';
             document.getElementById('dBrand').innerText = p.brand || '-';
             document.getElementById('dPattern').innerText = p.pattern || 'STANDART';
-            document.getElementById('dCategory').innerText = (p.group === 'İç Lastik') ? 'İç Lastik' : `${p.group || 'Otomobil'} (${p.season || 'Yaz'})`;
+            
+            // SADECE MEVSİM VEYA GRUP ADI
+            let categoryText = p.season || 'Yaz';
+            if (p.group === 'Zirai') categoryText = 'Zirai Grubu';
+            if (p.group === 'İç Lastik') categoryText = 'İç Lastik';
+            document.getElementById('dCategory').innerText = categoryText;
+
             document.getElementById('dDot').innerText = p.dot || '2026';
             document.getElementById('dStock').innerHTML = getStockBadgeHtml(stockVal);
             document.getElementById('dPrice').innerText = formatCurrency(p.price);
@@ -960,16 +984,17 @@
                 const stockVal = parseInt(p.stock) || 0;
                 const displayImg = p.img || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
 
+                // CANLI VE RENKLİ MEVSİM / KATEGORİ İKONLARI
                 let catTag = '';
                 if (p.group === 'Zirai') {
-                    catTag = `<span class="tag tag-category"><i class="fa-solid fa-tractor"></i> Zirai</span>`;
+                    catTag = `<span class="tag tag-category"><i class="fa-solid fa-tractor icon-tractor"></i> Zirai</span>`;
                 } else if (p.group === 'İç Lastik') {
-                    catTag = `<span class="tag tag-category"><i class="fa-solid fa-circle-dot"></i> İç Lastik</span>`;
+                    catTag = `<span class="tag tag-category"><i class="fa-solid fa-circle-dot icon-tube"></i> İç Lastik</span>`;
                 } else {
-                    let icon = 'fa-sun';
-                    if (p.season === 'Kış') icon = 'fa-snowflake';
-                    else if (p.season === '4 Mevsim') icon = 'fa-cloud-sun-rain';
-                    catTag = `<span class="tag tag-category"><i class="fa-solid ${icon}"></i> ${p.season || 'Yaz'}</span>`;
+                    let iconClass = 'fa-sun icon-sun';
+                    if (p.season === 'Kış') iconClass = 'fa-snowflake icon-snow';
+                    else if (p.season === '4 Mevsim') iconClass = 'fa-cloud-sun-rain icon-all';
+                    catTag = `<span class="tag tag-category"><i class="fa-solid ${iconClass}"></i> ${p.season || 'Yaz'}</span>`;
                 }
 
                 let brandHtml = '';
