@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Montserrat:ital,wght@0,400;0,600;0,800;0,900;1,800;1,900&family=Orbitron:wght@700;900&family=Titan+One&display=swap" rel="stylesheet">
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -194,25 +194,35 @@
         }
         .product-img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* MÜKEMMEL ŞEFFAF MARKA LOGO ALANI */
-        .brand-display-box { 
-            display: flex; 
-            align-items: center; 
-            justify-content: flex-start; 
-            max-height: 42px; 
-            background: transparent;
-        }
-        .brand-logo-img { 
-            max-width: 120px; 
-            max-height: 38px; 
-            object-fit: contain; 
-            background: transparent !important; 
-            border: none !important; 
-            box-shadow: none !important; 
+        /* BİREBİR ORİJİNAL MARKA LOGO STİLLERİ (ÖZEL CSS KODLARI) */
+        .brand-logo-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 1.05rem;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            user-select: none;
         }
 
+        .brand-petlas { font-weight: 900; font-style: italic; color: #e11d48; text-transform: lowercase; font-size: 1.2rem; }
+        .brand-goodyear { font-weight: 900; color: #f59e0b; text-transform: uppercase; font-family: 'Montserrat', sans-serif; }
+        .brand-pirelli { background: #facc15; color: #dc2626; font-weight: 900; text-transform: uppercase; padding: 2px 8px; border-radius: 3px; font-family: 'Impact', 'Montserrat', sans-serif; letter-spacing: 1px; }
+        .brand-lassa { font-weight: 900; font-style: italic; color: #ef4444; text-transform: uppercase; font-size: 1.15rem; }
+        .brand-michelin { font-weight: 900; color: #2563eb; font-style: italic; text-transform: uppercase; }
+        .brand-continental { font-weight: 900; color: #f97316; font-style: italic; text-transform: uppercase; }
+        .brand-bridgestone { font-weight: 900; color: #ffffff; text-transform: uppercase; }
+        .brand-bridgestone::first-letter { color: #dc2626; }
+        .brand-starmaxx { font-weight: 800; color: #0284c7; text-transform: lowercase; font-style: italic; }
+        .brand-hankook { font-weight: 900; color: #f97316; text-transform: uppercase; }
+        .brand-laufenn { font-weight: 800; color: #1e293b; background: #94a3b8; padding: 2px 6px; border-radius: 3px; text-transform: uppercase; }
+        .brand-milestone { font-weight: 900; color: #10b981; font-style: italic; text-transform: uppercase; }
+        .brand-jantsa { font-weight: 900; color: #0284c7; font-style: italic; text-transform: uppercase; }
+        .brand-default { font-weight: 800; color: var(--accent-yellow); text-transform: uppercase; }
+
         .col-size { font-size: 1.15rem; font-weight: 800; color: #fff; white-space: nowrap; }
-        .col-brand-text { font-size: 1.05rem; color: var(--accent-yellow); font-weight: 800; text-transform: uppercase; white-space: nowrap; }
         
         .pattern-box {
             display: inline-flex; align-items: center; justify-content: center; gap: 5px;
@@ -617,35 +627,6 @@
         let adminPass = localStorage.getItem('celebi_admin_pass') || 'celebi166';
         let bayiPass = localStorage.getItem('celebi_bayi_pass') || '1234';
 
-        // OTOMATİK MARKA LOGO VERİTABANI (SİZ LİNKLE UĞRAŞMAYIN DİYE!)
-        const AUTO_BRAND_LOGOS = {
-            "petlas": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Petlas_logo.svg/1200px-Petlas_logo.svg.png",
-            "lassa": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Lassa_logo.svg/1200px-Lassa_logo.svg.png",
-            "bridgestone": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Bridgestone_logo.svg/1200px-Bridgestone_logo.svg.png",
-            "michelin": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Michelin_logo.svg/1200px-Michelin_logo.svg.png",
-            "goodyear": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Goodyear_logo.svg/1200px-Goodyear_logo.svg.png",
-            "pirelli": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Pirelli_logo.svg/1200px-Pirelli_logo.svg.png",
-            "continental": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Continental_AG_logo.svg/1200px-Continental_AG_logo.svg.png",
-            "starmaxx": "https://raw.githubusercontent.com/celebi-oto/logos/main/starmaxx.png",
-            "hankook": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Hankook_Tire_logo.svg/1200px-Hankook_Tire_logo.svg.png",
-            "laufenn": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Laufenn_logo.svg/1200px-Laufenn_logo.svg.png",
-            "dunlop": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Dunlop_logo.svg/1200px-Dunlop_logo.svg.png",
-            "falken": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Falken_Tyres_logo.svg/1200px-Falken_Tyres_logo.svg.png",
-            "yokohama": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Yokohama_Rubber_Company_logo.svg/1200px-Yokohama_Rubber_Company_logo.svg.png",
-            "kumho": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Kumho_Tire_logo.svg/1200px-Kumho_Tire_logo.svg.png",
-            "nexen": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Nexen_Tire_logo.svg/1200px-Nexen_Tire_logo.svg.png",
-            "nokian": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Nokian_Tyres_logo.svg/1200px-Nokian_Tyres_logo.svg.png",
-            "toyo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Toyo_Tires_logo.svg/1200px-Toyo_Tires_logo.svg.png",
-            "bfgoodrich": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/BFGoodrich_logo.svg/1200px-BFGoodrich_logo.svg.png",
-            "firestone": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Firestone_Logo.svg/1200px-Firestone_Logo.svg.png",
-            "barum": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Barum_logo.svg/1200px-Barum_logo.svg.png",
-            "sava": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Sava_Tyres_logo.svg/1200px-Sava_Tyres_logo.svg.png",
-            "debica": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Debica_logo.svg/1200px-Debica_logo.svg.png",
-            "fulda": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Fulda_Tyres_logo.svg/1200px-Fulda_Tyres_logo.svg.png",
-            "kormoran": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Kormoran_logo.svg/1200px-Kormoran_logo.svg.png",
-            "jantsa": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Jantsa_logo.svg/1200px-Jantsa_logo.svg.png"
-        };
-
         let siteImages = {
             loginBg: localStorage.getItem('cfg_loginBg') || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80',
             headerBg: localStorage.getItem('cfg_headerBg') || 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Petlas_logo.svg/1200px-Petlas_logo.svg.png',
@@ -988,6 +969,27 @@
             document.getElementById('detailModal').style.display = 'flex';
         }
 
+        // BİREBİR ORİJİNAL RENK VE FONT İLE MARKA STİLİ OLUŞTURUCU
+        function getBrandLogoHtml(brandName) {
+            const b = (brandName || '').toLowerCase().trim();
+            let styleClass = 'brand-default';
+
+            if (b.includes('petlas')) styleClass = 'brand-petlas';
+            else if (b.includes('goodyear')) styleClass = 'brand-goodyear';
+            else if (b.includes('pirelli')) styleClass = 'brand-pirelli';
+            else if (b.includes('lassa')) styleClass = 'brand-lassa';
+            else if (b.includes('michelin')) styleClass = 'brand-michelin';
+            else if (b.includes('continental')) styleClass = 'brand-continental';
+            else if (b.includes('bridgestone')) styleClass = 'brand-bridgestone';
+            else if (b.includes('starmaxx')) styleClass = 'brand-starmaxx';
+            else if (b.includes('hankook')) styleClass = 'brand-hankook';
+            else if (b.includes('laufenn')) styleClass = 'brand-laufenn';
+            else if (b.includes('milestone')) styleClass = 'brand-milestone';
+            else if (b.includes('jantsa')) styleClass = 'brand-jantsa';
+
+            return `<span class="brand-logo-badge ${styleClass}">${brandName}</span>`;
+        }
+
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             const search = document.getElementById('searchInput').value.toLowerCase().trim();
@@ -1024,16 +1026,7 @@
                     catTag = `<span class="tag tag-category"><i class="fa-solid ${iconClass}"></i> ${p.season || 'Yaz'}</span>`;
                 }
 
-                // MARKA LOGO OTOMATİK SEÇİCİ (FOTOĞRAFTAKİ GİBİ ŞEFFAF VE ORİJİNAL)
-                let brandHtml = '';
-                const brandKey = (p.brand || '').toLowerCase().trim();
-                const autoLogoUrl = AUTO_BRAND_LOGOS[brandKey] || p.logoUrl;
-
-                if (autoLogoUrl) {
-                    brandHtml = `<div class="brand-display-box"><img src="${autoLogoUrl}" class="brand-logo-img" alt="${p.brand}"></div>`;
-                } else {
-                    brandHtml = `<span class="col-brand-text">${p.brand}</span>`;
-                }
+                const brandHtml = getBrandLogoHtml(p.brand);
 
                 const row = document.createElement('div');
                 row.className = 'product-row';
