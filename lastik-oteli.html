@@ -119,19 +119,24 @@
         .btn-add { background: var(--accent-red); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
         .btn-add:hover { background: var(--accent-hover); }
 
-        .hotel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
-        .hotel-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 14px; transition: 0.2s; position: relative; }
+        .hotel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 12px; }
+        .hotel-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 14px; transition: 0.2s; position: relative; display: flex; flex-direction: column; gap: 6px; }
         .hotel-card:hover { border-color: var(--accent-red); transform: translateY(-2px); }
 
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px dashed var(--card-border); padding-bottom: 6px; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; border-bottom: 1px dashed var(--card-border); padding-bottom: 6px; }
         .raf-badge { background: var(--accent-red); color: #fff; font-weight: 900; padding: 4px 10px; border-radius: 6px; font-size: 0.88rem; }
         .plaka-badge { background: #0f172a; color: #fff; font-weight: 800; padding: 4px 8px; border-radius: 5px; border: 1px solid var(--card-border); font-size: 0.85rem; }
 
-        .card-row { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px; }
+        .card-body-flex { display: flex; gap: 10px; align-items: center; }
+        .card-img-box { width: 75px; height: 75px; background: #0f172a; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .card-info-box { flex: 1; }
+        .card-row { display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 3px; }
         .card-label { color: var(--text-muted); font-weight: 600; }
         .card-val { color: var(--text-main); font-weight: 800; }
 
-        .card-actions { display: flex; gap: 6px; margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px; }
+        .card-actions { display: flex; gap: 6px; margin-top: 6px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px; }
         .btn-wa { background: #25d366; color: white; border: none; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-weight: 700; font-size: 0.78rem; flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px; }
         .btn-print { background: #6366f1; color: white; border: none; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-weight: 700; font-size: 0.78rem; flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px; }
         .btn-del { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); padding: 6px 8px; border-radius: 5px; cursor: pointer; font-size: 0.78rem; }
@@ -143,11 +148,16 @@
         .modal-header h3 { color: var(--accent-red); font-size: 1.1rem; }
         .close-btn { font-size: 1.3rem; cursor: pointer; color: var(--text-muted); }
 
-        @media print {
-            body * { visibility: hidden; }
-            #printArea, #printArea * { visibility: visible; }
-            #printArea { position: absolute; left: 0; top: 0; width: 100%; color: #000 !important; background: #fff !important; padding: 10px; }
+        .file-upload-box {
+            border: 1.5px dashed var(--accent-red);
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            background: rgba(239, 68, 68, 0.05);
+            cursor: pointer;
+            transition: 0.2s;
         }
+        .file-upload-box:hover { background: rgba(239, 68, 68, 0.15); }
 
         .hidden { display: none !important; }
     </style>
@@ -208,9 +218,25 @@
                 <span class="close-btn" onclick="closeModal('hotelModal')">&times;</span>
             </div>
 
+            <input type="hidden" id="hPhotoBase64" value="">
+
+            <!-- FOTOĞRAF ÇEK / SEÇ ALANI -->
             <div class="form-group">
-                <label>Raf / Etiket Numarası (Örn: 101, A-12)</label>
-                <input type="text" id="hRaf" class="form-control" placeholder="Örn: 105">
+                <label><i class="fa-solid fa-camera" style="color: var(--accent-red);"></i> Lastiğin Fotoğrafını Çek / Yükle</label>
+                <div class="file-upload-box" onclick="document.getElementById('photoInput').click()">
+                    <i class="fa-solid fa-camera-retro" style="font-size: 1.4rem; color: var(--accent-red); margin-bottom: 4px;"></i>
+                    <p id="uploadText" style="font-size: 0.8rem; color: var(--text-muted);">Kamerayı Açıp Fotoğraf Çekmek İçin Tıklayın</p>
+                    <input type="file" id="photoInput" accept="image/*" capture="environment" style="display:none;" onchange="handlePhotoUpload(this)">
+                </div>
+                <div id="photoPreviewContainer" style="margin-top: 6px; text-align: center; display: none;">
+                    <img id="photoPreviewImg" src="" style="max-height: 80px; border-radius: 6px; border: 1px solid var(--card-border);">
+                    <button type="button" style="background: var(--danger-color); color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; margin-left: 8px; cursor: pointer;" onclick="clearPhoto()">Kaldır</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Raf / Etiket Numarası</label>
+                <input type="text" id="hRaf" class="form-control" placeholder="Örn: 105, A-12">
             </div>
 
             <div class="form-group">
@@ -229,8 +255,46 @@
             </div>
 
             <div class="form-group">
-                <label>Lastik Ebadı ve Markası</label>
-                <input type="text" id="hTireInfo" class="form-control" placeholder="Örn: Petlas 205/55R16">
+                <label>Marka Seçin veya Yazın</label>
+                <select id="hBrandSelect" class="form-control" onchange="checkCustomBrand(this)">
+                    <option value="Petlas">Petlas</option>
+                    <option value="Lassa">Lassa</option>
+                    <option value="Bridgestone">Bridgestone</option>
+                    <option value="Michelin">Michelin</option>
+                    <option value="Goodyear">Goodyear</option>
+                    <option value="Pirelli">Pirelli</option>
+                    <option value="Continental">Continental</option>
+                    <option value="Starmaxx">Starmaxx</option>
+                    <option value="Milestone">Milestone</option>
+                    <option value="Hankook">Hankook</option>
+                    <option value="Laufenn">Laufenn</option>
+                    <option value="Falken">Falken</option>
+                    <option value="Dunlop">Dunlop</option>
+                    <option value="Diger">Diğer (Manuel Yaz)</option>
+                </select>
+            </div>
+            <div class="form-group hidden" id="customBrandGroup">
+                <label>Manuel Marka</label>
+                <input type="text" id="hCustomBrand" class="form-control" placeholder="Marka adı yazın">
+            </div>
+
+            <div class="form-group">
+                <label>Ebat Seçin veya Yazın</label>
+                <select id="hSizeSelect" class="form-control" onchange="checkCustomSize(this)">
+                    <option value="165/80R13">165/80R13</option>
+                    <option value="175/65R14">175/65R14</option>
+                    <option value="185/65R15">185/65R15</option>
+                    <option value="195/65R15">195/65R15</option>
+                    <option value="205/55R16" selected>205/55R16</option>
+                    <option value="215/55R17">215/55R17</option>
+                    <option value="225/45R17">225/45R17</option>
+                    <option value="235/60R18">235/60R18</option>
+                    <option value="Diger">Diğer (Manuel Ebat)</option>
+                </select>
+            </div>
+            <div class="form-group hidden" id="customSizeGroup">
+                <label>Manuel Ebat</label>
+                <input type="text" id="hCustomSize" class="form-control" placeholder="Örn: 245/45R18">
             </div>
 
             <div class="form-group">
@@ -259,9 +323,6 @@
             <button class="btn-primary" style="background: var(--accent-red); color: white;" onclick="saveHotelRecord()"><i class="fa-solid fa-floppy-disk"></i> Kaydet ve Etiket Hazırla</button>
         </div>
     </div>
-
-    <!-- GİZLİ YAZDIRMA ALANI -->
-    <div id="printArea" class="hidden"></div>
 
     <script>
         let hotelRecords = [];
@@ -296,14 +357,67 @@
             });
         };
 
+        function handlePhotoUpload(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 400; 
+                    const scaleSize = MAX_WIDTH / img.width;
+                    canvas.width = MAX_WIDTH;
+                    canvas.height = img.height * scaleSize;
+
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                    const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                    document.getElementById('hPhotoBase64').value = compressedBase64;
+                    document.getElementById('photoPreviewImg').src = compressedBase64;
+                    document.getElementById('photoPreviewContainer').style.display = 'block';
+                    document.getElementById('uploadText').innerText = 'Fotoğraf Çekildi!';
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearPhoto() {
+            document.getElementById('hPhotoBase64').value = '';
+            document.getElementById('photoInput').value = '';
+            document.getElementById('photoPreviewContainer').style.display = 'none';
+            document.getElementById('uploadText').innerText = 'Kamerayı Açıp Fotoğraf Çekmek İçin Tıklayın';
+        }
+
+        function checkCustomBrand(select) {
+            const group = document.getElementById('customBrandGroup');
+            if (select.value === 'Diger') group.classList.remove('hidden');
+            else group.classList.add('hidden');
+        }
+
+        function checkCustomSize(select) {
+            const group = document.getElementById('customSizeGroup');
+            if (select.value === 'Diger') group.classList.remove('hidden');
+            else group.classList.add('hidden');
+        }
+
         function openAddModal() {
             document.getElementById('hRaf').value = '';
             document.getElementById('hName').value = '';
             document.getElementById('hPhone').value = '';
             document.getElementById('hPlate').value = '';
-            document.getElementById('hTireInfo').value = '';
+            document.getElementById('hBrandSelect').value = 'Petlas';
+            document.getElementById('customBrandGroup').classList.add('hidden');
+            document.getElementById('hCustomBrand').value = '';
+            document.getElementById('hSizeSelect').value = '205/55R16';
+            document.getElementById('customSizeGroup').classList.add('hidden');
+            document.getElementById('hCustomSize').value = '';
             document.getElementById('hCount').value = '4';
             document.getElementById('hDepth').value = '';
+            clearPhoto();
             document.getElementById('hotelModal').style.display = 'flex';
         }
 
@@ -312,7 +426,14 @@
             const name = document.getElementById('hName').value.trim();
             const phone = document.getElementById('hPhone').value.trim();
             const plate = document.getElementById('hPlate').value.trim().toUpperCase();
-            const tireInfo = document.getElementById('hTireInfo').value.trim();
+            
+            let brand = document.getElementById('hBrandSelect').value;
+            if (brand === 'Diger') brand = document.getElementById('hCustomBrand').value.trim();
+
+            let size = document.getElementById('hSizeSelect').value;
+            if (size === 'Diger') size = document.getElementById('hCustomSize').value.trim();
+
+            const photo = document.getElementById('hPhotoBase64').value;
             const count = document.getElementById('hCount').value || '4';
             const season = document.getElementById('hSeason').value;
             const jant = document.getElementById('hJant').value;
@@ -324,7 +445,7 @@
             }
 
             const id = 'h_' + Date.now();
-            const recordData = { raf, name, phone, plate, tireInfo, count, season, jant, depth, date: new Date().toLocaleDateString('tr-TR') };
+            const recordData = { raf, name, phone, plate, brand, size, photo, count, season, jant, depth, date: new Date().toLocaleDateString('tr-TR') };
 
             await window.setDoc(window.doc(window.db, "lastik_oteli", id), recordData);
             closeModal('hotelModal');
@@ -336,7 +457,7 @@
             grid.innerHTML = '';
 
             const filtered = hotelRecords.filter(r => {
-                const fullStr = `${r.raf} ${r.name} ${r.plate} ${r.tireInfo}`.toLowerCase();
+                const fullStr = `${r.raf} ${r.name} ${r.plate} ${r.brand} ${r.size}`.toLowerCase();
                 return fullStr.includes(search);
             });
 
@@ -348,21 +469,33 @@
             filtered.forEach(r => {
                 const card = document.createElement('div');
                 card.className = 'hotel-card';
+                
+                const defaultTireImg = 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=200&auto=format&fit=crop&q=80';
+                const displayPhoto = r.photo || defaultTireImg;
+
                 card.innerHTML = `
                     <div class="card-header">
                         <span class="raf-badge">RAF NO: ${r.raf}</span>
                         <span class="plaka-badge">${r.plate}</span>
                     </div>
-                    <div class="card-row"><span class="card-label">Müşteri:</span><span class="card-val">${r.name}</span></div>
-                    <div class="card-row"><span class="card-label">Telefon:</span><span class="card-val">${r.phone || '-'}</span></div>
-                    <div class="card-row"><span class="card-label">Lastik:</span><span class="card-val">${r.tireInfo}</span></div>
-                    <div class="card-row"><span class="card-label">Durum:</span><span class="card-val">${r.count} Adet ${r.season} (${r.jant || 'Jantsız'})</span></div>
-                    ${r.depth ? `<div class="card-row"><span class="card-label">Diş Derinliği:</span><span class="card-val">${r.depth}</span></div>` : ''}
-                    <div class="card-row"><span class="card-label">Tarih:</span><span class="card-val">${r.date || '-'}</span></div>
+
+                    <div class="card-body-flex">
+                        <div class="card-img-box">
+                            <img src="${displayPhoto}" alt="Lastik">
+                        </div>
+                        <div class="card-info-box">
+                            <div class="card-row"><span class="card-label">Müşteri:</span><span class="card-val">${r.name}</span></div>
+                            <div class="card-row"><span class="card-label">Telefon:</span><span class="card-val">${r.phone || '-'}</span></div>
+                            <div class="card-row"><span class="card-label">Lastik:</span><span class="card-val">${r.brand || ''} ${r.size || ''}</span></div>
+                            <div class="card-row"><span class="card-label">Durum:</span><span class="card-val">${r.count} Adet ${r.season} (${r.jant || 'Jantsız'})</span></div>
+                            ${r.depth ? `<div class="card-row"><span class="card-label">Diş Derinliği:</span><span class="card-val">${r.depth}</span></div>` : ''}
+                            <div class="card-row"><span class="card-label">Tarih:</span><span class="card-val">${r.date || '-'}</span></div>
+                        </div>
+                    </div>
                     
                     <div class="card-actions">
                         <button class="btn-wa" onclick="sendWhatsApp('${r.phone}', '${r.name}', '${r.raf}', '${r.count}', '${r.season}', '${r.jant || 'Jantsız'}')"><i class="fa-brands fa-whatsapp"></i> Mesaj At</button>
-                        <button class="btn-print" onclick="printLabel('${r.raf}', '${r.name}', '${r.plate}', '${r.tireInfo}', '${r.count}', '${r.season}', '${r.jant || 'Jantsız'}')"><i class="fa-solid fa-print"></i> Etiket Bas</button>
+                        <button class="btn-print" onclick="printLabel('${r.raf}', '${r.name}', '${r.plate}', '${r.brand || ''} ${r.size || ''}', '${r.count}', '${r.season}', '${r.jant || 'Jantsız'}', '${r.photo || ''}')"><i class="fa-solid fa-print"></i> Etiket Bas</button>
                         <button class="btn-del" onclick="deleteRecord('${r.id}')"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 `;
@@ -380,22 +513,46 @@
             window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        function printLabel(raf, name, plate, tireInfo, count, season, jant) {
-            const printArea = document.getElementById('printArea');
-            printArea.innerHTML = `
-                <div style="border: 3px solid #000; padding: 15px; font-family: sans-serif; width: 300px; text-align: center;">
-                    <h2 style="margin:0; font-size:20px;">ÇELEBİ OTO LASTİK</h2>
-                    <p style="margin:2px 0 10px 0; font-size:12px;">LASTİK OTELİ EMANET ETİKETİ</p>
-                    <div style="font-size: 32px; font-weight: bold; border: 2px solid #000; padding: 5px; margin-bottom: 8px;">RAF NO: ${raf}</div>
-                    <div style="font-size: 18px; font-weight: bold;">${name}</div>
-                    <div style="font-size: 20px; font-weight: bold; margin: 4px 0;">PLAKA: ${plate}</div>
-                    <div style="font-size: 14px;">${tireInfo}</div>
-                    <div style="font-size: 14px; font-weight: bold;">${count} ADET - ${season} (${jant})</div>
-                </div>
-            `;
-            printArea.classList.remove('hidden');
-            window.print();
-            printArea.classList.add('hidden');
+        function printLabel(raf, name, plate, tireInfo, count, season, jant, photo) {
+            const printWindow = window.open('', '_blank', 'width=450,height=600');
+            
+            let photoHtml = '';
+            if (photo) {
+                photoHtml = `<div style="text-align:center; margin-bottom:8px;"><img src="${photo}" style="max-height:90px; border-radius:4px; border:1px solid #ccc;"></div>`;
+            }
+
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Lastik Oteli Etiketi - ${name}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 10px; margin: 0; }
+                        .label-card { border: 2px dashed #000; padding: 12px; width: 280px; margin: 0 auto; text-align: center; }
+                        .brand { font-size: 16px; font-weight: bold; margin-bottom: 2px; text-transform: uppercase; }
+                        .title { font-size: 10px; color: #555; margin-bottom: 8px; font-weight: bold; }
+                        .raf-box { font-size: 26px; font-weight: 900; background: #000; color: #fff; padding: 4px; border-radius: 4px; margin-bottom: 8px; }
+                        .info-line { font-size: 13px; font-weight: bold; margin: 3px 0; border-bottom: 1px solid #eee; padding-bottom: 2px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="label-card">
+                        <div class="brand">Çelebi Oto Lastik</div>
+                        <div class="title">LASTİK OTELİ EMANET ETİKETİ</div>
+                        <div class="raf-box">RAF NO: ${raf}</div>
+                        ${photoHtml}
+                        <div class="info-line">MÜŞTERİ: ${name}</div>
+                        <div class="info-line">PLAKA: ${plate}</div>
+                        <div class="info-line">LASTİK: ${tireInfo}</div>
+                        <div class="info-line">DURUM: ${count} Adet ${season} (${jant})</div>
+                        <div style="font-size: 9px; margin-top: 8px; color: #777;">Tarih: ${new Date().toLocaleDateString('tr-TR')}</div>
+                    </div>
+                    <script>
+                        window.onload = function() { window.print(); window.close(); };
+                    <\/script>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
         }
 
         async function deleteRecord(id) {
