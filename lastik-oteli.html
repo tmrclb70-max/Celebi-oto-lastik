@@ -78,6 +78,7 @@
 
         .user-info { display: flex; align-items: center; gap: 8px; background: rgba(15, 23, 42, 0.85); padding: 5px 10px; border-radius: 6px; border: 1px solid var(--card-border); backdrop-filter: blur(8px); }
         .user-badge { color: var(--accent-red); font-weight: 600; font-size: 0.82rem; }
+        .btn-settings { background: #475569; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 0.78rem; display: flex; align-items: center; gap: 5px; }
         .btn-logout { background: var(--danger-color); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 0.78rem; display: flex; align-items: center; gap: 5px; }
 
         .main-container { max-width: 1400px; margin: 15px auto; padding: 0 12px; }
@@ -121,7 +122,6 @@
 
         .hotel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 12px; }
         
-        /* ŞIK KART TASARIMI */
         .hotel-card { 
             background: var(--card-bg); 
             border: 1px solid var(--card-border); 
@@ -145,7 +145,6 @@
 
         .card-info-box { flex: 1; display: flex; flex-direction: column; gap: 4px; }
         
-        /* KUTUCUKLU DÜZEN */
         .info-box-item { 
             background: rgba(15, 23, 42, 0.7); 
             border: 1px solid rgba(255, 255, 255, 0.08); 
@@ -163,7 +162,6 @@
         .btn-print { background: #6366f1; color: white; border: none; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-weight: 700; font-size: 0.78rem; flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px; }
         .btn-del { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); padding: 6px 8px; border-radius: 5px; cursor: pointer; font-size: 0.78rem; }
 
-        /* MODAL VE DETAY PENCERESİ */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: flex-start; z-index: 3000; padding: 12px; overflow-y: auto; }
         .modal-content { background: var(--card-bg); border-radius: 10px; padding: 16px; width: 100%; max-width: 460px; border: 1px solid var(--card-border); margin: 15px auto; max-height: 85vh; overflow-y: auto; box-shadow: 0 12px 30px rgba(0,0,0,0.8); }
 
@@ -171,7 +169,6 @@
         .modal-header h3 { color: var(--accent-red); font-size: 1.1rem; }
         .close-btn { font-size: 1.3rem; cursor: pointer; color: var(--text-muted); }
 
-        /* BÜYÜK DETAY PENCERESİ DÜZENİ */
         .detail-body-container { display: flex; flex-direction: column; gap: 15px; }
         .detail-img-box { text-align: center; background: #0f172a; padding: 8px; border-radius: 8px; border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .detail-img-box img { max-height: 200px; width: 100%; object-fit: contain; border-radius: 6px; }
@@ -226,7 +223,7 @@
                 <p>"Müşteri Emanet ve Raf Takip Portalı"</p>
             </div>
             <div id="userInfoArea" class="user-info hidden">
-                <span>Giriş Yapan: <strong id="userBadge" class="user-badge">--</strong></span>
+                <button class="btn-settings" onclick="openSettingsModal()"><i class="fa-solid fa-gear"></i> Ayarlar</button>
                 <button class="btn-logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Çıkış</button>
             </div>
         </div>
@@ -244,6 +241,28 @@
 
         <div id="hotelGrid" class="hotel-grid"></div>
 
+    </div>
+
+    <!-- AYARLAR MODALI -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-gear" style="color: var(--accent-red);"></i> Portal Ayarları</h3>
+                <span class="close-btn" onclick="closeModal('settingsModal')">&times;</span>
+            </div>
+
+            <div class="form-group">
+                <label>Giriş Şifresini Değiştir</label>
+                <input type="password" id="setPass" class="form-control" placeholder="Yeni Şifre Yazın">
+            </div>
+
+            <div class="form-group">
+                <label>Giriş Ekranı Arka Plan Görsel URL</label>
+                <input type="text" id="setBgUrl" class="form-control" placeholder="https://ornek.com/resim.jpg">
+            </div>
+
+            <button class="btn-primary" onclick="saveSettings()"><i class="fa-solid fa-floppy-disk"></i> Ayarları Kaydet</button>
+        </div>
     </div>
 
     <!-- YENİ EMANET LASTİK EKLEME MODALI -->
@@ -266,7 +285,6 @@
                 <input type="text" id="hRaf" class="form-control" placeholder="İsim yazınca otomatik oluşur (Örn: A-1)">
             </div>
 
-            <!-- FOTOĞRAF ÇEK / SEÇ ALANI -->
             <div class="form-group">
                 <label><i class="fa-solid fa-camera" style="color: var(--accent-red);"></i> Lastiğin Fotoğrafını Çek / Yükle</label>
                 <div class="file-upload-box" onclick="document.getElementById('photoInput').click()">
@@ -388,16 +406,23 @@
 
     <script>
         let hotelRecords = [];
+        let currentPass = localStorage.getItem('hotelPass') || 'celebi166';
+        let currentBg = localStorage.getItem('hotelBg') || '';
+
+        window.onload = function() {
+            if (currentBg) {
+                document.getElementById('loginSection').style.backgroundImage = `url('${currentBg}')`;
+            }
+        };
 
         function login() {
             const u = document.getElementById('username').value.trim().toLowerCase();
             const p = document.getElementById('password').value.trim();
 
-            if (p === 'celebi166' || p === 'çelebi166' || p === '1234') {
+            if (p === currentPass || p === '1234') {
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('portalSection').classList.remove('hidden');
                 document.getElementById('userInfoArea').classList.remove('hidden');
-                document.getElementById('userBadge').innerText = 'Çelebi Oto Lastik';
                 renderHotel();
             } else {
                 alert('Hatalı Şifre!');
@@ -406,6 +431,33 @@
 
         function logout() {
             location.reload();
+        }
+
+        function openSettingsModal() {
+            document.getElementById('setPass').value = currentPass;
+            document.getElementById('setBgUrl').value = currentBg;
+            document.getElementById('settingsModal').style.display = 'flex';
+        }
+
+        function saveSettings() {
+            const newP = document.getElementById('setPass').value.trim();
+            const newBg = document.getElementById('setBgUrl').value.trim();
+
+            if (newP) {
+                currentPass = newP;
+                localStorage.setItem('hotelPass', newP);
+            }
+            currentBg = newBg;
+            localStorage.setItem('hotelBg', newBg);
+
+            if (currentBg) {
+                document.getElementById('loginSection').style.backgroundImage = `url('${currentBg}')`;
+            } else {
+                document.getElementById('loginSection').style.backgroundImage = 'none';
+            }
+
+            alert('Ayarlar başarıyla kaydedildi!');
+            closeModal('settingsModal');
         }
 
         window.initHotelData = function() {
@@ -419,14 +471,12 @@
             });
         };
 
-        /* BAŞ HARFE GÖRE OTOMATİK RAF NO (A-1, A-2 B-1...) ÜRETME */
         function autoGenerateRafNo(nameVal) {
             if (!nameVal || nameVal.trim() === '') {
                 document.getElementById('hRaf').value = '';
                 return;
             }
 
-            // Türkçe karakter uyumlu ilk harf alma
             let firstChar = nameVal.trim().charAt(0).toUpperCase();
             if (firstChar === 'İ') firstChar = 'I';
             if (firstChar === 'Ğ') firstChar = 'G';
@@ -435,7 +485,6 @@
             if (firstChar === 'Ö') firstChar = 'O';
             if (firstChar === 'Ç') firstChar = 'C';
 
-            // O harfle başlayan mevcut kayıtları bul ve en yüksek numarayı hesapla
             const matchingRecords = hotelRecords.filter(r => r.raf && r.raf.toUpperCase().startsWith(firstChar + '-'));
             
             let maxNum = 0;
@@ -610,7 +659,7 @@
                     
                     <div class="card-actions">
                         <button class="btn-wa" onclick="sendWhatsApp('${r.phone}', '${r.name}', '${r.raf}', '${r.count}', '${r.season}', '${r.jant || 'Jantsız'}')"><i class="fa-brands fa-whatsapp"></i> Mesaj At</button>
-                        <button class="btn-print" onclick="printLabel('${r.raf}', '${r.name}', '${r.plate}', '${r.brand || ''} ${r.size || ''}', '${r.count}', '${r.season}', '${r.jant || 'Jantsız'}', '${r.photo || ''}')"><i class="fa-solid fa-print"></i> Etiket Bas</button>
+                        <button class="btn-print" onclick="printLabelPrompt('${r.raf}', '${r.name}', '${r.plate}', '${r.brand || ''} ${r.size || ''}', '${r.count}', '${r.season}', '${r.jant || 'Jantsız'}')"><i class="fa-solid fa-print"></i> Etiket Bas</button>
                         <button class="btn-del" onclick="deleteRecord('${r.id}')"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 `;
@@ -628,38 +677,80 @@
             window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        function printLabel(raf, name, plate, tireInfo, count, season, jant, photo) {
-            const printWindow = window.open('', '_blank', 'width=450,height=600');
+        /* A4 SAYFASINA MÜREKKEP TASARRUFLU ETİKET BASMA */
+        function printLabelPrompt(raf, name, plate, tireInfo, count, season, jant) {
+            const countInput = prompt("A4 kağıdına kaç adet etiket basılsın? (1, 2, 3 veya 4 yazın):", "4");
+            if (!countInput) return;
+
+            let labelCount = parseInt(countInput);
+            if (isNaN(labelCount) || labelCount < 1) labelCount = 1;
+            if (labelCount > 4) labelCount = 4;
+
+            const printWindow = window.open('', '_blank');
             
-            let photoHtml = '';
-            if (photo) {
-                photoHtml = `<div style="text-align:center; margin-bottom:8px;"><img src="${photo}" style="max-height:90px; border-radius:4px; border:1px solid #ccc;"></div>`;
+            let labelsHtml = '';
+            for (let i = 0; i < labelCount; i++) {
+                labelsHtml += `
+                    <div class="label-box">
+                        <div class="brand-title">ÇELEBİ OTO LASTİK</div>
+                        <div class="sub-title">LASTİK OTELİ EMANET ETİKETİ</div>
+                        <div class="raf-badge">RAF NO: ${raf}</div>
+                        <div class="info-row"><span class="lbl">MÜŞTERİ:</span> <span class="val">${name}</span></div>
+                        <div class="info-row"><span class="lbl">PLAKA:</span> <span class="val">${plate}</span></div>
+                        <div class="info-row"><span class="lbl">LASTİK:</span> <span class="val">${tireInfo}</span></div>
+                        <div class="info-row"><span class="lbl">DURUM:</span> <span class="val">${count} Adet ${season} (${jant})</span></div>
+                        <div class="footer-date">Tarih: ${new Date().toLocaleDateString('tr-TR')}</div>
+                    </div>
+                `;
             }
+
+            // Izgara Düzeni (Grid)
+            let gridLayout = 'grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;';
+            if (labelCount === 1) gridLayout = 'grid-template-columns: 1fr; grid-template-rows: 1fr;';
+            if (labelCount === 2) gridLayout = 'grid-template-columns: 1fr 1fr; grid-template-rows: 1fr;';
 
             printWindow.document.write(`
                 <html>
                 <head>
-                    <title>Lastik Oteli Etiketi - ${name}</title>
+                    <title>A4 Etiket - ${name}</title>
                     <style>
-                        body { font-family: Arial, sans-serif; padding: 10px; margin: 0; }
-                        .label-card { border: 2px dashed #000; padding: 12px; width: 280px; margin: 0 auto; text-align: center; }
-                        .brand { font-size: 16px; font-weight: bold; margin-bottom: 2px; text-transform: uppercase; }
-                        .title { font-size: 10px; color: #555; margin-bottom: 8px; font-weight: bold; }
-                        .raf-box { font-size: 26px; font-weight: 900; background: #000; color: #fff; padding: 4px; border-radius: 4px; margin-bottom: 8px; }
-                        .info-line { font-size: 13px; font-weight: bold; margin: 3px 0; border-bottom: 1px solid #eee; padding-bottom: 2px; }
+                        @page { size: A4 portrait; margin: 8mm; }
+                        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+                        body { width: 100%; height: 100vh; background: #fff; color: #000; }
+                        
+                        .page-container {
+                            display: grid;
+                            ${gridLayout}
+                            gap: 10mm;
+                            width: 100%;
+                            height: 275mm;
+                        }
+
+                        .label-box {
+                            border: 2px dashed #000;
+                            padding: 15px;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                            text-align: center;
+                            background: #fff;
+                        }
+
+                        .brand-title { font-size: 22px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+                        .sub-title { font-size: 11px; font-weight: bold; margin-bottom: 12px; border-bottom: 2px solid #000; padding-bottom: 4px; width: 80%; }
+                        .raf-badge { font-size: 32px; font-weight: 900; border: 3px solid #000; padding: 6px 16px; margin-bottom: 14px; text-transform: uppercase; }
+                        
+                        .info-row { font-size: 16px; margin: 4px 0; width: 100%; text-align: left; border-bottom: 1px solid #ccc; padding-bottom: 3px; display: flex; justify-content: space-between; }
+                        .info-row .lbl { font-weight: bold; color: #333; }
+                        .info-row .val { font-weight: 900; color: #000; }
+                        
+                        .footer-date { font-size: 11px; color: #555; margin-top: 10px; align-self: flex-end; }
                     </style>
                 </head>
                 <body>
-                    <div class="label-card">
-                        <div class="brand">Çelebi Oto Lastik</div>
-                        <div class="title">LASTİK OTELİ EMANET ETİKETİ</div>
-                        <div class="raf-box">RAF NO: ${raf}</div>
-                        ${photoHtml}
-                        <div class="info-line">MÜŞTERİ: ${name}</div>
-                        <div class="info-line">PLAKA: ${plate}</div>
-                        <div class="info-line">LASTİK: ${tireInfo}</div>
-                        <div class="info-line">DURUM: ${count} Adet ${season} (${jant})</div>
-                        <div style="font-size: 9px; margin-top: 8px; color: #777;">Tarih: ${new Date().toLocaleDateString('tr-TR')}</div>
+                    <div class="page-container">
+                        ${labelsHtml}
                     </div>
                     <script>
                         window.onload = function() { window.print(); window.close(); };
