@@ -120,33 +120,69 @@
         .btn-add:hover { background: var(--accent-hover); }
 
         .hotel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 12px; }
-        .hotel-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 14px; transition: 0.2s; position: relative; display: flex; flex-direction: column; gap: 6px; }
-        .hotel-card:hover { border-color: var(--accent-red); transform: translateY(-2px); }
+        
+        /* ŞIK KART TASARIMI */
+        .hotel-card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--card-border); 
+            border-radius: 10px; 
+            padding: 12px; 
+            transition: 0.2s; 
+            cursor: pointer; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px;
+        }
+        .hotel-card:hover { border-color: var(--accent-red); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
 
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; border-bottom: 1px dashed var(--card-border); padding-bottom: 6px; }
-        .raf-badge { background: var(--accent-red); color: #fff; font-weight: 900; padding: 4px 10px; border-radius: 6px; font-size: 0.88rem; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--card-border); padding-bottom: 6px; }
+        .raf-badge { background: var(--accent-red); color: #fff; font-weight: 900; padding: 4px 10px; border-radius: 6px; font-size: 0.88rem; letter-spacing: 0.5px; }
         .plaka-badge { background: #0f172a; color: #fff; font-weight: 800; padding: 4px 8px; border-radius: 5px; border: 1px solid var(--card-border); font-size: 0.85rem; }
 
         .card-body-flex { display: flex; gap: 10px; align-items: center; }
         .card-img-box { width: 75px; height: 75px; background: #0f172a; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
         .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        .card-info-box { flex: 1; }
-        .card-row { display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 3px; }
-        .card-label { color: var(--text-muted); font-weight: 600; }
-        .card-val { color: var(--text-main); font-weight: 800; }
+        .card-info-box { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+        
+        /* KUTUCUKLU DÜZEN */
+        .info-box-item { 
+            background: rgba(15, 23, 42, 0.7); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            padding: 4px 8px; 
+            border-radius: 5px; 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 0.8rem; 
+        }
+        .info-label { color: var(--text-muted); font-weight: 600; }
+        .info-val { color: var(--text-main); font-weight: 800; }
 
-        .card-actions { display: flex; gap: 6px; margin-top: 6px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px; }
+        .card-actions { display: flex; gap: 6px; margin-top: 4px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px; }
         .btn-wa { background: #25d366; color: white; border: none; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-weight: 700; font-size: 0.78rem; flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px; }
         .btn-print { background: #6366f1; color: white; border: none; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-weight: 700; font-size: 0.78rem; flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px; }
         .btn-del { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); padding: 6px 8px; border-radius: 5px; cursor: pointer; font-size: 0.78rem; }
 
+        /* MODAL VE DETAY PENCERESİ */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: flex-start; z-index: 3000; padding: 12px; overflow-y: auto; }
         .modal-content { background: var(--card-bg); border-radius: 10px; padding: 16px; width: 100%; max-width: 460px; border: 1px solid var(--card-border); margin: 15px auto; max-height: 85vh; overflow-y: auto; box-shadow: 0 12px 30px rgba(0,0,0,0.8); }
 
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; }
         .modal-header h3 { color: var(--accent-red); font-size: 1.1rem; }
         .close-btn { font-size: 1.3rem; cursor: pointer; color: var(--text-muted); }
+
+        /* BÜYÜK DETAY PENCERESİ DÜZENİ */
+        .detail-body-container { display: flex; flex-direction: column; gap: 15px; }
+        .detail-img-box { text-align: center; background: #0f172a; padding: 8px; border-radius: 8px; border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .detail-img-box img { max-height: 200px; width: 100%; object-fit: contain; border-radius: 6px; }
+        .detail-info-grid { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+
+        @media (min-width: 769px) {
+            #detailModal .modal-content { max-width: 650px; }
+            .detail-body-container { flex-direction: row; align-items: center; }
+            .detail-img-box { width: 250px; height: 250px; flex-shrink: 0; }
+            .detail-img-box img { max-height: 230px; }
+        }
 
         .file-upload-box {
             border: 1.5px dashed var(--accent-red);
@@ -201,7 +237,7 @@
         <div class="action-bar">
             <div class="search-box">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" oninput="renderHotel()" placeholder="Müşteri Adı, Plaka veya Raf No Ara...">
+                <input type="text" id="searchInput" oninput="renderHotel()" placeholder="Müşteri Adı, Plaka, Raf No Vb. Ara...">
             </div>
             <button class="btn-add" onclick="openAddModal()"><i class="fa-solid fa-plus"></i> Yeni Emanet Kaydet</button>
         </div>
@@ -220,28 +256,28 @@
 
             <input type="hidden" id="hPhotoBase64" value="">
 
+            <div class="form-group">
+                <label>Müşteri Adı Soyadı</label>
+                <input type="text" id="hName" class="form-control" placeholder="Örn: Ahmet Yılmaz" oninput="autoGenerateRafNo(this.value)">
+            </div>
+
+            <div class="form-group">
+                <label>Otomatik / Elle Raf Numarası</label>
+                <input type="text" id="hRaf" class="form-control" placeholder="İsim yazınca otomatik oluşur (Örn: A-1)">
+            </div>
+
             <!-- FOTOĞRAF ÇEK / SEÇ ALANI -->
             <div class="form-group">
                 <label><i class="fa-solid fa-camera" style="color: var(--accent-red);"></i> Lastiğin Fotoğrafını Çek / Yükle</label>
                 <div class="file-upload-box" onclick="document.getElementById('photoInput').click()">
                     <i class="fa-solid fa-camera-retro" style="font-size: 1.4rem; color: var(--accent-red); margin-bottom: 4px;"></i>
-                    <p id="uploadText" style="font-size: 0.8rem; color: var(--text-muted);">Kamerayı Açıp Fotoğraf Çekmek İçin Tıklayın</p>
+                    <p id="uploadText" style="font-size: 0.8rem; color: var(--text-muted);">Fotoğraf Çekmek İçin Tıklayın</p>
                     <input type="file" id="photoInput" accept="image/*" capture="environment" style="display:none;" onchange="handlePhotoUpload(this)">
                 </div>
                 <div id="photoPreviewContainer" style="margin-top: 6px; text-align: center; display: none;">
                     <img id="photoPreviewImg" src="" style="max-height: 80px; border-radius: 6px; border: 1px solid var(--card-border);">
                     <button type="button" style="background: var(--danger-color); color: white; border: none; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; margin-left: 8px; cursor: pointer;" onclick="clearPhoto()">Kaldır</button>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label>Raf / Etiket Numarası</label>
-                <input type="text" id="hRaf" class="form-control" placeholder="Örn: 105, A-12">
-            </div>
-
-            <div class="form-group">
-                <label>Müşteri Adı Soyadı</label>
-                <input type="text" id="hName" class="form-control" placeholder="Örn: Ahmet Yılmaz">
             </div>
 
             <div class="form-group">
@@ -324,6 +360,32 @@
         </div>
     </div>
 
+    <!-- TIKLAYINCA AÇILAN ŞIK DETAY MODALI -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-circle-info" style="color: var(--accent-red);"></i> Emanet Lastik Detayı</h3>
+                <span class="close-btn" onclick="closeModal('detailModal')">&times;</span>
+            </div>
+            
+            <div class="detail-body-container">
+                <div class="detail-img-box">
+                    <img id="dImg" src="" alt="Lastik Görseli">
+                </div>
+                <div class="detail-info-grid">
+                    <div class="info-box-item"><span class="info-label">Raf Numarası:</span><span id="dRaf" class="info-val" style="color:var(--accent-red);">--</span></div>
+                    <div class="info-box-item"><span class="info-label">Araç Plakası:</span><span id="dPlate" class="info-val">--</span></div>
+                    <div class="info-box-item"><span class="info-label">Müşteri Adı:</span><span id="dName" class="info-val">--</span></div>
+                    <div class="info-box-item"><span class="info-label">Telefon:</span><span id="dPhone" class="info-val">--</span></div>
+                    <div class="info-box-item"><span class="info-label">Marka & Ebat:</span><span id="dTire" class="info-val">--</span></div>
+                    <div class="info-box-item"><span class="info-label">Durum:</span><span id="dState" class="info-val">--</span></div>
+                    <div class="info-box-item"><span class="info-label">Diş Derinliği:</span><span id="dDepth" class="info-val">--</span></div>
+                    <div class="info-box-item"><span class="info-label">Teslim Tarihi:</span><span id="dDate" class="info-val">--</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         let hotelRecords = [];
 
@@ -357,6 +419,38 @@
             });
         };
 
+        /* BAŞ HARFE GÖRE OTOMATİK RAF NO (A-1, A-2 B-1...) ÜRETME */
+        function autoGenerateRafNo(nameVal) {
+            if (!nameVal || nameVal.trim() === '') {
+                document.getElementById('hRaf').value = '';
+                return;
+            }
+
+            // Türkçe karakter uyumlu ilk harf alma
+            let firstChar = nameVal.trim().charAt(0).toUpperCase();
+            if (firstChar === 'İ') firstChar = 'I';
+            if (firstChar === 'Ğ') firstChar = 'G';
+            if (firstChar === 'Ü') firstChar = 'U';
+            if (firstChar === 'Ş') firstChar = 'S';
+            if (firstChar === 'Ö') firstChar = 'O';
+            if (firstChar === 'Ç') firstChar = 'C';
+
+            // O harfle başlayan mevcut kayıtları bul ve en yüksek numarayı hesapla
+            const matchingRecords = hotelRecords.filter(r => r.raf && r.raf.toUpperCase().startsWith(firstChar + '-'));
+            
+            let maxNum = 0;
+            matchingRecords.forEach(r => {
+                const parts = r.raf.split('-');
+                if (parts.length > 1) {
+                    const num = parseInt(parts[1]);
+                    if (!isNaN(num) && num > maxNum) maxNum = num;
+                }
+            });
+
+            const nextNum = maxNum + 1;
+            document.getElementById('hRaf').value = `${firstChar}-${nextNum}`;
+        }
+
         function handlePhotoUpload(input) {
             const file = input.files[0];
             if (!file) return;
@@ -389,7 +483,7 @@
             document.getElementById('hPhotoBase64').value = '';
             document.getElementById('photoInput').value = '';
             document.getElementById('photoPreviewContainer').style.display = 'none';
-            document.getElementById('uploadText').innerText = 'Kamerayı Açıp Fotoğraf Çekmek İçin Tıklayın';
+            document.getElementById('uploadText').innerText = 'Fotoğraf Çekmek İçin Tıklayın';
         }
 
         function checkCustomBrand(select) {
@@ -440,7 +534,7 @@
             const depth = document.getElementById('hDepth').value.trim();
 
             if (!raf || !name || !plate) {
-                alert('Lütfen Raf No, Müşteri Adı ve Plaka alanlarını doldurun!');
+                alert('Lütfen Müşteri Adı, Raf No ve Plaka alanlarını doldurun!');
                 return;
             }
 
@@ -449,6 +543,24 @@
 
             await window.setDoc(window.doc(window.db, "lastik_oteli", id), recordData);
             closeModal('hotelModal');
+        }
+
+        function openDetailModal(id) {
+            const r = hotelRecords.find(x => x.id === id);
+            if (!r) return;
+
+            const defaultTireImg = 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
+            document.getElementById('dImg').src = r.photo || defaultTireImg;
+            document.getElementById('dRaf').innerText = r.raf || '-';
+            document.getElementById('dPlate').innerText = r.plate || '-';
+            document.getElementById('dName').innerText = r.name || '-';
+            document.getElementById('dPhone').innerText = r.phone || '-';
+            document.getElementById('dTire').innerText = `${r.brand || ''} ${r.size || ''}`;
+            document.getElementById('dState').innerText = `${r.count} Adet ${r.season} (${r.jant || 'Jantsız'})`;
+            document.getElementById('dDepth').innerText = r.depth || 'Belirtilmedi';
+            document.getElementById('dDate').innerText = r.date || '-';
+
+            document.getElementById('detailModal').style.display = 'flex';
         }
 
         function renderHotel() {
@@ -473,6 +585,12 @@
                 const defaultTireImg = 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=200&auto=format&fit=crop&q=80';
                 const displayPhoto = r.photo || defaultTireImg;
 
+                card.onclick = (e) => {
+                    if (!e.target.closest('.btn-wa') && !e.target.closest('.btn-print') && !e.target.closest('.btn-del')) {
+                        openDetailModal(r.id);
+                    }
+                };
+
                 card.innerHTML = `
                     <div class="card-header">
                         <span class="raf-badge">RAF NO: ${r.raf}</span>
@@ -484,12 +602,9 @@
                             <img src="${displayPhoto}" alt="Lastik">
                         </div>
                         <div class="card-info-box">
-                            <div class="card-row"><span class="card-label">Müşteri:</span><span class="card-val">${r.name}</span></div>
-                            <div class="card-row"><span class="card-label">Telefon:</span><span class="card-val">${r.phone || '-'}</span></div>
-                            <div class="card-row"><span class="card-label">Lastik:</span><span class="card-val">${r.brand || ''} ${r.size || ''}</span></div>
-                            <div class="card-row"><span class="card-label">Durum:</span><span class="card-val">${r.count} Adet ${r.season} (${r.jant || 'Jantsız'})</span></div>
-                            ${r.depth ? `<div class="card-row"><span class="card-label">Diş Derinliği:</span><span class="card-val">${r.depth}</span></div>` : ''}
-                            <div class="card-row"><span class="card-label">Tarih:</span><span class="card-val">${r.date || '-'}</span></div>
+                            <div class="info-box-item"><span class="info-label">Müşteri:</span><span class="info-val">${r.name}</span></div>
+                            <div class="info-box-item"><span class="info-label">Lastik:</span><span class="info-val">${r.brand || ''} ${r.size || ''}</span></div>
+                            <div class="info-box-item"><span class="info-label">Durum:</span><span class="info-val">${r.count} Adet ${r.season} (${r.jant || 'Jantsız'})</span></div>
                         </div>
                     </div>
                     
