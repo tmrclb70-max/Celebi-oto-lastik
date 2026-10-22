@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Çelebi Oto Lastik - Lastik Oteli Portalı</title>
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='%23ef4444' d='M256 0a256 256 0 1 0 0 512 256 256 0 1 0 0-512zm0 96a160 160 0 1 1 0 320 160 160 0 1 1 0-320zm0 64a96 96 0 1 0 0 192 96 96 0 1 0 0-192z'/></svg>">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const p1 = "AIzaSyDvTUGue6WpbYlGFMN7HE";
+        const p2 = "bQW7sq-_PfrnA";
+
+        const firebaseConfig = {
+            apiKey: p1 + p2,
+            authDomain: "celebi-oto-lastik.firebaseapp.com",
+            projectId: "celebi-oto-lastik",
+            storageBucket: "celebi-oto-lastik.firebasestorage.app",
+            messagingSenderId: "20655444321",
+            appId: "1:20655444321:web:cc13a01cf093b7d52a7520",
+            measurementId: "G-EFV1NKZK0F"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.db = db;
+        window.collection = collection;
+        window.getDocs = getDocs;
+        window.doc = doc;
+        window.setDoc = setDoc;
+        window.deleteDoc = deleteDoc;
+        window.updateDoc = updateDoc;
+        window.onSnapshot = onSnapshot;
+
+        if (typeof window.initHotelData === 'function') {
+            window.initHotelData();
+        }
+    </script>
+    
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --card-border: #334155;
+            --accent-red: #ef4444;
+            --accent-hover: #dc2626;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --danger-color: #ef4444;
+            --success-color: #10b981;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding-bottom: 30px; overflow-x: hidden; }
+
+        header { 
+            position: relative;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-bottom: 3px solid var(--accent-red); 
+            padding: 16px 0; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6); 
+            overflow: hidden;
+        }
+
+        .header-container { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 0 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .header-title-area h1 { font-size: 1.5rem; font-weight: 900; color: #ffffff; letter-spacing: 0.8px; text-transform: uppercase; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
+        .header-title-area p { font-size: 0.78rem; color: var(--accent-red); font-style: italic; font-weight: 600; margin-top: 2px; }
+
+        .user-info { display: flex; align-items: center; gap: 8px; background: rgba(15, 23, 42, 0.85); padding: 5px 10px; border-radius: 6px; border: 1px solid var(--card-border); backdrop-filter: blur(8px); }
+        .user-badge { color: var(--accent-red); font-weight: 600; font-size: 0.82rem; }
+        .btn-logout { background: var(--danger-color); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 0.78rem; display: flex; align-items: center; gap: 5px; }
+
+        .main-container { max-width: 1400px; margin: 15px auto; padding: 0 12px; }
+
+        .login-wrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            display: flex; justify-content: center; align-items: center; z-index: 2000;
+            padding: 15px;
+        }
+        
+        .login-card { 
+            width: 100%; max-width: 400px; 
+            background: rgba(15, 23, 42, 0.88); 
+            padding: 24px 20px; 
+            border-radius: 14px; 
+            border: 1.5px solid rgba(239, 68, 68, 0.4); 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8); 
+            text-align: center; 
+            backdrop-filter: blur(14px); 
+        }
+        
+        .login-brand-title { font-family: 'Great Vibes', 'Alex Brush', cursive; font-size: 2.4rem; color: #ffffff; text-shadow: 0 3px 12px rgba(239, 68, 68, 0.5); line-height: 1.1; margin-bottom: 4px; }
+        .login-slogan { font-size: 0.82rem; color: var(--accent-red); font-style: italic; font-weight: 600; margin-bottom: 16px; }
+
+        .form-group { margin-bottom: 12px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 4px; font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
+        .form-control { width: 100%; padding: 9px 11px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(15, 23, 42, 0.8); color: white; font-size: 0.88rem; transition: 0.2s; }
+        .form-control:focus { outline: none; border-color: var(--accent-red); box-shadow: 0 0 8px rgba(239, 68, 68, 0.3); }
+        
+        .btn-primary { width: 100%; padding: 10px; background: var(--accent-red); color: #fff; font-weight: 800; border: none; border-radius: 6px; cursor: pointer; font-size: 0.92rem; transition: 0.2s; margin-top: 6px; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
+        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+        .action-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; background: var(--card-bg); padding: 12px; border-radius: 10px; border: 1px solid var(--card-border); }
+        .search-box { position: relative; flex: 1; min-width: 240px; }
+        .search-box i { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.95rem; }
+        .search-box input { width: 100%; padding: 10px 10px 10px 34px; background: #0f172a; border: 1px solid var(--card-border); border-radius: 6px; color: white; font-size: 0.9rem; }
+
+        .btn-add { background: var(--accent-red); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
+        .btn-add:hover { background: var(--accent-hover); }
+
+        .hotel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
+        .hotel-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 14px; transition: 0.2s; position: relative; }
+        .hotel-card:hover { border-color: var(--accent-red); transform: translateY(-2px); }
+
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px dashed var(--card-border); padding-bottom: 6px; }
+        .raf-badge { background: var(--accent-red); color: #fff; font-weight: 900; padding: 4px 10px; border-radius: 6px; font-size: 0.88rem; }
+        .plaka-badge { background: #0f172a; color: #fff; font-weight: 800; padding: 4px 8px; border-radius: 5px; border: 1px solid var(--card-border); font-size: 0.85rem; }
+
+        .card-row { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px; }
+        .card-label { color: var(--text-muted); font-weight: 600; }
+        .card-val { color: var(--text-main); font-weight: 800; }
+
+        .card-actions { display: flex; gap: 6px; margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px; }
+        .btn-wa { background: #25d366; color: white; border: none; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-weight: 700; font-size: 0.78rem; flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px; }
+        .btn-print { background: #6366f1; color: white; border: none; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-weight: 700; font-size: 0.78rem; flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px; }
+        .btn-del { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); padding: 6px 8px; border-radius: 5px; cursor: pointer; font-size: 0.78rem; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: flex-start; z-index: 3000; padding: 12px; overflow-y: auto; }
+        .modal-content { background: var(--card-bg); border-radius: 10px; padding: 16px; width: 100%; max-width: 460px; border: 1px solid var(--card-border); margin: 15px auto; max-height: 85vh; overflow-y: auto; box-shadow: 0 12px 30px rgba(0,0,0,0.8); }
+
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; }
+        .modal-header h3 { color: var(--accent-red); font-size: 1.1rem; }
+        .close-btn { font-size: 1.3rem; cursor: pointer; color: var(--text-muted); }
+
+        @media print {
+            body * { visibility: hidden; }
+            #printArea, #printArea * { visibility: visible; }
+            #printArea { position: absolute; left: 0; top: 0; width: 100%; color: #000 !important; background: #fff !important; padding: 10px; }
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <!-- GİRİŞ EKRANI -->
+    <div id="loginSection" class="login-wrapper">
+        <div class="login-card">
+            <h1 class="login-brand-title">Çelebi Oto Lastik</h1>
+            <p class="login-slogan">"Lastik Oteli Emanet Takip Sistemi"</p>
+
+            <div class="form-group">
+                <label><i class="fa-solid fa-user"></i> Kullanıcı Adı</label>
+                <input type="text" id="username" class="form-control" placeholder="Yönetici">
+            </div>
+            <div class="form-group">
+                <label><i class="fa-solid fa-key"></i> Şifre</label>
+                <input type="password" id="password" class="form-control" placeholder="****">
+            </div>
+            <button class="btn-primary" onclick="login()"><i class="fa-solid fa-right-to-bracket"></i> Giriş Yap</button>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header id="mainHeader">
+        <div class="header-container">
+            <div class="header-title-area">
+                <h1>ÇELEBİ LASTİK OTELİ</h1>
+                <p>"Müşteri Emanet ve Raf Takip Portalı"</p>
+            </div>
+            <div id="userInfoArea" class="user-info hidden">
+                <span>Giriş Yapan: <strong id="userBadge" class="user-badge">--</strong></span>
+                <button class="btn-logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Çıkış</button>
+            </div>
+        </div>
+    </header>
+
+    <div id="portalSection" class="main-container hidden">
+
+        <div class="action-bar">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" oninput="renderHotel()" placeholder="Müşteri Adı, Plaka veya Raf No Ara...">
+            </div>
+            <button class="btn-add" onclick="openAddModal()"><i class="fa-solid fa-plus"></i> Yeni Emanet Kaydet</button>
+        </div>
+
+        <div id="hotelGrid" class="hotel-grid"></div>
+
+    </div>
+
+    <!-- YENİ EMANET LASTİK EKLEME MODALI -->
+    <div id="hotelModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-warehouse" style="color: var(--accent-red);"></i> Yeni Emanet Lastik Kaydı</h3>
+                <span class="close-btn" onclick="closeModal('hotelModal')">&times;</span>
+            </div>
+
+            <div class="form-group">
+                <label>Raf / Etiket Numarası (Örn: 101, A-12)</label>
+                <input type="text" id="hRaf" class="form-control" placeholder="Örn: 105">
+            </div>
+
+            <div class="form-group">
+                <label>Müşteri Adı Soyadı</label>
+                <input type="text" id="hName" class="form-control" placeholder="Örn: Ahmet Yılmaz">
+            </div>
+
+            <div class="form-group">
+                <label>Telefon Numarası (WhatsApp İçin)</label>
+                <input type="text" id="hPhone" class="form-control" placeholder="Örn: 05321234567">
+            </div>
+
+            <div class="form-group">
+                <label>Araç Plakası</label>
+                <input type="text" id="hPlate" class="form-control" placeholder="Örn: 16 ABC 123">
+            </div>
+
+            <div class="form-group">
+                <label>Lastik Ebadı ve Markası</label>
+                <input type="text" id="hTireInfo" class="form-control" placeholder="Örn: Petlas 205/55R16">
+            </div>
+
+            <div class="form-group">
+                <label>Mevsim ve Jant Durumu</label>
+                <div style="display:flex; gap:6px;">
+                    <select id="hSeason" class="form-control">
+                        <option value="Kışlık">Kışlık Lastik</option>
+                        <option value="Yazlık">Yazlık Lastik</option>
+                        <option value="4 Mevsim">4 Mevsim</option>
+                    </select>
+                    <select id="hJant" class="form-control">
+                        <option value="Jantsız">Jantsız</option>
+                        <option value="Jantlı">Jantlı</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Adet & Diş Derinliği (mm)</label>
+                <div style="display:flex; gap:6px;">
+                    <input type="number" id="hCount" class="form-control" value="4" placeholder="Adet">
+                    <input type="text" id="hDepth" class="form-control" placeholder="Örn: 6 mm">
+                </div>
+            </div>
+
+            <button class="btn-primary" style="background: var(--accent-red); color: white;" onclick="saveHotelRecord()"><i class="fa-solid fa-floppy-disk"></i> Kaydet ve Etiket Hazırla</button>
+        </div>
+    </div>
+
+    <!-- GİZLİ YAZDIRMA ALANI -->
+    <div id="printArea" class="hidden"></div>
+
+    <script>
+        let hotelRecords = [];
+
+        function login() {
+            const u = document.getElementById('username').value.trim().toLowerCase();
+            const p = document.getElementById('password').value.trim();
+
+            if (p === 'celebi166' || p === 'çelebi166' || p === '1234') {
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('portalSection').classList.remove('hidden');
+                document.getElementById('userInfoArea').classList.remove('hidden');
+                document.getElementById('userBadge').innerText = 'Çelebi Oto Lastik';
+                renderHotel();
+            } else {
+                alert('Hatalı Şifre!');
+            }
+        }
+
+        function logout() {
+            location.reload();
+        }
+
+        window.initHotelData = function() {
+            if (!window.db) return;
+            window.onSnapshot(window.collection(window.db, "lastik_oteli"), (snapshot) => {
+                hotelRecords = [];
+                snapshot.forEach((docSnap) => {
+                    hotelRecords.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                renderHotel();
+            });
+        };
+
+        function openAddModal() {
+            document.getElementById('hRaf').value = '';
+            document.getElementById('hName').value = '';
+            document.getElementById('hPhone').value = '';
+            document.getElementById('hPlate').value = '';
+            document.getElementById('hTireInfo').value = '';
+            document.getElementById('hCount').value = '4';
+            document.getElementById('hDepth').value = '';
+            document.getElementById('hotelModal').style.display = 'flex';
+        }
+
+        async function saveHotelRecord() {
+            const raf = document.getElementById('hRaf').value.trim();
+            const name = document.getElementById('hName').value.trim();
+            const phone = document.getElementById('hPhone').value.trim();
+            const plate = document.getElementById('hPlate').value.trim().toUpperCase();
+            const tireInfo = document.getElementById('hTireInfo').value.trim();
+            const count = document.getElementById('hCount').value || '4';
+            const season = document.getElementById('hSeason').value;
+            const jant = document.getElementById('hJant').value;
+            const depth = document.getElementById('hDepth').value.trim();
+
+            if (!raf || !name || !plate) {
+                alert('Lütfen Raf No, Müşteri Adı ve Plaka alanlarını doldurun!');
+                return;
+            }
+
+            const id = 'h_' + Date.now();
+            const recordData = { raf, name, phone, plate, tireInfo, count, season, jant, depth, date: new Date().toLocaleDateString('tr-TR') };
+
+            await window.setDoc(window.doc(window.db, "lastik_oteli", id), recordData);
+            closeModal('hotelModal');
+        }
+
+        function renderHotel() {
+            const grid = document.getElementById('hotelGrid');
+            const search = document.getElementById('searchInput').value.toLowerCase().trim();
+            grid.innerHTML = '';
+
+            const filtered = hotelRecords.filter(r => {
+                const fullStr = `${r.raf} ${r.name} ${r.plate} ${r.tireInfo}`.toLowerCase();
+                return fullStr.includes(search);
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; color: var(--text-muted); padding:30px; background:var(--card-bg); border-radius:10px;">Henüz emanet kaydı yok veya aramayla eşleşmedi.</div>`;
+                return;
+            }
+
+            filtered.forEach(r => {
+                const card = document.createElement('div');
+                card.className = 'hotel-card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="raf-badge">RAF NO: ${r.raf}</span>
+                        <span class="plaka-badge">${r.plate}</span>
+                    </div>
+                    <div class="card-row"><span class="card-label">Müşteri:</span><span class="card-val">${r.name}</span></div>
+                    <div class="card-row"><span class="card-label">Telefon:</span><span class="card-val">${r.phone || '-'}</span></div>
+                    <div class="card-row"><span class="card-label">Lastik:</span><span class="card-val">${r.tireInfo}</span></div>
+                    <div class="card-row"><span class="card-label">Durum:</span><span class="card-val">${r.count} Adet ${r.season} (${r.jant || 'Jantsız'})</span></div>
+                    ${r.depth ? `<div class="card-row"><span class="card-label">Diş Derinliği:</span><span class="card-val">${r.depth}</span></div>` : ''}
+                    <div class="card-row"><span class="card-label">Tarih:</span><span class="card-val">${r.date || '-'}</span></div>
+                    
+                    <div class="card-actions">
+                        <button class="btn-wa" onclick="sendWhatsApp('${r.phone}', '${r.name}', '${r.raf}', '${r.count}', '${r.season}', '${r.jant || 'Jantsız'}')"><i class="fa-brands fa-whatsapp"></i> Mesaj At</button>
+                        <button class="btn-print" onclick="printLabel('${r.raf}', '${r.name}', '${r.plate}', '${r.tireInfo}', '${r.count}', '${r.season}', '${r.jant || 'Jantsız'}')"><i class="fa-solid fa-print"></i> Etiket Bas</button>
+                        <button class="btn-del" onclick="deleteRecord('${r.id}')"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function sendWhatsApp(phone, name, raf, count, season, jant) {
+            if (!phone) { alert('Müşterinin telefon numarası girilmemiş!'); return; }
+            let cleanPhone = phone.replace(/\D/g, '');
+            if (cleanPhone.startsWith('0')) cleanPhone = '90' + cleanPhone.substring(1);
+            if (!cleanPhone.startsWith('90')) cleanPhone = '90' + cleanPhone;
+
+            const msg = `Sayın ${name}, emanete bıraktığınız ${count} adet ${season} (${jant}) lastiğiniz Çelebi Oto Lastik Oteli'nde ${raf} Nolu Rafta emniyetle saklanmaktadır. Saygılarımızla!`;
+            window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function printLabel(raf, name, plate, tireInfo, count, season, jant) {
+            const printArea = document.getElementById('printArea');
+            printArea.innerHTML = `
+                <div style="border: 3px solid #000; padding: 15px; font-family: sans-serif; width: 300px; text-align: center;">
+                    <h2 style="margin:0; font-size:20px;">ÇELEBİ OTO LASTİK</h2>
+                    <p style="margin:2px 0 10px 0; font-size:12px;">LASTİK OTELİ EMANET ETİKETİ</p>
+                    <div style="font-size: 32px; font-weight: bold; border: 2px solid #000; padding: 5px; margin-bottom: 8px;">RAF NO: ${raf}</div>
+                    <div style="font-size: 18px; font-weight: bold;">${name}</div>
+                    <div style="font-size: 20px; font-weight: bold; margin: 4px 0;">PLAKA: ${plate}</div>
+                    <div style="font-size: 14px;">${tireInfo}</div>
+                    <div style="font-size: 14px; font-weight: bold;">${count} ADET - ${season} (${jant})</div>
+                </div>
+            `;
+            printArea.classList.remove('hidden');
+            window.print();
+            printArea.classList.add('hidden');
+        }
+
+        async function deleteRecord(id) {
+            if (confirm("Bu emanet kaydını silmek/teslim etmek istediğinize emin misiniz?")) {
+                await window.deleteDoc(window.doc(window.db, "lastik_oteli", id));
+            }
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+    </script>
+</body>
+</html>
