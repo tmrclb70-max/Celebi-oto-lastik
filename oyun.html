@@ -2,8 +2,14 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Çelebi Oto Lastik - 3D Dükkan Simülatörü</title>
+
+    <!-- Web App / PWA Ayarları (Ana Ekrana Eklendiğinde Tam Ekran Olması İçin) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0f172a">
     
     <!-- FontAwesome & Google Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -13,120 +19,101 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; user-select: none; }
-        body, html { width: 100%; height: 100%; overflow: hidden; background: #090d16; color: #fff; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; user-select: none; -webkit-user-select: none; }
+        body, html { width: 100%; height: 100%; overflow: hidden; background: #090d16; color: #fff; position: fixed; }
 
-        /* YAN EKRAN ZORUNLULUĞU UYARISI */
-        #orientWarning {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #0f172a; z-index: 9999; flex-direction: column; justify-content: center;
-            align-items: center; text-align: center; padding: 20px;
-        }
-        #orientWarning i { font-size: 4rem; color: #f59e0b; margin-bottom: 15px; animation: rotatePhone 2s infinite; }
-        @keyframes rotatePhone { 0% { transform: rotate(0deg); } 50% { transform: rotate(-90deg); } 100% { transform: rotate(0deg); } }
-
-        @media screen and (orientation: portrait) {
-            #orientWarning { display: flex; }
-        }
-
-        /* GİRİŞ VE YÜKLEME EKRANI */
+        /* GİRİŞ EKRANI (B2B & OTEL TEMASIYLA UYUMLU) */
         #menuOverlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, rgba(15,23,42,0.95), rgba(30,41,59,0.98)),
+            background: linear-gradient(135deg, rgba(15,23,42,0.96), rgba(30,41,59,0.98)),
                         url('https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1200&q=80') center/cover;
-            z-index: 2000; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 2000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 15px;
         }
 
         .menu-card {
-            background: rgba(15, 23, 42, 0.88); border: 2px solid #f59e0b; border-radius: 16px;
-            padding: 25px 35px; width: 90%; max-width: 500px; text-align: center;
-            box-shadow: 0 0 30px rgba(245, 158, 11, 0.4); backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.9); border: 2px solid #f59e0b; border-radius: 16px;
+            padding: 25px 30px; width: 100%; max-width: 440px; text-align: center;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.3); backdrop-filter: blur(12px);
         }
 
-        .menu-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: #fff; text-shadow: 0 0 10px #f59e0b; margin-bottom: 5px; }
-        .menu-sub { font-size: 0.85rem; color: #f59e0b; font-style: italic; font-weight: 700; margin-bottom: 20px; }
+        .menu-title { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: #fff; text-shadow: 0 0 12px #f59e0b; margin-bottom: 4px; }
+        .menu-sub { font-size: 0.82rem; color: #f59e0b; font-style: italic; font-weight: 700; margin-bottom: 18px; }
 
         .form-input {
-            width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155;
-            background: rgba(15, 23, 42, 0.9); color: white; font-size: 0.95rem; margin-bottom: 12px;
+            width: 100%; padding: 11px; border-radius: 8px; border: 1px solid #334155;
+            background: rgba(15, 23, 42, 0.9); color: white; font-size: 0.9rem; margin-bottom: 10px;
             text-align: center; font-weight: 700;
         }
         .form-input:focus { outline: none; border-color: #f59e0b; box-shadow: 0 0 10px rgba(245,158,11,0.5); }
 
         .btn-game {
             width: 100%; padding: 12px; border-radius: 8px; border: none; font-weight: 900;
-            font-size: 1rem; cursor: pointer; transition: 0.2s; margin-top: 6px;
+            font-size: 0.95rem; cursor: pointer; transition: 0.2s; margin-top: 6px;
             display: flex; align-items: center; justify-content: center; gap: 8px;
         }
         .btn-start { background: #f59e0b; color: #000; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); }
         .btn-multi { background: #3b82f6; color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
 
-        /* OYUN İÇİ HUD VE KONTROLLER */
+        /* OYUN HUD VE ARAYÜZ */
         #gameHUD { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000; pointer-events: none; }
-        .hud-top { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; justify-content: space-between; align-items: center; pointer-events: auto; }
+        .hud-top { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: center; pointer-events: auto; }
 
         .hud-box {
-            background: rgba(15, 23, 42, 0.85); border: 1.5px solid #334155; padding: 8px 16px;
-            border-radius: 10px; backdrop-filter: blur(8px); display: flex; align-items: center; gap: 8px;
-            font-weight: 800; font-size: 0.9rem;
+            background: rgba(15, 23, 42, 0.85); border: 1.5px solid #334155; padding: 6px 12px;
+            border-radius: 8px; backdrop-filter: blur(8px); display: flex; align-items: center; gap: 6px;
+            font-weight: 800; font-size: 0.85rem;
         }
 
-        .money-val { color: #10b981; font-family: 'Orbitron', sans-serif; font-size: 1.1rem; }
-        .admin-badge { background: #f59e0b; color: #000; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 900; }
+        .money-val { color: #10b981; font-family: 'Orbitron', sans-serif; font-size: 1rem; }
+        .admin-badge { background: #f59e0b; color: #000; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 900; }
 
-        /* SANAL JOYSTICK (SOL TARAF) */
+        /* MOBİL DOKUNMATİK JOYSTICK (EKRANDA DÜKKANDA YÜRÜMEK İÇİN) */
         #joystickZone {
-            position: absolute; bottom: 30px; left: 30px; width: 120px; height: 120px;
-            background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.3);
+            position: absolute; bottom: 20px; left: 20px; width: 110px; height: 110px;
+            background: rgba(255,255,255,0.12); border: 2px solid rgba(255,255,255,0.3);
             border-radius: 50%; pointer-events: auto; display: flex; align-items: center; justify-content: center;
         }
         #joystickKnob {
-            width: 50px; height: 50px; background: #f59e0b; border-radius: 50%;
+            width: 45px; height: 45px; background: #f59e0b; border-radius: 50%;
             position: absolute; box-shadow: 0 0 10px rgba(245,158,11,0.8);
         }
 
-        /* SAĞ ALT EYLEM BUTONLARI */
+        /* SAĞ AKSİYON BUTONLARI */
         .right-action-controls {
-            position: absolute; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 10px; pointer-events: auto;
+            position: absolute; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 8px; pointer-events: auto;
         }
         .action-btn {
-            background: #ef4444; color: white; border: none; padding: 14px 20px; border-radius: 12px;
-            font-weight: 900; font-size: 0.95rem; box-shadow: 0 5px 15px rgba(239, 68, 68, 0.5); cursor: pointer;
+            background: #ef4444; color: white; border: none; padding: 12px 16px; border-radius: 10px;
+            font-weight: 900; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(0,0,0,0.5); cursor: pointer;
             display: flex; align-items: center; gap: 6px;
         }
         .btn-tea-action { background: #d97706; }
         .btn-shelf-action { background: #3b82f6; }
 
-        /* MÜŞTERİ DİYALOG KUTUSU */
+        /* MÜŞTERİ DİYALOG PENCERESİ */
         #dialogBox {
-            display: none; position: absolute; top: 80px; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 550px; background: rgba(15, 23, 42, 0.95); border: 2px solid #f59e0b;
-            border-radius: 14px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            display: none; position: absolute; top: 70px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 500px; background: rgba(15, 23, 42, 0.95); border: 2px solid #f59e0b;
+            border-radius: 12px; padding: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             pointer-events: auto; text-align: left; backdrop-filter: blur(12px);
         }
-        .dialog-header { display: flex; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 6px; margin-bottom: 10px; }
-        .dialog-name { font-weight: 900; color: #f59e0b; font-size: 1rem; }
-        .dialog-text { font-size: 0.95rem; line-height: 1.4; color: #f8fafc; margin-bottom: 12px; font-weight: 600; }
+        .dialog-header { display: flex; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 4px; margin-bottom: 8px; }
+        .dialog-name { font-weight: 900; color: #f59e0b; font-size: 0.95rem; }
+        .dialog-text { font-size: 0.88rem; line-height: 1.3; color: #f8fafc; margin-bottom: 10px; font-weight: 600; }
         
-        .dialog-btn-group { display: flex; gap: 8px; }
-        .btn-dialog { padding: 8px 14px; border-radius: 6px; border: none; font-weight: 800; font-size: 0.85rem; cursor: pointer; flex: 1; }
+        .dialog-btn-group { display: flex; gap: 6px; }
+        .btn-dialog { padding: 8px 12px; border-radius: 6px; border: none; font-weight: 800; font-size: 0.8rem; cursor: pointer; flex: 1; }
         .btn-accept { background: #10b981; color: white; }
 
-        /* BİLDİRİM / MESAJ BALONU */
+        /* BİLDİRİM BALONU */
         #notificationToast {
-            position: absolute; top: 90px; left: 50%; transform: translateX(-50%);
-            background: rgba(16, 185, 129, 0.9); color: #fff; padding: 8px 16px; border-radius: 8px;
-            font-weight: 800; font-size: 0.9rem; display: none; z-index: 1500; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            position: absolute; top: 75px; left: 50%; transform: translateX(-50%);
+            background: rgba(16, 185, 129, 0.95); color: #fff; padding: 7px 14px; border-radius: 8px;
+            font-weight: 800; font-size: 0.85rem; display: none; z-index: 1500; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
     </style>
 </head>
 <body>
-
-    <div id="orientWarning">
-        <i class="fa-solid fa-mobile-screen-button"></i>
-        <h2>Lütfen Telefonunuzu Yan Tutun</h2>
-        <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 8px;">Çelebi Oto Lastik Simülatörü yatay ekranda oynanır!</p>
-    </div>
 
     <!-- GİRİŞ EKRANI -->
     <div id="menuOverlay">
@@ -142,7 +129,7 @@
         </div>
     </div>
 
-    <!-- OYUN HUD VE KONTROLLERİ -->
+    <!-- OYUN ARAYÜZÜ -->
     <div id="gameHUD">
         <div class="hud-top">
             <div class="hud-box">
@@ -160,7 +147,7 @@
             </div>
         </div>
 
-        <div id="notificationToast">Bildirim mesajı buraya gelecek</div>
+        <div id="notificationToast">--</div>
 
         <!-- SANAL JOYSTICK -->
         <div id="joystickZone">
@@ -178,7 +165,7 @@
         <div id="dialogBox">
             <div class="dialog-header">
                 <span id="custName" class="dialog-name">Müşteri (Ahmet Yılmaz)</span>
-                <span style="font-weight:800; background:#0f172a; padding:2px 6px; border-radius:4px; font-size:0.8rem;">16 ABC 16</span>
+                <span style="font-weight:800; background:#0f172a; padding:2px 6px; border-radius:4px; font-size:0.75rem;">16 ABC 16</span>
             </div>
             <div id="dialogMsg" class="dialog-text">Selamın aleyküm ustam, kolay gelsin! 4 adet sıfır Petlas lastik almaya geldim.</div>
             <div class="dialog-btn-group">
@@ -199,6 +186,18 @@
         
         let moveJoystickData = { active: false, x: 0, y: 0 };
 
+        function requestFullscreenAndOrientation() {
+            // Otomatik Tam Ekran Denemesi
+            const docEl = document.documentElement;
+            if (docEl.requestFullscreen) { docEl.requestFullscreen().catch(()=>{}); }
+            else if (docEl.webkitRequestFullscreen) { docEl.webkitRequestFullscreen().catch(()=>{}); }
+
+            // Ekran Yönünü Yatay Kilitleme (Destekleyen Tarayıcılarda)
+            if (screen.orientation && screen.orientation.lock) {
+                screen.orientation.lock('landscape').catch(()=>{});
+            }
+        }
+
         function init3DWorld() {
             const container = document.getElementById('canvasContainer');
             scene = new THREE.Scene();
@@ -212,8 +211,8 @@
             container.appendChild(renderer.domElement);
 
             // IŞIKLAR
-            scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            scene.add(new THREE.AmbientLight(0xffffff, 0.75));
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.85);
             dirLight.position.set(10, 25, 10);
             scene.add(dirLight);
 
@@ -268,7 +267,6 @@
         }
 
         function spawnCarAndCustomer() {
-            // KIRMIZI MÜŞTERİ ARABASI
             const carGroup = new THREE.Group();
             const bodyGeo = new THREE.BoxGeometry(2.2, 1.1, 4.2);
             const bodyMat = new THREE.MeshStandardMaterial({ color: 0xef4444 });
@@ -286,6 +284,8 @@
             const nick = document.getElementById('playerNickname').value.trim();
             if (!nick) { alert('Lütfen Oyuncu Adınızı Yazın!'); return; }
 
+            requestFullscreenAndOrientation();
+
             document.getElementById('playerBadgeName').innerText = nick;
             if (nick.toLowerCase() === 'tamer baba' || nick.toLowerCase() === 'tamerbaba') {
                 isTamerBaba = true;
@@ -300,11 +300,10 @@
             init3DWorld();
         }
 
-        // SANAL JOYSTICK KONTROLÜ
         function setupJoystick() {
             const zone = document.getElementById('joystickZone');
             const knob = document.getElementById('joystickKnob');
-            let maxDist = 45;
+            let maxDist = 40;
 
             zone.addEventListener('pointermove', (e) => {
                 const rect = zone.getBoundingClientRect();
@@ -339,7 +338,7 @@
                 carryingTire = true;
                 showToast("Raflardan 1 adet Petlas lastik alındı!");
             } else {
-                showToast("Lastik rafına çok uzaktasınız!");
+                showToast("Lastik rafına yakın değilsiniz!");
             }
         }
 
@@ -367,44 +366,32 @@
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
-            
-            // Müşteri yakınlık kontrolü
-            if (activeCustomer && player) {
-                const distToCar = player.position.distanceTo(new THREE.Vector3(4, player.position.y, -3));
-                if (distToCar < 4) {
-                    document.getElementById('talkCustomerBtn').style.display = 'flex';
-                } else {
-                    document.getElementById('talkCustomerBtn').style.display = 'none';
-                }
-            }
         }
 
         function animate() {
             requestAnimationFrame(animate);
 
-            // Karakteri hareket ettir
-            if (moveJoystickData.active) {
+            if (moveJoystickData.active && player) {
                 player.position.x += moveJoystickData.x * 0.1;
                 player.position.z += moveJoystickData.y * 0.1;
 
-                // Sınırlar
                 player.position.x = Math.max(-12, Math.min(12, player.position.x));
                 player.position.z = Math.max(-12, Math.min(12, player.position.z));
             }
 
-            // Kamerayı karakteri takip ettir (3. Şahıs / Arkadan Görünüm)
-            camera.position.x = player.position.x;
-            camera.position.y = player.position.y + 4;
-            camera.position.z = player.position.z + 6;
-            camera.lookAt(player.position.x, player.position.y, player.position.z);
+            if (player) {
+                camera.position.x = player.position.x;
+                camera.position.y = player.position.y + 4;
+                camera.position.z = player.position.z + 6;
+                camera.lookAt(player.position.x, player.position.y, player.position.z);
 
-            // Müşteriye yakınlık kontrolü
-            if (activeCustomer && player) {
-                const distToCar = player.position.distanceTo(new THREE.Vector3(4, player.position.y, -3));
-                if (distToCar < 4) {
-                    document.getElementById('talkCustomerBtn').style.display = 'flex';
-                } else {
-                    document.getElementById('talkCustomerBtn').style.display = 'none';
+                if (activeCustomer) {
+                    const distToCar = player.position.distanceTo(new THREE.Vector3(4, player.position.y, -3));
+                    if (distToCar < 4) {
+                        document.getElementById('talkCustomerBtn').style.display = 'flex';
+                    } else {
+                        document.getElementById('talkCustomerBtn').style.display = 'none';
+                    }
                 }
             }
 
