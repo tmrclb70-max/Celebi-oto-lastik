@@ -306,34 +306,36 @@
         .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 30px; height: 30px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; }
         .btn-edit-price { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); width: 30px; height: 30px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; }
 
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: flex-start; z-index: 3000; padding: 12px; overflow-y: auto; }
-        .modal-content { background: var(--card-bg); border-radius: 12px; padding: 20px; width: 100%; max-width: 750px; border: 1.5px solid var(--card-border); margin: 30px auto; max-height: 90vh; overflow-y: auto; box-shadow: 0 15px 40px rgba(0,0,0,0.9); }
+        /* GÖNDERDİĞİNİZ SON FOTOĞRAFKİ GİBİ TAM EKRAN VE GENİŞLETİLMİŞ DETAY MODALI */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 3000; padding: 10px; overflow-y: auto; }
+        .modal-content { background: var(--card-bg); border-radius: 12px; padding: 22px; width: 96%; max-width: 900px; border: 1.5px solid var(--card-border); max-height: 94vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.95); }
 
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; width: 100%; }
-        .modal-header h3 { color: var(--accent-yellow); font-size: 1.2rem; font-weight: 800; }
-        .close-btn { font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; width: 100%; }
+        .modal-header h3 { color: var(--accent-yellow); font-size: 1.25rem; font-weight: 800; }
+        .close-btn { font-size: 1.6rem; cursor: pointer; color: var(--text-muted); }
 
-        /* GÖNDERDİĞİNİZ GÖRSELDEKİ B2B DETAY EKRANI DÜZENİ (SOL BÜYÜK RESİM, SAĞ DETAYLAR) */
-        .b2b-detail-layout { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; }
-        .b2b-detail-img-area { flex: 1; min-width: 250px; background: #ffffff; border-radius: 8px; padding: 15px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--card-border); }
-        .b2b-detail-img-area img { width: 100%; max-height: 280px; object-fit: contain; }
+        .b2b-detail-layout { display: flex; gap: 24px; flex-wrap: wrap; align-items: stretch; }
+        .b2b-detail-img-area { flex: 1.1; min-width: 280px; background: #ffffff; border-radius: 10px; padding: 20px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--card-border); }
+        .b2b-detail-img-area img { width: 100%; max-height: 340px; object-fit: contain; }
         
-        .b2b-detail-info-area { flex: 1.3; min-width: 280px; display: flex; flex-direction: column; gap: 12px; }
-        .b2b-product-title { font-size: 1.25rem; font-weight: 900; color: #fff; line-height: 1.3; }
+        .b2b-detail-info-area { flex: 1.4; min-width: 300px; display: flex; flex-direction: column; gap: 14px; }
+        .b2b-product-title { font-size: 1.4rem; font-weight: 900; color: #fff; line-height: 1.3; }
         
-        .b2b-price-box { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .b2b-price-label { font-size: 0.9rem; color: var(--text-muted); font-weight: 600; }
-        .b2b-price-val { font-size: 1.4rem; font-weight: 900; color: var(--success-color); }
+        .b2b-price-box { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 14px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .b2b-price-label { font-size: 0.95rem; color: var(--text-muted); font-weight: 600; }
+        .b2b-price-val { font-size: 1.55rem; font-weight: 900; color: var(--success-color); }
 
-        .b2b-action-row { display: flex; gap: 10px; align-items: center; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; border: 1px solid var(--card-border); }
-        .b2b-qty-box { display: flex; align-items: center; gap: 5px; background: #0f172a; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--card-border); }
-        .b2b-btn-cart { flex: 1; background: #ffffff; color: #000; font-weight: 800; border: none; padding: 10px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem; transition: 0.2s; }
+        .b2b-action-row { display: flex; gap: 10px; align-items: center; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border: 1px solid var(--card-border); }
+        .b2b-qty-box { display: flex; align-items: center; gap: 6px; background: #0f172a; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--card-border); }
+        .b2b-btn-cart { flex: 1; background: #ffffff; color: #000; font-weight: 800; border: none; padding: 11px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.95rem; transition: 0.2s; }
         .b2b-btn-cart:hover { background: var(--accent-yellow); }
 
-        .b2b-spec-table { display: flex; flex-direction: column; gap: 8px; margin-top: 5px; }
-        .b2b-spec-row { display: flex; justify-content: space-between; padding: 8px 10px; background: rgba(15, 23, 42, 0.6); border-radius: 6px; border: 1px solid var(--card-border); font-size: 0.85rem; }
+        .b2b-spec-table { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+        .b2b-spec-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 12px; background: rgba(15, 23, 42, 0.6); border-radius: 6px; border: 1px solid var(--card-border); font-size: 0.9rem; }
         .b2b-spec-key { color: var(--text-muted); font-weight: 600; }
-        .b2b-spec-val { color: var(--text-main); font-weight: 800; }
+        .b2b-spec-val { color: var(--text-main); font-weight: 800; display: flex; align-items: center; gap: 6px; }
+
+        .detail-brand-logo { max-height: 24px; max-width: 100px; object-fit: contain; }
 
         .input-with-btn { display: flex; gap: 6px; }
         .btn-search-img { background: #3b82f6; color: white; border: none; padding: 0 10px; border-radius: 5px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 0.78rem; display: flex; align-items: center; gap: 4px; }
@@ -556,7 +558,7 @@
         </div>
     </footer>
 
-    <!-- YENİ B2B TARZI ÜRÜN DETAY MODALI (SOLDA BÜYÜK RESİM, SAĞDA FİYAT VE SEPET) -->
+    <!-- GENİŞLETİLMİŞ TAM EKRAN ÜRÜN DETAY MODALI -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -590,7 +592,7 @@
                         <button class="b2b-btn-cart" onclick="alert('Ürün sepete eklenmiştir!')"><i class="fa-solid fa-cart-shopping"></i> Sepete Ekle</button>
                     </div>
 
-                    <div style="font-size:0.85rem; font-weight:800; color:var(--accent-yellow); margin-top:5px;">Ürün Bilgileri</div>
+                    <div style="font-size:0.88rem; font-weight:800; color:var(--accent-yellow); margin-top:2px;">Ürün Bilgileri</div>
                     <div class="b2b-spec-table">
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Ürün Ebatı:</span><span id="dSize" class="b2b-spec-val">--</span></div>
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Marka:</span><span id="dBrand" class="b2b-spec-val">--</span></div>
@@ -631,7 +633,7 @@
         </div>
     </div>
 
-    <!-- AYARLAR MODALI (VİDEO VE 3LÜ SLİDER DESTEKLİ) -->
+    <!-- AYARLAR MODALI -->
     <div id="settingsModal" class="modal" style="max-width: 480px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -1229,7 +1231,7 @@
             }
         }
 
-        // YENİ B2B DETAY MODALI AÇMA FONKSİYONU
+        // TAM EKRAN B2B DETAY MODALI AÇMA FONKSİYONU
         function openDetailModal(id) {
             const p = products.find(x => x.id === id);
             if (!p) return;
@@ -1240,20 +1242,39 @@
             const stockVal = parseInt(p.stock) || 0;
             document.getElementById('dImg').src = p.img || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
             
-            // Başlık: Ebat + Desen + Marka (Görseldeki gibi şık üst başlık)
             document.getElementById('dTitle').innerText = `${p.size} ${p.pattern || ''} ${p.brand}`.toUpperCase();
-            
             document.getElementById('dPrice').innerText = formatCurrency(p.price);
             document.getElementById('dStockBadge').innerHTML = getStockBadgeHtml(stockVal);
 
             document.getElementById('dSize').innerText = p.size || '-';
-            document.getElementById('dBrand').innerText = (p.brand || '-').toUpperCase();
+            
+            // Marka alanında eğer özel logo varsa logo, yoksa yazı gösterimi
+            const brandValElem = document.getElementById('dBrand');
+            if (p.customLogo) {
+                brandValElem.innerHTML = `<img src="${p.customLogo}" class="detail-brand-logo" alt="${p.brand}">`;
+            } else {
+                brandValElem.innerText = (p.brand || '-').toUpperCase();
+            }
+
             document.getElementById('dPattern').innerText = (p.pattern || 'STANDART').toUpperCase();
             
-            let categoryText = p.season || 'Yaz';
-            if (p.group === 'Zirai') categoryText = 'Zirai Grubu';
-            if (p.group === 'İç Lastik') categoryText = 'İç Lastik';
-            document.getElementById('dCategory').innerText = categoryText;
+            // Mevsim Emojili ve Simgeli Gösterim
+            let seasonText = p.season || 'Yaz';
+            let seasonIcon = 'fa-sun icon-sun';
+            if (p.group === 'Zirai') {
+                seasonText = 'Zirai Grubu';
+                seasonIcon = 'fa-tractor icon-tractor';
+            } else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') {
+                seasonText = 'İç Lastik';
+                seasonIcon = 'fa-circle-dot icon-tube';
+            } else if (p.season === 'Kış') {
+                seasonText = 'Kış';
+                seasonIcon = 'fa-snowflake icon-snow';
+            } else if (p.season === '4 Mevsim') {
+                seasonText = '4 Mevsim';
+                seasonIcon = 'fa-cloud-sun-rain icon-all';
+            }
+            document.getElementById('dCategory').innerHTML = `<i class="fa-solid ${seasonIcon}"></i> ${seasonText}`;
 
             document.getElementById('dDot').innerText = p.dot || '2026';
 
