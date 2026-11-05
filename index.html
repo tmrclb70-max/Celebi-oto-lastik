@@ -78,21 +78,10 @@
             overflow: hidden;
         }
 
-        .header-bg-video {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; z-index: 1; pointer-events: none;
-        }
-        .header-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(90deg, rgba(15, 23, 42, 0.9) 0%, rgba(2, 6, 23, 0.85) 100%);
-            z-index: 1;
-        }
-
         .header-container { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
         .header-title-area h1 { font-size: 1.4rem; font-weight: 900; color: #ffffff; letter-spacing: 0.8px; text-transform: uppercase; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
         .header-title-area p { font-size: 0.78rem; color: var(--accent-yellow); font-style: italic; font-weight: 600; margin-top: 2px; }
 
-        /* DÖVİZ KURLARI KUTUSU */
         .currency-box {
             display: flex; align-items: center; gap: 15px; background: rgba(15, 23, 42, 0.9);
             padding: 6px 14px; border-radius: 8px; border: 1px solid var(--card-border); font-size: 0.85rem; font-weight: 700;
@@ -106,7 +95,6 @@
 
         .main-container { max-width: 1400px; margin: 15px auto; padding: 0 12px; }
 
-        /* FOTOĞRAF KAYDIRICI (SLIDER) ALANI */
         .slider-container {
             position: relative; width: 100%; height: 260px; border-radius: 10px;
             overflow: hidden; border: 1.5px solid var(--accent-yellow); margin-bottom: 15px;
@@ -139,21 +127,12 @@
 
         .login-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
             display: flex; justify-content: center; align-items: center; z-index: 2000;
-            padding: 15px; overflow: hidden; background: #0f172a;
-        }
-        .login-bg-video {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; z-index: 1; pointer-events: none;
-        }
-        .login-bg-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(2, 6, 23, 0.9));
-            z-index: 2;
+            padding: 15px;
         }
         
         .login-card { 
-            position: relative; z-index: 3;
             width: 100%; max-width: 400px; 
             background: rgba(15, 23, 42, 0.88); 
             padding: 24px 20px; 
@@ -306,7 +285,6 @@
         .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 30px; height: 30px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; }
         .btn-edit-price { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); width: 30px; height: 30px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; }
 
-        /* GÖNDERDİĞİNİZ SON FOTOĞRAFKİ GİBİ TAM EKRAN VE GENİŞLETİLMİŞ DETAY MODALI */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 3000; padding: 10px; overflow-y: auto; }
         .modal-content { background: var(--card-bg); border-radius: 12px; padding: 22px; width: 96%; max-width: 900px; border: 1.5px solid var(--card-border); max-height: 94vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.95); }
 
@@ -354,7 +332,6 @@
         .notif-item { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--card-border); padding: 8px 12px; border-radius: 6px; margin-bottom: 6px; font-size: 0.82rem; }
         .settings-section-title { font-size: 0.85rem; color: var(--accent-yellow); font-weight: 700; margin: 12px 0 8px 0; border-bottom: 1px dashed var(--card-border); padding-bottom: 3px; display: flex; align-items: center; gap: 5px; }
 
-        /* ALT BİLGİ VE İLETİŞİM ALANI (FOOTER) STİLLERİ */
         .main-footer {
             background: #0f172a; border-top: 2px solid var(--card-border); margin-top: 40px; padding: 35px 20px 20px 20px;
         }
@@ -384,11 +361,8 @@
 </head>
 <body>
 
-    <!-- GİRİŞ EKRANI (VİDEO DESTEKLİ) -->
+    <!-- GİRİŞ EKRANI -->
     <div id="loginSection" class="login-wrapper">
-        <video id="loginVideoBg" class="login-bg-video" autoplay muted loop playsinline></video>
-        <div class="login-bg-overlay"></div>
-        
         <div class="login-card">
             <h1 class="login-brand-title">Çelebi Oto Lastik</h1>
             <p class="login-slogan">"Yolunuzda Güven, Lastiğinizde Kalite"</p>
@@ -410,18 +384,14 @@
         </div>
     </div>
 
-    <!-- EN ÜST HEADER (VİDEO DESTEKLİ) -->
+    <!-- EN ÜST HEADER -->
     <header id="mainHeader">
-        <video id="headerVideoBg" class="header-bg-video" autoplay muted loop playsinline></video>
-        <div class="header-overlay"></div>
-
         <div class="header-container">
             <div class="header-title-area">
                 <h1>ÇELEBİ OTO LASTİK</h1>
                 <p>"Yolunuzda Güven, Lastiğinizde Kalite"</p>
             </div>
             
-            <!-- DÖVİZ KURLARI KUTUSU -->
             <div class="currency-box">
                 <div class="currency-item"><i class="fa-solid fa-dollar-sign" style="color:#10b981;"></i> <span>USD:</span> <span class="val">₺49,9360</span></div>
                 <div class="currency-item"><i class="fa-solid fa-euro-sign" style="color:#3b82f6;"></i> <span>EUR:</span> <span class="val">₺56,1576</span></div>
@@ -436,7 +406,7 @@
 
     <div id="portalSection" class="main-container hidden">
 
-        <!-- KAMPANYA FOTOĞRAF KAYDIRICI (SLIDER) ALANI (3 FOTOĞRAF) -->
+        <!-- 3LÜ SLİDER BANNER ALANI -->
         <div class="slider-container">
             <button class="slider-btn prev" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
             <button class="slider-btn next" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
@@ -501,7 +471,6 @@
 
     </div>
 
-    <!-- ALT BİLGİ VE İLETİŞİM ALANI (FOOTER) -->
     <footer class="main-footer">
         <div class="footer-grid">
             <div class="footer-col">
@@ -558,7 +527,7 @@
         </div>
     </footer>
 
-    <!-- GENİŞLETİLMİŞ TAM EKRAN ÜRÜN DETAY MODALI -->
+    <!-- ÜRÜN DETAY MODALI -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -637,7 +606,7 @@
     <div id="settingsModal" class="modal" style="max-width: 480px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fa-solid fa-gear"></i> Sistem, Video ve Görsel Ayarları</h3>
+                <h3><i class="fa-solid fa-gear"></i> Sistem ve Görsel Ayarları</h3>
                 <span class="close-btn" onclick="closeModal('settingsModal')">&times;</span>
             </div>
             
@@ -651,17 +620,17 @@
                 <input type="password" id="newBayiPass" class="form-control" placeholder="Yeni Bayi Şifresi (Varsayılan: 1234)">
             </div>
 
-            <div class="settings-section-title"><i class="fa-solid fa-video"></i> Arka Plan Video Ayarları (MP4 URL)</div>
+            <div class="settings-section-title"><i class="fa-solid fa-image"></i> Giriş ve Header Arka Plan Resimleri</div>
             <div class="form-group">
-                <label>Giriş Ekranı Arka Plan Videosu (MP4 Linki)</label>
-                <input type="text" id="cfgLoginVideo" class="form-control" placeholder="Örn: https://.../video.mp4">
+                <label>Giriş Ekranı Arka Plan Resmi (URL)</label>
+                <input type="text" id="cfgLoginBg" class="form-control" placeholder="Resim URL yapıştırın">
             </div>
             <div class="form-group">
-                <label>En Üst Header Arka Plan Videosu (MP4 Linki)</label>
-                <input type="text" id="cfgHeaderVideo" class="form-control" placeholder="Örn: https://.../video.mp4">
+                <label>En Üst Header Arka Plan Resmi (URL)</label>
+                <input type="text" id="cfgHeaderBg" class="form-control" placeholder="Resim URL yapıştırın">
             </div>
 
-            <div class="settings-section-title"><i class="fa-solid fa-images"></i> Slider Banner Resimleri (3 Adet)</div>
+            <div class="settings-section-title"><i class="fa-solid fa-images"></i> 3'lü Slider Banner Resimleri</div>
             <div class="form-group">
                 <label>1. Banner Fotoğrafı (URL)</label>
                 <input type="text" id="cfgBanner1" class="form-control" placeholder="1. görsel URL">
@@ -742,7 +711,6 @@
                 <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Kabat, BKT Vb.">
             </div>
 
-            <!-- BİLGİSAYAR İÇİN ÖZEL LOGO YÜKLEME ALANI -->
             <div class="form-group">
                 <label><i class="fa-solid fa-file-image" style="color: var(--accent-yellow);"></i> Bilgisayar İçin Marka Logosu (Şeffaf PNG)</label>
                 <div class="file-upload-box" onclick="document.getElementById('logoFileInput').click()">
@@ -843,28 +811,28 @@
         let adminPass = localStorage.getItem('celebi_admin_pass') || 'celebi166';
         let bayiPass = localStorage.getItem('celebi_bayi_pass') || '1234';
 
-        let siteSettings = {
-            loginVideo: localStorage.getItem('cfg_loginVideo') || '',
-            headerVideo: localStorage.getItem('cfg_headerVideo') || '',
+        let siteImages = {
+            loginBg: localStorage.getItem('cfg_loginBg') || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80',
+            headerBg: localStorage.getItem('cfg_headerBg') || 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Petlas_logo.svg/1200px-Petlas_logo.svg.png',
             banner1: localStorage.getItem('cfg_banner1') || 'https://araclo-bucket.sfo3.cdn.digitaloceanspaces.com/blog/1233242a-ea59-497c-b3c9-83f339a50e40.jpg',
             banner2: localStorage.getItem('cfg_banner2') || 'https://images.unsplash.com/photo-1543465077-db45d34b88a5?w=1200&q=80',
             banner3: localStorage.getItem('cfg_banner3') || 'https://images.unsplash.com/photo-1613214149922-f1809c99b414?w=1200&q=80'
         };
 
         window.initFirebaseData = function() {
-            applySiteSettings();
+            applySiteImages();
 
             if (!window.db) return;
 
             window.onSnapshot(window.doc(window.db, "site_ayarlari", "gorseller"), (docSnap) => {
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    if (data.loginVideo !== undefined) siteSettings.loginVideo = data.loginVideo;
-                    if (data.headerVideo !== undefined) siteSettings.headerVideo = data.headerVideo;
-                    if (data.banner1) siteSettings.banner1 = data.banner1;
-                    if (data.banner2) siteSettings.banner2 = data.banner2;
-                    if (data.banner3) siteSettings.banner3 = data.banner3;
-                    applySiteSettings();
+                    if (data.loginBg) siteImages.loginBg = data.loginBg;
+                    if (data.headerBg) siteImages.headerBg = data.headerBg;
+                    if (data.banner1) siteImages.banner1 = data.banner1;
+                    if (data.banner2) siteImages.banner2 = data.banner2;
+                    if (data.banner3) siteImages.banner3 = data.banner3;
+                    applySiteImages();
                 }
             });
 
@@ -878,35 +846,23 @@
             });
         };
 
-        function applySiteSettings() {
-            const loginVid = document.getElementById('loginVideoBg');
-            if (loginVid) {
-                if (siteSettings.loginVideo) {
-                    loginVid.src = siteSettings.loginVideo;
-                    loginVid.style.display = 'block';
-                    loginVid.play().catch(e => console.log("Video autoplay blocked"));
-                } else {
-                    loginVid.style.display = 'none';
-                }
+        function applySiteImages() {
+            const loginElem = document.getElementById('loginSection');
+            if (loginElem) {
+                loginElem.style.backgroundImage = `linear-gradient(rgba(15, 23, 42, 0.82), rgba(2, 6, 23, 0.90)), url('${siteImages.loginBg}')`;
             }
 
-            const headerVid = document.getElementById('headerVideoBg');
-            if (headerVid) {
-                if (siteSettings.headerVideo) {
-                    headerVid.src = siteSettings.headerVideo;
-                    headerVid.style.display = 'block';
-                    headerVid.play().catch(e => console.log("Video autoplay blocked"));
-                } else {
-                    headerVid.style.display = 'none';
-                }
+            const headerElem = document.getElementById('mainHeader');
+            if (headerElem) {
+                headerElem.style.backgroundImage = `linear-gradient(90deg, rgba(15, 23, 42, 0.88) 0%, rgba(2, 6, 23, 0.82) 100%), url('${siteImages.headerBg}')`;
             }
 
             const b1 = document.getElementById('bannerSlide1');
             const b2 = document.getElementById('bannerSlide2');
             const b3 = document.getElementById('bannerSlide3');
-            if (b1) b1.src = siteSettings.banner1;
-            if (b2) b2.src = siteSettings.banner2;
-            if (b3) b3.src = siteSettings.banner3;
+            if (b1) b1.src = siteImages.banner1;
+            if (b2) b2.src = siteImages.banner2;
+            if (b3) b3.src = siteImages.banner3;
         }
 
         function formatCurrency(val) {
@@ -958,11 +914,11 @@
             document.getElementById('newAdminPass').value = '';
             document.getElementById('newBayiPass').value = '';
             
-            document.getElementById('cfgLoginVideo').value = siteSettings.loginVideo || '';
-            document.getElementById('cfgHeaderVideo').value = siteSettings.headerVideo || '';
-            document.getElementById('cfgBanner1').value = siteSettings.banner1 || '';
-            document.getElementById('cfgBanner2').value = siteSettings.banner2 || '';
-            document.getElementById('cfgBanner3').value = siteSettings.banner3 || '';
+            document.getElementById('cfgLoginBg').value = siteImages.loginBg || '';
+            document.getElementById('cfgHeaderBg').value = siteImages.headerBg || '';
+            document.getElementById('cfgBanner1').value = siteImages.banner1 || '';
+            document.getElementById('cfgBanner2').value = siteImages.banner2 || '';
+            document.getElementById('cfgBanner3').value = siteImages.banner3 || '';
 
             document.getElementById('settingsModal').style.display = 'flex';
         }
@@ -974,25 +930,25 @@
             if (aPass) { adminPass = aPass; localStorage.setItem('celebi_admin_pass', aPass); }
             if (bPass) { bayiPass = bPass; localStorage.setItem('celebi_bayi_pass', bPass); }
 
-            const lVid = document.getElementById('cfgLoginVideo').value.trim();
-            const hVid = document.getElementById('cfgHeaderVideo').value.trim();
+            const lBg = document.getElementById('cfgLoginBg').value.trim();
+            const hBg = document.getElementById('cfgHeaderBg').value.trim();
             const b1 = document.getElementById('cfgBanner1').value.trim();
             const b2 = document.getElementById('cfgBanner2').value.trim();
             const b3 = document.getElementById('cfgBanner3').value.trim();
 
-            siteSettings.loginVideo = lVid; localStorage.setItem('cfg_loginVideo', lVid);
-            siteSettings.headerVideo = hVid; localStorage.setItem('cfg_headerVideo', hVid);
-            if (b1) { siteSettings.banner1 = b1; localStorage.setItem('cfg_banner1', b1); }
-            if (b2) { siteSettings.banner2 = b2; localStorage.setItem('cfg_banner2', b2); }
-            if (b3) { siteSettings.banner3 = b3; localStorage.setItem('cfg_banner3', b3); }
+            if (lBg) { siteImages.loginBg = lBg; localStorage.setItem('cfg_loginBg', lBg); }
+            if (hBg) { siteImages.headerBg = hBg; localStorage.setItem('cfg_headerBg', hBg); }
+            if (b1) { siteImages.banner1 = b1; localStorage.setItem('cfg_banner1', b1); }
+            if (b2) { siteImages.banner2 = b2; localStorage.setItem('cfg_banner2', b2); }
+            if (b3) { siteImages.banner3 = b3; localStorage.setItem('cfg_banner3', b3); }
 
-            applySiteSettings();
+            applySiteImages();
 
             if (window.db) {
-                await window.setDoc(window.doc(window.db, "site_ayarlari", "gorseller"), siteSettings, { merge: true });
+                await window.setDoc(window.doc(window.db, "site_ayarlari", "gorseller"), siteImages, { merge: true });
             }
 
-            alert('Tüm ayarlar ve video tercihleri başarıyla kaydedildi!');
+            alert('Tüm ayarlar ve görseller başarıyla kaydedildi!');
             closeModal('settingsModal');
         }
 
@@ -1231,7 +1187,6 @@
             }
         }
 
-        // TAM EKRAN B2B DETAY MODALI AÇMA FONKSİYONU
         function openDetailModal(id) {
             const p = products.find(x => x.id === id);
             if (!p) return;
@@ -1248,7 +1203,6 @@
 
             document.getElementById('dSize').innerText = p.size || '-';
             
-            // Marka alanında eğer özel logo varsa logo, yoksa yazı gösterimi
             const brandValElem = document.getElementById('dBrand');
             if (p.customLogo) {
                 brandValElem.innerHTML = `<img src="${p.customLogo}" class="detail-brand-logo" alt="${p.brand}">`;
@@ -1258,7 +1212,6 @@
 
             document.getElementById('dPattern').innerText = (p.pattern || 'STANDART').toUpperCase();
             
-            // Mevsim Emojili ve Simgeli Gösterim
             let seasonText = p.season || 'Yaz';
             let seasonIcon = 'fa-sun icon-sun';
             if (p.group === 'Zirai') {
@@ -1458,7 +1411,6 @@
             document.getElementById(modalId).style.display = 'none';
         }
 
-        // SLİDER KONTROLÜ
         let slideIndex = 0;
         function showSlide(index) {
             const slides = document.querySelectorAll('.slide');
