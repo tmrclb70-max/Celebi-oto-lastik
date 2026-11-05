@@ -9,7 +9,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Kurumsal ve Net Font Ailesi -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <script type="module">
@@ -79,6 +78,16 @@
             overflow: hidden;
         }
 
+        .header-bg-video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: 1; pointer-events: none;
+        }
+        .header-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, rgba(15, 23, 42, 0.9) 0%, rgba(2, 6, 23, 0.85) 100%);
+            z-index: 1;
+        }
+
         .header-container { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
         .header-title-area h1 { font-size: 1.4rem; font-weight: 900; color: #ffffff; letter-spacing: 0.8px; text-transform: uppercase; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
         .header-title-area p { font-size: 0.78rem; color: var(--accent-yellow); font-style: italic; font-weight: 600; margin-top: 2px; }
@@ -130,12 +139,21 @@
 
         .login-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover; background-position: center;
             display: flex; justify-content: center; align-items: center; z-index: 2000;
-            padding: 15px;
+            padding: 15px; overflow: hidden; background: #0f172a;
+        }
+        .login-bg-video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: 1; pointer-events: none;
+        }
+        .login-bg-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(2, 6, 23, 0.9));
+            z-index: 2;
         }
         
         .login-card { 
+            position: relative; z-index: 3;
             width: 100%; max-width: 400px; 
             background: rgba(15, 23, 42, 0.88); 
             padding: 24px 20px; 
@@ -289,23 +307,33 @@
         .btn-edit-price { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); width: 30px; height: 30px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; }
 
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: flex-start; z-index: 3000; padding: 12px; overflow-y: auto; }
-        .modal-content { background: var(--card-bg); border-radius: 10px; padding: 16px; width: 100%; max-width: 460px; border: 1px solid var(--card-border); margin: 15px auto; max-height: 85vh; overflow-y: auto; box-shadow: 0 12px 30px rgba(0,0,0,0.8); }
+        .modal-content { background: var(--card-bg); border-radius: 12px; padding: 20px; width: 100%; max-width: 750px; border: 1.5px solid var(--card-border); margin: 30px auto; max-height: 90vh; overflow-y: auto; box-shadow: 0 15px 40px rgba(0,0,0,0.9); }
 
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; width: 100%; }
-        .modal-header h3 { color: var(--accent-yellow); font-size: 1.1rem; }
-        .close-btn { font-size: 1.3rem; cursor: pointer; color: var(--text-muted); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; width: 100%; }
+        .modal-header h3 { color: var(--accent-yellow); font-size: 1.2rem; font-weight: 800; }
+        .close-btn { font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
 
-        .detail-body-container { display: flex; flex-direction: column; gap: 15px; }
-        .detail-img-box { text-align: center; background: #ffffff; padding: 12px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
-        .detail-img-box img { max-height: 140px; width: 100%; object-fit: contain; }
-        .detail-info-box { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+        /* GÖNDERDİĞİNİZ GÖRSELDEKİ B2B DETAY EKRANI DÜZENİ (SOL BÜYÜK RESİM, SAĞ DETAYLAR) */
+        .b2b-detail-layout { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; }
+        .b2b-detail-img-area { flex: 1; min-width: 250px; background: #ffffff; border-radius: 8px; padding: 15px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--card-border); }
+        .b2b-detail-img-area img { width: 100%; max-height: 280px; object-fit: contain; }
+        
+        .b2b-detail-info-area { flex: 1.3; min-width: 280px; display: flex; flex-direction: column; gap: 12px; }
+        .b2b-product-title { font-size: 1.25rem; font-weight: 900; color: #fff; line-height: 1.3; }
+        
+        .b2b-price-box { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .b2b-price-label { font-size: 0.9rem; color: var(--text-muted); font-weight: 600; }
+        .b2b-price-val { font-size: 1.4rem; font-weight: 900; color: var(--success-color); }
 
-        @media (min-width: 769px) {
-            #detailModal .modal-content { max-width: 650px; }
-            .detail-body-container { flex-direction: row; align-items: center; }
-            .detail-img-box { width: 240px; height: 240px; flex-shrink: 0; }
-            .detail-img-box img { max-height: 210px; }
-        }
+        .b2b-action-row { display: flex; gap: 10px; align-items: center; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; border: 1px solid var(--card-border); }
+        .b2b-qty-box { display: flex; align-items: center; gap: 5px; background: #0f172a; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--card-border); }
+        .b2b-btn-cart { flex: 1; background: #ffffff; color: #000; font-weight: 800; border: none; padding: 10px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem; transition: 0.2s; }
+        .b2b-btn-cart:hover { background: var(--accent-yellow); }
+
+        .b2b-spec-table { display: flex; flex-direction: column; gap: 8px; margin-top: 5px; }
+        .b2b-spec-row { display: flex; justify-content: space-between; padding: 8px 10px; background: rgba(15, 23, 42, 0.6); border-radius: 6px; border: 1px solid var(--card-border); font-size: 0.85rem; }
+        .b2b-spec-key { color: var(--text-muted); font-weight: 600; }
+        .b2b-spec-val { color: var(--text-main); font-weight: 800; }
 
         .input-with-btn { display: flex; gap: 6px; }
         .btn-search-img { background: #3b82f6; color: white; border: none; padding: 0 10px; border-radius: 5px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 0.78rem; display: flex; align-items: center; gap: 4px; }
@@ -319,16 +347,9 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .file-upload-box:hover {
-            background: rgba(245, 158, 11, 0.15);
-        }
+        .file-upload-box:hover { background: rgba(245, 158, 11, 0.15); }
 
         .notif-item { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--card-border); padding: 8px 12px; border-radius: 6px; margin-bottom: 6px; font-size: 0.82rem; }
-
-        .detail-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.88rem; }
-        .detail-label { color: var(--text-muted); font-weight: 600; }
-        .detail-val { color: var(--text-main); font-weight: 800; }
-
         .settings-section-title { font-size: 0.85rem; color: var(--accent-yellow); font-weight: 700; margin: 12px 0 8px 0; border-bottom: 1px dashed var(--card-border); padding-bottom: 3px; display: flex; align-items: center; gap: 5px; }
 
         /* ALT BİLGİ VE İLETİŞİM ALANI (FOOTER) STİLLERİ */
@@ -361,8 +382,11 @@
 </head>
 <body>
 
-    <!-- GİRİŞ EKRANI -->
+    <!-- GİRİŞ EKRANI (VİDEO DESTEKLİ) -->
     <div id="loginSection" class="login-wrapper">
+        <video id="loginVideoBg" class="login-bg-video" autoplay muted loop playsinline></video>
+        <div class="login-bg-overlay"></div>
+        
         <div class="login-card">
             <h1 class="login-brand-title">Çelebi Oto Lastik</h1>
             <p class="login-slogan">"Yolunuzda Güven, Lastiğinizde Kalite"</p>
@@ -384,8 +408,11 @@
         </div>
     </div>
 
-    <!-- EN ÜST HEADER -->
+    <!-- EN ÜST HEADER (VİDEO DESTEKLİ) -->
     <header id="mainHeader">
+        <video id="headerVideoBg" class="header-bg-video" autoplay muted loop playsinline></video>
+        <div class="header-overlay"></div>
+
         <div class="header-container">
             <div class="header-title-area">
                 <h1>ÇELEBİ OTO LASTİK</h1>
@@ -413,18 +440,9 @@
             <button class="slider-btn next" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
 
             <div class="slider-wrapper" id="sliderWrapper">
-                <!-- 1. FOTOĞRAF -->
-                <div class="slide">
-                    <img id="bannerSlide1" src="https://araclo-bucket.sfo3.cdn.digitaloceanspaces.com/blog/1233242a-ea59-497c-b3c9-83f339a50e40.jpg" alt="Kampanya 1">
-                </div>
-                <!-- 2. FOTOĞRAF -->
-                <div class="slide">
-                    <img id="bannerSlide2" src="https://images.unsplash.com/photo-1543465077-db45d34b88a5?w=1200&q=80" alt="Kampanya 2">
-                </div>
-                <!-- 3. FOTOĞRAF -->
-                <div class="slide">
-                    <img id="bannerSlide3" src="https://images.unsplash.com/photo-1613214149922-f1809c99b414?w=1200&q=80" alt="Kampanya 3">
-                </div>
+                <div class="slide"><img id="bannerSlide1" src="" alt="Kampanya 1"></div>
+                <div class="slide"><img id="bannerSlide2" src="" alt="Kampanya 2"></div>
+                <div class="slide"><img id="bannerSlide3" src="" alt="Kampanya 3"></div>
             </div>
 
             <div class="dots-container" id="dotsContainer">
@@ -538,28 +556,47 @@
         </div>
     </footer>
 
-    <!-- BİLGİSAYARDA YAN YANA GÖRÜNEN ŞIK DETAY MODALI -->
+    <!-- YENİ B2B TARZI ÜRÜN DETAY MODALI (SOLDA BÜYÜK RESİM, SAĞDA FİYAT VE SEPET) -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fa-solid fa-circle-info" style="color: var(--accent-yellow);"></i> Ürün Detayı</h3>
+                <h3><i class="fa-solid fa-circle-info" style="color: var(--accent-yellow);"></i> Ürün Bilgileri</h3>
                 <span class="close-btn" onclick="closeModal('detailModal')">&times;</span>
             </div>
             
-            <div class="detail-body-container">
-                <div class="detail-img-box">
+            <div class="b2b-detail-layout">
+                <div class="b2b-detail-img-area">
                     <img id="dImg" src="" alt="Lastik Görseli">
                 </div>
-                <div class="detail-info-box">
-                    <div class="detail-row"><span class="detail-label">Ebat:</span><span id="dSize" class="detail-val">--</span></div>
-                    <div class="detail-row"><span class="detail-label">Marka:</span><span id="dBrand" class="detail-val">--</span></div>
-                    <div class="detail-row"><span class="detail-label">Desen:</span><span id="dPattern" class="detail-val">--</span></div>
-                    <div class="detail-row"><span class="detail-label">Mevsim:</span><span id="dCategory" class="detail-val">--</span></div>
-                    <div class="detail-row"><span class="detail-label">Üretim Yılı (DOT):</span><span id="dDot" class="detail-val">--</span></div>
-                    <div class="detail-row"><span class="detail-label">Stok Durumu:</span><span id="dStock" class="detail-val">--</span></div>
-                    <div class="detail-row" style="border:none; margin-top:10px; background:rgba(16,185,129,0.1); padding:10px; border-radius:6px;">
-                        <span class="detail-label" style="color:#10b981; font-size:1.05rem;">Birim Fiyatı:</span>
-                        <span id="dPrice" class="detail-val" style="color:#10b981; font-size:1.25rem;">--</span>
+                
+                <div class="b2b-detail-info-area">
+                    <div id="dTitle" class="b2b-product-title">--</div>
+                    
+                    <div class="b2b-price-box">
+                        <span class="b2b-price-label">Net Fiyat</span>
+                        <span id="dPrice" class="b2b-price-val">--</span>
+                    </div>
+
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span id="dStockBadge">--</span>
+                    </div>
+
+                    <div class="b2b-action-row">
+                        <div class="b2b-qty-box">
+                            <button class="btn-qty" onclick="changeModalQty(-1)">-</button>
+                            <span id="modalQtyVal" style="font-weight:800; min-width:28px; text-align:center;">1</span>
+                            <button class="btn-qty" onclick="changeModalQty(1)">+</button>
+                        </div>
+                        <button class="b2b-btn-cart" onclick="alert('Ürün sepete eklenmiştir!')"><i class="fa-solid fa-cart-shopping"></i> Sepete Ekle</button>
+                    </div>
+
+                    <div style="font-size:0.85rem; font-weight:800; color:var(--accent-yellow); margin-top:5px;">Ürün Bilgileri</div>
+                    <div class="b2b-spec-table">
+                        <div class="b2b-spec-row"><span class="b2b-spec-key">Ürün Ebatı:</span><span id="dSize" class="b2b-spec-val">--</span></div>
+                        <div class="b2b-spec-row"><span class="b2b-spec-key">Marka:</span><span id="dBrand" class="b2b-spec-val">--</span></div>
+                        <div class="b2b-spec-row"><span class="b2b-spec-key">Desen / Model:</span><span id="dPattern" class="b2b-spec-val">--</span></div>
+                        <div class="b2b-spec-row"><span class="b2b-spec-key">Mevsim / Tür:</span><span id="dCategory" class="b2b-spec-val">--</span></div>
+                        <div class="b2b-spec-row"><span class="b2b-spec-key">Üretim Yılı (DOT):</span><span id="dDot" class="b2b-spec-val">--</span></div>
                     </div>
                 </div>
             </div>
@@ -567,38 +604,38 @@
     </div>
 
     <!-- BİLDİRİM MODALI -->
-    <div id="notifModal" class="modal">
+    <div id="notifModal" class="modal" style="max-width: 500px;">
         <div class="modal-content">
             <div class="modal-header">
                 <h3><i class="fa-solid fa-bell" style="color: var(--accent-yellow);"></i> Stok Uyarı Bildirimleri</h3>
                 <span class="close-btn" onclick="closeModal('notifModal')">&times;</span>
             </div>
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Aşağıda Rezerve Stok (0) veya tekli/azalmış stokta (1, 2, 3 Adet) olan ürünler listelenmiştir:</p>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Aşağıda Rezerve Stok (0) veya tekli/azalmış stokta olan ürünler listelenmiştir:</p>
             <div id="notifListContainer"></div>
         </div>
     </div>
 
     <!-- TOPLU ZAM MODALI -->
-    <div id="bulkPriceModal" class="modal">
+    <div id="bulkPriceModal" class="modal" style="max-width: 400px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="bulkModalTitle"><i class="fa-solid fa-percent"></i> Toplu Zam / İndirim Uygula</h3>
+                <h3 id="bulkModalTitle"><i class="fa-solid fa-percent"></i> Toplu Zam / İndirim</h3>
                 <span class="close-btn" onclick="closeModal('bulkPriceModal')">&times;</span>
             </div>
             <input type="hidden" id="bulkTargetCategory" value="">
             <div class="form-group">
                 <label>Zam Veya İndirim Oranı (%)</label>
-                <input type="number" id="bulkPercentInput" class="form-control" placeholder="Örn: %2 Zam için 2, %5 İndirim için -5 yazın">
+                <input type="number" id="bulkPercentInput" class="form-control" placeholder="Örn: %2 Zam için 2, %5 İndirim için -5">
             </div>
             <button class="btn-primary" style="background: var(--accent-yellow); color: #000;" onclick="applyBulkPrice()"><i class="fa-solid fa-check-double"></i> Oranı Uygula</button>
         </div>
     </div>
 
-    <!-- AYARLAR MODALI (3 FOTOĞRAF DESTEKLİ) -->
-    <div id="settingsModal" class="modal">
-        <div class="modal-content" style="max-width: 440px;">
+    <!-- AYARLAR MODALI (VİDEO VE 3LÜ SLİDER DESTEKLİ) -->
+    <div id="settingsModal" class="modal" style="max-width: 480px;">
+        <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fa-solid fa-gear"></i> Sistem ve Görsel Ayarları</h3>
+                <h3><i class="fa-solid fa-gear"></i> Sistem, Video ve Görsel Ayarları</h3>
                 <span class="close-btn" onclick="closeModal('settingsModal')">&times;</span>
             </div>
             
@@ -612,29 +649,28 @@
                 <input type="password" id="newBayiPass" class="form-control" placeholder="Yeni Bayi Şifresi (Varsayılan: 1234)">
             </div>
 
-            <div class="settings-section-title"><i class="fa-solid fa-image"></i> Site Görsellerini Değiştirme</div>
+            <div class="settings-section-title"><i class="fa-solid fa-video"></i> Arka Plan Video Ayarları (MP4 URL)</div>
             <div class="form-group">
-                <label>Giriş Ekranı Arka Plan Resmi (URL)</label>
-                <input type="text" id="cfgLoginBg" class="form-control" placeholder="Resim URL yapıştırın">
+                <label>Giriş Ekranı Arka Plan Videosu (MP4 Linki)</label>
+                <input type="text" id="cfgLoginVideo" class="form-control" placeholder="Örn: https://.../video.mp4">
             </div>
             <div class="form-group">
-                <label>En Üst Header Arka Plan Resmi (URL)</label>
-                <input type="text" id="cfgHeaderBg" class="form-control" placeholder="Resim URL yapıştırın">
+                <label>En Üst Header Arka Plan Videosu (MP4 Linki)</label>
+                <input type="text" id="cfgHeaderVideo" class="form-control" placeholder="Örn: https://.../video.mp4">
             </div>
 
-            <!-- 3 AYRI SLİDER FOTOĞRAFI İÇİN ALAN -->
             <div class="settings-section-title"><i class="fa-solid fa-images"></i> Slider Banner Resimleri (3 Adet)</div>
             <div class="form-group">
                 <label>1. Banner Fotoğrafı (URL)</label>
-                <input type="text" id="cfgBanner1" class="form-control" placeholder="1. görsel URL yapıştırın">
+                <input type="text" id="cfgBanner1" class="form-control" placeholder="1. görsel URL">
             </div>
             <div class="form-group">
                 <label>2. Banner Fotoğrafı (URL)</label>
-                <input type="text" id="cfgBanner2" class="form-control" placeholder="2. görsel URL yapıştırın">
+                <input type="text" id="cfgBanner2" class="form-control" placeholder="2. görsel URL">
             </div>
             <div class="form-group">
                 <label>3. Banner Fotoğrafı (URL)</label>
-                <input type="text" id="cfgBanner3" class="form-control" placeholder="3. görsel URL yapıştırın">
+                <input type="text" id="cfgBanner3" class="form-control" placeholder="3. görsel URL">
             </div>
 
             <button class="btn-primary" style="background: #3b82f6; color: white;" onclick="saveSettings()"><i class="fa-solid fa-floppy-disk"></i> Ayarları Kaydet</button>
@@ -642,7 +678,7 @@
     </div>
 
     <!-- YENİ ÜRÜN EKLE MODALI -->
-    <div id="productModal" class="modal">
+    <div id="productModal" class="modal" style="max-width: 480px;">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modalTitleText"><i class="fa-solid fa-plus-circle"></i> Yeni Ürün Ekle</h3>
@@ -763,8 +799,8 @@
     </div>
 
     <!-- KAR HESAPLAMA MODALI -->
-    <div id="karModal" class="modal">
-        <div class="modal-content" style="max-width: 380px;">
+    <div id="karModal" class="modal" style="max-width: 380px;">
+        <div class="modal-content">
             <div class="modal-header">
                 <h3><i class="fa-solid fa-calculator" style="color: var(--accent-yellow);"></i> Kar Oranı Hesaplayıcı</h3>
                 <span class="close-btn" onclick="closeModal('karModal')">&times;</span>
@@ -786,15 +822,8 @@
                     <option value="8">%8 Kar</option>
                     <option value="9">%9 Kar</option>
                     <option value="10" selected>%10 Kar</option>
-                    <option value="11">%11 Kar</option>
                     <option value="12">%12 Kar</option>
-                    <option value="13">%13 Kar</option>
-                    <option value="14">%14 Kar</option>
                     <option value="15">%15 Kar</option>
-                    <option value="16">%16 Kar</option>
-                    <option value="17">%17 Kar</option>
-                    <option value="18">%18 Kar</option>
-                    <option value="19">%19 Kar</option>
                     <option value="20">%20 Kar</option>
                 </select>
             </div>
@@ -806,32 +835,34 @@
         let products = [];
         let currentCategory = 'all';
         let currentUserRole = null;
+        let selectedProductForModal = null;
+        let modalProductQty = 1;
         
         let adminPass = localStorage.getItem('celebi_admin_pass') || 'celebi166';
         let bayiPass = localStorage.getItem('celebi_bayi_pass') || '1234';
 
-        let siteImages = {
-            loginBg: localStorage.getItem('cfg_loginBg') || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80',
-            headerBg: localStorage.getItem('cfg_headerBg') || 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Petlas_logo.svg/1200px-Petlas_logo.svg.png',
+        let siteSettings = {
+            loginVideo: localStorage.getItem('cfg_loginVideo') || '',
+            headerVideo: localStorage.getItem('cfg_headerVideo') || '',
             banner1: localStorage.getItem('cfg_banner1') || 'https://araclo-bucket.sfo3.cdn.digitaloceanspaces.com/blog/1233242a-ea59-497c-b3c9-83f339a50e40.jpg',
             banner2: localStorage.getItem('cfg_banner2') || 'https://images.unsplash.com/photo-1543465077-db45d34b88a5?w=1200&q=80',
             banner3: localStorage.getItem('cfg_banner3') || 'https://images.unsplash.com/photo-1613214149922-f1809c99b414?w=1200&q=80'
         };
 
         window.initFirebaseData = function() {
-            applySiteImages();
+            applySiteSettings();
 
             if (!window.db) return;
 
             window.onSnapshot(window.doc(window.db, "site_ayarlari", "gorseller"), (docSnap) => {
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    if (data.loginBg) siteImages.loginBg = data.loginBg;
-                    if (data.headerBg) siteImages.headerBg = data.headerBg;
-                    if (data.banner1) siteImages.banner1 = data.banner1;
-                    if (data.banner2) siteImages.banner2 = data.banner2;
-                    if (data.banner3) siteImages.banner3 = data.banner3;
-                    applySiteImages();
+                    if (data.loginVideo !== undefined) siteSettings.loginVideo = data.loginVideo;
+                    if (data.headerVideo !== undefined) siteSettings.headerVideo = data.headerVideo;
+                    if (data.banner1) siteSettings.banner1 = data.banner1;
+                    if (data.banner2) siteSettings.banner2 = data.banner2;
+                    if (data.banner3) siteSettings.banner3 = data.banner3;
+                    applySiteSettings();
                 }
             });
 
@@ -845,23 +876,35 @@
             });
         };
 
-        function applySiteImages() {
-            const loginElem = document.getElementById('loginSection');
-            if (loginElem) {
-                loginElem.style.backgroundImage = `linear-gradient(rgba(15, 23, 42, 0.82), rgba(2, 6, 23, 0.90)), url('${siteImages.loginBg}')`;
+        function applySiteSettings() {
+            const loginVid = document.getElementById('loginVideoBg');
+            if (loginVid) {
+                if (siteSettings.loginVideo) {
+                    loginVid.src = siteSettings.loginVideo;
+                    loginVid.style.display = 'block';
+                    loginVid.play().catch(e => console.log("Video autoplay blocked"));
+                } else {
+                    loginVid.style.display = 'none';
+                }
             }
 
-            const headerElem = document.getElementById('mainHeader');
-            if (headerElem) {
-                headerElem.style.backgroundImage = `linear-gradient(90deg, rgba(15, 23, 42, 0.88) 0%, rgba(2, 6, 23, 0.82) 100%), url('${siteImages.headerBg}')`;
+            const headerVid = document.getElementById('headerVideoBg');
+            if (headerVid) {
+                if (siteSettings.headerVideo) {
+                    headerVid.src = siteSettings.headerVideo;
+                    headerVid.style.display = 'block';
+                    headerVid.play().catch(e => console.log("Video autoplay blocked"));
+                } else {
+                    headerVid.style.display = 'none';
+                }
             }
 
             const b1 = document.getElementById('bannerSlide1');
             const b2 = document.getElementById('bannerSlide2');
             const b3 = document.getElementById('bannerSlide3');
-            if (b1) b1.src = siteImages.banner1;
-            if (b2) b2.src = siteImages.banner2;
-            if (b3) b3.src = siteImages.banner3;
+            if (b1) b1.src = siteSettings.banner1;
+            if (b2) b2.src = siteSettings.banner2;
+            if (b3) b3.src = siteSettings.banner3;
         }
 
         function formatCurrency(val) {
@@ -913,11 +956,11 @@
             document.getElementById('newAdminPass').value = '';
             document.getElementById('newBayiPass').value = '';
             
-            document.getElementById('cfgLoginBg').value = siteImages.loginBg || '';
-            document.getElementById('cfgHeaderBg').value = siteImages.headerBg || '';
-            document.getElementById('cfgBanner1').value = siteImages.banner1 || '';
-            document.getElementById('cfgBanner2').value = siteImages.banner2 || '';
-            document.getElementById('cfgBanner3').value = siteImages.banner3 || '';
+            document.getElementById('cfgLoginVideo').value = siteSettings.loginVideo || '';
+            document.getElementById('cfgHeaderVideo').value = siteSettings.headerVideo || '';
+            document.getElementById('cfgBanner1').value = siteSettings.banner1 || '';
+            document.getElementById('cfgBanner2').value = siteSettings.banner2 || '';
+            document.getElementById('cfgBanner3').value = siteSettings.banner3 || '';
 
             document.getElementById('settingsModal').style.display = 'flex';
         }
@@ -929,25 +972,25 @@
             if (aPass) { adminPass = aPass; localStorage.setItem('celebi_admin_pass', aPass); }
             if (bPass) { bayiPass = bPass; localStorage.setItem('celebi_bayi_pass', bPass); }
 
-            const lBg = document.getElementById('cfgLoginBg').value.trim();
-            const hBg = document.getElementById('cfgHeaderBg').value.trim();
+            const lVid = document.getElementById('cfgLoginVideo').value.trim();
+            const hVid = document.getElementById('cfgHeaderVideo').value.trim();
             const b1 = document.getElementById('cfgBanner1').value.trim();
             const b2 = document.getElementById('cfgBanner2').value.trim();
             const b3 = document.getElementById('cfgBanner3').value.trim();
 
-            if (lBg) { siteImages.loginBg = lBg; localStorage.setItem('cfg_loginBg', lBg); }
-            if (hBg) { siteImages.headerBg = hBg; localStorage.setItem('cfg_headerBg', hBg); }
-            if (b1) { siteImages.banner1 = b1; localStorage.setItem('cfg_banner1', b1); }
-            if (b2) { siteImages.banner2 = b2; localStorage.setItem('cfg_banner2', b2); }
-            if (b3) { siteImages.banner3 = b3; localStorage.setItem('cfg_banner3', b3); }
+            siteSettings.loginVideo = lVid; localStorage.setItem('cfg_loginVideo', lVid);
+            siteSettings.headerVideo = hVid; localStorage.setItem('cfg_headerVideo', hVid);
+            if (b1) { siteSettings.banner1 = b1; localStorage.setItem('cfg_banner1', b1); }
+            if (b2) { siteSettings.banner2 = b2; localStorage.setItem('cfg_banner2', b2); }
+            if (b3) { siteSettings.banner3 = b3; localStorage.setItem('cfg_banner3', b3); }
 
-            applySiteImages();
+            applySiteSettings();
 
             if (window.db) {
-                await window.setDoc(window.doc(window.db, "site_ayarlari", "gorseller"), siteImages, { merge: true });
+                await window.setDoc(window.doc(window.db, "site_ayarlari", "gorseller"), siteSettings, { merge: true });
             }
 
-            alert('Tüm şifre ve görsel ayarları kalıcı olarak kaydedildi!');
+            alert('Tüm ayarlar ve video tercihleri başarıyla kaydedildi!');
             closeModal('settingsModal');
         }
 
@@ -1186,15 +1229,26 @@
             }
         }
 
+        // YENİ B2B DETAY MODALI AÇMA FONKSİYONU
         function openDetailModal(id) {
             const p = products.find(x => x.id === id);
             if (!p) return;
+            selectedProductForModal = p;
+            modalProductQty = 1;
+            document.getElementById('modalQtyVal').innerText = modalProductQty;
 
             const stockVal = parseInt(p.stock) || 0;
             document.getElementById('dImg').src = p.img || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
+            
+            // Başlık: Ebat + Desen + Marka (Görseldeki gibi şık üst başlık)
+            document.getElementById('dTitle').innerText = `${p.size} ${p.pattern || ''} ${p.brand}`.toUpperCase();
+            
+            document.getElementById('dPrice').innerText = formatCurrency(p.price);
+            document.getElementById('dStockBadge').innerHTML = getStockBadgeHtml(stockVal);
+
             document.getElementById('dSize').innerText = p.size || '-';
-            document.getElementById('dBrand').innerText = p.brand || '-';
-            document.getElementById('dPattern').innerText = p.pattern || 'STANDART';
+            document.getElementById('dBrand').innerText = (p.brand || '-').toUpperCase();
+            document.getElementById('dPattern').innerText = (p.pattern || 'STANDART').toUpperCase();
             
             let categoryText = p.season || 'Yaz';
             if (p.group === 'Zirai') categoryText = 'Zirai Grubu';
@@ -1202,10 +1256,14 @@
             document.getElementById('dCategory').innerText = categoryText;
 
             document.getElementById('dDot').innerText = p.dot || '2026';
-            document.getElementById('dStock').innerHTML = getStockBadgeHtml(stockVal);
-            document.getElementById('dPrice').innerText = formatCurrency(p.price);
 
             document.getElementById('detailModal').style.display = 'flex';
+        }
+
+        function changeModalQty(change) {
+            modalProductQty += change;
+            if (modalProductQty < 1) modalProductQty = 1;
+            document.getElementById('modalQtyVal').innerText = modalProductQty;
         }
 
         function getSortableSize(sizeStr) {
@@ -1379,7 +1437,7 @@
             document.getElementById(modalId).style.display = 'none';
         }
 
-        // SLİDER JAVASCRIPT KONTROLÜ
+        // SLİDER KONTROLÜ
         let slideIndex = 0;
         function showSlide(index) {
             const slides = document.querySelectorAll('.slide');
