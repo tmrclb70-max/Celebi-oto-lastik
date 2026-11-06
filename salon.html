@@ -9,119 +9,148 @@
     
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --card-border: #334155;
-            --accent-gold: #f59e0b;
+            --bg-color: #0b0f19;
+            --card-bg: #131b2e;
+            --card-border: #1e293b;
+            --accent-platinum: #38bdf8; /* Şık Kurumsal Buz Mavisi/Gümüş */
+            --accent-hover: #0ea5e9;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --danger-color: #ef4444;
+            --danger-color: #f43f5e;
             --success-color: #10b981;
+            --warning-color: #fbbf24;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding-bottom: 40px; }
 
         header {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            border-bottom: 2px solid var(--accent-gold);
+            background: linear-gradient(135deg, #131b2e, #0b0f19);
+            border-bottom: 2px solid var(--accent-platinum);
             padding: 16px 20px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
         }
         header h1 { font-size: 1.4rem; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
-        header p { font-size: 0.8rem; color: var(--accent-gold); font-weight: 700; margin-top: 2px; }
+        header p { font-size: 0.8rem; color: var(--accent-platinum); font-weight: 700; margin-top: 3px; }
 
         .container { max-width: 600px; margin: 15px auto; padding: 0 12px; }
 
         .tabs { display: flex; gap: 8px; margin-bottom: 15px; }
         .tab-btn {
-            flex: 1; padding: 10px; background: var(--card-bg); border: 1px solid var(--card-border);
+            flex: 1; padding: 11px; background: var(--card-bg); border: 1px solid var(--card-border);
             color: var(--text-muted); font-weight: 700; border-radius: 8px; cursor: pointer; font-size: 0.85rem;
             display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.2s;
         }
-        .tab-btn.active { background: var(--accent-gold); color: #000; border-color: var(--accent-gold); }
+        .tab-btn.active { background: var(--accent-platinum); color: #0b0f19; border-color: var(--accent-platinum); font-weight: 800; }
 
         .card {
-            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px;
-            padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px;
+            padding: 16px; margin-bottom: 15px; box-shadow: 0 6px 16px rgba(0,0,0,0.4);
         }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+        .stat-box { background: rgba(15, 23, 42, 0.8); border: 1px solid var(--card-border); border-radius: 8px; padding: 10px 6px; text-align: center; }
+        .stat-box span { display: block; font-size: 0.7rem; color: var(--text-muted); font-weight: 600; margin-bottom: 3px; }
+        .stat-box strong { font-size: 0.88rem; font-weight: 900; color: #fff; }
 
         .form-group { margin-bottom: 10px; text-align: left; }
         .form-group label { display: block; margin-bottom: 4px; font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
         .form-control {
-            width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--card-border);
-            background: #0f172a; color: white; font-size: 0.9rem;
+            width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--card-border);
+            background: #0b0f19; color: white; font-size: 0.9rem;
         }
-        .form-control:focus { outline: none; border-color: var(--accent-gold); }
+        .form-control:focus { outline: none; border-color: var(--accent-platinum); box-shadow: 0 0 8px rgba(56, 189, 248, 0.3); }
 
         .btn-primary {
-            width: 100%; padding: 11px; background: var(--accent-gold); color: #000; font-weight: 800;
-            border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem; margin-top: 5px;
-            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+            width: 100%; padding: 12px; background: var(--accent-platinum); color: #0b0f19; font-weight: 800;
+            border: none; border-radius: 8px; cursor: pointer; font-size: 0.95rem; margin-top: 5px;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3); transition: 0.2s;
         }
+        .btn-primary:hover { background: var(--accent-hover); }
 
         .list-item {
-            background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-radius: 8px;
+            background: rgba(11, 15, 25, 0.75); border: 1px solid var(--card-border); border-radius: 9px;
             padding: 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
         }
         .item-info h4 { font-size: 0.95rem; color: #fff; font-weight: 800; margin-bottom: 2px; }
         .item-info p { font-size: 0.78rem; color: var(--text-muted); }
-        .item-actions { display: flex; gap: 6px; align-items: center; }
+        .item-actions { display: flex; gap: 5px; align-items: center; }
 
-        .badge { padding: 4px 8px; border-radius: 5px; font-size: 0.72rem; font-weight: 800; }
+        .badge { padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; }
         .badge-success { background: rgba(16, 185, 129, 0.2); color: var(--success-color); border: 1px solid var(--success-color); }
-        .badge-danger { background: rgba(239, 68, 68, 0.2); color: var(--danger-color); border: 1px solid var(--danger-color); }
+        .badge-danger { background: rgba(244, 63, 94, 0.2); color: var(--danger-color); border: 1px solid var(--danger-color); }
 
-        .btn-action { background: none; border: none; cursor: pointer; font-size: 1rem; padding: 6px; border-radius: 4px; }
+        .btn-action { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); cursor: pointer; font-size: 0.85rem; width: 30px; height: 30px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #fff; transition: 0.2s; }
         .btn-delete { color: var(--danger-color); }
+        .btn-delete:hover { background: rgba(244, 63, 94, 0.2); }
         .btn-check { color: var(--success-color); }
+        .btn-check:hover { background: rgba(16, 185, 129, 0.2); }
+        .btn-edit { color: var(--warning-color); }
+        .btn-edit:hover { background: rgba(251, 191, 36, 0.2); }
 
-        .section-title { font-size: 0.95rem; font-weight: 800; color: var(--accent-gold); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+        .section-title { font-size: 0.95rem; font-weight: 800; color: var(--accent-platinum); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Men’s Güzellik Salonu</h1>
-        <p><i class="fa-solid fa-scissors"></i> İşletmeci: Yunus Erbay</p>
+        <h1>💈 Men’s Güzellik Salonu</h1>
+        <p>✂️ İşletmeci: Yunus Erbay | 🪒 Profesyonel Bakım</p>
     </header>
 
     <div class="container">
         <!-- Sekmeler -->
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('randevuTab', this)"><i class="fa-solid fa-calendar-check"></i> Randevular</button>
-            <button class="tab-btn" onclick="switchTab('cariTab', this)"><i class="fa-solid fa-wallet"></i> Cari / Veresiye</button>
+            <button class="tab-btn" onclick="switchTab('cariTab', this)"><i class="fa-solid fa-wallet"></i> Cari & Kasa</button>
         </div>
 
         <!-- 1. RANDEVU SEKMESİ -->
         <div id="randevuTab">
             <div class="card">
-                <div class="section-title"><i class="fa-solid fa-plus-circle"></i> Yeni Randevu Ekle</div>
+                <div class="section-title"><i class="fa-solid fa-plus-circle"></i> <span id="randevuFormTitle">Yeni Randevu Oluştur</span></div>
+                <input type="hidden" id="editingRandevuId" value="">
                 <div class="form-group">
                     <label>Müşteri Adı Soyadı</label>
                     <input type="text" id="rMusteri" class="form-control" placeholder="Örn: Ahmet Yılmaz">
                 </div>
                 <div class="form-group">
                     <label>Yapılacak İşlem</label>
-                    <input type="text" id="rIslem" class="form-control" placeholder="Örn: Saç + Sakal Kesimi">
+                    <input type="text" id="rIslem" class="form-control" placeholder="Örn: ✂️ Saç + Sakal Kesimi">
                 </div>
                 <div class="form-group">
                     <label>Tarih ve Saat</label>
                     <input type="datetime-local" id="rTarih" class="form-control">
                 </div>
-                <button class="btn-primary" onclick="addRandevu()">Randevuyu Kaydet</button>
+                <button class="btn-primary" id="randevuSaveBtn" onclick="saveRandevu()">Randevuyu Kaydet</button>
             </div>
 
             <div class="card">
-                <div class="section-title"><i class="fa-solid fa-list"></i> Randevu Listesi</div>
+                <div class="section-title"><i class="fa-solid fa-list"></i> Randevu Takvimi</div>
                 <div id="randevuListContainer"></div>
             </div>
         </div>
 
-        <!-- 2. CARİ / VERESİYE SEKMESİ -->
+        <!-- 2. CARİ / KASA SEKMESİ -->
         <div id="cariTab" class="hidden">
+            <!-- Özet Kutuları -->
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span>Toplam Alacak</span>
+                    <strong id="statBorc" style="color: var(--danger-color);">₺0,00</strong>
+                </div>
+                <div class="stat-box">
+                    <span>Tahsil Edilen</span>
+                    <strong id="statTahsil" style="color: var(--success-color);">₺0,00</strong>
+                </div>
+                <div class="stat-box">
+                    <span>Toplam Ciro</span>
+                    <strong id="statCiro" style="color: var(--accent-platinum);">₺0,00</strong>
+                </div>
+            </div>
+
             <div class="card">
                 <div class="section-title"><i class="fa-solid fa-user-plus"></i> Cari / Veresiye Müşteri Ekle</div>
                 <div class="form-group">
@@ -155,31 +184,81 @@
             btn.classList.add('active');
         }
 
+        // --- BİLDİRİM KONTROLÜ ---
+        function checkNotifications() {
+            if (!("Notification" in window)) return;
+            if (Notification.permission !== "granted") {
+                Notification.requestPermission();
+            }
+
+            const now = new Date().getTime();
+            randevular.forEach(r => {
+                const rTime = new Date(r.tarih).getTime();
+                // Randevu saati geldiyse veya geçtiyse ve daha önce bildirilmediyse
+                if (r.durum === 'Bekliyor' && rTime <= now && rTime > (now - 10 * 60 * 1000)) {
+                    if (Notification.permission === "granted") {
+                        new Notification("💈 Men’s Güzellik Salonu - Randevu Vakti!", {
+                            body: `${r.musteri} için ${r.islem} randevusu başladı!`,
+                            icon: "https://cdn-icons-png.flaticon.com/512/2933/2933888.png"
+                        });
+                    }
+                }
+            });
+        }
+        setInterval(checkNotifications, 30000); // Her 30 saniyede bir kontrol et
+
         // --- RANDEVU İŞLEMLERİ ---
-        function addRandevu() {
+        function saveRandevu() {
             const musteri = document.getElementById('rMusteri').value.trim();
             const islem = document.getElementById('rIslem').value.trim();
             const tarih = document.getElementById('rTarih').value;
+            const editingId = document.getElementById('editingRandevuId').value;
 
             if(!musteri || !islem || !tarih) {
                 alert('Lütfen tüm alanları doldurun!');
                 return;
             }
 
-            const yeni = { id: Date.now(), musteri, islem, tarih, durum: 'Bekliyor' };
-            randevular.push(yeni);
-            localStorage.setItem('yunus_randevular', JSON.stringify(randevular));
+            if(editingId) {
+                // Güncelleme
+                const r = randevular.find(x => x.id == editingId);
+                if(r) {
+                    r.musteri = musteri;
+                    r.islem = islem;
+                    r.tarih = tarih;
+                }
+                document.getElementById('editingRandevuId').value = '';
+                document.getElementById('randevuFormTitle').innerText = 'Yeni Randevu Oluştur';
+                document.getElementById('randevuSaveBtn').innerText = 'Randevuyu Kaydet';
+            } else {
+                // Yeni Ekleme
+                const yeni = { id: Date.now(), musteri, islem, tarih, durum: 'Bekliyor' };
+                randevular.push(yeni);
+            }
 
+            localStorage.setItem('yunus_randevular', JSON.stringify(randevular));
             document.getElementById('rMusteri').value = '';
             document.getElementById('rIslem').value = '';
             document.getElementById('rTarih').value = '';
             renderRandevular();
         }
 
+        function editRandevu(id) {
+            const r = randevular.find(x => x.id === id);
+            if(!r) return;
+            document.getElementById('editingRandevuId').value = r.id;
+            document.getElementById('rMusteri').value = r.musteri;
+            document.getElementById('rIslem').value = r.islem;
+            document.getElementById('rTarih').value = r.tarih;
+            document.getElementById('randevuFormTitle').innerText = 'Randevu Düzenle';
+            document.getElementById('randevuSaveBtn').innerText = 'Değişiklikleri Güncelle';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         function toggleRandevuDurumu(id) {
             const r = randevular.find(x => x.id === id);
             if(r) {
-                r.durum = r.durum === 'Bekliyor' ? 'Tamamlandı' : 'Bekliyor';
+                r.durum = r.durum === 'Bekliyor' ? 'Tıraş Edildi' : 'Bekliyor';
                 localStorage.setItem('yunus_randevular', JSON.stringify(randevular));
                 renderRandevular();
             }
@@ -204,19 +283,21 @@
 
             randevular.forEach(r => {
                 const tarihFormatted = r.tarih.replace('T', ' Saat: ');
-                const badgeClass = r.durum === 'Tamamlandı' ? 'badge-success' : 'badge-danger';
+                const isCompleted = r.durum === 'Tıraş Edildi';
+                const badgeClass = isCompleted ? 'badge-success' : 'badge-danger';
 
                 const div = document.createElement('div');
                 div.className = 'list-item';
                 div.innerHTML = `
                     <div class="item-info">
                         <h4>${r.musteri}</h4>
-                        <p><i class="fa-solid fa-cut"></i> ${r.islem}</p>
-                        <p><i class="fa-regular fa-clock"></i> ${tarihFormatted}</p>
+                        <p>✂️ ${r.islem}</p>
+                        <p>🕒 ${tarihFormatted}</p>
                         <span class="badge ${badgeClass}" style="margin-top:4px; display:inline-block;">${r.durum}</span>
                     </div>
                     <div class="item-actions">
-                        <button class="btn-action btn-check" onclick="toggleRandevuDurumu(${r.id})" title="Durum Değiştir"><i class="fa-solid fa-check"></i></button>
+                        <button class="btn-action btn-check" onclick="toggleRandevuDurumu(${r.id})" title="${isCompleted ? 'Bekliyora Çevir' : 'Tıraş Edildi / Onayla'}"><i class="fa-solid fa-check"></i></button>
+                        <button class="btn-action btn-edit" onclick="editRandevu(${r.id})" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
                         <button class="btn-action btn-delete" onclick="deleteRandevu(${r.id})" title="Sil"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 `;
@@ -234,7 +315,7 @@
                 return;
             }
 
-            const yeni = { id: Date.now(), musteri, bakiye };
+            const yeni = { id: Date.now(), musteri, bakiye, odenen: 0 };
             cariler.push(yeni);
             localStorage.setItem('yunus_cariler', JSON.stringify(cariler));
 
@@ -243,8 +324,21 @@
             renderCariler();
         }
 
+        function odemeAl(id) {
+            const c = cariler.find(x => x.id === id);
+            if(!c) return;
+            const alinan = prompt(`${c.musteri} için tahsil edilen (ödenen) tutarı girin (TL):`, c.bakiye);
+            if(alinan !== null && !isNaN(parseFloat(alinan))) {
+                const miktar = parseFloat(alinan);
+                c.odenen = (c.odenen || 0) + miktar;
+                c.bakiye = Math.max(0, c.bakiye - miktar);
+                localStorage.setItem('yunus_cariler', JSON.stringify(cariler));
+                renderCariler();
+            }
+        }
+
         function deleteCari(id) {
-            if(confirm('Bu cari hesabı silmek/kapatmak istiyor musunuz?')) {
+            if(confirm('Bu cari hesabı silmek istiyor musunuz?')) {
                 cariler = cariler.filter(x => x.id !== id);
                 localStorage.setItem('yunus_cariler', JSON.stringify(cariler));
                 renderCariler();
@@ -254,6 +348,19 @@
         function renderCariler() {
             const container = document.getElementById('cariListContainer');
             container.innerHTML = '';
+
+            let toplamBorc = 0;
+            let toplamTahsil = 0;
+
+            cariler.forEach(c => {
+                toplamBorc += (c.bakiye || 0);
+                toplamTahsil += (c.odenen || 0);
+            });
+            const toplamCiro = toplamBorc + toplamTahsil;
+
+            document.getElementById('statBorc').innerText = '₺' + toplamBorc.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+            document.getElementById('statTahsil').innerText = '₺' + toplamTahsil.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+            document.getElementById('statCiro').innerText = '₺' + toplamCiro.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
 
             if(cariler.length === 0) {
                 container.innerHTML = '<p style="color:var(--text-muted); text-align:center; font-size:0.85rem;">Kayıtlı cari/veresiye hesap bulunmuyor.</p>';
@@ -266,17 +373,18 @@
                 div.innerHTML = `
                     <div class="item-info">
                         <h4>${c.musteri}</h4>
-                        <p style="color: var(--success-color); font-weight:800; font-size:0.9rem; margin-top:2px;">Borç / Bakiye: ₺${c.bakiye.toLocaleString('tr-TR')}</p>
+                        <p style="color: var(--danger-color); font-weight:800; font-size:0.85rem;">Kalan Borç: ₺${c.bakiye.toLocaleString('tr-TR')}</p>
+                        ${c.odenen > 0 ? `<p style="color: var(--success-color); font-size:0.75rem;">Ödenen: ₺${c.odenen.toLocaleString('tr-TR')}</p>` : ''}
                     </div>
                     <div class="item-actions">
-                        <button class="btn-action btn-delete" onclick="deleteCari(${c.id})" title="Hesabı Sil"><i class="fa-solid fa-trash"></i></button>
+                        <button class="btn-action btn-check" onclick="odemeAl(${c.id})" title="Ödeme Al"><i class="fa-solid fa-coins"></i></button>
+                        <button class="btn-action btn-delete" onclick="deleteCari(${c.id})" title="Sil"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 `;
                 container.appendChild(div);
             });
         }
 
-        // Sayfa açıldığında listeleri doldur
         renderRandevular();
         renderCariler();
     </script>
