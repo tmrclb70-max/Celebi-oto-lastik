@@ -531,7 +531,7 @@
         </div>
     </footer>
 
-    <!-- ÜRÜN DETAY MODALI (TÜR VE MEVSİM AYRILMIŞ HALDE) -->
+    <!-- ÜRÜN DETAY MODALI -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1280,8 +1280,9 @@
 
                 let matchCat = false;
                 if (currentCategory === 'all') {
-                    // "Tüm Ürünler" dendiğinde sadece normal sıfır lastikler (Otomobil/Yaz/Kış/4Mevsim) gösterilir
-                    matchCat = !isInnerTube && !isSecondHand && !isZirai;
+                    // "Tüm Ürünler" seçildiğinde Zirai grubu da dahil olmak üzere tüm sıfır lastikler gösterilir
+                    // Sadece özel kategoriler olan İç Lastik ve 2. El hariç tutulur
+                    matchCat = !isInnerTube && !isSecondHand;
                 } else if (currentCategory === 'İç Lastik') {
                     matchCat = isInnerTube;
                 } else if (currentCategory === '2. El') {
@@ -1289,7 +1290,7 @@
                 } else if (currentCategory === 'Zirai') {
                     matchCat = isZirai;
                 } else {
-                    // Yaz, Kış veya 4 Mevsim filtresi seçildiğinde sadece sıfır oto lastikleri eşleşir
+                    // Yaz, Kış veya 4 Mevsim seçildiğinde sadece binek/hafif ticari sıfır lastikleri eşleşir (Zirai karışmaz)
                     matchCat = (p.season === currentCategory && !isInnerTube && !isSecondHand && !isZirai);
                 }
                 
@@ -1314,7 +1315,6 @@
                 } else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') {
                     catTag = `<span class="tag tag-category"><i class="fa-solid fa-circle-dot icon-tube"></i> İç Lastik</span>`;
                 } else if (p.group === '2. El') {
-                    // 2. El ürünlerde istenildiği gibi hem 2. El hem de yazlık/kışlık durumu birlikte gösterilir
                     let sIcon = 'fa-sun icon-sun';
                     if (p.season === 'Kış') sIcon = 'fa-snowflake icon-snow';
                     else if (p.season === '4 Mevsim') sIcon = 'fa-cloud-sun-rain icon-all';
