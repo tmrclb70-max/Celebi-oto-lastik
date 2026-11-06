@@ -62,6 +62,7 @@
             --icon-all: #10b981;
             --icon-tractor: #f97316;
             --icon-tube: #ef4444;
+            --icon-secondhand: #8b5cf6;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
@@ -173,6 +174,7 @@
         .icon-all { color: var(--icon-all) !important; filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.6)); }
         .icon-tractor { color: var(--icon-tractor) !important; filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.6)); }
         .icon-tube { color: var(--icon-tube) !important; filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.6)); }
+        .icon-secondhand { color: var(--icon-secondhand) !important; filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.6)); }
 
         .admin-bar { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; background: rgba(255,255,255,0.03); padding: 10px 12px; border-radius: 8px; border: 1px solid var(--card-border); }
         .admin-bar-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
@@ -436,6 +438,7 @@
                 </button>
             </div>
 
+            <!-- FİLTRE BUTONLARI (İÇ LASTİKLERİN YANINDA 2. EL LASTİKLER EKLENDİ) -->
             <div class="filter-buttons">
                 <button class="filter-btn active" onclick="setCategory('all', this)"><i class="fa-solid fa-border-all"></i> Tüm Ürünler</button>
                 <button class="filter-btn" onclick="setCategory('Yaz', this)"><i class="fa-solid fa-sun icon-sun"></i> Yaz Lastikleri</button>
@@ -443,6 +446,7 @@
                 <button class="filter-btn" onclick="setCategory('4 Mevsim', this)"><i class="fa-solid fa-cloud-sun-rain icon-all"></i> 4 Mevsim</button>
                 <button class="filter-btn" onclick="setCategory('Zirai', this)"><i class="fa-solid fa-tractor icon-tractor"></i> Zirai Grubu</button>
                 <button class="filter-btn" onclick="setCategory('İç Lastik', this)"><i class="fa-solid fa-circle-dot icon-tube"></i> İç Lastikler</button>
+                <button class="filter-btn" onclick="setCategory('2. El', this)"><i class="fa-solid fa-rotate-right icon-secondhand"></i> 2. El Lastikler</button>
             </div>
         </div>
 
@@ -462,6 +466,7 @@
                 <button class="btn-bulk-item" onclick="openBulkPriceModal('4 Mevsim')"><i class="fa-solid fa-cloud-sun-rain icon-all"></i> % 4 Mevsim</button>
                 <button class="btn-bulk-item" onclick="openBulkPriceModal('Zirai')"><i class="fa-solid fa-tractor icon-tractor"></i> % Zirai</button>
                 <button class="btn-bulk-item" onclick="openBulkPriceModal('İç Lastik')"><i class="fa-solid fa-circle-dot icon-tube"></i> % İç Lastik</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('2. El')"><i class="fa-solid fa-rotate-right icon-secondhand"></i> % 2. El</button>
             </div>
         </div>
 
@@ -648,7 +653,7 @@
         </div>
     </div>
 
-    <!-- YENİ ÜRÜN EKLE MODALI -->
+    <!-- YENİ ÜRÜN EKLE MODALI (2. EL SEÇENEĞİ EKLENDİ) -->
     <div id="productModal" class="modal" style="max-width: 480px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -665,6 +670,7 @@
                     <option value="Otomobil">Otomobil / Hafif Ticari Lastiği</option>
                     <option value="Zirai">Zirai Grubu (Traktör / İş Makinesi)</option>
                     <option value="İç Lastik">İç Lastik (Şambrel)</option>
+                    <option value="2. El">2. El Lastik Grubu</option>
                 </select>
             </div>
 
@@ -725,8 +731,8 @@
             </div>
 
             <div class="form-group">
-                <label>Lastik Deseni / Model / Özellik</label>
-                <input type="text" id="pPattern" class="form-control" placeholder="Örn: 8PR TRAKTÖR ÖN, SNOWMASTER Vb.">
+                <label>Lastik Deseni / Diş Durumu / Özellik</label>
+                <input type="text" id="pPattern" class="form-control" placeholder="Örn: 5mm Dişli, TEMİZ Vb.">
             </div>
 
             <div class="form-group" id="seasonGroup">
@@ -740,18 +746,18 @@
 
             <div class="form-group">
                 <label>DOT (Üretim Yılı)</label>
-                <input type="text" id="pDot" class="form-control" placeholder="Örn: 2026">
+                <input type="text" id="pDot" class="form-control" placeholder="Örn: 2024">
             </div>
 
             <div class="form-group">
                 <label>Stok Adedi</label>
-                <input type="number" id="pStock" class="form-control" value="4">
+                <input type="number" id="pStock" class="form-control" value="2">
             </div>
 
             <div class="form-group">
                 <label>Birim Satış Fiyatı (TL)</label>
                 <div class="input-with-btn">
-                    <input type="number" id="pPrice" class="form-control" placeholder="Örn: 2400">
+                    <input type="number" id="pPrice" class="form-control" placeholder="Örn: 1000">
                     <button class="btn-search-img" type="button" onclick="openKarModal()"><i class="fa-solid fa-percent"></i> Kar Hesapla</button>
                 </div>
             </div>
@@ -1047,7 +1053,7 @@
             document.getElementById('pPattern').value = '';
             document.getElementById('pSeason').value = 'Yaz';
             document.getElementById('pDot').value = '2026';
-            document.getElementById('pStock').value = '4';
+            document.getElementById('pStock').value = '2';
             document.getElementById('pPrice').value = '';
             document.getElementById('pImg').value = '';
             document.getElementById('productModal').style.display = 'flex';
@@ -1164,7 +1170,8 @@
             const targetProducts = products.filter(p => {
                 if (cat === 'Zirai') return p.group === 'Zirai';
                 if (cat === 'İç Lastik') return p.group === 'İç Lastik';
-                return p.season === cat;
+                if (cat === '2. El') return p.group === '2. El';
+                return p.season === cat && p.group !== '2. El';
             });
 
             for (let p of targetProducts) {
@@ -1220,6 +1227,9 @@
             } else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') {
                 seasonText = 'İç Lastik';
                 seasonIcon = 'fa-circle-dot icon-tube';
+            } else if (p.group === '2. El') {
+                seasonText = '2. El Lastik';
+                seasonIcon = 'fa-rotate-right icon-secondhand';
             } else if (p.season === 'Kış') {
                 seasonText = 'Kış';
                 seasonIcon = 'fa-snowflake icon-snow';
@@ -1257,16 +1267,20 @@
 
             let filtered = products.filter(p => {
                 const isInnerTube = (p.group === 'İç Lastik' || p.season === 'İç Lastik');
+                const isSecondHand = (p.group === '2. El');
 
                 let matchCat = false;
                 if (currentCategory === 'all') {
-                    matchCat = !isInnerTube;
+                    // "Tüm Ürünler" dendiğinde sıfır lastikler gösterilir, İç Lastik ve 2. El hariç tutulur
+                    matchCat = !isInnerTube && !isSecondHand;
                 } else if (currentCategory === 'İç Lastik') {
                     matchCat = isInnerTube;
+                } else if (currentCategory === '2. El') {
+                    matchCat = isSecondHand;
                 } else if (currentCategory === 'Zirai') {
                     matchCat = (p.group === 'Zirai');
                 } else {
-                    matchCat = (p.season === currentCategory && !isInnerTube);
+                    matchCat = (p.season === currentCategory && !isInnerTube && !isSecondHand);
                 }
                 
                 const fullStr = `${p.size} ${p.brand} ${p.pattern} ${p.dot}`.toLowerCase();
@@ -1289,6 +1303,8 @@
                     catTag = `<span class="tag tag-category"><i class="fa-solid fa-tractor icon-tractor"></i> Zirai</span>`;
                 } else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') {
                     catTag = `<span class="tag tag-category"><i class="fa-solid fa-circle-dot icon-tube"></i> İç Lastik</span>`;
+                } else if (p.group === '2. El') {
+                    catTag = `<span class="tag tag-category"><i class="fa-solid fa-rotate-right icon-secondhand"></i> 2. El</span>`;
                 } else {
                     let iconClass = 'fa-sun icon-sun';
                     if (p.season === 'Kış') iconClass = 'fa-snowflake icon-snow';
