@@ -12,7 +12,7 @@
             --bg-color: #0b0f19;
             --card-bg: #131b2e;
             --card-border: #1e293b;
-            --accent-platinum: #38bdf8; /* Şık Kurumsal Buz Mavisi/Gümüş */
+            --accent-platinum: #38bdf8;
             --accent-hover: #0ea5e9;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
@@ -194,7 +194,6 @@
             const now = new Date().getTime();
             randevular.forEach(r => {
                 const rTime = new Date(r.tarih).getTime();
-                // Randevu saati geldiyse veya geçtiyse ve daha önce bildirilmediyse
                 if (r.durum === 'Bekliyor' && rTime <= now && rTime > (now - 10 * 60 * 1000)) {
                     if (Notification.permission === "granted") {
                         new Notification("💈 Men’s Güzellik Salonu - Randevu Vakti!", {
@@ -205,7 +204,7 @@
                 }
             });
         }
-        setInterval(checkNotifications, 30000); // Her 30 saniyede bir kontrol et
+        setInterval(checkNotifications, 30000);
 
         // --- RANDEVU İŞLEMLERİ ---
         function saveRandevu() {
@@ -220,7 +219,6 @@
             }
 
             if(editingId) {
-                // Güncelleme
                 const r = randevular.find(x => x.id == editingId);
                 if(r) {
                     r.musteri = musteri;
@@ -231,7 +229,6 @@
                 document.getElementById('randevuFormTitle').innerText = 'Yeni Randevu Oluştur';
                 document.getElementById('randevuSaveBtn').innerText = 'Randevuyu Kaydet';
             } else {
-                // Yeni Ekleme
                 const yeni = { id: Date.now(), musteri, islem, tarih, durum: 'Bekliyor' };
                 randevular.push(yeni);
             }
