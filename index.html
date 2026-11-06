@@ -438,7 +438,6 @@
                 </button>
             </div>
 
-            <!-- FİLTRE BUTONLARI (İÇ LASTİKLERİN YANINDA 2. EL LASTİKLER EKLENDİ) -->
             <div class="filter-buttons">
                 <button class="filter-btn active" onclick="setCategory('all', this)"><i class="fa-solid fa-border-all"></i> Tüm Ürünler</button>
                 <button class="filter-btn" onclick="setCategory('Yaz', this)"><i class="fa-solid fa-sun icon-sun"></i> Yaz Lastikleri</button>
@@ -532,7 +531,7 @@
         </div>
     </footer>
 
-    <!-- ÜRÜN DETAY MODALI -->
+    <!-- ÜRÜN DETAY MODALI (TÜR VE MEVSİM AYRILMIŞ HALDE) -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -571,7 +570,8 @@
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Ürün Ebatı:</span><span id="dSize" class="b2b-spec-val">--</span></div>
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Marka:</span><span id="dBrand" class="b2b-spec-val">--</span></div>
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Desen / Model:</span><span id="dPattern" class="b2b-spec-val">--</span></div>
-                        <div class="b2b-spec-row"><span class="b2b-spec-key">Mevsim / Tür:</span><span id="dCategory" class="b2b-spec-val">--</span></div>
+                        <div class="b2b-spec-row"><span class="b2b-spec-key">Ürün Türü:</span><span id="dType" class="b2b-spec-val">--</span></div>
+                        <div class="b2b-spec-row"><span class="b2b-spec-key">Mevsimi:</span><span id="dSeason" class="b2b-spec-val">--</span></div>
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Üretim Yılı (DOT):</span><span id="dDot" class="b2b-spec-val">--</span></div>
                     </div>
                 </div>
@@ -653,7 +653,7 @@
         </div>
     </div>
 
-    <!-- YENİ ÜRÜN EKLE MODALI (2. EL SEÇENEĞİ EKLENDİ) -->
+    <!-- YENİ ÜRÜN EKLE MODALI -->
     <div id="productModal" class="modal" style="max-width: 480px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -1171,7 +1171,7 @@
                 if (cat === 'Zirai') return p.group === 'Zirai';
                 if (cat === 'İç Lastik') return p.group === 'İç Lastik';
                 if (cat === '2. El') return p.group === '2. El';
-                return p.season === cat && p.group !== '2. El';
+                return p.season === cat && p.group !== 'Zirai' && p.group !== 'İç Lastik' && p.group !== '2. El';
             });
 
             for (let p of targetProducts) {
@@ -1219,6 +1219,14 @@
 
             document.getElementById('dPattern').innerText = (p.pattern || 'STANDART').toUpperCase();
             
+            // Ürün Türü (Otomobil, Zirai, İç Lastik, 2. El)
+            let typeText = 'Otomobil / Hafif Ticari';
+            if (p.group === 'Zirai') typeText = 'Zirai Grubu';
+            else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') typeText = 'İç Lastik (Şambrel)';
+            else if (p.group === '2. El') typeText = '2. El Lastik';
+            document.getElementById('dType').innerText = typeText;
+
+            // Mevsimi (Ayrı satır)
             let seasonText = p.season || 'Yaz';
             let seasonIcon = 'fa-sun icon-sun';
             if (p.group === 'Zirai') {
@@ -1228,7 +1236,7 @@
                 seasonText = 'İç Lastik';
                 seasonIcon = 'fa-circle-dot icon-tube';
             } else if (p.group === '2. El') {
-                seasonText = '2. El Lastik';
+                seasonText = p.season || '2. El';
                 seasonIcon = 'fa-rotate-right icon-secondhand';
             } else if (p.season === 'Kış') {
                 seasonText = 'Kış';
@@ -1237,7 +1245,7 @@
                 seasonText = '4 Mevsim';
                 seasonIcon = 'fa-cloud-sun-rain icon-all';
             }
-            document.getElementById('dCategory').innerHTML = `<i class="fa-solid ${seasonIcon}"></i> ${seasonText}`;
+            document.getElementById('dSeason').innerHTML = `<i class="fa-solid ${seasonIcon}"></i> ${seasonText}`;
 
             document.getElementById('dDot').innerText = p.dot || '2026';
 
@@ -1268,19 +1276,21 @@
             let filtered = products.filter(p => {
                 const isInnerTube = (p.group === 'İç Lastik' || p.season === 'İç Lastik');
                 const isSecondHand = (p.group === '2. El');
+                const isZirai = (p.group === 'Zirai');
 
                 let matchCat = false;
                 if (currentCategory === 'all') {
-                    // "Tüm Ürünler" dendiğinde sıfır lastikler gösterilir, İç Lastik ve 2. El hariç tutulur
-                    matchCat = !isInnerTube && !isSecondHand;
+                    // "Tüm Ürünler" dendiğinde sadece normal sıfır lastikler (Otomobil/Yaz/Kış/4Mevsim) gösterilir
+                    matchCat = !isInnerTube && !isSecondHand && !isZirai;
                 } else if (currentCategory === 'İç Lastik') {
                     matchCat = isInnerTube;
                 } else if (currentCategory === '2. El') {
                     matchCat = isSecondHand;
                 } else if (currentCategory === 'Zirai') {
-                    matchCat = (p.group === 'Zirai');
+                    matchCat = isZirai;
                 } else {
-                    matchCat = (p.season === currentCategory && !isInnerTube && !isSecondHand);
+                    // Yaz, Kış veya 4 Mevsim filtresi seçildiğinde sadece sıfır oto lastikleri eşleşir
+                    matchCat = (p.season === currentCategory && !isInnerTube && !isSecondHand && !isZirai);
                 }
                 
                 const fullStr = `${p.size} ${p.brand} ${p.pattern} ${p.dot}`.toLowerCase();
@@ -1304,7 +1314,11 @@
                 } else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') {
                     catTag = `<span class="tag tag-category"><i class="fa-solid fa-circle-dot icon-tube"></i> İç Lastik</span>`;
                 } else if (p.group === '2. El') {
-                    catTag = `<span class="tag tag-category"><i class="fa-solid fa-rotate-right icon-secondhand"></i> 2. El</span>`;
+                    // 2. El ürünlerde istenildiği gibi hem 2. El hem de yazlık/kışlık durumu birlikte gösterilir
+                    let sIcon = 'fa-sun icon-sun';
+                    if (p.season === 'Kış') sIcon = 'fa-snowflake icon-snow';
+                    else if (p.season === '4 Mevsim') sIcon = 'fa-cloud-sun-rain icon-all';
+                    catTag = `<span class="tag tag-category"><i class="fa-solid fa-rotate-right icon-secondhand"></i> 2. El (<i class="fa-solid ${sIcon}"></i> ${p.season || 'Yaz'})</span>`;
                 } else {
                     let iconClass = 'fa-sun icon-sun';
                     if (p.season === 'Kış') iconClass = 'fa-snowflake icon-snow';
