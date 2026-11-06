@@ -80,6 +80,9 @@
         }
 
         .header-container { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+        
+        .header-title-area { display: flex; flex-direction: column; }
+        .header-logo-img { max-height: 46px; max-width: 220px; object-fit: contain; object-position: left center; }
         .header-title-area h1 { font-size: 1.4rem; font-weight: 900; color: #ffffff; letter-spacing: 0.8px; text-transform: uppercase; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
         .header-title-area p { font-size: 0.78rem; color: var(--accent-yellow); font-style: italic; font-weight: 600; margin-top: 2px; }
 
@@ -390,7 +393,9 @@
     <header id="mainHeader">
         <div class="header-container">
             <div class="header-title-area">
-                <h1>ÇELEBİ OTO LASTİK</h1>
+                <div id="headerLogoContainer">
+                    <h1 id="headerTextFallback">ÇELEBİ OTO LASTİK</h1>
+                </div>
                 <p>"Yolunuzda Güven, Lastiğinizde Kalite"</p>
             </div>
             
@@ -625,7 +630,22 @@
                 <input type="password" id="newBayiPass" class="form-control" placeholder="Yeni Bayi Şifresi (Varsayılan: 1234)">
             </div>
 
-            <div class="settings-section-title"><i class="fa-solid fa-image"></i> Giriş ve Header Arka Plan Resimleri</div>
+            <div class="settings-section-title"><i class="fa-solid fa-image"></i> Sol Üst Köşe Logo ve Arka Planlar</div>
+            
+            <input type="hidden" id="cfgSiteLogoBase64" value="">
+            <div class="form-group">
+                <label><i class="fa-solid fa-shield-halved" style="color:var(--accent-yellow);"></i> Bilgisayardan Sol Üst Köşe Şeffaf Logosu Seç</label>
+                <div class="file-upload-box" onclick="document.getElementById('siteLogoFileInput').click()">
+                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 1.3rem; color: var(--accent-yellow); margin-bottom: 4px;"></i>
+                    <p id="siteLogoFileText" style="font-size: 0.8rem; color: var(--text-muted);">Bilgisayarınızdan şeffaf PNG logo seçmek için tıklayın</p>
+                    <input type="file" id="siteLogoFileInput" accept="image/png, image/webp, image/svg+xml" style="display:none;" onchange="handleSiteLogoUpload(this)">
+                </div>
+                <div id="siteLogoPreviewContainer" style="margin-top: 6px; text-align: center; display: none;">
+                    <img id="siteLogoPreviewImg" src="" style="max-height: 40px; background: rgba(255,255,255,0.1); padding: 4px; border-radius: 4px;">
+                    <button type="button" style="background: var(--danger-color); color: white; border: none; padding: 2px 6px; border-radius: 4px; font-size: 0.72rem; margin-left: 8px; cursor: pointer;" onclick="clearSiteLogo()">Logoyu Kaldır</button>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label>Giriş Ekranı Arka Plan Resmi (URL)</label>
                 <input type="text" id="cfgLoginBg" class="form-control" placeholder="Resim URL yapıştırın">
@@ -818,6 +838,7 @@
         let bayiPass = localStorage.getItem('celebi_bayi_pass') || '1234';
 
         let siteImages = {
+            siteLogoBase64: localStorage.getItem('cfg_siteLogoBase64') || '',
             loginBg: localStorage.getItem('cfg_loginBg') || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80',
             headerBg: localStorage.getItem('cfg_headerBg') || 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Petlas_logo.svg/1200px-Petlas_logo.svg.png',
             banner1: localStorage.getItem('cfg_banner1') || 'https://araclo-bucket.sfo3.cdn.digitaloceanspaces.com/blog/1233242a-ea59-497c-b3c9-83f339a50e40.jpg',
@@ -833,6 +854,7 @@
             window.onSnapshot(window.doc(window.db, "site_ayarlari", "gorseller"), (docSnap) => {
                 if (docSnap.exists()) {
                     const data = docSnap.data();
+                    if (data.siteLogoBase64 !== undefined) siteImages.siteLogoBase64 = data.siteLogoBase64;
                     if (data.loginBg) siteImages.loginBg = data.loginBg;
                     if (data.headerBg) siteImages.headerBg = data.headerBg;
                     if (data.banner1) siteImages.banner1 = data.banner1;
@@ -861,6 +883,15 @@
             const headerElem = document.getElementById('mainHeader');
             if (headerElem) {
                 headerElem.style.backgroundImage = `linear-gradient(90deg, rgba(15, 23, 42, 0.88) 0%, rgba(2, 6, 23, 0.82) 100%), url('${siteImages.headerBg}')`;
+            }
+
+            const logoContainer = document.getElementById('headerLogoContainer');
+            if (logoContainer) {
+                if (siteImages.siteLogoBase64 && siteImages.siteLogoBase64.trim() !== '') {
+                    logoContainer.innerHTML = `<img src="${siteImages.siteLogoBase64}" class="header-logo-img" alt="Çelebi Oto Lastik Logo">`;
+                } else {
+                    logoContainer.innerHTML = `<h1 id="headerTextFallback">ÇELEBİ OTO LASTİK</h1>`;
+                }
             }
 
             const b1 = document.getElementById('bannerSlide1');
@@ -920,6 +951,15 @@
             document.getElementById('newAdminPass').value = '';
             document.getElementById('newBayiPass').value = '';
             
+            if (siteImages.siteLogoBase64) {
+                document.getElementById('cfgSiteLogoBase64').value = siteImages.siteLogoBase64;
+                document.getElementById('siteLogoPreviewImg').src = siteImages.siteLogoBase64;
+                document.getElementById('siteLogoPreviewContainer').style.display = 'block';
+                document.getElementById('siteLogoFileText').innerText = 'Şeffaf logo yüklü';
+            } else {
+                clearSiteLogo();
+            }
+
             document.getElementById('cfgLoginBg').value = siteImages.loginBg || '';
             document.getElementById('cfgHeaderBg').value = siteImages.headerBg || '';
             document.getElementById('cfgBanner1').value = siteImages.banner1 || '';
@@ -929,6 +969,41 @@
             document.getElementById('settingsModal').style.display = 'flex';
         }
 
+        function handleSiteLogoUpload(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 280; 
+                    const scaleSize = MAX_WIDTH / img.width;
+                    canvas.width = MAX_WIDTH;
+                    canvas.height = img.height * scaleSize;
+
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                    const compressedBase64 = canvas.toDataURL('image/png');
+                    document.getElementById('cfgSiteLogoBase64').value = compressedBase64;
+                    document.getElementById('siteLogoPreviewImg').src = compressedBase64;
+                    document.getElementById('siteLogoPreviewContainer').style.display = 'block';
+                    document.getElementById('siteLogoFileText').innerText = `Yüklendi: ${file.name}`;
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearSiteLogo() {
+            document.getElementById('cfgSiteLogoBase64').value = '';
+            document.getElementById('siteLogoFileInput').value = '';
+            document.getElementById('siteLogoPreviewContainer').style.display = 'none';
+            document.getElementById('siteLogoFileText').innerText = 'Bilgisayarınızdan şeffaf PNG logo seçmek için tıklayın';
+        }
+
         async function saveSettings() {
             const aPass = document.getElementById('newAdminPass').value.trim();
             const bPass = document.getElementById('newBayiPass').value.trim();
@@ -936,12 +1011,14 @@
             if (aPass) { adminPass = aPass; localStorage.setItem('celebi_admin_pass', aPass); }
             if (bPass) { bayiPass = bPass; localStorage.setItem('celebi_bayi_pass', bPass); }
 
+            const sLogoBase64 = document.getElementById('cfgSiteLogoBase64').value.trim();
             const lBg = document.getElementById('cfgLoginBg').value.trim();
             const hBg = document.getElementById('cfgHeaderBg').value.trim();
             const b1 = document.getElementById('cfgBanner1').value.trim();
             const b2 = document.getElementById('cfgBanner2').value.trim();
             const b3 = document.getElementById('cfgBanner3').value.trim();
 
+            siteImages.siteLogoBase64 = sLogoBase64; localStorage.setItem('cfg_siteLogoBase64', sLogoBase64);
             if (lBg) { siteImages.loginBg = lBg; localStorage.setItem('cfg_loginBg', lBg); }
             if (hBg) { siteImages.headerBg = hBg; localStorage.setItem('cfg_headerBg', hBg); }
             if (b1) { siteImages.banner1 = b1; localStorage.setItem('cfg_banner1', b1); }
@@ -954,7 +1031,7 @@
                 await window.setDoc(window.doc(window.db, "site_ayarlari", "gorseller"), siteImages, { merge: true });
             }
 
-            alert('Tüm ayarlar ve görseller başarıyla kaydedildi!');
+            alert('Tüm ayarlar ve sol üst logo başarıyla kaydedildi!');
             closeModal('settingsModal');
         }
 
@@ -1219,14 +1296,12 @@
 
             document.getElementById('dPattern').innerText = (p.pattern || 'STANDART').toUpperCase();
             
-            // Ürün Türü (Otomobil, Zirai, İç Lastik, 2. El)
             let typeText = 'Otomobil / Hafif Ticari';
             if (p.group === 'Zirai') typeText = 'Zirai Grubu';
             else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') typeText = 'İç Lastik (Şambrel)';
             else if (p.group === '2. El') typeText = '2. El Lastik';
             document.getElementById('dType').innerText = typeText;
 
-            // Mevsimi (Ayrı satır)
             let seasonText = p.season || 'Yaz';
             let seasonIcon = 'fa-sun icon-sun';
             if (p.group === 'Zirai') {
@@ -1280,8 +1355,6 @@
 
                 let matchCat = false;
                 if (currentCategory === 'all') {
-                    // "Tüm Ürünler" seçildiğinde Zirai grubu da dahil olmak üzere tüm sıfır lastikler gösterilir
-                    // Sadece özel kategoriler olan İç Lastik ve 2. El hariç tutulur
                     matchCat = !isInnerTube && !isSecondHand;
                 } else if (currentCategory === 'İç Lastik') {
                     matchCat = isInnerTube;
@@ -1290,7 +1363,6 @@
                 } else if (currentCategory === 'Zirai') {
                     matchCat = isZirai;
                 } else {
-                    // Yaz, Kış veya 4 Mevsim seçildiğinde sadece binek/hafif ticari sıfır lastikleri eşleşir (Zirai karışmaz)
                     matchCat = (p.season === currentCategory && !isInnerTube && !isSecondHand && !isZirai);
                 }
                 
