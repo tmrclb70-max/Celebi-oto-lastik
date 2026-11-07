@@ -64,6 +64,13 @@
         }
         .form-control:focus { outline: none; border-color: var(--accent-platinum); box-shadow: 0 0 8px rgba(56, 189, 248, 0.3); }
 
+        .quick-clients { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+        .quick-chip {
+            background: rgba(56, 189, 248, 0.1); border: 1px solid var(--accent-platinum); color: var(--accent-platinum);
+            padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: 0.2s;
+        }
+        .quick-chip:hover { background: var(--accent-platinum); color: #0b0f19; }
+
         .btn-primary {
             width: 100%; padding: 12px; background: var(--accent-platinum); color: #0b0f19; font-weight: 800;
             border: none; border-radius: 8px; cursor: pointer; font-size: 0.95rem; margin-top: 5px;
@@ -137,13 +144,24 @@
             <div class="card">
                 <div class="section-title"><i class="fa-solid fa-plus-circle"></i> <span id="randevuFormTitle">Yeni Randevu Oluştur</span></div>
                 <input type="hidden" id="editingRandevuId" value="">
+                
+                <!-- Hızlı Sabit Müşteri Seçimi (Tamer Çelebi vb. tek tıkla doldurma) -->
+                <div class="form-group">
+                    <label>⚡ Hızlı Müşteri Seç (Sabit Müşteriler)</label>
+                    <div class="quick-clients">
+                        <span class="quick-chip" onclick="fillClient('Tamer Çelebi', '05513981992', '✂️ Saç + Sakal')">Tamer Çelebi</span>
+                        <span class="quick-chip" onclick="fillClient('Ahmet Yılmaz', '05320000000', '✂️ Saç Kesimi')">Ahmet Yılmaz</span>
+                        <span class="quick-chip" onclick="fillClient('Mehmet Demir', '05331112233', '🪒 Sakal Tıraşı')">Mehmet Demir</span>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label>Müşteri Adı Soyadı</label>
-                    <input type="text" id="rMusteri" class="form-control" placeholder="Örn: Ahmet Yılmaz">
+                    <input type="text" id="rMusteri" class="form-control" placeholder="Örn: Tamer Çelebi">
                 </div>
                 <div class="form-group">
                     <label>Telefon Numarası</label>
-                    <input type="tel" id="rTelefon" class="form-control" placeholder="Örn: 05321234567">
+                    <input type="tel" id="rTelefon" class="form-control" placeholder="Örn: 05513981992">
                 </div>
                 <div class="form-group">
                     <label>Yapılacak İşlem</label>
@@ -217,7 +235,7 @@
             btn.classList.add('active');
         }
 
-        // --- BİLDİRİM KONTROLÜ ---
+        // --- TEK SEFERLİK BİLDİRİM KONTROLÜ ---
         function checkNotifications() {
             if (!("Notification" in window)) return;
             if (Notification.permission !== "granted") {
@@ -225,19 +243,34 @@
             }
 
             const now = new Date().getTime();
+            let guncellendi = false;
+
             randevular.forEach(r => {
                 const rTime = new Date(r.tarih).getTime();
-                if (r.durum === 'Bekliyor' && rTime <= now && rTime > (now - 10 * 60 * 1000)) {
+                // Zamanı gelmiş, bekliyor ve daha önce bildirim gönderilmemişse
+                if (r.durum === 'Bekliyor' && !r.bildirimGonderildi && rTime <= now && rTime > (now - 15 * 60 * 1000)) {
                     if (Notification.permission === "granted") {
                         new Notification("💈 Men’s Güzellik Salonu - Randevu Vakti!", {
                             body: `${r.musteri} için ${r.islem} randevusu başladı!`,
                             icon: "https://cdn-icons-png.flaticon.com/512/2933/2933888.png"
                         });
                     }
+                    r.bildirimGonderildi = true; // Sadece 1 kere bildirilsin diye işaretle
+                    guncellendi = true;
                 }
             });
+
+            if (guncellendi) {
+                localStorage.setItem('yunus_randevular', JSON.stringify(randevular));
+            }
         }
-        setInterval(checkNotifications, 30000);
+        setInterval(checkNotifications, 20000);
+
+        function fillClient(isim, tel, islem) {
+            document.getElementById('rMusteri').value = isim;
+            document.getElementById('rTelefon').value = tel;
+            document.getElementById('rIslem').value = islem;
+        }
 
         // --- RANDEVU İŞLEMLERİ ---
         function saveRandevu() {
@@ -271,7 +304,7 @@
                 document.getElementById('randevuFormTitle').innerText = 'Yeni Randevu Oluştur';
                 document.getElementById('randevuSaveBtn').innerText = 'Randevuyu Kaydet';
             } else {
-                const yeni = { id: Date.now(), musteri, telefon, islem, tarih, durum: 'Bekliyor' };
+                const yeni = { id: Date.now(), musteri, telefon, islem, tarih, durum: 'Bekliyor', bildirimGonderildi: false };
                 randevular.push(yeni);
             }
 
@@ -320,7 +353,6 @@
                 alert('Bu müşteriye ait telefon numarası girilmemiş!');
                 return;
             }
-            // Numarayı uluslararası formata uyarla (0 ile başlıyorsa 90 ekle)
             let formattedTel = tel.replace(/\D/g, '');
             if(formattedTel.startsWith('0')) {
                 formattedTel = '9' + formattedTel;
@@ -328,7 +360,6 @@
                 formattedTel = '90' + formattedTel;
             }
 
-            // Tarih formatını güzelleştir
             const parts = tarihStr.split('T');
             const dateParts = parts[0].split('-');
             const formattedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
@@ -398,8 +429,16 @@
                 return;
             }
 
-            const yeni = { id: Date.now(), musteri, telefon, bakiye, odenen: 0 };
-            cariler.push(yeni);
+            // Aynı isimde cari varsa üzerine ekle, yoksa yeni aç
+            const existing = cariler.find(x => x.musteri.toLowerCase() === musteri.toLowerCase());
+            if(existing) {
+                existing.bakiye += bakiye;
+                if(telefon) existing.telefon = telefon;
+            } else {
+                const yeni = { id: Date.now(), musteri, telefon, bakiye, odenen: 0 };
+                cariler.push(yeni);
+            }
+
             localStorage.setItem('yunus_cariler', JSON.stringify(cariler));
 
             document.getElementById('cMusteri').value = '';
@@ -471,7 +510,7 @@
                     </div>
                     <div class="item-actions">
                         ${c.telefon ? `<button class="btn-action btn-call" onclick="callCustomer('${c.telefon}')" title="Müşteriyi Ara"><i class="fa-solid fa-phone"></i></button>` : ''}
-                        <button class="btn-action btn-check" onclick="odemeAl(${c.id})" title="Ödeme Al"><i class="fa-solid fa-coins"></i></button>
+                        <button class="btn-action btn-check" onclick="odemeAl(${c.id})" title="Ödeme Al / Tahsil Et"><i class="fa-solid fa-coins"></i></button>
                         <button class="btn-action btn-delete" onclick="deleteCari(${c.id})" title="Sil"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 `;
