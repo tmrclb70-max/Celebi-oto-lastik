@@ -69,6 +69,14 @@
         }
         .btn-primary:hover { background: var(--accent-hover); }
 
+        .next-customer-banner {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(16, 185, 129, 0.15));
+            border: 1px solid var(--accent-platinum); border-radius: 10px; padding: 12px; margin-bottom: 12px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .next-info h5 { font-size: 0.75rem; color: var(--accent-platinum); text-transform: uppercase; font-weight: 800; margin-bottom: 2px; }
+        .next-info p { font-size: 0.9rem; font-weight: 700; color: #fff; }
+
         .list-item {
             background: rgba(11, 15, 25, 0.75); border: 1px solid var(--card-border); border-radius: 9px;
             padding: 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
@@ -109,6 +117,17 @@
 
         <!-- 1. RANDEVU SEKMESİ -->
         <div id="randevuTab">
+            <!-- Sıradaki Müşteri Göstergesi -->
+            <div id="nextCustomerBanner" class="hidden">
+                <div class="next-customer-banner">
+                    <div class="next-info">
+                        <h5>🔥 Sıradaki / Yaklaşan Müşteri</h5>
+                        <p id="nextCustomerText">-</p>
+                    </div>
+                    <i class="fa-solid fa-user-clock" style="font-size: 1.5rem; color: var(--accent-platinum);"></i>
+                </div>
+            </div>
+
             <div class="card">
                 <div class="section-title"><i class="fa-solid fa-plus-circle"></i> <span id="randevuFormTitle">Yeni Randevu Oluştur</span></div>
                 <input type="hidden" id="editingRandevuId" value="">
@@ -218,6 +237,13 @@
                 return;
             }
 
+            // Aynı saatte başkası var mı kontrolü (Düzenleme hariç)
+            const cakisma = randevular.find(x => x.tarih === tarih && x.id != editingId);
+            if(cakisma) {
+                alert(`⚠️ Dikkat: Seçtiğiniz bu saatte (${tarih.replace('T', ' Saat: ')}) ${cakisma.musteri} adlı müşterinin randevusu zaten var! Lütfen başka bir saat seçin.`);
+                return;
+            }
+
             if(editingId) {
                 const r = randevular.find(x => x.id == editingId);
                 if(r) {
@@ -232,6 +258,9 @@
                 const yeni = { id: Date.now(), musteri, islem, tarih, durum: 'Bekliyor' };
                 randevular.push(yeni);
             }
+
+            // Tarihe göre sırala
+            randevular.sort((a, b) => new Date(a.tarih) - new Date(b.tarih));
 
             localStorage.setItem('yunus_randevular', JSON.stringify(randevular));
             document.getElementById('rMusteri').value = '';
@@ -271,7 +300,22 @@
 
         function renderRandevular() {
             const container = document.getElementById('randevuListContainer');
+            const nextBanner = document.getElementById('nextCustomerBanner');
+            const nextText = document.getElementById('nextCustomerText');
             container.innerHTML = '';
+
+            // Tarihe göre sıralama garantisi
+            randevular.sort((a, b) => new Date(a.tarih) - new Date(b.tarih));
+
+            // Sıradaki bekleyen müşteriyi bul
+            const bekleyenler = randevular.filter(r => r.durum === 'Bekliyor');
+            if(bekleyenler.length > 0) {
+                const siradaki = bekleyenler[0];
+                nextText.innerHTML = `${siradaki.musteri} - (${siradaki.islem}) <br><span style="font-size:0.75rem; color:var(--text-muted);">🕒 ${siradaki.tarih.replace('T', ' Saat: ')}</span>`;
+                nextBanner.classList.remove('hidden');
+            } else {
+                nextBanner.classList.add('hidden');
+            }
 
             if(randevular.length === 0) {
                 container.innerHTML = '<p style="color:var(--text-muted); text-align:center; font-size:0.85rem;">Henüz kayıtlı randevu yok.</p>';
@@ -353,7 +397,9 @@
                 toplamBorc += (c.bakiye || 0);
                 toplamTahsil += (c.odenen || 0);
             });
-            const toplamCiro = toplamBorc + toplamTahsil;
+            
+            // Ciro = Sadece kasaya gerçekten tahsil edilen para! (Borçlar ciroya yazılmaz, ödenince eklenir)
+            const toplamCiro = toplamTahsil;
 
             document.getElementById('statBorc').innerText = '₺' + toplamBorc.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
             document.getElementById('statTahsil').innerText = '₺' + toplamTahsil.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
@@ -371,7 +417,7 @@
                     <div class="item-info">
                         <h4>${c.musteri}</h4>
                         <p style="color: var(--danger-color); font-weight:800; font-size:0.85rem;">Kalan Borç: ₺${c.bakiye.toLocaleString('tr-TR')}</p>
-                        ${c.odenen > 0 ? `<p style="color: var(--success-color); font-size:0.75rem;">Ödenen: ₺${c.odenen.toLocaleString('tr-TR')}</p>` : ''}
+                        ${c.odenen > 0 ? `<p style="color: var(--success-color); font-size:0.75rem;">Tahsil Edilen: ₺${c.odenen.toLocaleString('tr-TR')}</p>` : ''}
                     </div>
                     <div class="item-actions">
                         <button class="btn-action btn-check" onclick="odemeAl(${c.id})" title="Ödeme Al"><i class="fa-solid fa-coins"></i></button>
