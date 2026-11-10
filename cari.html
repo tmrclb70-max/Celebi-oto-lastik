@@ -624,6 +624,7 @@
             if (p === currentPassword || p === 'çelebi166' || p === 'celebi166') {
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('portalSection').classList.remove('hidden');
+                renderKasa();
             } else {
                 alert('Şifre hatalı!');
             }
@@ -697,6 +698,7 @@
         function renderCustomers() {
             const search = document.getElementById('searchCustomerInput').value.toLowerCase();
             const listEl = document.getElementById('customerList');
+            if (!listEl) return;
             listEl.innerHTML = '';
 
             let totalAlacak = 0;
@@ -821,7 +823,7 @@
             document.getElementById('customerDetailModal').style.display = 'flex';
         }
 
-        // KASA / GELİR GİDER YÖNETİMİ & AKORDEON SİSTEMİ (GÜNCELLENMİŞ VE HATASIZ)
+        // KASA / GELİR GİDER YÖNETİMİ & AKORDEON SİSTEMİ
         function openAddKasaModal() {
             document.getElementById('editingKasaId').value = '';
             document.getElementById('kasaDesc').value = '';
@@ -875,7 +877,6 @@
                 const id = editingId ? editingId : 'kasa_' + Date.now();
                 const now = new Date();
                 
-                // Güncel tarihi GG.AA.YYYY formatında garanti altına alıyoruz
                 const day = String(now.getDate()).padStart(2, '0');
                 const month = String(now.getMonth() + 1).padStart(2, '0');
                 const year = now.getFullYear();
@@ -914,7 +915,6 @@
 
             let totalGelir = 0;
             let totalGider = 0;
-
             const grouped = {};
 
             kasaRecords.forEach(k => {
@@ -1005,12 +1005,14 @@
         function toggleDayGroup(headerEl) {
             const contentEl = headerEl.nextElementSibling;
             const iconEl = headerEl.querySelector('.fa-chevron-down, .fa-chevron-up');
-            if (contentEl.classList.contains('collapsed')) {
+            if (contentEl.style.display === 'none' || contentEl.classList.contains('collapsed')) {
                 contentEl.classList.remove('collapsed');
-                if (iconEl) { iconEl.className = 'fa-solid fa-chevron-up'; }
+                contentEl.style.display = 'flex';
+                if (iconEl) iconEl.className = 'fa-solid fa-chevron-up';
             } else {
                 contentEl.classList.add('collapsed');
-                if (iconEl) { iconEl.className = 'fa-solid fa-chevron-down'; }
+                contentEl.style.display = 'none';
+                if (iconEl) iconEl.className = 'fa-solid fa-chevron-down';
             }
         }
 
@@ -1069,6 +1071,7 @@
 
             document.getElementById('vadeBadge').innerText = vadeList.length;
             const container = document.getElementById('vadeListContainer');
+            if (!container) return;
             container.innerHTML = '';
 
             if (vadeList.length === 0) {
