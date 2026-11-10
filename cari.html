@@ -910,13 +910,14 @@
             const grouped = {};
 
             kasaRecords.forEach(k => {
-                if (k.type === 'gelir') totalGelir += Number(k.amount);
-                else totalGider += Number(k.amount);
+                const amt = Number(k.amount) || 0;
+                if (k.type === 'gelir') totalGelir += amt;
+                else if (k.type === 'gider') totalGider += amt;
 
                 let dateOnly = "Tarihsiz";
                 if (k.date) {
                     const parts = k.date.split(' ');
-                    dateOnly = parts[0] ? parts[0].replace(',', '') : k.date;
+                    dateOnly = parts[0] ? parts[0].replace(',', '').trim() : k.date;
                 }
 
                 const fullText = (dateOnly + " " + (k.desc || '') + " " + (k.user || '')).toLowerCase();
@@ -929,8 +930,8 @@
                 }
 
                 grouped[dateOnly].items.push(k);
-                if (k.type === 'gelir') grouped[dateOnly].dayGelir += Number(k.amount);
-                else grouped[dateOnly].dayGider += Number(k.amount);
+                if (k.type === 'gelir') grouped[dateOnly].dayGelir += amt;
+                else if (k.type === 'gider') grouped[dateOnly].dayGider += amt;
             });
 
             document.getElementById('kasaTotalGelir').innerText = formatCurrency(totalGelir);
@@ -938,13 +939,15 @@
             document.getElementById('kasaNet').innerText = formatCurrency(totalGelir - totalGider);
 
             const sortedDates = Object.keys(grouped).sort((a,b) => {
+                if (a === "Tarihsiz") return 1;
+                if (b === "Tarihsiz") return -1;
                 const pA = a.split('.').reverse().join('-');
                 const pB = b.split('.').reverse().join('-');
                 return pB.localeCompare(pA);
             });
 
             if (sortedDates.length === 0) {
-                listEl.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 20px; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--card-border);">Aradığınız kriterde gelir/gider kaydı bulunamadı.</div>';
+                listEl.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 20px; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--card-border);">Kayıtlı gelir veya gider bulunmuyor.</div>';
                 return;
             }
 
@@ -971,10 +974,10 @@
                                     <div class="tx-desc">${k.desc}</div>
                                     <div class="tx-sub-info">
                                         <span><i class="fa-solid fa-tag"></i> ${k.type === 'gelir' ? 'Gelir' : 'Gider'}</span>
-                                        <span>• ${k.method || ''}</span>
-                                        <span style="color: var(--accent-purple); font-weight: bold;">• Ekleyen: ${k.user || 'Belirtilmedi'}</span>
+                                        <span>• ${k.method || 'Nakit'}</span>
+                                        <span style="color: var(--accent-purple); font-weight: bold;">• Ekleyen: ${k.user || 'Tamer ÇELEBİ'}</span>
                                     </div>
-                                    <div class="tx-date"><i class="fa-regular fa-clock"></i> Saat: ${k.date ? (k.date.split(' ')[1] || k.date) : ''}</div>
+                                    <div class="tx-date"><i class="fa-regular fa-clock"></i> Saat: ${k.date ? (k.date.split(' ')[1] || '') : ''}</div>
                                 </div>
                                 <div class="tx-right">
                                     <div class="tx-amount" style="color: ${k.type === 'gelir' ? 'var(--success-color)' : 'var(--danger-color)'};">
