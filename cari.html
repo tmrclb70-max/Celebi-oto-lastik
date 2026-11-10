@@ -362,7 +362,7 @@
                 <button class="btn-add-customer" style="background: var(--blue-color);" onclick="openAddKasaModal()"><i class="fa-solid fa-plus-circle"></i> Yeni Gelir / Gider Ekle</button>
                 <div class="search-box">
                     <i class="fa-solid fa-calendar-days"></i>
-                    <input type="text" id="searchKasaDateInput" oninput="renderKasa()" placeholder="Tarih veya Açıklama Ara (Örn: 19.10.2026)... 🔍">
+                    <input type="text" id="searchKasaDateInput" oninput="renderKasa()" placeholder="Tarih veya Açıklama Ara (Örn: 10.11.2026)... 🔍">
                 </div>
             </div>
 
@@ -668,6 +668,7 @@
             } else if (tab === 'kasa') {
                 document.getElementById('kasaView').classList.remove('hidden');
                 document.getElementById('tabKasabtn').classList.add('active');
+                renderKasa();
             } else if (tab === 'analiz') {
                 document.getElementById('analizView').classList.remove('hidden');
                 document.getElementById('tabAnalizBtn').classList.add('active');
@@ -820,7 +821,7 @@
             document.getElementById('customerDetailModal').style.display = 'flex';
         }
 
-        // KASA / GELİR GİDER YÖNETİMİ & AKORDEON SİSTEMİ (HATASIZ)
+        // KASA / GELİR GİDER YÖNETİMİ & AKORDEON SİSTEMİ (GÜNCELLENMİŞ VE HATASIZ)
         function openAddKasaModal() {
             document.getElementById('editingKasaId').value = '';
             document.getElementById('kasaDesc').value = '';
@@ -873,7 +874,12 @@
             try {
                 const id = editingId ? editingId : 'kasa_' + Date.now();
                 const now = new Date();
-                const dateStr = now.toLocaleDateString('tr-TR');
+                
+                // Güncel tarihi GG.AA.YYYY formatında garanti altına alıyoruz
+                const day = String(now.getDate()).padStart(2, '0');
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const year = now.getFullYear();
+                const dateStr = `${day}.${month}.${year}`;
                 const timeStr = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
 
                 await window.setDoc(window.doc(window.db, "kasa", id), { 
@@ -887,6 +893,7 @@
                 }, { merge: true });
 
                 closeModal('addKasaModal');
+                renderKasa();
             } catch (error) {
                 console.error("Kayıt hatası:", error);
                 alert("Kayıt eklenirken bir hata oluştu.");
@@ -902,6 +909,7 @@
         function renderKasa() {
             const listEl = document.getElementById('kasaList');
             const dateSearchInput = document.getElementById('searchKasaDateInput') ? document.getElementById('searchKasaDateInput').value.toLowerCase().trim() : '';
+            if (!listEl) return;
             listEl.innerHTML = '';
 
             let totalGelir = 0;
@@ -967,7 +975,7 @@
                             <i class="fa-solid fa-chevron-down" style="margin-left: 8px;"></i>
                         </div>
                     </div>
-                    <div class="day-group-content collapsed">
+                    <div class="day-group-content">
                         ${group.items.map(k => `
                             <div class="tx-item">
                                 <div>
@@ -1268,11 +1276,15 @@
             if ((type === 'tahsilat' || type === 'bizim_odeme') && !paymentMethod) { alert('Lütfen ödeme yöntemi seçin!'); return; }
 
             const id = 'tx_' + Date.now();
-            const now = new Date().toLocaleString('tr-TR');
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            const dateStr = `${day}.${month}.${year} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
             await window.setDoc(window.doc(window.db, "transactions", id), {
                 customerId: activeCustomer.id,
-                type, desc, amount, paymentMethod, dueDate, date: now
+                type, desc, amount, paymentMethod, dueDate, date: dateStr
             });
 
             closeModal('addTxModal');
