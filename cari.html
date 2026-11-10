@@ -201,8 +201,7 @@
         .day-group-title:hover { background: rgba(245, 158, 11, 0.2); }
         .day-summary-badges { font-size: 0.82rem; display: flex; gap: 10px; flex-wrap: wrap; font-weight: 700; }
         .day-group-content { padding: 10px; display: flex; flex-direction: column; gap: 8px; background: #0f1523; border-top: 1px solid var(--card-border); }
-        .day-group-content.collapsed { display: none; }
-
+        
         .btn-sm-icon { background: rgba(255,255,255,0.08); border: 1px solid var(--card-border); color: #fff; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; transition: 0.2s; }
         .btn-sm-icon:hover { border-color: var(--accent-yellow); color: var(--accent-yellow); background: rgba(245, 158, 11, 0.15); }
         .btn-sm-del:hover { border-color: var(--danger-color); color: var(--danger-color); background: rgba(239, 68, 68, 0.15); }
@@ -823,7 +822,7 @@
             document.getElementById('customerDetailModal').style.display = 'flex';
         }
 
-        // KASA / GELİR GİDER YÖNETİMİ & AKORDEON SİSTEMİ
+        // KASA / GELİR GİDER YÖNETİMİ & KESİN ÇÖZÜMLÜ AKORDEON
         function openAddKasaModal() {
             document.getElementById('editingKasaId').value = '';
             document.getElementById('kasaDesc').value = '';
@@ -881,7 +880,7 @@
                 const month = String(now.getMonth() + 1).padStart(2, '0');
                 const year = now.getFullYear();
                 const dateStr = `${day}.${month}.${year}`;
-                const timeStr = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+                const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
 
                 await window.setDoc(window.doc(window.db, "kasa", id), { 
                     user, 
@@ -972,10 +971,10 @@
                             <span style="color: var(--success-color);">Gelir: +${formatCurrency(group.dayGelir)}</span> | 
                             <span style="color: var(--danger-color);">Gider: -${formatCurrency(group.dayGider)}</span> | 
                             <span style="color: ${dayNet >= 0 ? 'var(--success-color)' : 'var(--danger-color)'}; font-weight: bold;">Net: ${formatCurrency(dayNet)}</span>
-                            <i class="fa-solid fa-chevron-down" style="margin-left: 8px;"></i>
+                            <i class="fa-solid fa-chevron-up" style="margin-left: 8px;"></i>
                         </div>
                     </div>
-                    <div class="day-group-content">
+                    <div class="day-group-content" style="display: flex;">
                         ${group.items.map(k => `
                             <div class="tx-item">
                                 <div>
