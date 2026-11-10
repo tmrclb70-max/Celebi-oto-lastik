@@ -587,7 +587,7 @@
         let activeCustomer = null;
         let currentPassword = localStorage.getItem('celebi_cari_pass') || 'çelebi166';
 
-        // Sayfa açıldığında yerel hafızadan verileri HEMEN yükle (Bekleme yapmaz)
+        // Sayfa ilk yüklendiğinde lokal hafızadan verileri anında çek ve ekrana bas
         try {
             const localKasa = localStorage.getItem('celebi_local_kasa');
             if (localKasa) kasaRecords = JSON.parse(localKasa);
@@ -631,7 +631,6 @@
                 renderAnaliz();
             });
 
-            // İlk açılışta lokal veriyi ekrana bas
             renderKasa();
             renderAnaliz();
         };
@@ -914,7 +913,7 @@
                 timestamp: now.getTime() 
             };
 
-            // Önce yerel listeye ekle ve hemen ekranda göster
+            // KRİTİK GÜNCELLEME: Önce yerel diziye ekleyip ekranda ANINDA gösteriyoruz
             const index = kasaRecords.findIndex(x => x.id === id);
             if (index >= 0) {
                 kasaRecords[index] = newRecord;
@@ -922,12 +921,13 @@
                 kasaRecords.unshift(newRecord);
             }
 
+            // Hafızaya ve ekrana kaydı hemen yansıt
             localStorage.setItem('celebi_local_kasa', JSON.stringify(kasaRecords));
             renderKasa();
             renderAnaliz();
             closeModal('addKasaModal');
 
-            // Sonra arka planda Firebase'e kaydet
+            // Arka planda Firebase'e gönder
             try {
                 await window.setDoc(window.doc(window.db, "kasa", id), newRecord, { merge: true });
             } catch (error) {
@@ -961,7 +961,6 @@
             kasaRecords.forEach(k => {
                 const amt = Number(k.amount) || 0;
                 
-                // KESİN KONTROL: Türüne göre ayrı ayrı topluyoruz
                 if (k.type === 'gelir') {
                     totalGelir += amt;
                 } else if (k.type === 'gider') {
