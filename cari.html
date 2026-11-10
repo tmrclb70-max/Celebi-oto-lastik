@@ -820,14 +820,14 @@
             document.getElementById('customerDetailModal').style.display = 'flex';
         }
 
-        // KASA / GELİR GİDER YÖNETİMİ & AKORDEON SİSTEMİ
+        // KASA / GELİR GİDER YÖNETİMİ & AKORDEON SİSTEMİ (HATASIZ)
         function openAddKasaModal() {
             document.getElementById('editingKasaId').value = '';
             document.getElementById('kasaDesc').value = '';
             document.getElementById('kasaAmount').value = '';
             document.getElementById('kasaType').value = 'gelir';
             document.getElementById('kasaUser').value = 'Tamer ÇELEBİ';
-            document.getElementById('kasaMethod').value = '';
+            document.getElementById('kasaMethod').value = 'Nakit';
             document.getElementById('kasaModalTitle').innerHTML = '<i class="fa-solid fa-cash-register"></i> Günlük Gelir / Gider Kaydı';
             document.getElementById('addKasaModal').style.display = 'flex';
         }
@@ -840,7 +840,7 @@
             document.getElementById('kasaUser').value = k.user || 'Tamer ÇELEBİ';
             document.getElementById('kasaType').value = k.type || 'gelir';
             document.getElementById('kasaDesc').value = k.desc || '';
-            document.getElementById('kasaMethod').value = k.method || '';
+            document.getElementById('kasaMethod').value = k.method || 'Nakit';
             document.getElementById('kasaAmount').value = k.amount || '';
             
             document.getElementById('kasaModalTitle').innerHTML = '<i class="fa-solid fa-pen"></i> Gelir / Gider Düzenle';
@@ -855,19 +855,46 @@
             const method = document.getElementById('kasaMethod').value;
             const amount = parseFloat(document.getElementById('kasaAmount').value);
 
-            if (!desc) { alert('Açıklama zorunludur!'); return; }
-            if (!method) { alert('Ödeme yöntemi seçin!'); return; }
-            if (!amount || amount <= 0) { alert('Tutar girin!'); return; }
+            if (!desc) { 
+                alert('Açıklama / Yapılan iş zorunludur!'); 
+                document.getElementById('kasaDesc').focus();
+                return; 
+            }
+            if (!method) { 
+                alert('Lütfen ödeme yöntemi seçin!'); 
+                return; 
+            }
+            if (!amount || isNaN(amount) || amount <= 0) { 
+                alert('Lütfen geçerli bir tutar girin!'); 
+                document.getElementById('kasaAmount').focus();
+                return; 
+            }
 
-            const id = editingId ? editingId : 'kasa_' + Date.now();
-            const now = new Date().toLocaleString('tr-TR');
+            try {
+                const id = editingId ? editingId : 'kasa_' + Date.now();
+                const now = new Date();
+                const dateStr = now.toLocaleDateString('tr-TR');
+                const timeStr = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
 
-            await window.setDoc(window.doc(window.db, "kasa", id), { user, type, desc, method, amount, date: now }, { merge: true });
-            closeModal('addKasaModal');
+                await window.setDoc(window.doc(window.db, "kasa", id), { 
+                    user, 
+                    type, 
+                    desc, 
+                    method, 
+                    amount: Number(amount), 
+                    date: dateStr + ' ' + timeStr, 
+                    timestamp: now.getTime() 
+                }, { merge: true });
+
+                closeModal('addKasaModal');
+            } catch (error) {
+                console.error("Kayıt hatası:", error);
+                alert("Kayıt eklenirken bir hata oluştu.");
+            }
         }
 
         async function deleteKasaRecord(id) {
-            if (confirm("Bu kasa kaydını silmek istiyor musunuz?")) {
+            if (confirm("Bu kasa kaydını silmek istediğinize emin misiniz?")) {
                 await window.deleteDoc(window.doc(window.db, "kasa", id));
             }
         }
@@ -917,7 +944,7 @@
             });
 
             if (sortedDates.length === 0) {
-                listEl.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 20px;">Aradığınız kriterde kayıt bulunamadı.</div>';
+                listEl.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 20px; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--card-border);">Aradığınız kriterde gelir/gider kaydı bulunamadı.</div>';
                 return;
             }
 
