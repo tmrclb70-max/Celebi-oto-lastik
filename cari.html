@@ -587,6 +587,12 @@
         let activeCustomer = null;
         let currentPassword = localStorage.getItem('celebi_cari_pass') || 'çelebi166';
 
+        // Sayfa açıldığında yerel hafızadan verileri HEMEN yükle (Bekleme yapmaz)
+        try {
+            const localKasa = localStorage.getItem('celebi_local_kasa');
+            if (localKasa) kasaRecords = JSON.parse(localKasa);
+        } catch(e) {}
+
         window.initCariData = function() {
             if (!window.db) return;
 
@@ -608,30 +614,26 @@
                 if (activeCustomer) openCustomerDetail(activeCustomer.id);
             });
 
-            // Kasa Kayıtları (Firebase + Yerel Güvence Yedeklemesi)
+            // Kasa Kayıtları (Firebase Senkronizasyonu)
             window.onSnapshot(window.collection(window.db, "kasa"), (snap) => {
-                kasaRecords = [];
-                snap.forEach(d => kasaRecords.push({ id: d.id, ...d.data() }));
+                let remoteRecords = [];
+                snap.forEach(d => remoteRecords.push({ id: d.id, ...d.data() }));
                 
-                if (kasaRecords.length === 0) {
-                    const localData = localStorage.getItem('celebi_local_kasa');
-                    if (localData) {
-                        try { kasaRecords = JSON.parse(localData); } catch(e){}
-                    }
-                } else {
+                if (remoteRecords.length > 0) {
+                    kasaRecords = remoteRecords;
                     localStorage.setItem('celebi_local_kasa', JSON.stringify(kasaRecords));
                 }
 
                 renderKasa();
                 renderAnaliz();
             }, (error) => {
-                const localData = localStorage.getItem('celebi_local_kasa');
-                if (localData) {
-                    try { kasaRecords = JSON.parse(localData); } catch(e){}
-                }
                 renderKasa();
                 renderAnaliz();
             });
+
+            // İlk açılışta lokal veriyi ekrana bas
+            renderKasa();
+            renderAnaliz();
         };
 
         function formatCurrency(val) {
@@ -904,7 +906,7 @@
             const newRecord = { 
                 id, 
                 user, 
-                type, // Doğrudan 'gelir' veya 'gider' olarak kaydediliyor
+                type, 
                 desc, 
                 method, 
                 amount: Number(amount), 
@@ -912,6 +914,7 @@
                 timestamp: now.getTime() 
             };
 
+            // Önce yerel listeye ekle ve hemen ekranda göster
             const index = kasaRecords.findIndex(x => x.id === id);
             if (index >= 0) {
                 kasaRecords[index] = newRecord;
@@ -924,6 +927,7 @@
             renderAnaliz();
             closeModal('addKasaModal');
 
+            // Sonra arka planda Firebase'e kaydet
             try {
                 await window.setDoc(window.doc(window.db, "kasa", id), newRecord, { merge: true });
             } catch (error) {
