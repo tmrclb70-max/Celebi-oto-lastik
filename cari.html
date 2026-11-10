@@ -590,6 +590,7 @@
         window.initCariData = function() {
             if (!window.db) return;
 
+            // Müşteriler
             window.onSnapshot(window.collection(window.db, "customers"), (snap) => {
                 customers = [];
                 snap.forEach(d => customers.push({ id: d.id, ...d.data() }));
@@ -597,6 +598,7 @@
                 renderAnaliz();
             });
 
+            // Cari İşlemler
             window.onSnapshot(window.collection(window.db, "transactions"), (snap) => {
                 transactions = [];
                 snap.forEach(d => transactions.push({ id: d.id, ...d.data() }));
@@ -606,9 +608,27 @@
                 if (activeCustomer) openCustomerDetail(activeCustomer.id);
             });
 
+            // Kasa Kayıtları (Firebase + Yerel Güvence Yedeklemesi)
             window.onSnapshot(window.collection(window.db, "kasa"), (snap) => {
                 kasaRecords = [];
                 snap.forEach(d => kasaRecords.push({ id: d.id, ...d.data() }));
+                
+                if (kasaRecords.length === 0) {
+                    const localData = localStorage.getItem('celebi_local_kasa');
+                    if (localData) {
+                        try { kasaRecords = JSON.parse(localData); } catch(e){}
+                    }
+                } else {
+                    localStorage.setItem('celebi_local_kasa', JSON.stringify(kasaRecords));
+                }
+
+                renderKasa();
+                renderAnaliz();
+            }, (error) => {
+                const localData = localStorage.getItem('celebi_local_kasa');
+                if (localData) {
+                    try { kasaRecords = JSON.parse(localData); } catch(e){}
+                }
                 renderKasa();
                 renderAnaliz();
             });
@@ -822,7 +842,7 @@
             document.getElementById('customerDetailModal').style.display = 'flex';
         }
 
-        // KASA / GELİR GİDER YÖNETİMİ & KESİN ÇÖZÜMLÜ AKORDEON
+        // KASA / GELİR GİDER YÖNETİMİ 
         function openAddKasaModal() {
             document.getElementById('editingKasaId').value = '';
             document.getElementById('kasaDesc').value = '';
@@ -852,7 +872,7 @@
         async function saveKasaRecord() {
             const editingId = document.getElementById('editingKasaId').value;
             const user = document.getElementById('kasaUser').value;
-            const type = document.getElementById('kasaType').value;
+            const type = document.getElementById('kasaType').value; // 'gelir' veya 'gider'
             const desc = document.getElementById('kasaDesc').value.trim();
             const method = document.getElementById('kasaMethod').value;
             const amount = parseFloat(document.getElementById('kasaAmount').value);
@@ -872,37 +892,55 @@
                 return; 
             }
 
+            const id = editingId ? editingId : 'kasa_' + Date.now();
+            const now = new Date();
+            
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            const dateStr = `${day}.${month}.${year}`;
+            const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+            const newRecord = { 
+                id, 
+                user, 
+                type, // Doğrudan 'gelir' veya 'gider' olarak kaydediliyor
+                desc, 
+                method, 
+                amount: Number(amount), 
+                date: dateStr + ' ' + timeStr, 
+                timestamp: now.getTime() 
+            };
+
+            const index = kasaRecords.findIndex(x => x.id === id);
+            if (index >= 0) {
+                kasaRecords[index] = newRecord;
+            } else {
+                kasaRecords.unshift(newRecord);
+            }
+
+            localStorage.setItem('celebi_local_kasa', JSON.stringify(kasaRecords));
+            renderKasa();
+            renderAnaliz();
+            closeModal('addKasaModal');
+
             try {
-                const id = editingId ? editingId : 'kasa_' + Date.now();
-                const now = new Date();
-                
-                const day = String(now.getDate()).padStart(2, '0');
-                const month = String(now.getMonth() + 1).padStart(2, '0');
-                const year = now.getFullYear();
-                const dateStr = `${day}.${month}.${year}`;
-                const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
-
-                await window.setDoc(window.doc(window.db, "kasa", id), { 
-                    user, 
-                    type, 
-                    desc, 
-                    method, 
-                    amount: Number(amount), 
-                    date: dateStr + ' ' + timeStr, 
-                    timestamp: now.getTime() 
-                }, { merge: true });
-
-                closeModal('addKasaModal');
-                renderKasa();
+                await window.setDoc(window.doc(window.db, "kasa", id), newRecord, { merge: true });
             } catch (error) {
-                console.error("Kayıt hatası:", error);
-                alert("Kayıt eklenirken bir hata oluştu.");
+                console.error("Firebase kayıt uyarısı:", error);
             }
         }
 
         async function deleteKasaRecord(id) {
             if (confirm("Bu kasa kaydını silmek istediğinize emin misiniz?")) {
-                await window.deleteDoc(window.doc(window.db, "kasa", id));
+                kasaRecords = kasaRecords.filter(x => x.id !== id);
+                localStorage.setItem('celebi_local_kasa', JSON.stringify(kasaRecords));
+                renderKasa();
+                renderAnaliz();
+
+                try {
+                    await window.deleteDoc(window.doc(window.db, "kasa", id));
+                } catch(e){}
             }
         }
 
@@ -918,8 +956,13 @@
 
             kasaRecords.forEach(k => {
                 const amt = Number(k.amount) || 0;
-                if (k.type === 'gelir') totalGelir += amt;
-                else if (k.type === 'gider') totalGider += amt;
+                
+                // KESİN KONTROL: Türüne göre ayrı ayrı topluyoruz
+                if (k.type === 'gelir') {
+                    totalGelir += amt;
+                } else if (k.type === 'gider') {
+                    totalGider += amt;
+                }
 
                 let dateOnly = "Tarihsiz";
                 if (k.date) {
@@ -937,8 +980,11 @@
                 }
 
                 grouped[dateOnly].items.push(k);
-                if (k.type === 'gelir') grouped[dateOnly].dayGelir += amt;
-                else if (k.type === 'gider') grouped[dateOnly].dayGider += amt;
+                if (k.type === 'gelir') {
+                    grouped[dateOnly].dayGelir += amt;
+                } else if (k.type === 'gider') {
+                    grouped[dateOnly].dayGider += amt;
+                }
             });
 
             document.getElementById('kasaTotalGelir').innerText = formatCurrency(totalGelir);
