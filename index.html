@@ -747,7 +747,7 @@
                 </div>
             </div>
 
-            <!-- 2. EL LASTİKLER İÇİN 4 FOTOĞRAF ÇEKME / YÜKLEME ALANI -->
+            <!-- 2. EL LASTİKLER İÇİN 4 FOTOĞRAF ÇEKME / YÜKLEME VE SİLME ALANI -->
             <div class="form-group hidden" id="usedTirePhotosGroup">
                 <label><i class="fa-solid fa-camera-retro" style="color: var(--accent-yellow);"></i> 2. El Lastik Fotoğrafları (En Fazla 4 Adet Çekin / Seçin)</label>
                 <div class="file-upload-box" onclick="document.getElementById('usedTirePhotosInput').click()">
@@ -756,6 +756,7 @@
                     <input type="file" id="usedTirePhotosInput" accept="image/*" multiple style="display:none;" onchange="handleUsedTirePhotosUpload(this)">
                 </div>
                 <div id="usedTirePhotoPreviewGrid" class="photo-preview-grid"></div>
+                <button type="button" id="clearUsedPhotosBtn" class="hidden" style="background: var(--danger-color); color: white; border: none; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; margin-top: 6px; cursor: pointer;" onclick="clearUsedTirePhotos()"><i class="fa-solid fa-trash"></i> Tüm Fotoğrafları Sil / Temizle</button>
             </div>
 
             <div class="form-group">
@@ -1078,7 +1079,7 @@
             document.getElementById('fileUploadText').innerText = 'Bilgisayarınızdan şeffaf PNG logosu seçebilirsiniz';
         }
 
-        // --- 2. EL LASTİK İÇİN 4 FOTOĞRAF SLİDER & KAMERA FONKSİYONLARI ---
+        // --- 2. EL LASTİK İÇİN 4 FOTOĞRAF SLİDER & SİLME FONKSİYONLARI ---
         let tempUsedTirePhotos = [];
 
         function setCategory(cat, btn) {
@@ -1115,6 +1116,7 @@
         function handleUsedTirePhotosUpload(input) {
             const files = input.files;
             const grid = document.getElementById('usedTirePhotoPreviewGrid');
+            const clearBtn = document.getElementById('clearUsedPhotosBtn');
             if (!grid) return;
             grid.innerHTML = '';
             tempUsedTirePhotos = [];
@@ -1135,7 +1137,20 @@
             }
             if (limit > 0) {
                 document.getElementById('usedTireUploadText').innerText = `${limit} adet fotoğraf seçildi / çekildi.`;
+                if (clearBtn) clearBtn.classList.remove('hidden');
             }
+        }
+
+        function clearUsedTirePhotos() {
+            tempUsedTirePhotos = [];
+            const grid = document.getElementById('usedTirePhotoPreviewGrid');
+            if (grid) grid.innerHTML = '';
+            const input = document.getElementById('usedTirePhotosInput');
+            if (input) input.value = '';
+            const upText = document.getElementById('usedTireUploadText');
+            if (upText) upText.innerText = 'Telefon kamerasını açmak ve 4 fotoğraf seçmek için tıklayın';
+            const clearBtn = document.getElementById('clearUsedPhotosBtn');
+            if (clearBtn) clearBtn.classList.add('hidden');
         }
 
         function checkCustomSize(select) {
@@ -1188,11 +1203,15 @@
             document.getElementById('pStock').value = '2';
             document.getElementById('pPrice').value = '';
             document.getElementById('pImg').value = '';
+            
             tempUsedTirePhotos = [];
             const grid = document.getElementById('usedTirePhotoPreviewGrid');
             if (grid) grid.innerHTML = '';
             const upText = document.getElementById('usedTireUploadText');
             if (upText) upText.innerText = 'Telefon kamerasını açmak ve 4 fotoğraf seçmek için tıklayın';
+            const clearBtn = document.getElementById('clearUsedPhotosBtn');
+            if (clearBtn) clearBtn.classList.add('hidden');
+
             document.getElementById('productModal').style.display = 'flex';
         }
 
@@ -1304,6 +1323,14 @@
                 }
                 const upText = document.getElementById('usedTireUploadText');
                 if (upText) upText.innerText = `${p.photos.length} adet fotoğraf yüklü.`;
+                const clearBtn = document.getElementById('clearUsedPhotosBtn');
+                if (clearBtn) clearBtn.classList.remove('hidden');
+            } else {
+                tempUsedTirePhotos = [];
+                const grid = document.getElementById('usedTirePhotoPreviewGrid');
+                if (grid) grid.innerHTML = '';
+                const clearBtn = document.getElementById('clearUsedPhotosBtn');
+                if (clearBtn) clearBtn.classList.add('hidden');
             }
 
             document.getElementById('pPattern').value = p.pattern || '';
@@ -1478,7 +1505,8 @@
 
                 let matchCat = false;
                 if (currentCategory === 'all') {
-                    matchCat = true;
+                    // Tüm ürünler dendiğinde: İç lastik ve 2. el hariç diğerleri (Yaz, Kış, 4 Mevsim, Zirai) görünsün
+                    matchCat = !isInnerTube && !isSecondHand;
                 } else if (currentCategory === 'İç Lastik') {
                     matchCat = isInnerTube;
                 } else if (currentCategory === '2. El') {
