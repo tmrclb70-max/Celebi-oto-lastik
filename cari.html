@@ -7,6 +7,7 @@
 
     <!-- Apple iPhone Ana Ekran Simgesi ve Web Uygulaması Ayarları -->
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Çelebi Cari">
     <link rel="apple-touch-icon" href="https://img.icons8.com/emoji/192/000000/car-tire.png">
@@ -587,10 +588,12 @@
         let activeCustomer = null;
         let currentPassword = localStorage.getItem('celebi_cari_pass') || 'çelebi166';
 
-        // Sayfa ilk yüklendiğinde lokal hafızadan verileri anında çek ve ekrana bas
+        // Sayfa açılır açılmaz lokal veriyi kesin olarak yükle
         try {
             const localKasa = localStorage.getItem('celebi_local_kasa');
-            if (localKasa) kasaRecords = JSON.parse(localKasa);
+            if (localKasa) {
+                kasaRecords = JSON.parse(localKasa);
+            }
         } catch(e) {}
 
         window.initCariData = function() {
@@ -614,7 +617,7 @@
                 if (activeCustomer) openCustomerDetail(activeCustomer.id);
             });
 
-            // Kasa Kayıtları (Firebase Senkronizasyonu)
+            // Kasa Kayıtları (Çift Kanallı Güvenceli Senkronizasyon)
             window.onSnapshot(window.collection(window.db, "kasa"), (snap) => {
                 let remoteRecords = [];
                 snap.forEach(d => remoteRecords.push({ id: d.id, ...d.data() }));
@@ -631,6 +634,7 @@
                 renderAnaliz();
             });
 
+            // İlk açılışta ekrana verileri bas
             renderKasa();
             renderAnaliz();
         };
@@ -913,7 +917,7 @@
                 timestamp: now.getTime() 
             };
 
-            // KRİTİK GÜNCELLEME: Önce yerel diziye ekleyip ekranda ANINDA gösteriyoruz
+            // ÖNCE LOKAL HAFIZAYA EKLE VE ANINDA EKRANDA GÖSTER
             const index = kasaRecords.findIndex(x => x.id === id);
             if (index >= 0) {
                 kasaRecords[index] = newRecord;
@@ -921,13 +925,12 @@
                 kasaRecords.unshift(newRecord);
             }
 
-            // Hafızaya ve ekrana kaydı hemen yansıt
             localStorage.setItem('celebi_local_kasa', JSON.stringify(kasaRecords));
             renderKasa();
             renderAnaliz();
             closeModal('addKasaModal');
 
-            // Arka planda Firebase'e gönder
+            // ARDINDAN FIREBASE'E GÖNDER
             try {
                 await window.setDoc(window.doc(window.db, "kasa", id), newRecord, { merge: true });
             } catch (error) {
