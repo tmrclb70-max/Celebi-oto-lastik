@@ -509,7 +509,7 @@
         </div>
     </div>
 
-    <!-- GELİR / GİDER MODAL (TARİH SEÇİM ÖZELLİĞİ EKLENDİ) -->
+    <!-- GELİR / GİDER MODAL -->
     <div id="addKasaModal" class="modal">
         <div class="modal-content" style="max-width: 550px;">
             <div class="modal-header">
@@ -855,7 +855,7 @@
             document.getElementById('kasaUser').value = 'Tamer ÇELEBİ';
             document.getElementById('kasaMethod').value = 'Nakit';
 
-            // Varsayılan olarak bugünün tarihini seçili getir
+            // Bugünü YYYY-MM-DD formatında ayarla
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('kasaDate').value = today;
 
@@ -874,7 +874,6 @@
             document.getElementById('kasaMethod').value = k.method || 'Nakit';
             document.getElementById('kasaAmount').value = k.amount || '';
 
-            // Kayıttaki tarihi input formatına çevir (GG.MM.YYYY -> YYYY-MM-DD)
             if (k.rawDate) {
                 document.getElementById('kasaDate').value = k.rawDate;
             } else {
@@ -887,7 +886,7 @@
 
         async function saveKasaRecord() {
             const editingId = document.getElementById('editingKasaId').value;
-            const selectedDateInput = document.getElementById('kasaDate').value; // YYYY-MM-DD
+            const selectedDateInput = document.getElementById('kasaDate').value; // YYYY-MM-DD (Kullanıcının seçtiği tarih)
             const user = document.getElementById('kasaUser').value;
             const type = document.getElementById('kasaType').value;
             const desc = document.getElementById('kasaDesc').value.trim();
@@ -917,7 +916,7 @@
             const now = new Date();
             const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
 
-            // Seçilen tarihi GG.MM.YYYY formatına dönüştür
+            // KESİN ÇÖZÜM: Seçilen YYYY-MM-DD tarihini GG.MM.YYYY formatına çeviriyoruz
             const dateParts = selectedDateInput.split('-'); // [YYYY, MM, DD]
             const dateStr = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
 
@@ -928,8 +927,8 @@
                 desc, 
                 method, 
                 amount: Number(amount), 
-                date: dateStr + ' ' + timeStr,
-                rawDate: selectedDateInput, // Sıralama ve düzenleme için
+                date: dateStr + ' ' + timeStr, // Seçilen tarih artık ana tarih sütunu oluyor
+                rawDate: selectedDateInput,
                 timestamp: new Date(selectedDateInput + 'T' + timeStr).getTime() 
             };
 
