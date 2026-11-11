@@ -509,7 +509,7 @@
         </div>
     </div>
 
-    <!-- GELİR / GİDER MODAL -->
+    <!-- GELİR / GİDER MODAL (TARİH SEÇİM ÖZELLİĞİ EKLENDİ) -->
     <div id="addKasaModal" class="modal">
         <div class="modal-content" style="max-width: 550px;">
             <div class="modal-header">
@@ -517,6 +517,10 @@
                 <span class="close-btn" onclick="closeModal('addKasaModal')">&times;</span>
             </div>
             <input type="hidden" id="editingKasaId" value="">
+            <div class="form-group">
+                <label>İşlem Tarihi *</label>
+                <input type="date" id="kasaDate" class="form-control">
+            </div>
             <div class="form-group">
                 <label>İşlemi Yapan Kişi *</label>
                 <select id="kasaUser" class="form-control">
@@ -588,7 +592,6 @@
         let activeCustomer = null;
         let currentPassword = localStorage.getItem('celebi_cari_pass') || 'çelebi166';
 
-        // Sayfa açılır açılmaz lokal veriyi kesin olarak yükle
         try {
             const localKasa = localStorage.getItem('celebi_local_kasa');
             if (localKasa) {
@@ -599,7 +602,6 @@
         window.initCariData = function() {
             if (!window.db) return;
 
-            // Müşteriler
             window.onSnapshot(window.collection(window.db, "customers"), (snap) => {
                 customers = [];
                 snap.forEach(d => customers.push({ id: d.id, ...d.data() }));
@@ -607,7 +609,6 @@
                 renderAnaliz();
             });
 
-            // Cari İşlemler
             window.onSnapshot(window.collection(window.db, "transactions"), (snap) => {
                 transactions = [];
                 snap.forEach(d => transactions.push({ id: d.id, ...d.data() }));
@@ -617,7 +618,6 @@
                 if (activeCustomer) openCustomerDetail(activeCustomer.id);
             });
 
-            // Kasa Kayıtları (Çift Kanallı Güvenceli Senkronizasyon)
             window.onSnapshot(window.collection(window.db, "kasa"), (snap) => {
                 let remoteRecords = [];
                 snap.forEach(d => remoteRecords.push({ id: d.id, ...d.data() }));
@@ -634,7 +634,6 @@
                 renderAnaliz();
             });
 
-            // İlk açılışta ekrana verileri bas
             renderKasa();
             renderAnaliz();
         };
@@ -855,6 +854,11 @@
             document.getElementById('kasaType').value = 'gelir';
             document.getElementById('kasaUser').value = 'Tamer ÇELEBİ';
             document.getElementById('kasaMethod').value = 'Nakit';
+
+            // Varsayılan olarak bugünün tarihini seçili getir
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('kasaDate').value = today;
+
             document.getElementById('kasaModalTitle').innerHTML = '<i class="fa-solid fa-cash-register"></i> Günlük Gelir / Gider Kaydı';
             document.getElementById('addKasaModal').style.display = 'flex';
         }
@@ -869,6 +873,13 @@
             document.getElementById('kasaDesc').value = k.desc || '';
             document.getElementById('kasaMethod').value = k.method || 'Nakit';
             document.getElementById('kasaAmount').value = k.amount || '';
+
+            // Kayıttaki tarihi input formatına çevir (GG.MM.YYYY -> YYYY-MM-DD)
+            if (k.rawDate) {
+                document.getElementById('kasaDate').value = k.rawDate;
+            } else {
+                document.getElementById('kasaDate').value = new Date().toISOString().split('T')[0];
+            }
             
             document.getElementById('kasaModalTitle').innerHTML = '<i class="fa-solid fa-pen"></i> Gelir / Gider Düzenle';
             document.getElementById('addKasaModal').style.display = 'flex';
@@ -876,12 +887,17 @@
 
         async function saveKasaRecord() {
             const editingId = document.getElementById('editingKasaId').value;
+            const selectedDateInput = document.getElementById('kasaDate').value; // YYYY-MM-DD
             const user = document.getElementById('kasaUser').value;
-            const type = document.getElementById('kasaType').value; // 'gelir' veya 'gider'
+            const type = document.getElementById('kasaType').value;
             const desc = document.getElementById('kasaDesc').value.trim();
             const method = document.getElementById('kasaMethod').value;
             const amount = parseFloat(document.getElementById('kasaAmount').value);
 
+            if (!selectedDateInput) {
+                alert('Lütfen işlem tarihi seçin!');
+                return;
+            }
             if (!desc) { 
                 alert('Açıklama / Yapılan iş zorunludur!'); 
                 document.getElementById('kasaDesc').focus();
@@ -899,12 +915,11 @@
 
             const id = editingId ? editingId : 'kasa_' + Date.now();
             const now = new Date();
-            
-            const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const year = now.getFullYear();
-            const dateStr = `${day}.${month}.${year}`;
             const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+            // Seçilen tarihi GG.MM.YYYY formatına dönüştür
+            const dateParts = selectedDateInput.split('-'); // [YYYY, MM, DD]
+            const dateStr = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
 
             const newRecord = { 
                 id, 
@@ -913,11 +928,11 @@
                 desc, 
                 method, 
                 amount: Number(amount), 
-                date: dateStr + ' ' + timeStr, 
-                timestamp: now.getTime() 
+                date: dateStr + ' ' + timeStr,
+                rawDate: selectedDateInput, // Sıralama ve düzenleme için
+                timestamp: new Date(selectedDateInput + 'T' + timeStr).getTime() 
             };
 
-            // ÖNCE LOKAL HAFIZAYA EKLE VE ANINDA EKRANDA GÖSTER
             const index = kasaRecords.findIndex(x => x.id === id);
             if (index >= 0) {
                 kasaRecords[index] = newRecord;
@@ -930,7 +945,6 @@
             renderAnaliz();
             closeModal('addKasaModal');
 
-            // ARDINDAN FIREBASE'E GÖNDER
             try {
                 await window.setDoc(window.doc(window.db, "kasa", id), newRecord, { merge: true });
             } catch (error) {
@@ -1154,7 +1168,6 @@
             document.getElementById('vadeModal').style.display = 'flex';
         }
 
-        // PDF OLUŞTURMA VE WHATSAPP İÇİN İNDİRME
         function generateCustomerPDF() {
             if (!activeCustomer) return;
 
