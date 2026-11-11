@@ -156,7 +156,7 @@
         .form-group label { display: block; margin-bottom: 4px; font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
         .form-control { width: 100%; padding: 9px 11px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(15, 23, 42, 0.8); color: white; font-size: 0.88rem; transition: 0.2s; }
         .form-control:focus { outline: none; border-color: var(--accent-yellow); box-shadow: 0 0 8px rgba(245, 158, 11, 0.3); }
-        
+
         .btn-primary { width: 100%; padding: 10px; background: var(--accent-yellow); color: #000; font-weight: 800; border: none; border-radius: 6px; cursor: pointer; font-size: 0.92rem; transition: 0.2s; margin-top: 6px; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
         .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
 
@@ -212,36 +212,13 @@
         .product-row:hover { border-color: var(--accent-yellow); transform: translateX(2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
         
         .product-img-box {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 52px;
-            height: 38px;
-            background: #ffffff;
-            border-radius: 5px;
-            overflow: hidden;
-            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            width: 52px; height: 38px; background: #ffffff; border-radius: 5px; overflow: hidden; flex-shrink: 0;
         }
         .product-img { width: 100%; height: 100%; object-fit: contain; }
 
-        .brand-display-box { 
-            display: flex; 
-            align-items: center; 
-            justify-content: flex-start; 
-            height: 38px; 
-            width: 100%;
-            background: transparent;
-        }
-        .brand-logo-img { 
-            width: 100%;
-            max-width: 130px; 
-            height: 34px; 
-            object-fit: contain; 
-            object-position: left center;
-            background: transparent !important; 
-            border: none !important; 
-            box-shadow: none !important;
-        }
+        .brand-display-box { display: flex; align-items: center; justify-content: flex-start; height: 38px; width: 100%; background: transparent; }
+        .brand-logo-img { width: 100%; max-width: 130px; height: 34px; object-fit: contain; object-position: left center; background: transparent !important; border: none !important; box-shadow: none !important; }
         .brand-text-box {
             display: inline-flex; align-items: center; justify-content: center;
             background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(245, 158, 11, 0.6);
@@ -276,9 +253,9 @@
         .tag { font-size: 0.72rem; padding: 4px 8px; border-radius: 5px; background: #0f172a; color: var(--text-main); border: 1px solid var(--card-border); font-weight: 700; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 5px; white-space: nowrap; }
         .tag-category { color: var(--accent-yellow); border-color: rgba(245, 158, 11, 0.4); }
 
-        .stock-badge-in { background: rgba(16, 185, 129, 0.15); color: var(--success-color); border: 1.5px solid var(--success-color); font-weight: 800; padding: 4px 8px; border-radius: 5px; font-size: 0.75rem; text-align: center; white-space: nowrap; }
-        .stock-badge-low { background: rgba(245, 158, 11, 0.15); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); font-weight: 800; padding: 4px 8px; border-radius: 5px; font-size: 0.75rem; text-align: center; white-space: nowrap; }
-        .stock-badge-out { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1.5px solid var(--danger-color); font-weight: 800; padding: 4px 8px; border-radius: 5px; font-size: 0.75rem; text-align: center; white-space: nowrap; }
+        .stock-badge-in { background: rgba(16, 185, 129, 0.15); color: var(--success-color); border: 1.5px solid var(--success-color); font-weight: 800; padding: 4px 8px; border-radius: 5px; font-size: 0.75rem; text-align: center; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; }
+        .stock-badge-low { background: rgba(245, 158, 11, 0.15); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); font-weight: 800; padding: 4px 8px; border-radius: 5px; font-size: 0.75rem; text-align: center; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; }
+        .stock-badge-out { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1.5px solid var(--danger-color); font-weight: 800; padding: 4px 8px; border-radius: 5px; font-size: 0.75rem; text-align: center; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; }
         
         .admin-stock-control { display: flex; align-items: center; gap: 4px; background: rgba(15, 23, 42, 0.8); padding: 2px 5px; border-radius: 5px; border: 1px solid var(--card-border); }
         .admin-stock-val { font-weight: 800; color: #fff; font-size: 0.8rem; min-width: 38px; text-align: center; }
@@ -325,14 +302,27 @@
 
         .file-upload-box {
             border: 1.5px dashed var(--accent-yellow);
-            padding: 10px;
-            border-radius: 6px;
-            text-align: center;
-            background: rgba(245, 158, 11, 0.05);
-            cursor: pointer;
-            transition: 0.2s;
+            padding: 10px; border-radius: 6px; text-align: center;
+            background: rgba(245, 158, 11, 0.05); cursor: pointer; transition: 0.2s;
         }
         .file-upload-box:hover { background: rgba(245, 158, 11, 0.15); }
+
+        /* 2. EL LASTİK 4 FOTOĞRAF SLİDER VE ÖNİZLEME STİLLERİ */
+        .used-tire-slider-box {
+            position: relative; width: 100%; height: 280px; background: #000; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center;
+        }
+        .used-tire-slides { display: flex; width: 100%; height: 100%; transition: transform 0.4s ease-in-out; }
+        .used-tire-slide { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .used-tire-slide img { width: 100%; height: 100%; object-fit: contain; }
+        
+        .ut-slider-btn {
+            position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #fff; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 5;
+        }
+        .ut-slider-btn.prev { left: 8px; }
+        .ut-slider-btn.next { right: 8px; }
+        
+        .photo-preview-grid { display: flex; gap: 8px; overflow-x: auto; margin-top: 8px; padding-bottom: 5px; }
+        .preview-thumb { width: 65px; height: 65px; border-radius: 6px; object-fit: cover; border: 1.5px solid var(--accent-yellow); flex-shrink: 0; }
 
         .notif-section-card { background: rgba(15, 23, 42, 0.9); border: 1px solid var(--card-border); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
         .notif-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px; }
@@ -543,7 +533,7 @@
         </div>
     </footer>
 
-    <!-- ÜRÜN DETAY MODALI -->
+    <!-- ÜRÜN DETAY MODALI (2. EL İÇİN 4 FOTOĞRAFLI SLİDER DESTEKLİ) -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -552,7 +542,7 @@
             </div>
             
             <div class="b2b-detail-layout">
-                <div class="b2b-detail-img-area">
+                <div class="b2b-detail-img-area" id="detailImgAreaContainer">
                     <img id="dImg" src="" alt="Lastik Görseli">
                 </div>
                 
@@ -591,7 +581,7 @@
         </div>
     </div>
 
-    <!-- BİLDİRİM MODALI (KATEGORİZE EDİLMİŞ & WHATSAPP SİPARİŞLİ) -->
+    <!-- BİLDİRİM MODALI -->
     <div id="notifModal" class="modal" style="max-width: 580px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -680,7 +670,7 @@
         </div>
     </div>
 
-    <!-- YENİ ÜRÜN EKLE MODALI -->
+    <!-- YENİ ÜRÜN EKLE MODALI (2. EL İÇİN 4 FOTOĞRAF KAMERA DESTEKLİ) -->
     <div id="productModal" class="modal" style="max-width: 480px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -744,7 +734,8 @@
                 <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Kabat, BKT Vb.">
             </div>
 
-            <div class="form-group">
+            <!-- BİLGİSAYAR / LOGO YÜKLEME ALANI -->
+            <div class="form-group" id="normalLogoGroup">
                 <label><i class="fa-solid fa-file-image" style="color: var(--accent-yellow);"></i> Bilgisayar İçin Marka Logosu (Şeffaf PNG)</label>
                 <div class="file-upload-box" onclick="document.getElementById('logoFileInput').click()">
                     <i class="fa-solid fa-cloud-arrow-up" style="font-size: 1.3rem; color: var(--accent-yellow); margin-bottom: 4px;"></i>
@@ -755,6 +746,17 @@
                     <img id="logoPreviewImg" src="" style="max-height: 40px; background: rgba(255,255,255,0.1); padding: 4px; border-radius: 4px;">
                     <button type="button" style="background: var(--danger-color); color: white; border: none; padding: 2px 6px; border-radius: 4px; font-size: 0.72rem; margin-left: 8px; cursor: pointer;" onclick="clearUploadedLogo()">Kaldır</button>
                 </div>
+            </div>
+
+            <!-- 2. EL LASTİKLER İÇİN 4 FOTOĞRAF ÇEKME / YÜKLEME ALANI -->
+            <div class="form-group hidden" id="usedTirePhotosGroup">
+                <label><i class="fa-solid fa-camera-retro" style="color: var(--accent-yellow);"></i> 2. El Lastik Fotoğrafları (En Fazla 4 Adet Çekin / Seçin)</label>
+                <div class="file-upload-box" onclick="document.getElementById('usedTirePhotosInput').click()">
+                    <i class="fa-solid fa-camera" style="font-size: 1.3rem; color: var(--accent-yellow); margin-bottom: 4px;"></i>
+                    <p id="usedTireUploadText" style="font-size: 0.8rem; color: var(--text-muted);">Telefon kamerasını açmak ve 4 fotoğraf seçmek için tıklayın</p>
+                    <input type="file" id="usedTirePhotosInput" accept="image/*" multiple style="display:none;" onchange="handleUsedTirePhotosUpload(this)">
+                </div>
+                <div id="usedTirePhotoPreviewGrid" class="photo-preview-grid"></div>
             </div>
 
             <div class="form-group">
@@ -789,7 +791,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="normalImgUrlGroup">
                 <label>Ürün Görsel Bağlantısı (URL)</label>
                 <div class="input-with-btn">
                     <input type="text" id="pImg" class="form-control" placeholder="Ürün resmi URL kopyalayıp yapıştırın">
@@ -1063,7 +1065,7 @@
                     document.getElementById('pCustomLogoBase64').value = compressedBase64;
                     document.getElementById('logoPreviewImg').src = compressedBase64;
                     document.getElementById('logoPreviewContainer').style.display = 'block';
-                    document.getElementById('fileUploadText').innerText = `Yüklendi: ${file.name}`;
+                    document.getElementById('fileUploadText').innerText = 'Logo başarıyla yüklendi!';
                 };
                 img.src = e.target.result;
             };
@@ -1074,14 +1076,60 @@
             document.getElementById('pCustomLogoBase64').value = '';
             document.getElementById('logoFileInput').value = '';
             document.getElementById('logoPreviewContainer').style.display = 'none';
-            document.getElementById('fileUploadText').innerText = 'Bilgisayarınızdan şeffaf PNG logosu seçmek için tıklayın';
+            document.getElementById('fileUploadText').innerText = 'Bilgisayarınızdan şeffaf PNG logosu seçebilirsiniz';
         }
 
-        function setCategory(cat, btn) {
-            currentCategory = cat;
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderProducts();
+        // --- 2. EL LASTİK İÇİN 4 FOTOĞRAF SLİDER & KAMERA FONKSİYONLARI ---
+        let tempUsedTirePhotos = [];
+
+        function toggleGroupFields(val) {
+            const seasonGroup = document.getElementById('seasonGroup');
+            const normalLogoGroup = document.getElementById('normalLogoGroup');
+            const usedTirePhotosGroup = document.getElementById('usedTirePhotosGroup');
+            const normalImgUrlGroup = document.getElementById('normalImgUrlGroup');
+
+            if (val === '2. El') {
+                if (seasonGroup) seasonGroup.classList.remove('hidden');
+                if (normalLogoGroup) normalLogoGroup.classList.add('hidden');
+                if (usedTirePhotosGroup) usedTirePhotosGroup.classList.remove('hidden');
+                if (normalImgUrlGroup) normalImgUrlGroup.classList.add('hidden');
+            } else if (val === 'İç Lastik') {
+                if (seasonGroup) seasonGroup.classList.add('hidden');
+                if (normalLogoGroup) normalLogoGroup.classList.remove('hidden');
+                if (usedTirePhotosGroup) usedTirePhotosGroup.classList.add('hidden');
+                if (normalImgUrlGroup) normalImgUrlGroup.classList.remove('hidden');
+            } else {
+                if (seasonGroup) seasonGroup.classList.remove('hidden');
+                if (normalLogoGroup) normalLogoGroup.classList.remove('hidden');
+                if (usedTirePhotosGroup) usedTirePhotosGroup.classList.add('hidden');
+                if (normalImgUrlGroup) normalImgUrlGroup.classList.remove('hidden');
+            }
+        }
+
+        function handleUsedTirePhotosUpload(input) {
+            const files = input.files;
+            const grid = document.getElementById('usedTirePhotoPreviewGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            tempUsedTirePhotos = [];
+
+            const limit = Math.min(files.length, 4);
+            for (let i = 0; i < limit; i++) {
+                const file = files[i];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const b64 = e.target.result;
+                    tempUsedTirePhotos.push(b64);
+                    const img = document.createElement('img');
+                    img.src = b64;
+                    img.className = 'preview-thumb';
+                    grid.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            }
+            if (limit > 0) {
+                document.getElementById('usedTireUploadText').innerText = `${limit} adet fotoğraf seçildi / çekildi.`;
+            }
         }
 
         function checkCustomSize(select) {
@@ -1094,12 +1142,6 @@
             const group = document.getElementById('customBrandGroup');
             if (select.value === 'Diger') group.classList.remove('hidden');
             else group.classList.add('hidden');
-        }
-
-        function toggleGroupFields(val) {
-            const seasonGroup = document.getElementById('seasonGroup');
-            if (val === 'İç Lastik') seasonGroup.classList.add('hidden');
-            else seasonGroup.classList.remove('hidden');
         }
 
         function openKarModal() {
@@ -1140,6 +1182,11 @@
             document.getElementById('pStock').value = '2';
             document.getElementById('pPrice').value = '';
             document.getElementById('pImg').value = '';
+            tempUsedTirePhotos = [];
+            const grid = document.getElementById('usedTirePhotoPreviewGrid');
+            if (grid) grid.innerHTML = '';
+            const upText = document.getElementById('usedTireUploadText');
+            if (upText) upText.innerText = 'Telefon kamerasını açmak ve 4 fotoğraf seçmek için tıklayın';
             document.getElementById('productModal').style.display = 'flex';
         }
 
@@ -1171,7 +1218,15 @@
             const dot = document.getElementById('pDot').value.trim() || '2026';
             const stock = parseInt(document.getElementById('pStock').value) || 0;
             const price = parseFloat(document.getElementById('pPrice').value) || 0;
-            const img = document.getElementById('pImg').value.trim() || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
+            
+            let img = '';
+            let photos = [];
+            if (group === '2. El') {
+                photos = tempUsedTirePhotos;
+                img = photos.length > 0 ? photos[0] : 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
+            } else {
+                img = document.getElementById('pImg').value.trim() || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
+            }
 
             if (!size || !brand || !price) {
                 alert('Lütfen Ebat, Marka ve Fiyat alanlarını doldurunuz!');
@@ -1181,7 +1236,7 @@
             const editingId = document.getElementById('editingProductId').value;
             const id = editingId ? editingId : 'p_' + Date.now();
 
-            const productData = { group, size, brand, customLogo, pattern, season, dot, stock, price, img };
+            const productData = { group, size, brand, customLogo, pattern, season, dot, stock, price, img, photos };
             await window.setDoc(window.doc(window.db, "lastik_stoklari", id), productData, { merge: true });
             closeModal('productModal');
         }
@@ -1229,6 +1284,22 @@
                 clearUploadedLogo();
             }
 
+            if (p.photos && p.photos.length > 0) {
+                tempUsedTirePhotos = p.photos;
+                const grid = document.getElementById('usedTirePhotoPreviewGrid');
+                if (grid) {
+                    grid.innerHTML = '';
+                    p.photos.forEach(photo => {
+                        const imgElem = document.createElement('img');
+                        imgElem.src = photo;
+                        imgElem.className = 'preview-thumb';
+                        grid.appendChild(imgElem);
+                    });
+                }
+                const upText = document.getElementById('usedTireUploadText');
+                if (upText) upText.innerText = `${p.photos.length} adet fotoğraf yüklü.`;
+            }
+
             document.getElementById('pPattern').value = p.pattern || '';
             document.getElementById('pSeason').value = (p.season === 'İç Lastik') ? 'Yaz' : (p.season || 'Yaz');
             document.getElementById('pDot').value = p.dot || '2026';
@@ -1264,7 +1335,7 @@
                 await window.updateDoc(window.doc(window.db, "lastik_stoklari", p.id), { price: Math.round(yeniFiyat) });
             }
 
-            alert(`${targetProducts.length} adet ürüne başarıyla güncellendi!`);
+            alert(`${targetProducts.length} adet ürün başarıyla güncellendi!`);
             closeModal('bulkPriceModal');
         }
 
@@ -1278,6 +1349,10 @@
             }
         }
 
+        // --- ÜRÜN DETAY MODALI VE 2. EL YANA KAYDIRMALI (SLİDER) GALERİ ---
+        let currentDetailSlideIdx = 0;
+        let activeDetailPhotos = [];
+
         function openDetailModal(id) {
             const p = products.find(x => x.id === id);
             if (!p) return;
@@ -1286,14 +1361,38 @@
             document.getElementById('modalQtyVal').innerText = modalProductQty;
 
             const stockVal = parseInt(p.stock) || 0;
-            document.getElementById('dImg').src = p.img || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
             
+            // Görsel alanı / Slider yönetimi
+            const imgAreaContainer = document.getElementById('detailImgAreaContainer');
+            activeDetailPhotos = [];
+            if (p.photos && p.photos.length > 0) {
+                activeDetailPhotos = p.photos;
+            } else if (p.img) {
+                activeDetailPhotos = [p.img];
+            } else {
+                activeDetailPhotos = ['https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80'];
+            }
+
+            if (activeDetailPhotos.length > 1) {
+                currentDetailSlideIdx = 0;
+                let slidesHtml = activeDetailPhotos.map(photo => `<div class="used-tire-slide"><img src="${photo}" alt="Lastik Fotoğrafı"></div>`).join('');
+                imgAreaContainer.innerHTML = `
+                    <div class="used-tire-slider-box">
+                        <button class="ut-slider-btn prev" onclick="moveDetailSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button class="ut-slider-btn next" onclick="moveDetailSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        <div class="used-tire-slides" id="detailSlidesWrapper">${slidesHtml}</div>
+                    </div>
+                `;
+            } else {
+                imgAreaContainer.innerHTML = `<img id="dImg" src="${activeDetailPhotos[0]}" alt="Lastik Görseli" style="width:100%; max-height:340px; object-fit:contain;">`;
+            }
+           
             document.getElementById('dTitle').innerText = `${p.size} ${p.pattern || ''} ${p.brand}`.toUpperCase();
             document.getElementById('dPrice').innerText = formatCurrency(p.price);
             document.getElementById('dStockBadge').innerHTML = getStockBadgeHtml(stockVal);
 
             document.getElementById('dSize').innerText = p.size || '-';
-            
+           
             const brandValElem = document.getElementById('dBrand');
             if (p.customLogo) {
                 brandValElem.innerHTML = `<img src="${p.customLogo}" class="detail-brand-logo" alt="${p.brand}">`;
@@ -1302,7 +1401,7 @@
             }
 
             document.getElementById('dPattern').innerText = (p.pattern || 'STANDART').toUpperCase();
-            
+           
             let typeText = 'Otomobil / Hafif Ticari';
             if (p.group === 'Zirai') typeText = 'Zirai Grubu';
             else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') typeText = 'İç Lastik (Şambrel)';
@@ -1332,6 +1431,18 @@
             document.getElementById('dDot').innerText = p.dot || '2026';
 
             document.getElementById('detailModal').style.display = 'flex';
+        }
+
+        function moveDetailSlide(n) {
+            if (activeDetailPhotos.length <= 1) return;
+            currentDetailSlideIdx += n;
+            if (currentDetailSlideIdx >= activeDetailPhotos.length) currentDetailSlideIdx = 0;
+            if (currentDetailSlideIdx < 0) currentDetailSlideIdx = activeDetailPhotos.length - 1;
+
+            const wrapper = document.getElementById('detailSlidesWrapper');
+            if (wrapper) {
+                wrapper.style.transform = `translateX(-${currentDetailSlideIdx * 100}%)`;
+            }
         }
 
         function changeModalQty(change) {
@@ -1372,7 +1483,7 @@
                 } else {
                     matchCat = (p.season === currentCategory && !isInnerTube && !isSecondHand && !isZirai);
                 }
-                
+               
                 const fullStr = `${p.size} ${p.brand} ${p.pattern} ${p.dot}`.toLowerCase();
                 return matchCat && fullStr.includes(search);
             });
@@ -1386,7 +1497,9 @@
 
             filtered.forEach(p => {
                 const stockVal = parseInt(p.stock) || 0;
-                const displayImg = p.img || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
+                let displayImg = p.img || '';
+                if (!displayImg && p.photos && p.photos.length > 0) displayImg = p.photos[0];
+                if (!displayImg) displayImg = 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
 
                 let catTag = '';
                 if (p.group === 'Zirai') {
@@ -1421,7 +1534,7 @@
 
                 const row = document.createElement('div');
                 row.className = 'product-row';
-                
+               
                 row.onclick = (e) => {
                     if (!e.target.closest('.btn-qty') && !e.target.closest('.btn-edit-price') && !e.target.closest('.btn-icon')) {
                         openDetailModal(p.id);
@@ -1479,7 +1592,7 @@
             }
         }
 
-        checkNotifications = function() {
+        function checkNotifications() {
             const alertProducts = products.filter(p => (parseInt(p.stock) || 0) <= 3);
             const badge = document.getElementById('notifBadge');
             if (alertProducts.length > 0) {
@@ -1488,14 +1601,14 @@
             } else {
                 badge.classList.add('hidden');
             }
-        };
+        }
 
         function sendSupplierWhatsApp(groupName, itemsList) {
             if (!itemsList || itemsList.length === 0) return;
-            
+           
             let message = `Merhaba, Çelebi Oto Lastik için "${groupName}" grubunda eksilen stok sipariş listemiz aşağıdadır:\n\n`;
             itemsList.forEach((item, index) => {
-                let eksikAdet = 4 - item.stock; // 4'e tamamlama mantığına göre eksik miktar
+                let eksikAdet = 4 - item.stock; 
                 if (eksikAdet < 1) eksikAdet = 1;
                 message += `${index + 1}. ${item.size} ${item.brand} (${item.pattern || 'Standart'}) - Mevcut: ${item.stock} Adet\n`;
             });
@@ -1513,7 +1626,6 @@
             if (alertProducts.length === 0) {
                 container.innerHTML = `<div style="text-align:center; color: var(--text-muted); padding:15px;">Tüm ürün stokları yeterli seviyede.</div>`;
             } else {
-                // Kategorilere ayır
                 const categories = {
                     'Kış': alertProducts.filter(p => p.season === 'Kış' && p.group !== 'Zirai' && p.group !== 'İç Lastik'),
                     'Yaz': alertProducts.filter(p => p.season === 'Yaz' && p.group !== 'Zirai' && p.group !== 'İç Lastik' && p.group !== '2. El'),
@@ -1526,7 +1638,7 @@
                     if (catItems.length > 0) {
                         const section = document.createElement('div');
                         section.className = 'notif-section-card';
-                        
+                       
                         let itemsHtml = '';
                         catItems.forEach(p => {
                             const stockVal = parseInt(p.stock) || 0;
@@ -1539,7 +1651,6 @@
                             `;
                         });
 
-                        // Geçici dizi saklama ve buton tetikleme için
                         window[`cat_items_${catName.replace(/\s+/g, '_')}`] = catItems;
 
                         section.innerHTML = `
