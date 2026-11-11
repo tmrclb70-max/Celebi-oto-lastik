@@ -235,7 +235,6 @@
         }
 
         .col-size { font-size: 1rem; font-weight: 800; color: #fff; white-space: nowrap; }
-        .col-brand-text { font-size: 1rem; color: var(--accent-yellow); font-weight: 900; text-transform: uppercase; white-space: nowrap; }
         
         .pattern-box {
             display: inline-flex; align-items: center; justify-content: center; gap: 4px;
@@ -670,7 +669,7 @@
         </div>
     </div>
 
-    <!-- YENİ ÜRÜN EKLE MODALI (2. EL İÇİN 4 FOTOĞRAF KAMERA DESTEKLİ) -->
+    <!-- YENİ ÜRÜN EKLE MODALI -->
     <div id="productModal" class="modal" style="max-width: 480px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -1082,6 +1081,13 @@
         // --- 2. EL LASTİK İÇİN 4 FOTOĞRAF SLİDER & KAMERA FONKSİYONLARI ---
         let tempUsedTirePhotos = [];
 
+        function setCategory(cat, btn) {
+            currentCategory = cat;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            renderProducts();
+        }
+
         function toggleGroupFields(val) {
             const seasonGroup = document.getElementById('seasonGroup');
             const normalLogoGroup = document.getElementById('normalLogoGroup');
@@ -1362,7 +1368,6 @@
 
             const stockVal = parseInt(p.stock) || 0;
             
-            // Görsel alanı / Slider yönetimi
             const imgAreaContainer = document.getElementById('detailImgAreaContainer');
             activeDetailPhotos = [];
             if (p.photos && p.photos.length > 0) {
@@ -1473,7 +1478,7 @@
 
                 let matchCat = false;
                 if (currentCategory === 'all') {
-                    matchCat = !isInnerTube && !isSecondHand;
+                    matchCat = true;
                 } else if (currentCategory === 'İç Lastik') {
                     matchCat = isInnerTube;
                 } else if (currentCategory === '2. El') {
