@@ -620,7 +620,11 @@
 
             window.onSnapshot(window.collection(window.db, "kasa"), (snap) => {
                 let remoteRecords = [];
-                snap.forEach(d => remoteRecords.push({ id: d.id, ...d.data() }));
+                snap.forEach(d => {
+                    let dData = d.data();
+                    // Bozuk veya metinsel tutarları temizleyip güvenli hale getiriyoruz
+                    remoteRecords.push({ id: d.id, ...dData, amount: Number(dData.amount) || 0 });
+                });
                 
                 if (remoteRecords.length > 0) {
                     kasaRecords = remoteRecords;
@@ -855,7 +859,6 @@
             document.getElementById('kasaUser').value = 'Tamer ÇELEBİ';
             document.getElementById('kasaMethod').value = 'Nakit';
 
-            // Bugünü YYYY-MM-DD formatında ayarla
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('kasaDate').value = today;
 
@@ -886,7 +889,7 @@
 
         async function saveKasaRecord() {
             const editingId = document.getElementById('editingKasaId').value;
-            const selectedDateInput = document.getElementById('kasaDate').value; // YYYY-MM-DD (Kullanıcının seçtiği tarih)
+            const selectedDateInput = document.getElementById('kasaDate').value; // YYYY-MM-DD
             const user = document.getElementById('kasaUser').value;
             const type = document.getElementById('kasaType').value;
             const desc = document.getElementById('kasaDesc').value.trim();
@@ -916,7 +919,7 @@
             const now = new Date();
             const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
 
-            // KESİN ÇÖZÜM: Seçilen YYYY-MM-DD tarihini GG.MM.YYYY formatına çeviriyoruz
+            // Seçilen tarihi GG.MM.YYYY formatına çeviriyoruz
             const dateParts = selectedDateInput.split('-'); // [YYYY, MM, DD]
             const dateStr = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
 
@@ -927,7 +930,7 @@
                 desc, 
                 method, 
                 amount: Number(amount), 
-                date: dateStr + ' ' + timeStr, // Seçilen tarih artık ana tarih sütunu oluyor
+                date: dateStr + ' ' + timeStr, 
                 rawDate: selectedDateInput,
                 timestamp: new Date(selectedDateInput + 'T' + timeStr).getTime() 
             };
@@ -983,26 +986,32 @@
                     totalGider += amt;
                 }
 
-                let dateOnly = "Tarihsiz";
-                if (k.date) {
+                // TARİH GRUPLAMASI İÇİN KESİN KONTROL (rawDate veya date alanından al)
+                let dateKey = "Tarihsiz";
+                if (k.rawDate) {
+                    const p = k.rawDate.split('-');
+                    if (p.length === 3) {
+                        dateKey = `${p[2]}.${p[1]}.${p[0]}`;
+                    }
+                } else if (k.date) {
                     const parts = k.date.split(' ');
-                    dateOnly = parts[0] ? parts[0].replace(',', '').trim() : k.date;
+                    dateKey = parts[0] ? parts[0].replace(',', '').trim() : k.date;
                 }
 
-                const fullText = (dateOnly + " " + (k.desc || '') + " " + (k.user || '')).toLowerCase();
+                const fullText = (dateKey + " " + (k.desc || '') + " " + (k.user || '')).toLowerCase();
                 if (dateSearchInput && !fullText.includes(dateSearchInput)) {
                     return;
                 }
 
-                if (!grouped[dateOnly]) {
-                    grouped[dateOnly] = { items: [], dayGelir: 0, dayGider: 0 };
+                if (!grouped[dateKey]) {
+                    grouped[dateKey] = { items: [], dayGelir: 0, dayGider: 0 };
                 }
 
-                grouped[dateOnly].items.push(k);
+                grouped[dateKey].items.push(k);
                 if (k.type === 'gelir') {
-                    grouped[dateOnly].dayGelir += amt;
+                    grouped[dateKey].dayGelir += amt;
                 } else if (k.type === 'gider') {
-                    grouped[dateOnly].dayGider += amt;
+                    grouped[dateKey].dayGider += amt;
                 }
             });
 
@@ -1087,16 +1096,17 @@
 
             transactions.forEach(t => {
                 if (t.type === 'tahsilat') {
-                    toplamCiro += Number(t.amount);
+                    toplamCiro += Number(t.amount) || 0;
                 }
             });
 
             kasaRecords.forEach(k => {
+                const amt = Number(k.amount) || 0;
                 if (k.type === 'gelir') {
-                    toplamCiro += Number(k.amount);
+                    toplamCiro += amt;
                 }
                 if (k.type === 'gider') {
-                    toplamHarcama += Number(k.amount);
+                    toplamHarcama += amt;
                 }
             });
 
@@ -1104,10 +1114,11 @@
                 const custTx = transactions.filter(t => t.customerId === c.id);
                 let bakiye = 0;
                 custTx.forEach(t => {
-                    if (t.type === 'satis') bakiye += Number(t.amount);
-                    else if (t.type === 'tahsilat') bakiye -= Number(t.amount);
-                    else if (t.type === 'bizim_borc') bakiye -= Number(t.amount);
-                    else if (t.type === 'bizim_odeme') bakiye += Number(t.amount);
+                    const amt = Number(t.amount) || 0;
+                    if (t.type === 'satis') bakiye += amt;
+                    else if (t.type === 'tahsilat') bakiye -= amt;
+                    else if (t.type === 'bizim_borc') bakiye -= amt;
+                    else if (t.type === 'bizim_odeme') bakiye += amt;
                 });
                 if (bakiye > 0) toplamAlacak += bakiye;
             });
@@ -1179,25 +1190,26 @@
             custTx.forEach((t, index) => {
                 let sign = '+';
                 let typeLabel = '';
+                const amt = Number(t.amount) || 0;
 
                 if (t.type === 'satis') {
-                    toplamBorc += Number(t.amount);
-                    bakiye += Number(t.amount);
+                    toplamBorc += amt;
+                    bakiye += amt;
                     sign = '+';
                     typeLabel = 'Satış / Veresiye';
                 } else if (t.type === 'tahsilat') {
-                    toplamOdeme += Number(t.amount);
-                    bakiye -= Number(t.amount);
+                    toplamOdeme += amt;
+                    bakiye -= amt;
                     sign = '-';
                     typeLabel = 'Tahsilat (Ödeme Aldık)';
                 } else if (t.type === 'bizim_borc') {
-                    toplamBorc += Number(t.amount);
-                    bakiye -= Number(t.amount);
+                    toplamBorc += amt;
+                    bakiye -= amt;
                     sign = '-';
                     typeLabel = 'Bizim Borcumuz';
                 } else if (t.type === 'bizim_odeme') {
-                    toplamOdeme += Number(t.amount);
-                    bakiye += Number(t.amount);
+                    toplamOdeme += amt;
+                    bakiye += amt;
                     sign = '+';
                     typeLabel = 'Bizim Ödememiz';
                 }
@@ -1209,7 +1221,7 @@
                         <td><b>${t.desc}</b></td>
                         <td>${typeLabel} ${t.paymentMethod ? ' (' + t.paymentMethod + ')' : ''}</td>
                         <td style="text-align:right; font-weight:bold; color: ${sign === '+' ? '#16a34a' : '#dc2626'};">
-                            ${sign}${formatCurrency(t.amount)}
+                            ${sign}${formatCurrency(amt)}
                         </td>
                         <td style="text-align:right; font-weight:bold;">${formatCurrency(bakiye)}</td>
                     </tr>
@@ -1350,7 +1362,7 @@
 
             await window.setDoc(window.doc(window.db, "transactions", id), {
                 customerId: activeCustomer.id,
-                type, desc, amount, paymentMethod, dueDate, date: dateStr
+                type, desc, amount: Number(amount) || 0, paymentMethod, dueDate, date: dateStr
             });
 
             closeModal('addTxModal');
@@ -1374,10 +1386,11 @@
                 const custTx = transactions.filter(t => t.customerId === c.id);
                 let bakiye = 0;
                 custTx.forEach(t => {
-                    if (t.type === 'satis') bakiye += Number(t.amount);
-                    else if (t.type === 'tahsilat') bakiye -= Number(t.amount);
-                    else if (t.type === 'bizim_borc') bakiye -= Number(t.amount);
-                    else if (t.type === 'bizim_odeme') bakiye += Number(t.amount);
+                    const amt = Number(t.amount) || 0;
+                    if (t.type === 'satis') bakiye += amt;
+                    else if (t.type === 'tahsilat') bakiye -= amt;
+                    else if (t.type === 'bizim_borc') bakiye -= amt;
+                    else if (t.type === 'bizim_odeme') bakiye += amt;
                 });
 
                 const safeName = `"${c.name.replace(/"/g, '""')}"`;
