@@ -1079,7 +1079,7 @@
             document.getElementById('fileUploadText').innerText = 'Bilgisayarınızdan şeffaf PNG logosu seçebilirsiniz';
         }
 
-        // --- 2. EL LASTİK İÇİN 4 FOTOĞRAF SLİDER & SİLME FONKSİYONLARI ---
+        // --- 2. EL LASTİK İÇİN OTOMATİK BOYUTLANDIRILMIŞ 4 FOTOĞRAF & SİLME FONKSİYONLARI ---
         let tempUsedTirePhotos = [];
 
         function setCategory(cat, btn) {
@@ -1126,18 +1126,33 @@
                 const file = files[i];
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const b64 = e.target.result;
-                    tempUsedTirePhotos.push(b64);
-                    const img = document.createElement('img');
-                    img.src = b64;
-                    img.className = 'preview-thumb';
-                    grid.appendChild(img);
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 600; // Firebase 1MB sınırını aşmamak için otomatik optimize boyut
+                        const scaleSize = MAX_WIDTH / img.width;
+                        canvas.width = MAX_WIDTH;
+                        canvas.height = img.height > img.width ? MAX_WIDTH * (img.height / img.width) : img.height * scaleSize;
+
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                        const compressedB64 = canvas.toDataURL('image/jpeg', 0.75); // %75 kalite sıkıştırma
+                        tempUsedTirePhotos.push(compressedB64);
+
+                        const thumbImg = document.createElement('img');
+                        thumbImg.src = compressedB64;
+                        thumbImg.className = 'preview-thumb';
+                        grid.appendChild(thumbImg);
+
+                        if (tempUsedTirePhotos.length > 0) {
+                            document.getElementById('usedTireUploadText').innerText = `${tempUsedTirePhotos.length} adet fotoğraf optimize edildi.`;
+                            if (clearBtn) clearBtn.classList.remove('hidden');
+                        }
+                    };
+                    img.src = e.target.result;
                 }
                 reader.readAsDataURL(file);
-            }
-            if (limit > 0) {
-                document.getElementById('usedTireUploadText').innerText = `${limit} adet fotoğraf seçildi / çekildi.`;
-                if (clearBtn) clearBtn.classList.remove('hidden');
             }
         }
 
@@ -1505,7 +1520,6 @@
 
                 let matchCat = false;
                 if (currentCategory === 'all') {
-                    // Tüm ürünler dendiğinde: İç lastik ve 2. el hariç diğerleri (Yaz, Kış, 4 Mevsim, Zirai) görünsün
                     matchCat = !isInnerTube && !isSecondHand;
                 } else if (currentCategory === 'İç Lastik') {
                     matchCat = isInnerTube;
