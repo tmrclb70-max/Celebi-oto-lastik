@@ -749,10 +749,10 @@
 
             <!-- 2. EL LASTİKLER İÇİN 4 FOTOĞRAF ÇEKME / YÜKLEME VE SİLME ALANI -->
             <div class="form-group hidden" id="usedTirePhotosGroup">
-                <label><i class="fa-solid fa-camera-retro" style="color: var(--accent-yellow);"></i> 2. El Lastik Fotoğrafları (En Fazla 4 Adet Çekin / Seçin)</label>
+                <label><i class="fa-solid fa-camera-retro" style="color: var(--accent-yellow);"></i> 2. El Lastik Fotoğrafları (İsteğe Bağlı - En Fazla 4 Adet)</label>
                 <div class="file-upload-box" onclick="document.getElementById('usedTirePhotosInput').click()">
                     <i class="fa-solid fa-camera" style="font-size: 1.3rem; color: var(--accent-yellow); margin-bottom: 4px;"></i>
-                    <p id="usedTireUploadText" style="font-size: 0.8rem; color: var(--text-muted);">Telefon kamerasını açmak ve 4 fotoğraf seçmek için tıklayın</p>
+                    <p id="usedTireUploadText" style="font-size: 0.8rem; color: var(--text-muted);">Telefon kamerasını açmak ve fotoğraf seçmek için tıklayın</p>
                     <input type="file" id="usedTirePhotosInput" accept="image/*" multiple style="display:none;" onchange="handleUsedTirePhotosUpload(this)">
                 </div>
                 <div id="usedTirePhotoPreviewGrid" class="photo-preview-grid"></div>
@@ -1079,7 +1079,7 @@
             document.getElementById('fileUploadText').innerText = 'Bilgisayarınızdan şeffaf PNG logosu seçebilirsiniz';
         }
 
-        // --- 2. EL LASTİK İÇİN OTOMATİK BOYUTLANDIRILMIŞ 4 FOTOĞRAF & SİLME FONKSİYONLARI ---
+        // --- GÜVENLİ 2. EL FOTOĞRAF OPTİMİZASYON VE İŞLEME ---
         let tempUsedTirePhotos = [];
 
         function setCategory(cat, btn) {
@@ -1129,7 +1129,7 @@
                     const img = new Image();
                     img.onload = function() {
                         const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 600; // Firebase 1MB sınırını aşmamak için otomatik optimize boyut
+                        const MAX_WIDTH = 500; // Telefon donmasını ve boyut şişmesini önlemek için güvenli çözünürlük
                         const scaleSize = MAX_WIDTH / img.width;
                         canvas.width = MAX_WIDTH;
                         canvas.height = img.height > img.width ? MAX_WIDTH * (img.height / img.width) : img.height * scaleSize;
@@ -1137,7 +1137,7 @@
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                        const compressedB64 = canvas.toDataURL('image/jpeg', 0.75); // %75 kalite sıkıştırma
+                        const compressedB64 = canvas.toDataURL('image/jpeg', 0.65); // %65 hafif sıkıştırma ile garantili boyut
                         tempUsedTirePhotos.push(compressedB64);
 
                         const thumbImg = document.createElement('img');
@@ -1146,7 +1146,7 @@
                         grid.appendChild(thumbImg);
 
                         if (tempUsedTirePhotos.length > 0) {
-                            document.getElementById('usedTireUploadText').innerText = `${tempUsedTirePhotos.length} adet fotoğraf optimize edildi.`;
+                            document.getElementById('usedTireUploadText').innerText = `${tempUsedTirePhotos.length} adet fotoğraf hazırlandı.`;
                             if (clearBtn) clearBtn.classList.remove('hidden');
                         }
                     };
@@ -1163,7 +1163,7 @@
             const input = document.getElementById('usedTirePhotosInput');
             if (input) input.value = '';
             const upText = document.getElementById('usedTireUploadText');
-            if (upText) upText.innerText = 'Telefon kamerasını açmak ve 4 fotoğraf seçmek için tıklayın';
+            if (upText) upText.innerText = 'Telefon kamerasını açmak ve fotoğraf seçmek için tıklayın';
             const clearBtn = document.getElementById('clearUsedPhotosBtn');
             if (clearBtn) clearBtn.classList.add('hidden');
         }
@@ -1223,7 +1223,7 @@
             const grid = document.getElementById('usedTirePhotoPreviewGrid');
             if (grid) grid.innerHTML = '';
             const upText = document.getElementById('usedTireUploadText');
-            if (upText) upText.innerText = 'Telefon kamerasını açmak ve 4 fotoğraf seçmek için tıklayın';
+            if (upText) upText.innerText = 'Telefon kamerasını açmak ve fotoğraf seçmek için tıklayın';
             const clearBtn = document.getElementById('clearUsedPhotosBtn');
             if (clearBtn) clearBtn.classList.add('hidden');
 
@@ -1245,40 +1245,47 @@
         }
 
         async function saveProduct() {
-            const group = document.getElementById('pGroupSelect').value;
-            let size = document.getElementById('pSizeSelect').value;
-            if (size === 'Diger') size = document.getElementById('pCustomSize').value.trim();
+            try {
+                const group = document.getElementById('pGroupSelect').value;
+                let size = document.getElementById('pSizeSelect').value;
+                if (size === 'Diger') size = document.getElementById('pCustomSize').value.trim();
 
-            let brand = document.getElementById('pBrandSelect').value;
-            if (brand === 'Diger') brand = document.getElementById('pCustomBrand').value.trim();
+                let brand = document.getElementById('pBrandSelect').value;
+                if (brand === 'Diger') brand = document.getElementById('pCustomBrand').value.trim();
 
-            const customLogo = document.getElementById('pCustomLogoBase64').value;
-            const pattern = document.getElementById('pPattern').value.trim();
-            const season = (group === 'İç Lastik') ? 'İç Lastik' : document.getElementById('pSeason').value;
-            const dot = document.getElementById('pDot').value.trim() || '2026';
-            const stock = parseInt(document.getElementById('pStock').value) || 0;
-            const price = parseFloat(document.getElementById('pPrice').value) || 0;
-            
-            let img = '';
-            let photos = [];
-            if (group === '2. El') {
-                photos = tempUsedTirePhotos;
-                img = photos.length > 0 ? photos[0] : 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
-            } else {
-                img = document.getElementById('pImg').value.trim() || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
+                const customLogo = document.getElementById('pCustomLogoBase64').value;
+                const pattern = document.getElementById('pPattern').value.trim();
+                const season = (group === 'İç Lastik') ? 'İç Lastik' : document.getElementById('pSeason').value;
+                const dot = document.getElementById('pDot').value.trim() || '2026';
+                const stock = parseInt(document.getElementById('pStock').value) || 0;
+                const price = parseFloat(document.getElementById('pPrice').value) || 0;
+                
+                let img = '';
+                let photos = [];
+                if (group === '2. El') {
+                    photos = tempUsedTirePhotos;
+                    img = photos.length > 0 ? photos[0] : 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
+                } else {
+                    img = document.getElementById('pImg').value.trim() || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
+                }
+
+                if (!size || !brand || !price) {
+                    alert('Lütfen Ebat, Marka ve Fiyat alanlarını doldurunuz!');
+                    return;
+                }
+
+                const editingId = document.getElementById('editingProductId').value;
+                const id = editingId ? editingId : 'p_' + Date.now();
+
+                const productData = { group, size, brand, customLogo, pattern, season, dot, stock, price, img, photos };
+                
+                await window.setDoc(window.doc(window.db, "lastik_stoklari", id), productData);
+                closeModal('productModal');
+                alert('Ürün başarıyla kaydedildi!');
+            } catch (err) {
+                console.error("Kayıt hatası:", err);
+                alert("Ürün kaydedilirken bir hata oluştu. Fotoğraf boyutu çok büyük olabilir, fotoğrafsız deneyebilir misiniz?");
             }
-
-            if (!size || !brand || !price) {
-                alert('Lütfen Ebat, Marka ve Fiyat alanlarını doldurunuz!');
-                return;
-            }
-
-            const editingId = document.getElementById('editingProductId').value;
-            const id = editingId ? editingId : 'p_' + Date.now();
-
-            const productData = { group, size, brand, customLogo, pattern, season, dot, stock, price, img, photos };
-            await window.setDoc(window.doc(window.db, "lastik_stoklari", id), productData, { merge: true });
-            closeModal('productModal');
         }
 
         function editProduct(id) {
