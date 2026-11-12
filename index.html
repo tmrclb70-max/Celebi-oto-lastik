@@ -215,21 +215,12 @@
         }
         .product-row:hover { border-color: var(--accent-yellow); transform: translateX(2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
 
-        /* KART GÖRÜNÜMÜ İÇİN YUMUŞAK SAĞA/SOLA KAYDIRMALI SLIDER (MARQUEE) ALANI */
+        /* KART GÖRÜNÜMÜ İÇİN DÜZENLİ ALT ALTA VE YAN YANA GRID YAPISI */
         .products-grid-view {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 15px;
-            overflow-x: auto;
-            scroll-behavior: smooth;
             width: 100%;
-            padding: 10px 5px 20px 5px;
-        }
-        .products-grid-view::-webkit-scrollbar {
-            height: 8px;
-        }
-        .products-grid-view::-webkit-scrollbar-thumb {
-            background: var(--accent-yellow);
-            border-radius: 4px;
         }
 
         .product-card-item {
@@ -243,9 +234,7 @@
             transition: 0.2s;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            min-width: 270px;
-            max-width: 280px;
-            flex-shrink: 0;
+            width: 100%;
         }
         .product-card-item:hover {
             border-color: var(--accent-yellow);
@@ -1704,25 +1693,6 @@
             return (r * 100000) + (w * 100) + h;
         }
 
-        // OTOMATİK SAĞA-SOLA YUMUŞAK KAYDIRMA (MARQUEE SLIDER) DÖNGÜSÜ
-        let cardAutoScrollTimer = null;
-        function initCardAutoScroll() {
-            if (cardAutoScrollTimer) clearInterval(cardAutoScrollTimer);
-            
-            cardAutoScrollTimer = setInterval(() => {
-                if (!isCardView) return;
-                const grid = document.getElementById('productsGrid');
-                if (!grid) return;
-
-                // Sağa doğru yavaşça kaydır, sona gelince başa sar
-                if (grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 10) {
-                    grid.scrollTo({ left: 0, behavior: 'smooth' });
-                } else {
-                    grid.scrollBy({ left: 280, behavior: 'smooth' });
-                }
-            }, 3500); // Her 3.5 saniyede bir sonraki ürüne yumuşak kayma
-        }
-
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             const search = document.getElementById('searchInput').value.toLowerCase().trim();
@@ -1754,7 +1724,6 @@
 
             if (filtered.length === 0) {
                 grid.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 25px; font-size: 0.9rem; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--card-border);">Henüz kayıtlı ürün bulunmuyor veya arama eşleşmedi.</div>`;
-                if (cardAutoScrollTimer) clearInterval(cardAutoScrollTimer);
                 return;
             }
 
@@ -1830,11 +1799,7 @@
                     grid.appendChild(card);
                 });
 
-                // Otomatik kaydırmayı başlat
-                initCardAutoScroll();
-
             } else {
-                if (cardAutoScrollTimer) clearInterval(cardAutoScrollTimer);
                 grid.className = 'products-list';
                 filtered.forEach(p => {
                     const stockVal = parseInt(p.stock) || 0;
