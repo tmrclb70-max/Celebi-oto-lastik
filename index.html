@@ -166,7 +166,6 @@
         .search-box i { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.95rem; }
         .search-box input { width: 100%; padding: 10px 10px 10px 34px; background: #0f172a; border: 1px solid var(--card-border); border-radius: 6px; color: white; font-size: 0.9rem; }
         
-        /* KART GÖRÜNÜMÜ GEÇİŞ BUTONU */
         .btn-view-toggle { background: #3b82f6; color: white; border: none; padding: 0 14px; height: 38px; border-radius: 6px; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 6px; font-size: 0.85rem; white-space: nowrap; transition: 0.2s; }
         .btn-view-toggle:hover { filter: brightness(1.1); }
 
@@ -216,13 +215,23 @@
         }
         .product-row:hover { border-color: var(--accent-yellow); transform: translateX(2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
 
-        /* KART GÖRÜNÜMÜ (GRID) STİLLERİ - FOTOĞRAFTAKİ GİBİ YAN YANA */
+        /* KART GÖRÜNÜMÜ İÇİN YUMUŞAK SAĞA/SOLA KAYDIRMALI SLIDER (MARQUEE) ALANI */
         .products-grid-view {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            display: flex;
             gap: 15px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
             width: 100%;
+            padding: 10px 5px 20px 5px;
         }
+        .products-grid-view::-webkit-scrollbar {
+            height: 8px;
+        }
+        .products-grid-view::-webkit-scrollbar-thumb {
+            background: var(--accent-yellow);
+            border-radius: 4px;
+        }
+
         .product-card-item {
             background: var(--card-bg);
             border: 1.5px solid var(--card-border);
@@ -234,6 +243,9 @@
             transition: 0.2s;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            min-width: 270px;
+            max-width: 280px;
+            flex-shrink: 0;
         }
         .product-card-item:hover {
             border-color: var(--accent-yellow);
@@ -257,11 +269,40 @@
             height: 100%;
             object-fit: contain;
         }
+        .card-header-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2px;
+        }
         .card-title {
             font-size: 1.05rem;
             font-weight: 900;
             color: #fff;
-            margin-top: 2px;
+        }
+        .card-brand-display {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            max-width: 110px;
+            height: 28px;
+        }
+        .card-brand-logo-img {
+            max-width: 100px;
+            max-height: 26px;
+            object-fit: contain;
+            background: transparent !important;
+        }
+        .card-brand-text {
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--accent-yellow);
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(245, 158, 11, 0.5);
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
         }
         .card-price-row {
             display: flex;
@@ -380,7 +421,6 @@
         }
         .file-upload-box:hover { background: rgba(245, 158, 11, 0.15); }
 
-        /* 2. EL LASTİK 4 FOTOĞRAF SLİDER VE ÖNİZLEME STİLLERİ */
         .used-tire-slider-box {
             position: relative; width: 100%; height: 280px; background: #000; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center;
         }
@@ -508,7 +548,6 @@
                     <input type="text" id="searchInput" oninput="renderProducts()" placeholder="Ebat, Marka veya Desen Ara... (Örn: 205/55, Petlas)">
                 </div>
 
-                <!-- KART / TABLO GÖRÜNÜMÜ GEÇİŞ BUTONU (YÖNETİCİ VE BAYİDE ORTAK GÖRÜNÜR) -->
                 <button id="viewToggleBtn" class="btn-view-toggle" onclick="toggleViewMode()">
                     <i class="fa-solid fa-grip" id="viewToggleIcon"></i> <span id="viewToggleText">Kart Görünümü</span>
                 </button>
@@ -613,7 +652,7 @@
         </div>
     </footer>
 
-    <!-- ÜRÜN DETAY MODALI (2. EL İÇİN 4 FOTOĞRAFLI SLİDER & DETAYLI BİLGİ ALANLARI) -->
+    <!-- ÜRÜN DETAY MODALI -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -945,7 +984,7 @@
         let currentUserRole = null;
         let selectedProductForModal = null;
         let modalProductQty = 1;
-        let isCardView = false; // Varsayılan Tablo Görünümü
+        let isCardView = false;
         
         let adminPass = localStorage.getItem('celebi_admin_pass') || 'celebi166';
         let bayiPass = localStorage.getItem('celebi_bayi_pass') || '1234';
@@ -1665,6 +1704,25 @@
             return (r * 100000) + (w * 100) + h;
         }
 
+        // OTOMATİK SAĞA-SOLA YUMUŞAK KAYDIRMA (MARQUEE SLIDER) DÖNGÜSÜ
+        let cardAutoScrollTimer = null;
+        function initCardAutoScroll() {
+            if (cardAutoScrollTimer) clearInterval(cardAutoScrollTimer);
+            
+            cardAutoScrollTimer = setInterval(() => {
+                if (!isCardView) return;
+                const grid = document.getElementById('productsGrid');
+                if (!grid) return;
+
+                // Sağa doğru yavaşça kaydır, sona gelince başa sar
+                if (grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 10) {
+                    grid.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    grid.scrollBy({ left: 280, behavior: 'smooth' });
+                }
+            }, 3500); // Her 3.5 saniyede bir sonraki ürüne yumuşak kayma
+        }
+
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             const search = document.getElementById('searchInput').value.toLowerCase().trim();
@@ -1696,6 +1754,7 @@
 
             if (filtered.length === 0) {
                 grid.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 25px; font-size: 0.9rem; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--card-border);">Henüz kayıtlı ürün bulunmuyor veya arama eşleşmedi.</div>`;
+                if (cardAutoScrollTimer) clearInterval(cardAutoScrollTimer);
                 return;
             }
 
@@ -1720,6 +1779,9 @@
                         else if (p.season === '4 Mevsim') iconClass = 'fa-cloud-sun-rain icon-all';
                         catTag = `<span class="tag tag-category"><i class="fa-solid ${iconClass}"></i> ${p.season || 'Yaz'}</span>`;
                     }
+
+                    const brandUpper = (p.brand || 'STANDART').toUpperCase();
+                    let cardBrandHtml = p.customLogo ? `<img src="${p.customLogo}" class="card-brand-logo-img" alt="${p.brand}">` : `<span class="card-brand-text">${brandUpper}</span>`;
 
                     let adminControlsHtml = currentUserRole === 'admin' ? `
                         <div class="admin-stock-control">
@@ -1748,7 +1810,10 @@
                         <div class="card-img-box">
                             <img src="${displayImg}" alt="Lastik Görseli">
                         </div>
-                        <div class="card-title">${p.size} ${p.brand.toUpperCase()}</div>
+                        <div class="card-header-line">
+                            <div class="card-title">${p.size}</div>
+                            <div class="card-brand-display">${cardBrandHtml}</div>
+                        </div>
                         <div style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">Desen: <span style="color:var(--accent-yellow);">${p.pattern || 'STANDART'}</span> | DOT: ${p.dot || '2026'}</div>
                         <div class="card-price-row">
                             <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">Net Fiyat</span>
@@ -1765,7 +1830,11 @@
                     grid.appendChild(card);
                 });
 
+                // Otomatik kaydırmayı başlat
+                initCardAutoScroll();
+
             } else {
+                if (cardAutoScrollTimer) clearInterval(cardAutoScrollTimer);
                 grid.className = 'products-list';
                 filtered.forEach(p => {
                     const stockVal = parseInt(p.stock) || 0;
