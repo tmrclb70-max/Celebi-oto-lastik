@@ -162,7 +162,7 @@
         .btn-primary { width: 100%; padding: 10px; background: var(--accent-yellow); color: #000; font-weight: 800; border: none; border-radius: 6px; cursor: pointer; font-size: 0.92rem; transition: 0.2s; margin-top: 6px; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
         .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
 
-        /* GELİŞMİŞ MİSAFİR FİLTRE PANELİ */
+        /* AKILLI FİLTRE PANELİ (YAZILABİLİR & SEÇMELİ) */
         .smart-filter-box {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             border: 1.5px solid rgba(245, 158, 11, 0.4);
@@ -173,7 +173,7 @@
         }
         .filter-grid-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 10px;
             margin-top: 10px;
         }
@@ -204,16 +204,9 @@
         .notif-badge { position: absolute; top: -4px; right: -4px; background: var(--danger-color); color: white; font-size: 0.68rem; font-weight: 800; padding: 1px 5px; border-radius: 8px; border: 2px solid var(--card-bg); }
 
         .filter-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
-        .filter-btn { flex: 1; min-width: 85px; padding: 7px 8px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 0.78rem; transition: 0.2s; }
+        .filter-btn { flex: 1; min-width: 90px; padding: 7px 8px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 0.78rem; transition: 0.2s; }
         .filter-btn:hover { border-color: var(--accent-yellow); }
         .filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
-
-        .icon-sun { color: var(--icon-sun) !important; filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.6)); }
-        .icon-snow { color: var(--icon-snow) !important; filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.6)); }
-        .icon-all { color: var(--icon-all) !important; filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.6)); }
-        .icon-tractor { color: var(--icon-tractor) !important; filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.6)); }
-        .icon-tube { color: var(--icon-tube) !important; filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.6)); }
-        .icon-secondhand { color: var(--icon-secondhand) !important; filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.6)); }
 
         .admin-bar { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; background: rgba(255,255,255,0.03); padding: 10px 12px; border-radius: 8px; border: 1px solid var(--card-border); }
         .admin-bar-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
@@ -411,35 +404,37 @@
         .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 30px; height: 30px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; }
         .btn-edit-price { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); width: 30px; height: 30px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; }
 
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 3000; padding: 10px; overflow-y: auto; }
-        .modal-content { background: var(--card-bg); border-radius: 12px; padding: 22px; width: 96%; max-width: 900px; border: 1.5px solid var(--card-border); max-height: 94vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.95); }
+        /* BÜYÜTÜLMÜŞ VE ŞIK ÜRÜN DETAY MODALI */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 3000; padding: 15px; overflow-y: auto; }
+        .modal-content { background: var(--card-bg); border-radius: 14px; padding: 28px; width: 98%; max-width: 1000px; border: 2px solid rgba(245,158,11,0.5); max-height: 96vh; overflow-y: auto; box-shadow: 0 25px 60px rgba(0,0,0,0.95); }
 
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; width: 100%; }
-        .modal-header h3 { color: var(--accent-yellow); font-size: 1.25rem; font-weight: 800; }
-        .close-btn { font-size: 1.6rem; cursor: pointer; color: var(--text-muted); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; width: 100%; }
+        .modal-header h3 { color: var(--accent-yellow); font-size: 1.4rem; font-weight: 900; }
+        .close-btn { font-size: 1.8rem; cursor: pointer; color: var(--text-muted); transition: 0.2s; }
+        .close-btn:hover { color: var(--danger-color); }
 
-        .b2b-detail-layout { display: flex; gap: 24px; flex-wrap: wrap; align-items: stretch; }
-        .b2b-detail-img-area { flex: 1.1; min-width: 280px; background: #ffffff; border-radius: 10px; padding: 20px; display: flex; align-items: center; justify-content: center; border: 1px solid #e2e8f0; }
-        .b2b-detail-img-area img { width: 100%; max-height: 340px; object-fit: contain; background: #ffffff; }
+        .b2b-detail-layout { display: flex; gap: 30px; flex-wrap: wrap; align-items: stretch; }
+        .b2b-detail-img-area { flex: 1.2; min-width: 320px; background: #ffffff; border-radius: 12px; padding: 24px; display: flex; align-items: center; justify-content: center; border: 1px solid #e2e8f0; }
+        .b2b-detail-img-area img { width: 100%; max-height: 380px; object-fit: contain; background: #ffffff; }
         
-        .b2b-detail-info-area { flex: 1.4; min-width: 300px; display: flex; flex-direction: column; gap: 14px; }
-        .b2b-product-title { font-size: 1.4rem; font-weight: 900; color: #fff; line-height: 1.3; }
+        .b2b-detail-info-area { flex: 1.5; min-width: 320px; display: flex; flex-direction: column; gap: 16px; }
+        .b2b-product-title { font-size: 1.6rem; font-weight: 900; color: #fff; line-height: 1.3; }
         
-        .b2b-price-box { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 14px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .b2b-price-label { font-size: 0.95rem; color: var(--text-muted); font-weight: 600; }
-        .b2b-price-val { font-size: 1.55rem; font-weight: 900; color: var(--success-color); }
+        .b2b-price-box { background: rgba(16, 185, 129, 0.1); border: 1.5px solid rgba(16, 185, 129, 0.4); padding: 16px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .b2b-price-label { font-size: 1rem; color: var(--text-muted); font-weight: 700; }
+        .b2b-price-val { font-size: 1.8rem; font-weight: 900; color: var(--success-color); }
 
-        .b2b-action-row { display: flex; gap: 10px; align-items: center; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border: 1px solid var(--card-border); }
-        .b2b-qty-box { display: flex; align-items: center; gap: 6px; background: #0f172a; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--card-border); }
-        .b2b-btn-cart { flex: 1; background: #ffffff; color: #000; font-weight: 800; border: none; padding: 11px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.95rem; transition: 0.2s; }
+        .b2b-action-row { display: flex; gap: 12px; align-items: center; background: rgba(255,255,255,0.03); padding: 14px; border-radius: 10px; border: 1px solid var(--card-border); }
+        .b2b-qty-box { display: flex; align-items: center; gap: 8px; background: #0f172a; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--card-border); }
+        .b2b-btn-cart { flex: 1; background: #ffffff; color: #000; font-weight: 900; border: none; padding: 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem; transition: 0.2s; }
         .b2b-btn-cart:hover { background: var(--accent-yellow); }
 
-        .b2b-spec-table { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
-        .b2b-spec-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 12px; background: rgba(15, 23, 42, 0.6); border-radius: 6px; border: 1px solid var(--card-border); font-size: 0.9rem; }
-        .b2b-spec-key { color: var(--text-muted); font-weight: 600; }
-        .b2b-spec-val { color: var(--text-main); font-weight: 800; display: flex; align-items: center; gap: 6px; }
+        .b2b-spec-table { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+        .b2b-spec-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 14px; background: rgba(15, 23, 42, 0.7); border-radius: 8px; border: 1px solid var(--card-border); font-size: 0.95rem; }
+        .b2b-spec-key { color: var(--text-muted); font-weight: 700; }
+        .b2b-spec-val { color: var(--text-main); font-weight: 900; display: flex; align-items: center; gap: 6px; }
 
-        .detail-brand-logo { max-height: 24px; max-width: 100px; object-fit: contain; }
+        .detail-brand-logo { max-height: 28px; max-width: 120px; object-fit: contain; }
 
         .input-with-btn { display: flex; gap: 6px; }
         .btn-search-img { background: #3b82f6; color: white; border: none; padding: 0 10px; border-radius: 5px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 0.78rem; display: flex; align-items: center; gap: 4px; }
@@ -452,17 +447,17 @@
         .file-upload-box:hover { background: rgba(245, 158, 11, 0.15); }
 
         .used-tire-slider-box {
-            position: relative; width: 100%; height: 280px; background: #ffffff; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center;
+            position: relative; width: 100%; height: 320px; background: #ffffff; border-radius: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center;
         }
         .used-tire-slides { display: flex; width: 100%; height: 100%; transition: transform 0.4s ease-in-out; }
         .used-tire-slide { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #ffffff; padding: 12px; }
         .used-tire-slide img { width: 100%; height: 100%; object-fit: contain; background: #ffffff; border-radius: 6px; }
         
         .ut-slider-btn {
-            position: absolute; top: 50%; transform: translateY(-50%); background: rgba(15, 23, 42, 0.75); color: #fff; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 5;
+            position: absolute; top: 50%; transform: translateY(-50%); background: rgba(15, 23, 42, 0.75); color: #fff; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 5;
         }
-        .ut-slider-btn.prev { left: 8px; }
-        .ut-slider-btn.next { right: 8px; }
+        .ut-slider-btn.prev { left: 10px; }
+        .ut-slider-btn.next { right: 10px; }
         
         .photo-preview-grid { display: flex; gap: 8px; overflow-x: auto; margin-top: 8px; padding-bottom: 5px; }
         .preview-thumb { width: 65px; height: 65px; border-radius: 6px; object-fit: contain; background: #ffffff; padding: 3px; border: 1.5px solid var(--accent-yellow); flex-shrink: 0; }
@@ -514,12 +509,12 @@
             
             <div class="login-welcome-text">
                 <i class="fa-solid fa-user-shield" style="color: var(--accent-yellow);"></i>
-                Yönetici veya Bayi Girişi
+                Bayi Girişi
             </div>
 
             <div class="form-group">
                 <label><i class="fa-solid fa-user"></i> Kullanıcı Adı</label>
-                <input type="text" id="username" class="form-control" placeholder="Yönetici veya Bayi">
+                <input type="text" id="username" class="form-control" placeholder="Kullanıcı Adı veya Bayi">
             </div>
             <div class="form-group">
                 <label><i class="fa-solid fa-key"></i> Şifre</label>
@@ -546,7 +541,7 @@
             </div>
 
             <div id="authArea">
-                <button class="btn-login-open" onclick="openLoginModal()"><i class="fa-solid fa-user-lock"></i> Bayi / Yönetici Girişi</button>
+                <button class="btn-login-open" onclick="openLoginModal()"><i class="fa-solid fa-user-lock"></i> Bayi Girişi</button>
             </div>
 
             <div id="userInfoArea" class="user-info hidden">
@@ -576,96 +571,113 @@
             </div>
         </div>
 
-        <!-- MİSAFİR / DIŞ MÜŞTERİ İÇİN AKILLI EBAT & MARKA FİLTRE PANELİ -->
+        <!-- MİSAFİR / DIŞ MÜŞTERİ İÇİN YAZILABİLİR & SEÇMELİ AKILLI FİLTRE PANELİ -->
         <div id="guestSmartFilterSection" class="smart-filter-box">
-            <div style="font-size: 0.95rem; font-weight: 800; color: var(--accent-yellow); display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
-                <i class="fa-solid fa-sliders"></i> Aradığınız Lastiği Ebat ve Markaya Göre Bulun
+            <div style="font-size: 0.98rem; font-weight: 800; color: var(--accent-yellow); display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                <i class="fa-solid fa-sliders"></i> Akıllı Lastik Arama ve Filtreleme Motoru
             </div>
-            <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px;">Aracınıza uygun ebatları seçerek saniyeler içinde doğru lastiği filtreleyin:</div>
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px;">Listeden seçebilir ya da aradığınız ebat ve markayı kutucuklara doğrudan yazabilirsiniz:</div>
             
             <div class="filter-grid-row">
-                <!-- Marka Seçimi -->
+                <!-- Marka (Seçilebilir ve Yazılabilir) -->
                 <div class="filter-dropdown-group">
-                    <label><i class="fa-solid fa-copyright"></i> Marka Seçin</label>
-                    <select id="filterBrandSelect" class="form-control" onchange="renderProducts()">
-                        <option value="all">Tüm Markalar</option>
-                        <option value="Petlas">Petlas</option>
-                        <option value="Lassa">Lassa</option>
-                        <option value="Bridgestone">Bridgestone</option>
-                        <option value="Michelin">Michelin</option>
-                        <option value="Goodyear">Goodyear</option>
-                        <option value="Pirelli">Pirelli</option>
-                        <option value="Continental">Continental</option>
-                        <option value="Starmaxx">Starmaxx</option>
-                        <option value="Milestone">Milestone</option>
-                        <option value="Hankook">Hankook</option>
-                        <option value="Laufenn">Laufenn</option>
-                        <option value="Falken">Falken</option>
-                        <option value="Dunlop">Dunlop</option>
-                        <option value="Kabat">Kabat</option>
-                        <option value="BKT">BKT</option>
-                    </select>
+                    <label><i class="fa-solid fa-copyright"></i> Marka Seç / Yaz</label>
+                    <input type="text" id="filterBrandInput" list="brandListOptions" class="form-control" placeholder="Örn: Petlas, Lassa, Michelin..." oninput="renderProducts()">
+                    <datalist id="brandListOptions">
+                        <option value="Petlas">
+                        <option value="Lassa">
+                        <option value="Bridgestone">
+                        <option value="Michelin">
+                        <option value="Goodyear">
+                        <option value="Pirelli">
+                        <option value="Continental">
+                        <option value="Starmaxx">
+                        <option value="Milestone">
+                        <option value="Hankook">
+                        <option value="Laufenn">
+                        <option value="Falken">
+                        <option value="Dunlop">
+                        <option value="Yokohama">
+                        <option value="Kumho">
+                        <option value="Nokian">
+                        <option value="Toyo">
+                        <option value="Matador">
+                        <option value="Kabat">
+                        <option value="BKT">
+                        <option value="Ozka">
+                        <option value="Seha">
+                        <option value="Alliance">
+                    </datalist>
                 </div>
 
-                <!-- Taban Genişliği -->
+                <!-- Taban Genişliği (Seçilebilir ve Yazılabilir) -->
                 <div class="filter-dropdown-group">
                     <label><i class="fa-solid fa-arrows-left-right"></i> Taban Genişliği</label>
-                    <select id="filterWidthSelect" class="form-control" onchange="renderProducts()">
-                        <option value="all">Tüm Genişlikler</option>
-                        <option value="145">145</option>
-                        <option value="155">155</option>
-                        <option value="165">165</option>
-                        <option value="175">175</option>
-                        <option value="185">185</option>
-                        <option value="195">195</option>
-                        <option value="205">205</option>
-                        <option value="215">215</option>
-                        <option value="225">225</option>
-                        <option value="235">235</option>
-                        <option value="245">245</option>
-                        <option value="255">255</option>
-                        <option value="265">265</option>
-                        <option value="275">275</option>
-                    </select>
+                    <input type="text" id="filterWidthInput" list="widthListOptions" class="form-control" placeholder="Örn: 205, 185, 16.9..." oninput="renderProducts()">
+                    <datalist id="widthListOptions">
+                        <option value="135">
+                        <option value="145">
+                        <option value="155">
+                        <option value="165">
+                        <option value="175">
+                        <option value="185">
+                        <option value="195">
+                        <option value="205">
+                        <option value="215">
+                        <option value="225">
+                        <option value="235">
+                        <option value="245">
+                        <option value="255">
+                        <option value="265">
+                        <option value="275">
+                        <option value="285">
+                        <option value="295">
+                        <option value="315">
+                    </datalist>
                 </div>
 
-                <!-- Yanak Oranı -->
+                <!-- Yanak Oranı (Seçilebilir ve Yazılabilir) -->
                 <div class="filter-dropdown-group">
                     <label><i class="fa-solid fa-arrows-up-down"></i> Yanak Oranı</label>
-                    <select id="filterProfileSelect" class="form-control" onchange="renderProducts()">
-                        <option value="all">Tüm Yanaklar</option>
-                        <option value="30">30</option>
-                        <option value="35">35</option>
-                        <option value="40">40</option>
-                        <option value="45">45</option>
-                        <option value="50">50</option>
-                        <option value="55">55</option>
-                        <option value="60">60</option>
-                        <option value="65">65</option>
-                        <option value="70">70</option>
-                        <option value="75">75</option>
-                        <option value="80">80</option>
-                        <option value="82">82</option>
-                    </select>
+                    <input type="text" id="filterProfileInput" list="profileListOptions" class="form-control" placeholder="Örn: 55, 65, 80..." oninput="renderProducts()">
+                    <datalist id="profileListOptions">
+                        <option value="30">
+                        <option value="35">
+                        <option value="40">
+                        <option value="45">
+                        <option value="50">
+                        <option value="55">
+                        <option value="60">
+                        <option value="65">
+                        <option value="70">
+                        <option value="75">
+                        <option value="80">
+                        <option value="82">
+                        <option value="90">
+                    </datalist>
                 </div>
 
-                <!-- Çap / Jant -->
+                <!-- Çap / Jant (Seçilebilir ve Yazılabilir) -->
                 <div class="filter-dropdown-group">
-                    <label><i class="fa-solid fa-circle-notch"></i> Çap (Jant)</label>
-                    <select id="filterRimSelect" class="form-control" onchange="renderProducts()">
-                        <option value="all">Tüm Çaplar (Jant)</option>
-                        <option value="12">12 Jant</option>
-                        <option value="13">13 Jant</option>
-                        <option value="14">14 Jant</option>
-                        <option value="15">15 Jant</option>
-                        <option value="16">16 Jant</option>
-                        <option value="17">17 Jant</option>
-                        <option value="18">18 Jant</option>
-                        <option value="19">19 Jant</option>
-                        <option value="20">20 Jant</option>
-                        <option value="21">21 Jant</option>
-                        <option value="22">22 Jant</option>
-                    </select>
+                    <label><i class="fa-solid fa-circle-notch"></i> Çap / Jant (R / İnç)</label>
+                    <input type="text" id="filterRimInput" list="rimListOptions" class="form-control" placeholder="Örn: 16, 17.5, 22.5..." oninput="renderProducts()">
+                    <datalist id="rimListOptions">
+                        <option value="12">
+                        <option value="13">
+                        <option value="14">
+                        <option value="15">
+                        <option value="16">
+                        <option value="17">
+                        <option value="17.5">
+                        <option value="18">
+                        <option value="19">
+                        <option value="19.5">
+                        <option value="20">
+                        <option value="22.5">
+                        <option value="24">
+                        <option value="30">
+                        <option value="38">
+                    </datalist>
                 </div>
             </div>
         </div>
@@ -674,7 +686,7 @@
             <div class="search-bar-row">
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="searchInput" oninput="renderProducts()" placeholder="Hızlı Arama (Örn: 205/55, Petlas, Traktör)...">
+                    <input type="text" id="searchInput" oninput="renderProducts()" placeholder="Hızlı Genel Arama (Örn: 205/55, Petlas, Traktör Römork)...">
                 </div>
 
                 <button id="viewToggleBtn" class="btn-view-toggle" onclick="toggleViewMode()">
@@ -687,17 +699,18 @@
                 </button>
             </div>
 
+            <!-- RENKLİ VE PARLAK EMOJİLİ KATEGORİ BUTONLARI -->
             <div class="filter-buttons">
-                <button class="filter-btn active" onclick="setCategory('all', this)"><i class="fa-solid fa-border-all"></i> Tüm Ürünler</button>
-                <button class="filter-btn" onclick="setCategory('Yaz', this)"><i class="fa-solid fa-sun icon-sun"></i> Yaz</button>
-                <button class="filter-btn" onclick="setCategory('Kış', this)"><i class="fa-solid fa-snowflake icon-snow"></i> Kış</button>
-                <button class="filter-btn" onclick="setCategory('4 Mevsim', this)"><i class="fa-solid fa-cloud-sun-rain icon-all"></i> 4 Mevsim</button>
-                <button class="filter-btn" onclick="setCategory('Otomobil', this)"><i class="fa-solid fa-car"></i> Otomobil</button>
-                <button class="filter-btn" onclick="setCategory('Hafif Ticari', this)"><i class="fa-solid fa-van-shuttle"></i> Hafif Ticari</button>
-                <button class="filter-btn" onclick="setCategory('Zirai', this)"><i class="fa-solid fa-tractor icon-tractor"></i> Zirai Grubu</button>
-                <button class="filter-btn" onclick="setCategory('Ağır Vasıta', this)"><i class="fa-solid fa-truck"></i> Ağır Vasıta</button>
-                <button class="filter-btn" onclick="setCategory('İç Lastik', this)"><i class="fa-solid fa-circle-dot icon-tube"></i> İç Lastik</button>
-                <button class="filter-btn" onclick="setCategory('2. El', this)"><i class="fa-solid fa-rotate-right icon-secondhand"></i> 2. El</button>
+                <button class="filter-btn active" onclick="setCategory('all', this)"><i class="fa-solid fa-border-all"></i> 🌐 Tüm Ürünler</button>
+                <button class="filter-btn" onclick="setCategory('Yaz', this)"><i class="fa-solid fa-sun icon-sun"></i> ☀️ Yaz</button>
+                <button class="filter-btn" onclick="setCategory('Kış', this)"><i class="fa-solid fa-snowflake icon-snow"></i> ❄️ Kış</button>
+                <button class="filter-btn" onclick="setCategory('4 Mevsim', this)"><i class="fa-solid fa-cloud-sun-rain icon-all"></i> 🌤️ 4 Mevsim</button>
+                <button class="filter-btn" onclick="setCategory('Otomobil', this)"><i class="fa-solid fa-car"></i> 🚗 Otomobil</button>
+                <button class="filter-btn" onclick="setCategory('Hafif Ticari', this)"><i class="fa-solid fa-van-shuttle"></i> 🚐 Hafif Ticari</button>
+                <button class="filter-btn" onclick="setCategory('Zirai', this)"><i class="fa-solid fa-tractor icon-tractor"></i> 🚜 Zirai / Traktör</button>
+                <button class="filter-btn" onclick="setCategory('Ağır Vasıta', this)"><i class="fa-solid fa-truck"></i> 🚛 Ağır Vasıta / Tır</button>
+                <button class="filter-btn" onclick="setCategory('İç Lastik', this)"><i class="fa-solid fa-circle-dot icon-tube"></i> ⭕ İç Lastik</button>
+                <button class="filter-btn" onclick="setCategory('2. El', this)"><i class="fa-solid fa-rotate-right icon-secondhand"></i> ♻️ 2. El</button>
             </div>
         </div>
 
@@ -713,12 +726,12 @@
             
             <div class="admin-btn-group">
                 <span style="font-size: 0.75rem; color: var(--accent-yellow); font-weight:700; display:flex; align-items:center; gap:3px;"><i class="fa-solid fa-percent"></i> Toplu Zam/İndirim:</span>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('Yaz')"><i class="fa-solid fa-sun icon-sun"></i> % Yaz</button>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('Kış')"><i class="fa-solid fa-snowflake icon-snow"></i> % Kış</button>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('4 Mevsim')"><i class="fa-solid fa-cloud-sun-rain icon-all"></i> % 4 Mevsim</button>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('Zirai')"><i class="fa-solid fa-tractor icon-tractor"></i> % Zirai</button>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('İç Lastik')"><i class="fa-solid fa-circle-dot icon-tube"></i> % İç Lastik</button>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('2. El')"><i class="fa-solid fa-rotate-right icon-secondhand"></i> % 2. El</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('Yaz')">☀️ % Yaz</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('Kış')">❄️ % Kış</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('4 Mevsim')">🌤️ % 4 Mevsim</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('Zirai')">🚜 % Zirai</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('İç Lastik')">⭕ % İç Lastik</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('2. El')">♻️ % 2. El</button>
             </div>
         </div>
 
@@ -784,11 +797,11 @@
         </div>
     </footer>
 
-    <!-- ÜRÜN DETAY MODALI -->
+    <!-- ÜRÜN DETAY MODALI (DAHA BÜYÜK VE ŞIK) -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fa-solid fa-circle-info" style="color: var(--accent-yellow);"></i> Ürün Bilgileri</h3>
+                <h3><i class="fa-solid fa-circle-info" style="color: var(--accent-yellow);"></i> Ürün Detay ve Bilgileri</h3>
                 <span class="close-btn" onclick="closeModal('detailModal')">&times;</span>
             </div>
             
@@ -804,7 +817,7 @@
                     <div style="display:flex; align-items:center; gap:8px;" id="detailStockArea"></div>
                     <div class="b2b-action-row" id="detailActionRow"></div>
 
-                    <div style="font-size:0.88rem; font-weight:800; color:var(--accent-yellow); margin-top:2px;">Ürün Bilgileri</div>
+                    <div style="font-size:0.92rem; font-weight:800; color:var(--accent-yellow); margin-top:4px;">Detaylı Teknik Bilgiler</div>
                     <div class="b2b-spec-table" id="detailSpecTable">
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Ürün Ebatı:</span><span id="dSize" class="b2b-spec-val">--</span></div>
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Marka:</span><span id="dBrand" class="b2b-spec-val">--</span></div>
@@ -921,12 +934,12 @@
             <div class="form-group">
                 <label>Ürün / Araç Grubu</label>
                 <select id="pGroupSelect" class="form-control" onchange="toggleGroupFields(this.value)">
-                    <option value="Otomobil">Otomobil Lastiği</option>
-                    <option value="Hafif Ticari">Hafif Ticari (Minibüs / Panelvan)</option>
-                    <option value="Zirai">Zirai Grubu (Traktör / İş Makinesi)</option>
-                    <option value="Ağır Vasıta">Ağır Vasıta (Kamyon / Tır)</option>
-                    <option value="İç Lastik">İç Lastik (Şambrel)</option>
-                    <option value="2. El">2. El Lastik Grubu</option>
+                    <option value="Otomobil">🚗 Otomobil Lastiği</option>
+                    <option value="Hafif Ticari">🚐 Hafif Ticari (Minibüs / Panelvan)</option>
+                    <option value="Zirai">🚜 Zirai Grubu (Traktör / Römork / İş Makinesi)</option>
+                    <option value="Ağır Vasıta">🚛 Ağır Vasıta (Kamyon / Tır)</option>
+                    <option value="İç Lastik">⭕ İç Lastik (Şambrel)</option>
+                    <option value="2. El">♻️ 2. El Lastik Grubu</option>
                 </select>
             </div>
 
@@ -941,6 +954,8 @@
                     <option value="215/55R17">215/55R17</option>
                     <option value="225/45R17">225/45R17</option>
                     <option value="235/60R18">235/60R18</option>
+                    <option value="315/80R22.5">315/80R22.5 (Tır)</option>
+                    <option value="16.9-30">16.9-30 (Traktör)</option>
                     <option value="Diger">Diğer (Manuel Ebat Yaz)</option>
                 </select>
             </div>
@@ -967,12 +982,15 @@
                     <option value="Dunlop">Dunlop</option>
                     <option value="Kabat">Kabat</option>
                     <option value="BKT">BKT</option>
+                    <option value="Ozka">Özka</option>
+                    <option value="Seha">Seha</option>
+                    <option value="Alliance">Alliance</option>
                     <option value="Diger">Diğer (Manuel Yaz)</option>
                 </select>
             </div>
             <div class="form-group hidden" id="customBrandGroup">
                 <label>Manuel Marka Adı</label>
-                <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Öзкаş, Sava Vb.">
+                <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Sava, Matador Vb.">
             </div>
 
             <div class="form-group" id="normalLogoGroup">
@@ -1022,9 +1040,10 @@
 
             <div class="form-group">
                 <label>Lastik Deseni / Diş Durumu / Özellik</label>
-                <input type="text" id="pPattern" class="form-control" placeholder="Örn: PT741, Competus, 5mm Dişli Vb.">
+                <input type="text" id="pPattern" class="form-control" placeholder="Örn: PT741, Traktör Dişli, 5mm Vb.">
             </div>
 
+            <!-- ZİRAİ VEYA İÇ LASTİKTE OTOMATİK GİZLENEN MEVSİM ALANI -->
             <div class="form-group" id="seasonGroup">
                 <label>Mevsim / Tür</label>
                 <select id="pSeason" class="form-control">
@@ -1242,7 +1261,6 @@
             document.getElementById('authArea').classList.add('hidden');
             document.getElementById('userInfoArea').classList.remove('hidden');
 
-            // Sadece yönetici ise stok artırma/azaltma ve ekleme çubuğunu aç
             if (currentUserRole === 'admin') {
                 document.getElementById('adminBar').classList.remove('hidden');
                 document.getElementById('adminNotifBtn').classList.remove('hidden');
@@ -1409,7 +1427,8 @@
                 if (usedTirePhotosGroup) usedTirePhotosGroup.classList.remove('hidden');
                 if (usedTireExtraFields) usedTireExtraFields.classList.remove('hidden');
                 if (normalImgUrlGroup) normalImgUrlGroup.classList.add('hidden');
-            } else if (val === 'İç Lastik') {
+            } else if (val === 'İç Lastik' || val === 'Zirai') {
+                // İÇ LASTİK VEYA ZİRAİ GRUPTA YAZ/KIŞ SEÇENEĞİ GÖSTERİLMEZ
                 if (seasonGroup) seasonGroup.classList.add('hidden');
                 if (normalLogoGroup) normalLogoGroup.classList.remove('hidden');
                 if (usedTirePhotosGroup) usedTirePhotosGroup.classList.add('hidden');
@@ -1584,7 +1603,12 @@
 
                 const customLogo = document.getElementById('pCustomLogoBase64').value;
                 const pattern = document.getElementById('pPattern').value.trim();
-                const season = (group === 'İç Lastik') ? 'İç Lastik' : document.getElementById('pSeason').value;
+                
+                // Zirai veya İç lastikse mevsime gerek yok
+                let season = document.getElementById('pSeason').value;
+                if (group === 'İç Lastik') season = 'İç Lastik';
+                if (group === 'Zirai') season = 'Zirai';
+
                 const dot = document.getElementById('pDot').value.trim() || '2026';
                 const stock = parseInt(document.getElementById('pStock').value) || 0;
                 const price = parseFloat(document.getElementById('pPrice').value) || 0;
@@ -1700,7 +1724,7 @@
             document.getElementById('pUsedNote').value = p.usedNote || '';
 
             document.getElementById('pPattern').value = p.pattern || '';
-            document.getElementById('pSeason').value = (p.season === 'İç Lastik') ? 'Yaz' : (p.season || 'Yaz');
+            document.getElementById('pSeason').value = (p.season === 'İç Lastik' || p.season === 'Zirai') ? 'Yaz' : (p.season || 'Yaz');
             document.getElementById('pDot').value = p.dot || '2026';
             document.getElementById('pStock').value = p.stock || 0;
             document.getElementById('pPrice').value = p.price || 0;
@@ -1790,7 +1814,7 @@
                     </div>
                 `;
             } else {
-                imgAreaContainer.innerHTML = `<img id="dImg" src="${activeDetailPhotos[0]}" alt="Lastik Görseli" style="width:100%; max-height:340px; object-fit:contain; background:#ffffff;">`;
+                imgAreaContainer.innerHTML = `<img id="dImg" src="${activeDetailPhotos[0]}" alt="Lastik Görseli" style="width:100%; max-height:380px; object-fit:contain; background:#ffffff;">`;
             }
            
             document.getElementById('dTitle').innerText = `${p.size} ${p.pattern || ''} ${p.brand}`.toUpperCase();
@@ -1816,16 +1840,15 @@
                     <button class="b2b-btn-cart" onclick="alert('Ürün sepete eklenmiştir!')"><i class="fa-solid fa-cart-shopping"></i> Sepete Ekle</button>
                 `;
             } else {
-                // MİSAFİR DETAY: FİYAT VE STOK GİZLİ, WHATSAPP VAR
                 priceSection.innerHTML = `
-                    <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="padding: 12px; font-size: 1rem;">
-                        <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> WhatsApp ile Fiyat Sor / Bilgi Al (Tamer & İbrahim)
+                    <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="padding: 14px; font-size: 1.05rem;">
+                        <i class="fa-brands fa-whatsapp" style="font-size: 1.3rem;"></i> WhatsApp ile Fiyat Sor / Bilgi Al (Tamer & İbrahim)
                     </button>
                 `;
-                stockArea.innerHTML = `<span style="font-size: 0.82rem; color: var(--success-color); font-weight: 700;"><i class="fa-solid fa-store"></i> Çelebi Oto Lastik Karaman Stoklarında Mevcut</span>`;
+                stockArea.innerHTML = `<span style="font-size: 0.88rem; color: var(--success-color); font-weight: 700;"><i class="fa-solid fa-store"></i> Çelebi Oto Lastik Karaman Stoklarında Mevcut</span>`;
                 actionRow.innerHTML = `
-                    <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="padding: 12px; font-size: 0.95rem; width:100%;">
-                        <i class="fa-brands fa-whatsapp" style="font-size: 1.1rem;"></i> Hemen WhatsApp'tan İletişime Geç
+                    <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="padding: 14px; font-size: 1.05rem; width:100%;">
+                        <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Hemen WhatsApp'tan İletişime Geç
                     </button>
                 `;
             }
@@ -1906,11 +1929,11 @@
             const grid = document.getElementById('productsGrid');
             const search = document.getElementById('searchInput').value.toLowerCase().trim();
             
-            // Akıllı Filitre Değerleri (Misafirler için)
-            const fBrand = document.getElementById('filterBrandSelect').value;
-            const fWidth = document.getElementById('filterWidthSelect').value;
-            const fProfile = document.getElementById('filterProfileSelect').value;
-            const fRim = document.getElementById('filterRimSelect').value;
+            // Akıllı Arama Kutusundan Gelen Değerler (Yazılabilir veya Seçilebilir)
+            const fBrand = document.getElementById('filterBrandInput').value.toLowerCase().trim();
+            const fWidth = document.getElementById('filterWidthInput').value.toLowerCase().trim();
+            const fProfile = document.getElementById('filterProfileInput').value.toLowerCase().trim();
+            const fRim = document.getElementById('filterRimInput').value.toLowerCase().trim();
 
             grid.innerHTML = '';
 
@@ -1918,10 +1941,10 @@
                 const isInnerTube = (p.group === 'İç Lastik' || p.season === 'İç Lastik');
                 const isSecondHand = (p.group === '2. El');
 
-                // Kategori Butonları Eşleşmesi
+                // "Tüm Ürünler" dendiğinde İç Lastik ve 2. El ana listede GÖZÜKMEZ, sadece kendi butonuna basıldığında gelir.
                 let matchCat = false;
                 if (currentCategory === 'all') {
-                    matchCat = true;
+                    matchCat = !isInnerTube && !isSecondHand;
                 } else if (currentCategory === 'İç Lastik') {
                     matchCat = isInnerTube;
                 } else if (currentCategory === '2. El') {
@@ -1935,33 +1958,32 @@
                 } else if (currentCategory === 'Ağır Vasıta') {
                     matchCat = (p.group === 'Ağır Vasıta');
                 } else {
+                    // Yaz, Kış, 4 Mevsim butonları
                     matchCat = (p.season === currentCategory && !isInnerTube && !isSecondHand);
                 }
 
                 if (!matchCat) return false;
 
-                // Marka Filtresi
-                if (fBrand !== 'all') {
-                    if (!p.brand || p.brand.toLowerCase() !== fBrand.toLowerCase()) return false;
+                // Marka Filtresi (Yazılarak da aranabilir)
+                if (fBrand !== '') {
+                    if (!p.brand || !p.brand.toLowerCase().includes(fBrand)) return false;
                 }
 
-                const sizeStr = (p.size || '').toUpperCase();
+                const sizeStr = (p.size || '').toLowerCase();
 
                 // Taban Genişliği Filtresi
-                if (fWidth !== 'all') {
+                if (fWidth !== '') {
                     if (!sizeStr.startsWith(fWidth)) return false;
                 }
 
                 // Yanak Filtresi
-                if (fProfile !== 'all') {
-                    // Örn: 205/55R16 -> /55 arayalım
-                    if (!sizeStr.includes(`/${fProfile}`)) return false;
+                if (fProfile !== '') {
+                    if (!sizeStr.includes(`/${fProfile}`) && !sizeStr.includes(`-${fProfile}`)) return false;
                 }
 
                 // Çap (Jant) Filtresi
-                if (fRim !== 'all') {
-                    // Örn: R16 veya 16
-                    if (!sizeStr.includes(`R${fRim}`) && !sizeStr.includes(`-${fRim}`) && !sizeStr.includes(`/${fRim}`) && !sizeStr.endsWith(`${fRim}`)) return false;
+                if (fRim !== '') {
+                    if (!sizeStr.includes(`r${fRim}`) && !sizeStr.includes(`-${fRim}`) && !sizeStr.includes(`/${fRim}`) && !sizeStr.endsWith(`${fRim}`)) return false;
                 }
                
                 const fullStr = `${p.size} ${p.brand} ${p.pattern} ${p.dot} ${p.group}`.toLowerCase();
@@ -1971,7 +1993,7 @@
             filtered.sort((a, b) => getSortableSize(a.size) - getSortableSize(b.size));
 
             if (filtered.length === 0) {
-                grid.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 25px; font-size: 0.9rem; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--card-border);">Aradığınız kriterlere uygun lastik bulunamadı. Lütfen filtreleri değiştirerek tekrar deneyin.</div>`;
+                grid.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 25px; font-size: 0.9rem; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--card-border);">Aradığınız kriterlere uygun lastik bulunamadı. Lütfen filtreleri veya arama terimini değiştirin.</div>`;
                 return;
             }
 
@@ -1998,7 +2020,6 @@
                                 <span class="card-price-val">${formatCurrency(p.price)}</span>
                             </div>
                         `;
-                        // SADECE YÖNETİCİ STOK DEĞİŞTİREBİLİR VEYA DÜZENLEYEBİLİR (BAYİ DEĞİŞTİREMEZ)
                         if (currentUserRole === 'admin') {
                             adminActionsHtml = `
                                 <div style="display:flex; align-items:center; gap:6px;">
@@ -2014,11 +2035,9 @@
                                 </div>
                             `;
                         } else {
-                            // BAYİ GÖSTERGESİ (Sadece Stok Miktarı, Buton Yok)
                             adminActionsHtml = `<div>${getStockBadgeHtml(stockVal)}</div>`;
                         }
                     } else {
-                        // MİSAFİR: FİYAT VE STOK GİZLİ, WHATSAPP VAR
                         priceOrWpHtml = `
                             <button class="btn-card-whatsapp" onclick="event.stopPropagation(); openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')">
                                 <i class="fa-brands fa-whatsapp" style="font-size: 1rem;"></i> WhatsApp ile Fiyat Sor
@@ -2108,7 +2127,6 @@
                                 </div>
                             `;
                         } else {
-                            // BAYİ TABLO: Sadece stok adedini görür, butonlar kapalı
                             stockOrActionColumn = `<div>${getStockBadgeHtml(stockVal)}</div>`;
                             adminActionsColumn = `<div></div>`;
                         }
