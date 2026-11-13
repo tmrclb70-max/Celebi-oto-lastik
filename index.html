@@ -196,7 +196,6 @@
         .btn-notification { position: relative; background: #0f172a; border: 1px solid var(--card-border); color: var(--accent-yellow); padding: 0 12px; height: 38px; border-radius: 6px; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 6px; font-size: 0.85rem; white-space: nowrap; }
         .notif-badge { position: absolute; top: -4px; right: -4px; background: var(--danger-color); color: white; font-size: 0.68rem; font-weight: 800; padding: 1px 5px; border-radius: 8px; border: 2px solid var(--card-bg); }
 
-        /* FİLTRE BUTONLARI FERAH VE RAHAT YERLEŞİM */
         .filter-buttons { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
         .filter-btn { flex: 1; min-width: 115px; padding: 9px 10px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.82rem; transition: 0.2s; }
         .filter-btn:hover { border-color: var(--accent-yellow); }
@@ -398,7 +397,6 @@
         .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 28px; height: 28px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; }
         .btn-edit-price { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); width: 28px; height: 28px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; }
 
-        /* BÜYÜTÜLMÜŞ VE ŞIK ÜRÜN DETAY MODALI */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 3000; padding: 15px; overflow-y: auto; }
         .modal-content { background: var(--card-bg); border-radius: 14px; padding: 28px; width: 98%; max-width: 1000px; border: 2px solid rgba(245,158,11,0.5); max-height: 96vh; overflow-y: auto; box-shadow: 0 25px 60px rgba(0,0,0,0.95); }
 
@@ -495,7 +493,6 @@
 </head>
 <body>
 
-    <!-- GİRİŞ EKRANI -->
     <div id="loginSection" class="login-wrapper hidden">
         <div class="login-card">
             <h1 class="login-brand-title">Çelebi Oto Lastik</h1>
@@ -519,7 +516,6 @@
         </div>
     </div>
 
-    <!-- EN ÜST HEADER -->
     <header id="mainHeader">
         <div class="header-container">
             <div class="header-title-area">
@@ -547,7 +543,6 @@
 
     <div id="portalSection" class="main-container">
 
-        <!-- 3LÜ SLİDER BANNER ALANI -->
         <div class="slider-container">
             <button class="slider-btn prev" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
             <button class="slider-btn next" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
@@ -565,7 +560,6 @@
             </div>
         </div>
 
-        <!-- MİSAFİR / DIŞ MÜŞTERİ İÇİN YAZILABİLİR & SEÇMELİ AKILLI FİLTRE PANELİ -->
         <div id="guestSmartFilterSection" class="smart-filter-box">
             <div style="font-size: 0.98rem; font-weight: 800; color: var(--accent-yellow); display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
                 <i class="fa-solid fa-sliders"></i> Akıllı Lastik Arama ve Filtreleme Motoru
@@ -573,7 +567,6 @@
             <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px;">Listeden seçebilir ya da aradığınız ebat ve markayı kutucuklara doğrudan yazabilirsiniz:</div>
             
             <div class="filter-grid-row">
-                <!-- Marka (Seçilebilir ve Yazılabilir) -->
                 <div class="filter-dropdown-group">
                     <label><i class="fa-solid fa-copyright"></i> Marka Seç / Yaz</label>
                     <input type="text" id="filterBrandInput" list="brandListOptions" class="form-control" placeholder="Örn: Petlas, Lassa, Michelin..." oninput="renderProducts()">
@@ -604,7 +597,6 @@
                     </datalist>
                 </div>
 
-                <!-- Taban Genişliği (Seçilebilir ve Yazılabilir) -->
                 <div class="filter-dropdown-group">
                     <label><i class="fa-solid fa-arrows-left-right"></i> Taban Genişliği</label>
                     <input type="text" id="filterWidthInput" list="widthListOptions" class="form-control" placeholder="Örn: 205, 185, 16.9..." oninput="renderProducts()">
@@ -630,7 +622,6 @@
                     </datalist>
                 </div>
 
-                <!-- Yanak Oranı (Seçilebilir ve Yazılabilir) -->
                 <div class="filter-dropdown-group">
                     <label><i class="fa-solid fa-arrows-up-down"></i> Yanak Oranı</label>
                     <input type="text" id="filterProfileInput" list="profileListOptions" class="form-control" placeholder="Örn: 55, 65, 80..." oninput="renderProducts()">
@@ -651,7 +642,6 @@
                     </datalist>
                 </div>
 
-                <!-- Çap / Jant (Seçilebilir ve Yazılabilir) -->
                 <div class="filter-dropdown-group">
                     <label><i class="fa-solid fa-circle-notch"></i> Çap / Jant (R / İnç)</label>
                     <input type="text" id="filterRimInput" list="rimListOptions" class="form-control" placeholder="Örn: 16, 17.5, 22.5..." oninput="renderProducts()">
@@ -692,7 +682,6 @@
                 </button>
             </div>
 
-            <!-- FİLTRE BUTONLARI (YAZ KIŞ 4 MEVSİM BUTONLARI KALDIRILDI, SEÇENEKLİ YAPILDI) -->
             <div class="filter-buttons">
                 <button class="filter-btn active" onclick="setCategory('all', this)">🌐 Tüm Ürünler</button>
                 <button class="filter-btn" onclick="setCategory('Otomobil', this)">🚗 Otomobil</button>
@@ -709,7 +698,6 @@
                 <h3 style="color: var(--text-muted); font-size: 0.88rem;"><i class="fa-solid fa-boxes-stacked"></i> Stok Yönetimi & Kontrolü</h3>
                 <div style="display: flex; gap: 6px;">
                     <button class="btn-add" onclick="openAddModal()"><i class="fa-solid fa-plus"></i> Yeni Ürün Ekle</button>
-                    <!-- 2. EL LASTİK EKLE ÇERÇEVELİ BUTON -->
                     <button class="btn-add" style="background: var(--icon-secondhand); border: 1.5px solid rgba(139, 92, 246, 0.8);" onclick="openAddModal('2. El')"><i class="fa-solid fa-rotate-right"></i> 2. El Lastik Ekle</button>
                     <button class="btn-add" style="background: #3b82f6;" onclick="openSettingsModal()"><i class="fa-solid fa-gear"></i> Ayarlar</button>
                 </div>
@@ -1034,7 +1022,6 @@
                 <input type="text" id="pPattern" class="form-control" placeholder="Örn: PT741, Traktör Dişli, 5mm Vb.">
             </div>
 
-            <!-- AĞIR VASITA VE ZİRAİDE OTOMATİK GİZLENEN MEVSİM ALANI -->
             <div class="form-group" id="seasonGroup">
                 <label>Mevsim / Tür</label>
                 <select id="pSeason" class="form-control">
@@ -1117,13 +1104,11 @@
             <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">Hangi yetkilimize ulaşmak istersiniz?</p>
             
             <div style="display: flex; gap: 10px; justify-content: center;">
-                <!-- TAMER ÇELEBİ BUTONU MAVİ TONDA -->
                 <a id="wpTamerBtn" href="#" target="_blank" class="btn-card-whatsapp" style="flex: 1; background: #0284c7; padding: 12px 8px; justify-content: center; font-size: 0.85rem; flex-direction: column; gap: 4px;">
                     <i class="fa-brands fa-whatsapp" style="font-size: 1.4rem;"></i>
                     <span>Tamer Çelebi</span>
                     <small style="font-size:0.72rem; opacity:0.9;">0545 394 77 91</small>
                 </a>
-                <!-- İBRAHİM ÇELEBİ BUTONU MAVİ TONDA -->
                 <a id="wpIbrahimBtn" href="#" target="_blank" class="btn-card-whatsapp" style="flex: 1; background: #0284c7; padding: 12px 8px; justify-content: center; font-size: 0.85rem; flex-direction: column; gap: 4px;">
                     <i class="fa-brands fa-whatsapp" style="font-size: 1.4rem;"></i>
                     <span>İbrahim Çelebi</span>
@@ -1411,7 +1396,6 @@
             renderProducts();
         }
 
-        // AĞIR VASITA VE ZİRAİDE MEVSİM ALANINI OTOMATİK GİZLEME
         function toggleGroupFields(val) {
             const seasonGroup = document.getElementById('seasonGroup');
             const normalLogoGroup = document.getElementById('normalLogoGroup');
@@ -1835,7 +1819,6 @@
                     <button class="b2b-btn-cart" onclick="alert('Ürün sepete eklenmiştir!')"><i class="fa-solid fa-cart-shopping"></i> Sepete Ekle</button>
                 `;
             } else {
-                // MİSAFİR DETAY: ÜSTTE İKİSİ DE MAVİ TONDA TAMER VE İBRAHİM WHATSAPP SEÇENEĞİ
                 priceSection.innerHTML = `
                     <div style="font-size: 0.88rem; font-weight: 800; color: var(--accent-yellow); margin-bottom: 6px; text-align: center;">💬 WhatsApp ile Fiyat Sor / Bilgi Al</div>
                     <div style="display: flex; gap: 8px; width: 100%;">
@@ -1856,8 +1839,9 @@
                 
                 stockArea.innerHTML = guestStockHtml;
                 
+                // HEMEN BUTONU İSTEDİĞİNİZ GİBİ YEŞİL RENGE AYARLANDI (#25d366)
                 actionRow.innerHTML = `
-                    <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="background:#0284c7; padding: 12px; font-size: 1rem; width:100%; justify-content:center;">
+                    <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="background:#25d366; padding: 12px; font-size: 1rem; width:100%; justify-content:center;">
                         <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Hemen WhatsApp'tan İletişime Geç
                     </button>
                 `;
@@ -1947,7 +1931,8 @@
 
                 let matchCat = false;
                 if (currentCategory === 'all') {
-                    matchCat = true;
+                    // TÜM ÜRÜNLER SEÇİLDİĞİNDE İÇ LASTİK VE 2. EL OTOMATİK OLARAK GİZLENECEK
+                    matchCat = !isInnerTube && !isSecondHand;
                 } else if (currentCategory === 'İç Lastik') {
                     matchCat = isInnerTube;
                 } else if (currentCategory === '2. El') {
@@ -2005,7 +1990,6 @@
 
                     let catTag = `<span class="tag tag-category"><i class="fa-solid fa-car"></i> ${p.group || 'Otomobil'}</span>`;
 
-                    // KART GÖRÜNÜMÜ İÇİN PARLAK EMOJİLİ MEVSİM / TÜR GÖSTERİMİ (2. FOTOĞRAF İSTEĞİ)
                     let seasonEmojiTag = '';
                     if (p.group === 'Zirai') {
                         seasonEmojiTag = `<span class="tag" style="color:#fbbf24;" title="Zirai Grubu">🚜</span>`;
@@ -2101,7 +2085,6 @@
 
                     let catTag = `<span class="tag tag-category"><i class="fa-solid fa-car"></i> ${p.group || 'Otomobil'}</span>`;
 
-                    // TABLO GÖRÜNÜMÜ İÇİN YAZILAR OLMADAN SADECE PARLAK EMOJİ (3. FOTOĞRAF İSTEĞİ)
                     let rowSeasonEmojiTag = '';
                     if (p.group === 'Zirai') {
                         rowSeasonEmojiTag = `<span class="tag" style="color:#fbbf24;" title="Zirai Grubu">🚜</span>`;
