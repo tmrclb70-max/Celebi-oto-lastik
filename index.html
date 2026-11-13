@@ -196,10 +196,23 @@
         .btn-notification { position: relative; background: #0f172a; border: 1px solid var(--card-border); color: var(--accent-yellow); padding: 0 12px; height: 38px; border-radius: 6px; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 6px; font-size: 0.85rem; white-space: nowrap; }
         .notif-badge { position: absolute; top: -4px; right: -4px; background: var(--danger-color); color: white; font-size: 0.68rem; font-weight: 800; padding: 1px 5px; border-radius: 8px; border: 2px solid var(--card-bg); }
 
-        .filter-buttons { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
-        .filter-btn { flex: 1; min-width: 115px; padding: 9px 10px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.82rem; transition: 0.2s; }
+        .filter-buttons { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; align-items: center; }
+        .filter-btn { flex: 1; min-width: 110px; padding: 9px 10px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.82rem; transition: 0.2s; }
         .filter-btn:hover { border-color: var(--accent-yellow); }
         .filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
+
+        /* AÇILIR MEVSİM SEÇİM BUTONU / DROPDOWN */
+        .season-dropdown-container { position: relative; flex: 1; min-width: 130px; }
+        .season-select-box {
+            width: 100%; padding: 9px 10px; background: #0f172a; border: 1px solid var(--card-border);
+            color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.82rem;
+            display: flex; align-items: center; justify-content: space-between; transition: 0.2s;
+        }
+        .season-select-box:hover { border-color: var(--accent-yellow); }
+        .season-select-box.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
+        .season-select-box select {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
+        }
 
         .admin-bar { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; background: rgba(255,255,255,0.03); padding: 10px 12px; border-radius: 8px; border: 1px solid var(--card-border); }
         .admin-bar-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
@@ -682,12 +695,28 @@
                 </button>
             </div>
 
+            <!-- FİLTRE BUTONLARI + AÇILIR MEVSİM / TÜR SEÇİM MENÜSÜ -->
             <div class="filter-buttons">
                 <button class="filter-btn active" onclick="setCategory('all', this)">🌐 Tüm Ürünler</button>
+                
+                <!-- AÇILIR MEVSİM VE TÜR SEÇİM MENÜSÜ -->
+                <div class="season-dropdown-container" id="seasonDropdownContainer">
+                    <div class="season-select-box" id="seasonSelectBox">
+                        <span id="seasonDropdownLabel"><i class="fa-solid fa-filter"></i> Mevsim / Tür Seç</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem;"></i>
+                        <select id="seasonDropdownSelect" onchange="handleSeasonDropdownChange(this)">
+                            <option value="">-- Mevsim / Tür Seç --</option>
+                            <option value="Yaz">☀️ Yaz</option>
+                            <option value="Kış">❄️ Kış</option>
+                            <option value="4 Mevsim">🌤️ 4 Mevsim</option>
+                            <option value="Zirai">🚜 Zirai / Traktör</option>
+                            <option value="Ağır Vasıta">🚛 Ağır Vasıta / Tır</option>
+                        </select>
+                    </div>
+                </div>
+
                 <button class="filter-btn" onclick="setCategory('Otomobil', this)">🚗 Otomobil</button>
                 <button class="filter-btn" onclick="setCategory('Hafif Ticari', this)">🚐 Hafif Ticari</button>
-                <button class="filter-btn" onclick="setCategory('Zirai', this)">🚜 Zirai / Traktör</button>
-                <button class="filter-btn" onclick="setCategory('Ağır Vasıta', this)">🚛 Ağır Vasıta / Tır</button>
                 <button class="filter-btn" onclick="setCategory('İç Lastik', this)">⭕ İç Lastik</button>
                 <button class="filter-btn" onclick="setCategory('2. El', this)">♻️ 2. El</button>
             </div>
@@ -1391,8 +1420,48 @@
 
         function setCategory(cat, btn) {
             currentCategory = cat;
+            // Diğer standart butonların active sınıfını kaldır
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             if (btn) btn.classList.add('active');
+
+            // Açılır menü etiketini ve rengini sıfırla
+            document.getElementById('seasonDropdownSelect').value = '';
+            const dropBox = document.getElementById('seasonSelectBox');
+            dropBox.classList.remove('active');
+            document.getElementById('seasonDropdownLabel').innerHTML = `<i class="fa-solid fa-filter"></i> Mevsim / Tür Seç`;
+
+            renderProducts();
+        }
+
+        // AÇILIR MEVSİM / TÜR SEÇİM FONKSİYONU
+        function handleSeasonDropdownChange(selectElem) {
+            const val = selectElem.value;
+            const dropBox = document.getElementById('seasonSelectBox');
+            const label = document.getElementById('seasonDropdownLabel');
+
+            // Diğer filtre butonlarının active sınıflarını temizle
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+
+            if (val !== '') {
+                currentCategory = val;
+                dropBox.classList.add('active');
+                
+                let icon = '☀️';
+                if (val === 'Kış') icon = '❄️';
+                else if (val === '4 Mevsim') icon = '🌤️';
+                else if (val === 'Zirai') icon = '🚜';
+                else if (val === 'Ağır Vasıta') icon = '🚛';
+
+                label.innerHTML = `${icon} ${val}`;
+            } else {
+                currentCategory = 'all';
+                dropBox.classList.remove('active');
+                label.innerHTML = `<i class="fa-solid fa-filter"></i> Mevsim / Tür Seç`;
+                // Tüm ürünler butonunu aktif yap
+                const allBtn = document.querySelector('.filter-btn');
+                if (allBtn) allBtn.classList.add('active');
+            }
+
             renderProducts();
         }
 
@@ -1743,9 +1812,22 @@
             closeModal('bulkPriceModal');
         }
 
-        function getStockBadgeHtml(stockVal) {
-            if (stockVal >= 1) {
-                return `<div class="stock-badge-in"><i class="fa-solid fa-check"></i> Stokta Var (${stockVal} Adet)</div>`;
+        // AKILLI STOK ROZETİ MANTIĞI (İSTEDİĞİNİZ KURALLARA GÖRE)
+        function getSmartStockBadgeHtml(stockVal) {
+            const isAuthorized = (currentUserRole === 'admin' || currentUserRole === 'bayi');
+
+            if (stockVal >= 4) {
+                if (isAuthorized) {
+                    return `<div class="stock-badge-in"><i class="fa-solid fa-check"></i> Stokta Var (${stockVal} Adet)</div>`;
+                } else {
+                    return `<div class="stock-badge-in"><i class="fa-solid fa-store"></i> Stokta Var</div>`;
+                }
+            } else if (stockVal > 0 && stockVal < 4) {
+                if (isAuthorized) {
+                    return `<div class="stock-badge-low"><i class="fa-solid fa-triangle-exclamation"></i> Kritik Stok (${stockVal} Adet)</div>`;
+                } else {
+                    return `<div class="stock-badge-in"><i class="fa-solid fa-store"></i> Stokta Var</div>`;
+                }
             } else {
                 return `<div class="stock-badge-out"><i class="fa-solid fa-lock"></i> Rezerve Stok</div>`;
             }
@@ -1809,7 +1891,7 @@
                         <span class="b2b-price-val">${formatCurrency(p.price)}</span>
                     </div>
                 `;
-                stockArea.innerHTML = `<span>${getStockBadgeHtml(stockVal)}</span>`;
+                stockArea.innerHTML = `<span>${getSmartStockBadgeHtml(stockVal)}</span>`;
                 actionRow.innerHTML = `
                     <div class="b2b-qty-box">
                         <button class="btn-qty" onclick="changeModalQty(-1)">-</button>
@@ -1833,13 +1915,8 @@
                     </div>
                 `;
                 
-                let guestStockHtml = stockVal >= 1 ? 
-                    `<span style="font-size: 0.88rem; color: var(--success-color); font-weight: 700;"><i class="fa-solid fa-store"></i> Çelebi Oto Lastik Karaman Stoklarında Mevcut (Stokta Var)</span>` : 
-                    `<span style="font-size: 0.88rem; color: var(--danger-color); font-weight: 700;"><i class="fa-solid fa-lock"></i> Rezerve Stok (Şu an tükendi, bilgi alınız)</span>`;
+                stockArea.innerHTML = `<span>${getSmartStockBadgeHtml(stockVal)}</span>`;
                 
-                stockArea.innerHTML = guestStockHtml;
-                
-                // HEMEN BUTONU İSTEDİĞİNİZ GİBİ YEŞİL RENGE AYARLANDI (#25d366)
                 actionRow.innerHTML = `
                     <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="background:#25d366; padding: 12px; font-size: 1rem; width:100%; justify-content:center;">
                         <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Hemen WhatsApp'tan İletişime Geç
@@ -1931,7 +2008,6 @@
 
                 let matchCat = false;
                 if (currentCategory === 'all') {
-                    // TÜM ÜRÜNLER SEÇİLDİĞİNDE İÇ LASTİK VE 2. EL OTOMATİK OLARAK GİZLENECEK
                     matchCat = !isInnerTube && !isSecondHand;
                 } else if (currentCategory === 'İç Lastik') {
                     matchCat = isInnerTube;
@@ -1946,6 +2022,7 @@
                 } else if (currentCategory === 'Ağır Vasıta') {
                     matchCat = (p.group === 'Ağır Vasıta');
                 } else {
+                    // Mevsim seçildiyse (Yaz, Kış, 4 Mevsim)
                     matchCat = (p.season === currentCategory && !isInnerTube && !isSecondHand);
                 }
 
@@ -2033,7 +2110,7 @@
                                 </div>
                             `;
                         } else {
-                            adminActionsHtml = `<div>${getStockBadgeHtml(stockVal)}</div>`;
+                            adminActionsHtml = `<div>${getSmartStockBadgeHtml(stockVal)}</div>`;
                         }
                     } else {
                         priceOrWpHtml = `
@@ -2042,8 +2119,7 @@
                             </button>
                         `;
                         
-                        let cardStockText = stockVal >= 1 ? `<span style="color:var(--success-color);"><i class="fa-solid fa-store"></i> Stokta Var</span>` : `<span style="color:var(--danger-color);"><i class="fa-solid fa-lock"></i> Rezerve Stok</span>`;
-                        adminActionsHtml = `<div style="font-size:0.75rem; font-weight:700;">${cardStockText}</div>`;
+                        adminActionsHtml = `<div>${getSmartStockBadgeHtml(stockVal)}</div>`;
                     }
 
                     const card = document.createElement('div');
@@ -2145,7 +2221,7 @@
                                 </div>
                             `;
                         } else {
-                            stockOrActionColumn = `<div>${getStockBadgeHtml(stockVal)}</div>`;
+                            stockOrActionColumn = `<div>${getSmartStockBadgeHtml(stockVal)}</div>`;
                             adminActionsColumn = `<div></div>`;
                         }
                     } else {
@@ -2157,8 +2233,7 @@
                             </div>
                         `;
                         
-                        let rowStockText = stockVal >= 1 ? `<span style="color:var(--success-color);"><i class="fa-solid fa-store"></i> Stokta Var</span>` : `<span style="color:var(--danger-color);"><i class="fa-solid fa-lock"></i> Rezerve Stok</span>`;
-                        stockOrActionColumn = `<div style="font-size:0.72rem; font-weight:700;">${rowStockText}</div>`;
+                        stockOrActionColumn = `<div>${getSmartStockBadgeHtml(stockVal)}</div>`;
                         adminActionsColumn = `<div></div>`;
                     }
 
