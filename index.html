@@ -197,15 +197,15 @@
         .notif-badge { position: absolute; top: -4px; right: -4px; background: var(--danger-color); color: white; font-size: 0.68rem; font-weight: 800; padding: 1px 5px; border-radius: 8px; border: 2px solid var(--card-bg); }
 
         .filter-buttons { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; align-items: center; }
-        .filter-btn { flex: 1; min-width: 110px; padding: 9px 10px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.82rem; transition: 0.2s; }
+        .filter-btn { flex: 1; min-width: 100px; padding: 9px 8px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 0.78rem; transition: 0.2s; }
         .filter-btn:hover { border-color: var(--accent-yellow); }
         .filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
 
-        /* AÇILIR MEVSİM SEÇİM BUTONU / DROPDOWN */
-        .season-dropdown-container { position: relative; flex: 1; min-width: 130px; }
+        /* AÇILIR MEVSİM SEÇİM BUTONU (SADECE YAZ, KIŞ, 4 MEVSİM) */
+        .season-dropdown-container { position: relative; flex: 1; min-width: 120px; }
         .season-select-box {
-            width: 100%; padding: 9px 10px; background: #0f172a; border: 1px solid var(--card-border);
-            color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.82rem;
+            width: 100%; padding: 9px 8px; background: #0f172a; border: 1px solid var(--card-border);
+            color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.78rem;
             display: flex; align-items: center; justify-content: space-between; transition: 0.2s;
         }
         .season-select-box:hover { border-color: var(--accent-yellow); }
@@ -573,16 +573,17 @@
             </div>
         </div>
 
+        <!-- AKILLI ARAMA KUTUSU: SADECE MİSAFİR GÖRÜNÜMÜNDE AÇIK OLACAK -->
         <div id="guestSmartFilterSection" class="smart-filter-box">
             <div style="font-size: 0.98rem; font-weight: 800; color: var(--accent-yellow); display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
                 <i class="fa-solid fa-sliders"></i> Akıllı Lastik Arama ve Filtreleme Motoru
             </div>
-            <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px;">Listeden seçebilir ya da aradığınız ebat ve markayı kutucuklara doğrudan yazabilirsiniz:</div>
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px;">Dünya geneli tüm marka, binek, hafif ticari, ağır vasıta, tır ve traktör/zirai ebatlarını buradan süzebilirsiniz:</div>
             
             <div class="filter-grid-row">
                 <div class="filter-dropdown-group">
                     <label><i class="fa-solid fa-copyright"></i> Marka Seç / Yaz</label>
-                    <input type="text" id="filterBrandInput" list="brandListOptions" class="form-control" placeholder="Örn: Petlas, Lassa, Michelin..." oninput="renderProducts()">
+                    <input type="text" id="filterBrandInput" list="brandListOptions" class="form-control" placeholder="Örn: Petlas, Lassa, Michelin, BKT..." oninput="renderProducts()">
                     <datalist id="brandListOptions">
                         <option value="Petlas">
                         <option value="Lassa">
@@ -602,36 +603,37 @@
                         <option value="Nokian">
                         <option value="Toyo">
                         <option value="Matador">
+                        <option value="Sava">
                         <option value="Kabat">
                         <option value="BKT">
                         <option value="Ozka">
                         <option value="Seha">
                         <option value="Alliance">
+                        <option value="Aeolus">
+                        <option value="Barum">
+                        <option value="Debica">
+                        <option value="Kelly">
+                        <option value="Fulda">
+                        <option value="General Tire">
+                        <option value="Nexen">
+                        <option value="Riken">
+                        <option value="Taurus">
+                        <option value="Orium">
+                        <option value="Kormoran">
+                        <option value="Triangle">
+                        <option value="Double Coin">
+                        <option value="Linglong">
+                        <option value="Sailun">
+                        <option value="Westlake">
+                        <option value="Goodride">
                     </datalist>
                 </div>
 
                 <div class="filter-dropdown-group">
-                    <label><i class="fa-solid fa-arrows-left-right"></i> Taban Genişliği</label>
-                    <input type="text" id="filterWidthInput" list="widthListOptions" class="form-control" placeholder="Örn: 205, 185, 16.9..." oninput="renderProducts()">
+                    <label><i class="fa-solid fa-arrows-left-right"></i> Taban Genişliği (MM / İnç)</label>
+                    <input type="text" id="filterWidthInput" list="widthListOptions" class="form-control" placeholder="Örn: 145, 205, 315, 16.9..." oninput="renderProducts()">
                     <datalist id="widthListOptions">
-                        <option value="135">
-                        <option value="145">
-                        <option value="155">
-                        <option value="165">
-                        <option value="175">
-                        <option value="185">
-                        <option value="195">
-                        <option value="205">
-                        <option value="215">
-                        <option value="225">
-                        <option value="235">
-                        <option value="245">
-                        <option value="255">
-                        <option value="265">
-                        <option value="275">
-                        <option value="285">
-                        <option value="295">
-                        <option value="315">
+                        <option value="125"><option value="135"><option value="145"><option value="155"><option value="165"><option value="175"><option value="185"><option value="195"><option value="205"><option value="215"><option value="225"><option value="235"><option value="245"><option value="255"><option value="265"><option value="275"><option value="285"><option value="295"><option value="305"><option value="315"><option value="325"><option value="335"><option value="345"><option value="355"><option value="385"><option value="425"><option value="445"><option value="6.00"><option value="6.50"><option value="7.00"><option value="7.50"><option value="8.25"><option value="9.00"><option value="10.00"><option value="11.00"><option value="12.00"><option value="12.4"><option value="13.6"><option value="14.9"><option value="16.9"><option value="18.4"><option value="20.8"><option value="23.1"><option value="28.1">
                     </datalist>
                 </div>
 
@@ -639,40 +641,15 @@
                     <label><i class="fa-solid fa-arrows-up-down"></i> Yanak Oranı</label>
                     <input type="text" id="filterProfileInput" list="profileListOptions" class="form-control" placeholder="Örn: 55, 65, 80..." oninput="renderProducts()">
                     <datalist id="profileListOptions">
-                        <option value="30">
-                        <option value="35">
-                        <option value="40">
-                        <option value="45">
-                        <option value="50">
-                        <option value="55">
-                        <option value="60">
-                        <option value="65">
-                        <option value="70">
-                        <option value="75">
-                        <option value="80">
-                        <option value="82">
-                        <option value="90">
+                        <option value="25"><option value="30"><option value="35"><option value="40"><option value="45"><option value="50"><option value="55"><option value="60"><option value="65"><option value="70"><option value="75"><option value="80"><option value="82"><option value="85"><option value="90"><option value="95">
                     </datalist>
                 </div>
 
                 <div class="filter-dropdown-group">
                     <label><i class="fa-solid fa-circle-notch"></i> Çap / Jant (R / İnç)</label>
-                    <input type="text" id="filterRimInput" list="rimListOptions" class="form-control" placeholder="Örn: 16, 17.5, 22.5..." oninput="renderProducts()">
+                    <input type="text" id="filterRimInput" list="rimListOptions" class="form-control" placeholder="Örn: 16, 17.5, 22.5, 30..." oninput="renderProducts()">
                     <datalist id="rimListOptions">
-                        <option value="12">
-                        <option value="13">
-                        <option value="14">
-                        <option value="15">
-                        <option value="16">
-                        <option value="17.5">
-                        <option value="18">
-                        <option value="19">
-                        <option value="19.5">
-                        <option value="20">
-                        <option value="22.5">
-                        <option value="24">
-                        <option value="30">
-                        <option value="38">
+                        <option value="10"><option value="12"><option value="13"><option value="14"><option value="15"><option value="16"><option value="16.5"><option value="17"><option value="17.5"><option value="18"><option value="19"><option value="19.5"><option value="20"><option value="22"><option value="22.5"><option value="24"><option value="25"><option value="26"><option value="28"><option value="30"><option value="32"><option value="34"><option value="36"><option value="38"><option value="42">
                     </datalist>
                 </div>
             </div>
@@ -695,28 +672,28 @@
                 </button>
             </div>
 
-            <!-- FİLTRE BUTONLARI + AÇILIR MEVSİM / TÜR SEÇİM MENÜSÜ -->
+            <!-- FİLTRE BUTONLARI + YENİ DÜZENLENDİĞİ GİBİ AÇILIR SADECE YAZ, KIŞ, 4 MEVSİM MENÜSÜ -->
             <div class="filter-buttons">
                 <button class="filter-btn active" onclick="setCategory('all', this)">🌐 Tüm Ürünler</button>
                 
-                <!-- AÇILIR MEVSİM VE TÜR SEÇİM MENÜSÜ -->
+                <!-- AÇILIR MEVSİM SEÇİM MENÜSÜ (SADECE YAZ, KIŞ, 4 MEVSİM) -->
                 <div class="season-dropdown-container" id="seasonDropdownContainer">
                     <div class="season-select-box" id="seasonSelectBox">
-                        <span id="seasonDropdownLabel"><i class="fa-solid fa-filter"></i> Mevsim / Tür Seç</span>
-                        <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem;"></i>
+                        <span id="seasonDropdownLabel"><i class="fa-solid fa-filter"></i> Mevsim Seç</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i>
                         <select id="seasonDropdownSelect" onchange="handleSeasonDropdownChange(this)">
-                            <option value="">-- Mevsim / Tür Seç --</option>
+                            <option value="">-- Mevsim Seç --</option>
                             <option value="Yaz">☀️ Yaz</option>
                             <option value="Kış">❄️ Kış</option>
                             <option value="4 Mevsim">🌤️ 4 Mevsim</option>
-                            <option value="Zirai">🚜 Zirai / Traktör</option>
-                            <option value="Ağır Vasıta">🚛 Ağır Vasıta / Tır</option>
                         </select>
                     </div>
                 </div>
 
                 <button class="filter-btn" onclick="setCategory('Otomobil', this)">🚗 Otomobil</button>
-                <button class="filter-btn" onclick="setCategory('Hafif Ticari', this)">🚐 Hafif Ticari</button>
+                <button class="filter-btn" onclick="setCategory('Hafif Ticari', this)">🚐 Ticari</button>
+                <button class="filter-btn" onclick="setCategory('Zirai', this)">🚜 Zirai</button>
+                <button class="filter-btn" onclick="setCategory('Ağır Vasıta', this)">🚛 Ağır Vasıta</button>
                 <button class="filter-btn" onclick="setCategory('İç Lastik', this)">⭕ İç Lastik</button>
                 <button class="filter-btn" onclick="setCategory('2. El', this)">♻️ 2. El</button>
             </div>
@@ -738,6 +715,7 @@
                 <button class="btn-bulk-item" onclick="openBulkPriceModal('Kış')">❄️ % Kış</button>
                 <button class="btn-bulk-item" onclick="openBulkPriceModal('4 Mevsim')">🌤️ % 4 Mevsim</button>
                 <button class="btn-bulk-item" onclick="openBulkPriceModal('Zirai')">🚜 % Zirai</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('Ağır Vasıta')">🚛 % Ağır Vasıta</button>
                 <button class="btn-bulk-item" onclick="openBulkPriceModal('İç Lastik')">⭕ % İç Lastik</button>
                 <button class="btn-bulk-item" onclick="openBulkPriceModal('2. El')">♻️ % 2. El</button>
             </div>
@@ -1123,7 +1101,7 @@
         </div>
     </div>
 
-    <!-- YAN YANA TAMER & İBRAHİM (İKİSİ DE MAVİ) WHATSAPP SEÇİM MODALI -->
+    <!-- YAN YANA TAMER & İBRAHİM WHATSAPP SEÇİM MODALI -->
     <div id="wpModal" class="modal" style="max-width: 440px;">
         <div class="modal-content" style="text-align: center;">
             <div class="modal-header">
@@ -1272,6 +1250,10 @@
             document.getElementById('authArea').classList.add('hidden');
             document.getElementById('userInfoArea').classList.remove('hidden');
 
+            // MİSAFİR AKILLI ARAMA KUTUSU: BAYİ VEYA YÖNETİCİ GİRİNCE GİZLENİR
+            const smartFilterSec = document.getElementById('guestSmartFilterSection');
+            if (smartFilterSec) smartFilterSec.classList.add('hidden');
+
             if (currentUserRole === 'admin') {
                 document.getElementById('adminBar').classList.remove('hidden');
                 document.getElementById('adminNotifBtn').classList.remove('hidden');
@@ -1288,6 +1270,11 @@
             document.getElementById('userInfoArea').classList.add('hidden');
             document.getElementById('adminBar').classList.add('hidden');
             document.getElementById('adminNotifBtn').classList.add('hidden');
+            
+            // ÇIKIŞ YAPILINCA MİSAFİR AKILLI ARAMA KUTUSU YENİDEN GÖRÜNÜR
+            const smartFilterSec = document.getElementById('guestSmartFilterSection');
+            if (smartFilterSec) smartFilterSec.classList.remove('hidden');
+
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
             renderProducts();
@@ -1420,26 +1407,23 @@
 
         function setCategory(cat, btn) {
             currentCategory = cat;
-            // Diğer standart butonların active sınıfını kaldır
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             if (btn) btn.classList.add('active');
 
-            // Açılır menü etiketini ve rengini sıfırla
             document.getElementById('seasonDropdownSelect').value = '';
             const dropBox = document.getElementById('seasonSelectBox');
             dropBox.classList.remove('active');
-            document.getElementById('seasonDropdownLabel').innerHTML = `<i class="fa-solid fa-filter"></i> Mevsim / Tür Seç`;
+            document.getElementById('seasonDropdownLabel').innerHTML = `<i class="fa-solid fa-filter"></i> Mevsim Seç`;
 
             renderProducts();
         }
 
-        // AÇILIR MEVSİM / TÜR SEÇİM FONKSİYONU
+        // AÇILIR MEVSİM SEÇİM FONKSİYONU (SADECE YAZ, KIŞ, 4 MEVSİM)
         function handleSeasonDropdownChange(selectElem) {
             const val = selectElem.value;
             const dropBox = document.getElementById('seasonSelectBox');
             const label = document.getElementById('seasonDropdownLabel');
 
-            // Diğer filtre butonlarının active sınıflarını temizle
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
 
             if (val !== '') {
@@ -1449,15 +1433,12 @@
                 let icon = '☀️';
                 if (val === 'Kış') icon = '❄️';
                 else if (val === '4 Mevsim') icon = '🌤️';
-                else if (val === 'Zirai') icon = '🚜';
-                else if (val === 'Ağır Vasıta') icon = '🚛';
 
                 label.innerHTML = `${icon} ${val}`;
             } else {
                 currentCategory = 'all';
                 dropBox.classList.remove('active');
-                label.innerHTML = `<i class="fa-solid fa-filter"></i> Mevsim / Tür Seç`;
-                // Tüm ürünler butonunu aktif yap
+                label.innerHTML = `<i class="fa-solid fa-filter"></i> Mevsim Seç`;
                 const allBtn = document.querySelector('.filter-btn');
                 if (allBtn) allBtn.classList.add('active');
             }
@@ -1797,9 +1778,10 @@
 
             const targetProducts = products.filter(p => {
                 if (cat === 'Zirai') return p.group === 'Zirai';
+                if (cat === 'Ağır Vasıta') return p.group === 'Ağır Vasıta';
                 if (cat === 'İç Lastik') return p.group === 'İç Lastik';
                 if (cat === '2. El') return p.group === '2. El';
-                return p.season === cat && p.group !== 'Zirai' && p.group !== 'İç Lastik' && p.group !== '2. El' && p.group !== 'Ağır Vasıta';
+                return p.season === cat && p.group !== 'Zirai' && p.group !== 'Ağır Vasıta' && p.group !== 'İç Lastik' && p.group !== '2. El';
             });
 
             for (let p of targetProducts) {
@@ -1812,13 +1794,16 @@
             closeModal('bulkPriceModal');
         }
 
-        // AKILLI STOK ROZETİ MANTIĞI (İSTEDİĞİNİZ KURALLARA GÖRE)
+        // AKILLI STOK ROZETİ MANTIĞI: BAYİ İÇİN 4 VE ÜZERİ MİKTAR GİZLENDİ, "STOKTA VAR" YAZIYOR
         function getSmartStockBadgeHtml(stockVal) {
             const isAuthorized = (currentUserRole === 'admin' || currentUserRole === 'bayi');
 
             if (stockVal >= 4) {
-                if (isAuthorized) {
+                if (currentUserRole === 'admin') {
                     return `<div class="stock-badge-in"><i class="fa-solid fa-check"></i> Stokta Var (${stockVal} Adet)</div>`;
+                } else if (currentUserRole === 'bayi') {
+                    // BAYİ GİRİNCE MİKTAR GİZLENİR, DİREKT "STOKTA VAR" YAZAR
+                    return `<div class="stock-badge-in"><i class="fa-solid fa-store"></i> Stokta Var</div>`;
                 } else {
                     return `<div class="stock-badge-in"><i class="fa-solid fa-store"></i> Stokta Var</div>`;
                 }
@@ -2022,7 +2007,7 @@
                 } else if (currentCategory === 'Ağır Vasıta') {
                     matchCat = (p.group === 'Ağır Vasıta');
                 } else {
-                    // Mevsim seçildiyse (Yaz, Kış, 4 Mevsim)
+                    // Sadece Yaz, Kış, 4 Mevsim seçildiyse
                     matchCat = (p.season === currentCategory && !isInnerTube && !isSecondHand);
                 }
 
