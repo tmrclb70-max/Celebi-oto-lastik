@@ -243,20 +243,23 @@
         }
         .card-img-box {
             width: 100%;
-            height: 160px;
+            height: 165px;
             background: #ffffff;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            padding: 10px;
+            padding: 12px;
             position: relative;
+            box-shadow: inset 0 0 0 1px #e2e8f0;
         }
         .card-img-box img {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            border-radius: 4px;
+            background: #ffffff;
         }
         .card-header-line {
             display: flex;
@@ -317,9 +320,9 @@
         
         .product-img-box {
             display: flex; align-items: center; justify-content: center;
-            width: 52px; height: 38px; background: #ffffff; border-radius: 5px; overflow: hidden; flex-shrink: 0;
+            width: 52px; height: 38px; background: #ffffff; border-radius: 5px; overflow: hidden; flex-shrink: 0; padding: 3px;
         }
-        .product-img { width: 100%; height: 100%; object-fit: contain; }
+        .product-img { width: 100%; height: 100%; object-fit: contain; background: #ffffff; }
 
         .brand-display-box { display: flex; align-items: center; justify-content: flex-start; height: 38px; width: 100%; background: transparent; }
         .brand-logo-img { width: 100%; max-width: 130px; height: 34px; object-fit: contain; object-position: left center; background: transparent !important; border: none !important; box-shadow: none !important; }
@@ -378,8 +381,8 @@
         .close-btn { font-size: 1.6rem; cursor: pointer; color: var(--text-muted); }
 
         .b2b-detail-layout { display: flex; gap: 24px; flex-wrap: wrap; align-items: stretch; }
-        .b2b-detail-img-area { flex: 1.1; min-width: 280px; background: #ffffff; border-radius: 10px; padding: 20px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--card-border); }
-        .b2b-detail-img-area img { width: 100%; max-height: 340px; object-fit: contain; }
+        .b2b-detail-img-area { flex: 1.1; min-width: 280px; background: #ffffff; border-radius: 10px; padding: 20px; display: flex; align-items: center; justify-content: center; border: 1px solid #e2e8f0; }
+        .b2b-detail-img-area img { width: 100%; max-height: 340px; object-fit: contain; background: #ffffff; }
         
         .b2b-detail-info-area { flex: 1.4; min-width: 300px; display: flex; flex-direction: column; gap: 14px; }
         .b2b-product-title { font-size: 1.4rem; font-weight: 900; color: #fff; line-height: 1.3; }
@@ -410,21 +413,22 @@
         }
         .file-upload-box:hover { background: rgba(245, 158, 11, 0.15); }
 
+        /* 2. EL LASTİK DETAY SLAYTI İÇİN BEYAZ STÜDYO ARKA PLANI */
         .used-tire-slider-box {
-            position: relative; width: 100%; height: 280px; background: #000; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center;
+            position: relative; width: 100%; height: 280px; background: #ffffff; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center;
         }
         .used-tire-slides { display: flex; width: 100%; height: 100%; transition: transform 0.4s ease-in-out; }
-        .used-tire-slide { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-        .used-tire-slide img { width: 100%; height: 100%; object-fit: contain; }
+        .used-tire-slide { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #ffffff; padding: 12px; }
+        .used-tire-slide img { width: 100%; height: 100%; object-fit: contain; background: #ffffff; border-radius: 6px; }
         
         .ut-slider-btn {
-            position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #fff; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 5;
+            position: absolute; top: 50%; transform: translateY(-50%); background: rgba(15, 23, 42, 0.75); color: #fff; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 5;
         }
         .ut-slider-btn.prev { left: 8px; }
         .ut-slider-btn.next { right: 8px; }
         
         .photo-preview-grid { display: flex; gap: 8px; overflow-x: auto; margin-top: 8px; padding-bottom: 5px; }
-        .preview-thumb { width: 65px; height: 65px; border-radius: 6px; object-fit: cover; border: 1.5px solid var(--accent-yellow); flex-shrink: 0; }
+        .preview-thumb { width: 65px; height: 65px; border-radius: 6px; object-fit: contain; background: #ffffff; padding: 3px; border: 1.5px solid var(--accent-yellow); flex-shrink: 0; }
 
         .notif-section-card { background: rgba(15, 23, 42, 0.9); border: 1px solid var(--card-border); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
         .notif-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px; }
@@ -1278,16 +1282,29 @@
                 reader.onload = function(e) {
                     const img = new Image();
                     img.onload = function() {
+                        // Kare (1:1) beyaz stüdyo tuvali üzerine ortalayarak temiz beyaz arka planlı görsel oluştur
                         const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 500; 
-                        const scaleSize = MAX_WIDTH / img.width;
-                        canvas.width = MAX_WIDTH;
-                        canvas.height = img.height > img.width ? MAX_WIDTH * (img.height / img.width) : img.height * scaleSize;
+                        const CANVAS_SIZE = 500;
+                        canvas.width = CANVAS_SIZE;
+                        canvas.height = CANVAS_SIZE;
 
                         const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        // Tam beyaz arka plan doldur
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
-                        const compressedB64 = canvas.toDataURL('image/jpeg', 0.65);
+                        // Fotoğrafı kenarlardan %8 boşluk bırakarak orantılı ortala
+                        const padding = 35;
+                        const availSize = CANVAS_SIZE - (padding * 2);
+                        const scale = Math.min(availSize / img.width, availSize / img.height);
+                        const drawW = img.width * scale;
+                        const drawH = img.height * scale;
+                        const offsetX = (CANVAS_SIZE - drawW) / 2;
+                        const offsetY = (CANVAS_SIZE - drawH) / 2;
+
+                        ctx.drawImage(img, offsetX, offsetY, drawW, drawH);
+
+                        const compressedB64 = canvas.toDataURL('image/jpeg', 0.72);
                         tempUsedTirePhotos.push(compressedB64);
 
                         const thumbImg = document.createElement('img');
@@ -1296,7 +1313,7 @@
                         grid.appendChild(thumbImg);
 
                         if (tempUsedTirePhotos.length > 0) {
-                            document.getElementById('usedTireUploadText').innerText = `${tempUsedTirePhotos.length} adet fotoğraf hazırlandı.`;
+                            document.getElementById('usedTireUploadText').innerText = `${tempUsedTirePhotos.length} adet fotoğraf beyaz stüdyo çerçevesine yerleştirildi.`;
                             if (clearBtn) clearBtn.classList.remove('hidden');
                         }
                     };
@@ -1610,7 +1627,7 @@
                     </div>
                 `;
             } else {
-                imgAreaContainer.innerHTML = `<img id="dImg" src="${activeDetailPhotos[0]}" alt="Lastik Görseli" style="width:100%; max-height:340px; object-fit:contain;">`;
+                imgAreaContainer.innerHTML = `<img id="dImg" src="${activeDetailPhotos[0]}" alt="Lastik Görseli" style="width:100%; max-height:340px; object-fit:contain; background:#ffffff;">`;
             }
            
             document.getElementById('dTitle').innerText = `${p.size} ${p.pattern || ''} ${p.brand}`.toUpperCase();
