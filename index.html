@@ -57,13 +57,6 @@
             --danger-color: #ef4444;
             --success-color: #10b981;
             --whatsapp-color: #25d366;
-            
-            --icon-sun: #f59e0b;
-            --icon-snow: #3b82f6;
-            --icon-all: #10b981;
-            --icon-tractor: #f97316;
-            --icon-tube: #ef4444;
-            --icon-secondhand: #8b5cf6;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
@@ -162,7 +155,6 @@
         .btn-primary { width: 100%; padding: 10px; background: var(--accent-yellow); color: #000; font-weight: 800; border: none; border-radius: 6px; cursor: pointer; font-size: 0.92rem; transition: 0.2s; margin-top: 6px; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
         .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
 
-        /* AKILLI FİLTRE PANELİ (YAZILABİLİR & SEÇMELİ) */
         .smart-filter-box {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             border: 1.5px solid rgba(245, 158, 11, 0.4);
@@ -699,18 +691,18 @@
                 </button>
             </div>
 
-            <!-- RENKLİ VE PARLAK EMOJİLİ KATEGORİ BUTONLARI -->
+            <!-- SADECE PARLAYAN ŞIK EMOJİLER (BEYAZ İKONLAR TEMİZLENDİ) -->
             <div class="filter-buttons">
-                <button class="filter-btn active" onclick="setCategory('all', this)"><i class="fa-solid fa-border-all"></i> 🌐 Tüm Ürünler</button>
-                <button class="filter-btn" onclick="setCategory('Yaz', this)"><i class="fa-solid fa-sun icon-sun"></i> ☀️ Yaz</button>
-                <button class="filter-btn" onclick="setCategory('Kış', this)"><i class="fa-solid fa-snowflake icon-snow"></i> ❄️ Kış</button>
-                <button class="filter-btn" onclick="setCategory('4 Mevsim', this)"><i class="fa-solid fa-cloud-sun-rain icon-all"></i> 🌤️ 4 Mevsim</button>
-                <button class="filter-btn" onclick="setCategory('Otomobil', this)"><i class="fa-solid fa-car"></i> 🚗 Otomobil</button>
-                <button class="filter-btn" onclick="setCategory('Hafif Ticari', this)"><i class="fa-solid fa-van-shuttle"></i> 🚐 Hafif Ticari</button>
-                <button class="filter-btn" onclick="setCategory('Zirai', this)"><i class="fa-solid fa-tractor icon-tractor"></i> 🚜 Zirai / Traktör</button>
-                <button class="filter-btn" onclick="setCategory('Ağır Vasıta', this)"><i class="fa-solid fa-truck"></i> 🚛 Ağır Vasıta / Tır</button>
-                <button class="filter-btn" onclick="setCategory('İç Lastik', this)"><i class="fa-solid fa-circle-dot icon-tube"></i> ⭕ İç Lastik</button>
-                <button class="filter-btn" onclick="setCategory('2. El', this)"><i class="fa-solid fa-rotate-right icon-secondhand"></i> ♻️ 2. El</button>
+                <button class="filter-btn active" onclick="setCategory('all', this)">🌐 Tüm Ürünler</button>
+                <button class="filter-btn" onclick="setCategory('Yaz', this)">☀️ Yaz</button>
+                <button class="filter-btn" onclick="setCategory('Kış', this)">❄️ Kış</button>
+                <button class="filter-btn" onclick="setCategory('4 Mevsim', this)">🌤️ 4 Mevsim</button>
+                <button class="filter-btn" onclick="setCategory('Otomobil', this)">🚗 Otomobil</button>
+                <button class="filter-btn" onclick="setCategory('Hafif Ticari', this)">🚐 Hafif Ticari</button>
+                <button class="filter-btn" onclick="setCategory('Zirai', this)">🚜 Zirai / Traktör</button>
+                <button class="filter-btn" onclick="setCategory('Ağır Vasıta', this)">🚛 Ağır Vasıta / Tır</button>
+                <button class="filter-btn" onclick="setCategory('İç Lastik', this)">⭕ İç Lastik</button>
+                <button class="filter-btn" onclick="setCategory('2. El', this)">♻️ 2. El</button>
             </div>
         </div>
 
@@ -797,7 +789,7 @@
         </div>
     </footer>
 
-    <!-- ÜRÜN DETAY MODALI (DAHA BÜYÜK VE ŞIK) -->
+    <!-- ÜRÜN DETAY MODALI (ŞIK, BÜYÜK VE YAN YANA TAMER & İBRAHİM WHATSAPP BUTONLARI İLE) -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -817,7 +809,7 @@
                     <div style="display:flex; align-items:center; gap:8px;" id="detailStockArea"></div>
                     <div class="b2b-action-row" id="detailActionRow"></div>
 
-                    <div style="font-size:0.92rem; font-weight:800; color:var(--accent-yellow); margin-top:4px;">Detaylı Teknik Bilgiler</div>
+                    <div style="font-size:0.95rem; font-weight:800; color:var(--accent-yellow); margin-top:4px;">Detaylı Teknik Bilgiler</div>
                     <div class="b2b-spec-table" id="detailSpecTable">
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Ürün Ebatı:</span><span id="dSize" class="b2b-spec-val">--</span></div>
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Marka:</span><span id="dBrand" class="b2b-spec-val">--</span></div>
@@ -1043,7 +1035,6 @@
                 <input type="text" id="pPattern" class="form-control" placeholder="Örn: PT741, Traktör Dişli, 5mm Vb.">
             </div>
 
-            <!-- ZİRAİ VEYA İÇ LASTİKTE OTOMATİK GİZLENEN MEVSİM ALANI -->
             <div class="form-group" id="seasonGroup">
                 <label>Mevsim / Tür</label>
                 <select id="pSeason" class="form-control">
@@ -1116,21 +1107,25 @@
         </div>
     </div>
 
-    <!-- WHATSAPP SEÇİM MODALI -->
-    <div id="wpModal" class="modal" style="max-width: 380px;">
+    <!-- YAN YANA TAMER & İBRAHİM WHATSAPP SEÇİM MODALI -->
+    <div id="wpModal" class="modal" style="max-width: 440px;">
         <div class="modal-content" style="text-align: center;">
             <div class="modal-header">
                 <h3><i class="fa-brands fa-whatsapp" style="color: var(--whatsapp-color);"></i> WhatsApp ile İletişim</h3>
                 <span class="close-btn" onclick="closeModal('wpModal')">&times;</span>
             </div>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Hangi yetkilimize ulaşmak istersiniz?</p>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">Hangi yetkilimize ulaşmak istersiniz?</p>
             
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-                <a id="wpTamerBtn" href="#" target="_blank" class="btn-card-whatsapp" style="padding: 12px; justify-content: center; font-size: 0.95rem;">
-                    <i class="fa-brands fa-whatsapp" style="font-size: 1.1rem;"></i> Tamer Çelebi (0545 394 77 91)
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <a id="wpTamerBtn" href="#" target="_blank" class="btn-card-whatsapp" style="flex: 1; padding: 12px 8px; justify-content: center; font-size: 0.85rem; flex-direction: column; gap: 4px;">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 1.4rem;"></i>
+                    <span>Tamer Çelebi</span>
+                    <small style="font-size:0.72rem; opacity:0.9;">0545 394 77 91</small>
                 </a>
-                <a id="wpIbrahimBtn" href="#" target="_blank" class="btn-card-whatsapp" style="background: #0284c7; padding: 12px; justify-content: center; font-size: 0.95rem;">
-                    <i class="fa-brands fa-whatsapp" style="font-size: 1.1rem;"></i> İbrahim Çelebi (0542 125 70 09)
+                <a id="wpIbrahimBtn" href="#" target="_blank" class="btn-card-whatsapp" style="flex: 1; background: #0284c7; padding: 12px 8px; justify-content: center; font-size: 0.85rem; flex-direction: column; gap: 4px;">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 1.4rem;"></i>
+                    <span>İbrahim Çelebi</span>
+                    <small style="font-size:0.72rem; opacity:0.9;">0542 125 70 09</small>
                 </a>
             </div>
         </div>
@@ -1139,7 +1134,7 @@
     <script>
         let products = [];
         let currentCategory = 'all';
-        let currentUserRole = null; // null = dış müşteri (fiyat gizli, stok gizli, akıllı filtreler aktif), 'bayi' = fiyat ve stok görür ama düzenleyemez, 'admin' = tam yetki
+        let currentUserRole = null; 
         let selectedProductForModal = null;
         let modalProductQty = 1;
         let isCardView = false;
@@ -1428,7 +1423,6 @@
                 if (usedTireExtraFields) usedTireExtraFields.classList.remove('hidden');
                 if (normalImgUrlGroup) normalImgUrlGroup.classList.add('hidden');
             } else if (val === 'İç Lastik' || val === 'Zirai') {
-                // İÇ LASTİK VEYA ZİRAİ GRUPTA YAZ/KIŞ SEÇENEĞİ GÖSTERİLMEZ
                 if (seasonGroup) seasonGroup.classList.add('hidden');
                 if (normalLogoGroup) normalLogoGroup.classList.remove('hidden');
                 if (usedTirePhotosGroup) usedTirePhotosGroup.classList.add('hidden');
@@ -1604,7 +1598,6 @@
                 const customLogo = document.getElementById('pCustomLogoBase64').value;
                 const pattern = document.getElementById('pPattern').value.trim();
                 
-                // Zirai veya İç lastikse mevsime gerek yok
                 let season = document.getElementById('pSeason').value;
                 if (group === 'İç Lastik') season = 'İç Lastik';
                 if (group === 'Zirai') season = 'Zirai';
@@ -1763,12 +1756,10 @@
         }
 
         function getStockBadgeHtml(stockVal) {
-            if (stockVal >= 4) {
-                return `<div class="stock-badge-in"><i class="fa-solid fa-check"></i> Stokta Var</div>`;
-            } else if (stockVal === 0) {
-                return `<div class="stock-badge-out"><i class="fa-solid fa-lock"></i> Rezerve Stok</div>`;
+            if (stockVal >= 1) {
+                return `<div class="stock-badge-in"><i class="fa-solid fa-check"></i> Stokta Var (${stockVal} Adet)</div>`;
             } else {
-                return `<div class="stock-badge-low"><i class="fa-solid fa-triangle-exclamation"></i> ${stockVal} Adet</div>`;
+                return `<div class="stock-badge-out"><i class="fa-solid fa-lock"></i> Rezerve Stok</div>`;
             }
         }
 
@@ -1840,14 +1831,30 @@
                     <button class="b2b-btn-cart" onclick="alert('Ürün sepete eklenmiştir!')"><i class="fa-solid fa-cart-shopping"></i> Sepete Ekle</button>
                 `;
             } else {
+                // MİSAFİR DETAY: ÜSTTE YAN YANA TAMER & İBRAHİM WHATSAPP SEÇENEĞİ VE GERÇEKÇİ STOK
                 priceSection.innerHTML = `
-                    <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="padding: 14px; font-size: 1.05rem;">
-                        <i class="fa-brands fa-whatsapp" style="font-size: 1.3rem;"></i> WhatsApp ile Fiyat Sor / Bilgi Al (Tamer & İbrahim)
-                    </button>
+                    <div style="font-size: 0.88rem; font-weight: 800; color: var(--accent-yellow); margin-bottom: 4px; text-align: center;">💬 WhatsApp ile Fiyat Sor / Bilgi Al</div>
+                    <div style="display: flex; gap: 8px; width: 100%;">
+                        <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="flex:1; padding: 10px; font-size: 0.82rem; flex-direction:column; gap:2px;">
+                            <span>Tamer Çelebi</span>
+                            <small style="font-size:0.7rem; opacity:0.9;">0545 394 77 91</small>
+                        </button>
+                        <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="flex:1; background:#0284c7; padding: 10px; font-size: 0.82rem; flex-direction:column; gap:2px;">
+                            <span>İbrahim Çelebi</span>
+                            <small style="font-size:0.7rem; opacity:0.9;">0542 125 70 09</small>
+                        </button>
+                    </div>
                 `;
-                stockArea.innerHTML = `<span style="font-size: 0.88rem; color: var(--success-color); font-weight: 700;"><i class="fa-solid fa-store"></i> Çelebi Oto Lastik Karaman Stoklarında Mevcut</span>`;
+                
+                // 1 adet bile varsa stokta var, 0 ise rezerve stok
+                let guestStockHtml = stockVal >= 1 ? 
+                    `<span style="font-size: 0.88rem; color: var(--success-color); font-weight: 700;"><i class="fa-solid fa-store"></i> Çelebi Oto Lastik Karaman Stoklarında Mevcut (Stokta Var)</span>` : 
+                    `<span style="font-size: 0.88rem; color: var(--danger-color); font-weight: 700;"><i class="fa-solid fa-lock"></i> Rezerve Stok (Şu an tükendi, bilgi alınız)</span>`;
+                
+                stockArea.innerHTML = guestStockHtml;
+                
                 actionRow.innerHTML = `
-                    <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="padding: 14px; font-size: 1.05rem; width:100%;">
+                    <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="padding: 12px; font-size: 1rem; width:100%; justify-content:center;">
                         <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Hemen WhatsApp'tan İletişime Geç
                     </button>
                 `;
@@ -1869,26 +1876,18 @@
 
             let typeText = p.group || 'Otomobil';
             let seasonText = p.season || 'Yaz';
-            let seasonIcon = 'fa-sun icon-sun';
 
             if (p.group === 'Zirai') {
                 seasonText = 'Zirai Grubu';
-                seasonIcon = 'fa-tractor icon-tractor';
             } else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') {
                 seasonText = 'İç Lastik';
-                seasonIcon = 'fa-circle-dot icon-tube';
             } else if (p.group === '2. El') {
                 seasonText = p.season || '2. El';
-                seasonIcon = 'fa-rotate-right icon-secondhand';
-            } else if (p.season === 'Kış') {
-                seasonIcon = 'fa-snowflake icon-snow';
-            } else if (p.season === '4 Mevsim') {
-                seasonIcon = 'fa-cloud-sun-rain icon-all';
             }
 
             specHtml += `
                 <div class="b2b-spec-row"><span class="b2b-spec-key">Ürün Türü:</span><span id="dType" class="b2b-spec-val">${typeText}</span></div>
-                <div class="b2b-spec-row"><span class="b2b-spec-key">Mevsimi:</span><span id="dSeason" class="b2b-spec-val"><i class="fa-solid ${seasonIcon}"></i> ${seasonText}</span></div>
+                <div class="b2b-spec-row"><span class="b2b-spec-key">Mevsimi:</span><span id="dSeason" class="b2b-spec-val">${seasonText}</span></div>
                 <div class="b2b-spec-row"><span class="b2b-spec-key">Üretim Yılı (DOT):</span><span id="dDot" class="b2b-spec-val">${p.dot || '2026'}</span></div>
             `;
 
@@ -1929,7 +1928,6 @@
             const grid = document.getElementById('productsGrid');
             const search = document.getElementById('searchInput').value.toLowerCase().trim();
             
-            // Akıllı Arama Kutusundan Gelen Değerler (Yazılabilir veya Seçilebilir)
             const fBrand = document.getElementById('filterBrandInput').value.toLowerCase().trim();
             const fWidth = document.getElementById('filterWidthInput').value.toLowerCase().trim();
             const fProfile = document.getElementById('filterProfileInput').value.toLowerCase().trim();
@@ -1941,7 +1939,6 @@
                 const isInnerTube = (p.group === 'İç Lastik' || p.season === 'İç Lastik');
                 const isSecondHand = (p.group === '2. El');
 
-                // "Tüm Ürünler" dendiğinde İç Lastik ve 2. El ana listede GÖZÜKMEZ, sadece kendi butonuna basıldığında gelir.
                 let matchCat = false;
                 if (currentCategory === 'all') {
                     matchCat = !isInnerTube && !isSecondHand;
@@ -1958,30 +1955,25 @@
                 } else if (currentCategory === 'Ağır Vasıta') {
                     matchCat = (p.group === 'Ağır Vasıta');
                 } else {
-                    // Yaz, Kış, 4 Mevsim butonları
                     matchCat = (p.season === currentCategory && !isInnerTube && !isSecondHand);
                 }
 
                 if (!matchCat) return false;
 
-                // Marka Filtresi (Yazılarak da aranabilir)
                 if (fBrand !== '') {
                     if (!p.brand || !p.brand.toLowerCase().includes(fBrand)) return false;
                 }
 
                 const sizeStr = (p.size || '').toLowerCase();
 
-                // Taban Genişliği Filtresi
                 if (fWidth !== '') {
                     if (!sizeStr.startsWith(fWidth)) return false;
                 }
 
-                // Yanak Filtresi
                 if (fProfile !== '') {
                     if (!sizeStr.includes(`/${fProfile}`) && !sizeStr.includes(`-${fProfile}`)) return false;
                 }
 
-                // Çap (Jant) Filtresi
                 if (fRim !== '') {
                     if (!sizeStr.includes(`r${fRim}`) && !sizeStr.includes(`-${fRim}`) && !sizeStr.includes(`/${fRim}`) && !sizeStr.endsWith(`${fRim}`)) return false;
                 }
@@ -2043,7 +2035,10 @@
                                 <i class="fa-brands fa-whatsapp" style="font-size: 1rem;"></i> WhatsApp ile Fiyat Sor
                             </button>
                         `;
-                        adminActionsHtml = `<div style="font-size:0.75rem; color:var(--success-color); font-weight:700;"><i class="fa-solid fa-store"></i> Stokta Mevcut</div>`;
+                        
+                        // Misafir Kart Görünümü Stok Durumu (1 ve üzeriyse stokta var, 0 ise rezerve stok)
+                        let cardStockText = stockVal >= 1 ? `<span style="color:var(--success-color);"><i class="fa-solid fa-store"></i> Stokta Var</span>` : `<span style="color:var(--danger-color);"><i class="fa-solid fa-lock"></i> Rezerve Stok</span>`;
+                        adminActionsHtml = `<div style="font-size:0.75rem; font-weight:700;">${cardStockText}</div>`;
                     }
 
                     const card = document.createElement('div');
@@ -2138,7 +2133,9 @@
                                 </button>
                             </div>
                         `;
-                        stockOrActionColumn = `<div style="font-size:0.75rem; color:var(--success-color); font-weight:700;"><i class="fa-solid fa-store"></i> Stokta Var</div>`;
+                        
+                        let rowStockText = stockVal >= 1 ? `<span style="color:var(--success-color);"><i class="fa-solid fa-store"></i> Stokta Var</span>` : `<span style="color:var(--danger-color);"><i class="fa-solid fa-lock"></i> Rezerve Stok</span>`;
+                        stockOrActionColumn = `<div style="font-size:0.75rem; font-weight:700;">${rowStockText}</div>`;
                         adminActionsColumn = `<div></div>`;
                     }
 
