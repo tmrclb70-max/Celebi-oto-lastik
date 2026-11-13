@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Çelebi Oto Lastik - B2B Stok Portalı</title>
+    <title>Çelebi Oto Lastik - Karaman Lastik Satış ve Oteli</title>
 
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='%23f59e0b' d='M256 0a256 256 0 1 0 0 512 256 256 0 1 0 0-512zm0 96a160 160 0 1 1 0 320 160 160 0 1 1 0-320zm0 64a96 96 0 1 0 0 192 96 96 0 1 0 0-192z'/></svg>">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -97,6 +97,8 @@
         .user-info { display: flex; align-items: center; gap: 8px; background: rgba(15, 23, 42, 0.85); padding: 5px 10px; border-radius: 6px; border: 1px solid var(--card-border); backdrop-filter: blur(8px); }
         .user-badge { color: var(--accent-yellow); font-weight: 600; font-size: 0.82rem; }
         .btn-logout { background: var(--danger-color); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 0.78rem; display: flex; align-items: center; gap: 5px; }
+        .btn-login-open { background: var(--accent-yellow); color: #000; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 800; font-size: 0.82rem; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
+        .btn-login-open:hover { filter: brightness(1.1); }
 
         .main-container { max-width: 1400px; margin: 15px auto; padding: 0 12px; }
 
@@ -206,7 +208,6 @@
             .products-list { display: flex; flex-direction: column; gap: 8px; width: 100%; }
         }
         
-        /* TABLO GÖRÜNÜMÜ SATIR STİLİ */
         .product-row { 
             background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; 
             padding: 8px 12px; display: grid; 
@@ -215,7 +216,6 @@
         }
         .product-row:hover { border-color: var(--accent-yellow); transform: translateX(2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
 
-        /* KART GÖRÜNÜMÜ İÇİN DÜZENLİ ALT ALTA VE YAN YANA GRID YAPISI */
         .products-grid-view {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -310,6 +310,14 @@
             font-weight: 900;
             color: var(--success-color);
         }
+        
+        .btn-card-whatsapp {
+            background: var(--whatsapp-color); color: #fff; font-weight: 800; border: none;
+            padding: 9px 10px; border-radius: 6px; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; gap: 6px; font-size: 0.82rem; width: 100%; transition: 0.2s; text-decoration: none;
+        }
+        .btn-card-whatsapp:hover { filter: brightness(1.1); }
+
         .card-footer-row {
             display: flex;
             justify-content: space-between;
@@ -413,7 +421,6 @@
         }
         .file-upload-box:hover { background: rgba(245, 158, 11, 0.15); }
 
-        /* 2. EL LASTİK DETAY SLAYTI İÇİN BEYAZ STÜDYO ARKA PLANI */
         .used-tire-slider-box {
             position: relative; width: 100%; height: 280px; background: #ffffff; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center;
         }
@@ -470,14 +477,14 @@
 <body>
 
     <!-- GİRİŞ EKRANI -->
-    <div id="loginSection" class="login-wrapper">
+    <div id="loginSection" class="login-wrapper hidden">
         <div class="login-card">
             <h1 class="login-brand-title">Çelebi Oto Lastik</h1>
             <p class="login-slogan">"Yolunuzda Güven, Lastiğinizde Kalite"</p>
             
             <div class="login-welcome-text">
                 <i class="fa-solid fa-user-shield" style="color: var(--accent-yellow);"></i>
-                Giriş Yapın
+                Yönetici veya Bayi Girişi
             </div>
 
             <div class="form-group">
@@ -489,6 +496,7 @@
                 <input type="password" id="password" class="form-control" placeholder="****">
             </div>
             <button class="btn-primary" onclick="login()"><i class="fa-solid fa-right-to-bracket"></i> Giriş Yap</button>
+            <button class="btn-primary" style="background: transparent; color: var(--text-muted); border: 1px solid var(--card-border); margin-top: 8px;" onclick="closeLoginModal()"><i class="fa-solid fa-arrow-left"></i> Kataloğa Geri Dön</button>
         </div>
     </div>
 
@@ -507,6 +515,10 @@
                 <div class="currency-item"><i class="fa-solid fa-euro-sign" style="color:#3b82f6;"></i> <span>EUR:</span> <span class="val">₺56,1576</span></div>
             </div>
 
+            <div id="authArea">
+                <button class="btn-login-open" onclick="openLoginModal()"><i class="fa-solid fa-right-to-bracket"></i> Giriş Yap</button>
+            </div>
+
             <div id="userInfoArea" class="user-info hidden">
                 <span>Giriş Yapan: <strong id="userBadge" class="user-badge">--</strong></span>
                 <button class="btn-logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Çıkış</button>
@@ -514,7 +526,7 @@
         </div>
     </header>
 
-    <div id="portalSection" class="main-container hidden">
+    <div id="portalSection" class="main-container">
 
         <!-- 3LÜ SLİDER BANNER ALANI -->
         <div class="slider-container">
@@ -593,7 +605,7 @@
         <div class="footer-grid">
             <div class="footer-col">
                 <div class="brand-logo" style="font-size: 1.2rem; font-weight: 900; color: #fff; margin-bottom: 10px;">ÇELEBİ OTO LASTİK</div>
-                <p style="color: var(--text-muted); font-size: 0.82rem; line-height: 1.4;">"Yolunuzda Güven, Lastiğinizde Kalite". B2B Bayi Portalı ve Stok Takip Sistemi.</p>
+                <p style="color: var(--text-muted); font-size: 0.82rem; line-height: 1.4;">"Yolunuzda Güven, Lastiğinizde Kalite". Karaman B2B Bayi Portalı ve Lastik Satış Mağazası.</p>
             </div>
 
             <div class="footer-col">
@@ -608,8 +620,8 @@
             <div class="footer-col">
                 <h4>Yetkililer & Sosyal Medya</h4>
                 <ul class="footer-links">
-                    <li><a href="#"><i class="fa-solid fa-user" style="color:var(--accent-yellow); margin-right:5px;"></i> Tamer Çelebi</a></li>
-                    <li><a href="#"><i class="fa-solid fa-user" style="color:var(--accent-yellow); margin-right:5px;"></i> İbrahim Çelebi</a></li>
+                    <li><a href="#"><i class="fa-solid fa-user" style="color:var(--accent-yellow); margin-right:5px;"></i> Tamer Çelebi: 0545 394 77 91</a></li>
+                    <li><a href="#"><i class="fa-solid fa-user" style="color:var(--accent-yellow); margin-right:5px;"></i> İbrahim Çelebi: 0542 125 70 09</a></li>
                     <li><a href="https://instagram.com/celebiotolastik70" target="_blank"><i class="fa-brands fa-instagram" style="color:#e1306c; margin-right:5px;"></i> @celebiotolastik70</a></li>
                 </ul>
             </div>
@@ -618,7 +630,7 @@
                 <h4>İletişim Bilgileri</h4>
                 <div class="contact-item">
                     <i class="fa-solid fa-location-dot"></i>
-                    <span>Hamidiye Mah. Yeni sanayi sitesi 729.sk No:76</span>
+                    <span>Hamidiye Mah. Yeni sanayi sitesi 729.sk No:76 Karaman</span>
                 </div>
                 <div class="contact-item">
                     <i class="fa-solid fa-phone"></i>
@@ -661,23 +673,9 @@
                 <div class="b2b-detail-info-area">
                     <div id="dTitle" class="b2b-product-title">--</div>
                     
-                    <div class="b2b-price-box">
-                        <span class="b2b-price-label">Net Fiyat</span>
-                        <span id="dPrice" class="b2b-price-val">--</span>
-                    </div>
-
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <span id="dStockBadge">--</span>
-                    </div>
-
-                    <div class="b2b-action-row">
-                        <div class="b2b-qty-box">
-                            <button class="btn-qty" onclick="changeModalQty(-1)">-</button>
-                            <span id="modalQtyVal" style="font-weight:800; min-width:28px; text-align:center;">1</span>
-                            <button class="btn-qty" onclick="changeModalQty(1)">+</button>
-                        </div>
-                        <button class="b2b-btn-cart" onclick="alert('Ürün sepete eklenmiştir!')"><i class="fa-solid fa-cart-shopping"></i> Sepete Ekle</button>
-                    </div>
+                    <div id="detailPriceSection"></div>
+                    <div style="display:flex; align-items:center; gap:8px;" id="detailStockArea"></div>
+                    <div class="b2b-action-row" id="detailActionRow"></div>
 
                     <div style="font-size:0.88rem; font-weight:800; color:var(--accent-yellow); margin-top:2px;">Ürün Bilgileri</div>
                     <div class="b2b-spec-table" id="detailSpecTable">
@@ -846,7 +844,6 @@
                 <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Kabat, BKT Vb.">
             </div>
 
-            <!-- BİLGİSAYAR / LOGO YÜKLEME ALANI -->
             <div class="form-group" id="normalLogoGroup">
                 <label><i class="fa-solid fa-file-image" style="color: var(--accent-yellow);"></i> Bilgisayar İçin Marka Logosu (Şeffaf PNG)</label>
                 <div class="file-upload-box" onclick="document.getElementById('logoFileInput').click()">
@@ -860,7 +857,6 @@
                 </div>
             </div>
 
-            <!-- 2. EL LASTİKLER İÇİN 4 FOTOĞRAF ÇEKME / YÜKLEME VE DETAYLI AÇIKLAMA ALANLARI -->
             <div class="form-group hidden" id="usedTirePhotosGroup">
                 <label><i class="fa-solid fa-camera-retro" style="color: var(--accent-yellow);"></i> 2. El Lastik Fotoğrafları (En Fazla 4 Adet Çekin / Seçin)</label>
                 <div class="file-upload-box" onclick="document.getElementById('usedTirePhotosInput').click()">
@@ -872,7 +868,6 @@
                 <button type="button" id="clearUsedPhotosBtn" class="hidden" style="background: var(--danger-color); color: white; border: none; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; margin-top: 6px; cursor: pointer;" onclick="clearUsedTirePhotos()"><i class="fa-solid fa-trash"></i> Tüm Fotoğrafları Sil / Temizle</button>
             </div>
 
-            <!-- 2. EL ÖZEL DETAY ALANLARI (KM, DİŞ MM, KOMBİNASYON, AÇIKLAMA) -->
             <div id="usedTireExtraFields" class="hidden" style="background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; border: 1px dashed var(--accent-yellow); margin-bottom: 12px;">
                 <div style="font-size: 0.82rem; font-weight: 800; color: var(--accent-yellow); margin-bottom: 8px;"><i class="fa-solid fa-circle-info"></i> 2. El Detaylı Bilgileri (Bayi Ekranında Görünür)</div>
                 
@@ -971,10 +966,30 @@
         </div>
     </div>
 
+    <!-- WHATSAPP SEÇİM MODALI (İKİ KİŞİ ARASINDAN SEÇİM İÇİN) -->
+    <div id="wpModal" class="modal" style="max-width: 380px;">
+        <div class="modal-content" style="text-align: center;">
+            <div class="modal-header">
+                <h3><i class="fa-brands fa-whatsapp" style="color: var(--whatsapp-color);"></i> WhatsApp ile İletişim</h3>
+                <span class="close-btn" onclick="closeModal('wpModal')">&times;</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Hangi yetkilimize ulaşmak istersiniz?</p>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <a id="wpTamerBtn" href="#" target="_blank" class="btn-card-whatsapp" style="padding: 12px; justify-content: center; font-size: 0.95rem;">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 1.1rem;"></i> Tamer Çelebi (0545 394 77 91)
+                </a>
+                <a id="wpIbrahimBtn" href="#" target="_blank" class="btn-card-whatsapp" style="background: #0284c7; padding: 12px; justify-content: center; font-size: 0.95rem;">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 1.1rem;"></i> İbrahim Çelebi (0542 125 70 09)
+                </a>
+            </div>
+        </div>
+    </div>
+
     <script>
         let products = [];
         let currentCategory = 'all';
-        let currentUserRole = null;
+        let currentUserRole = null; 
         let selectedProductForModal = null;
         let modalProductQty = 1;
         let isCardView = false;
@@ -1066,6 +1081,14 @@
             renderProducts();
         }
 
+        function openLoginModal() {
+            document.getElementById('loginSection').classList.remove('hidden');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginSection').classList.add('hidden');
+        }
+
         function login() {
             const u = document.getElementById('username').value.trim().toLowerCase();
             const p = document.getElementById('password').value.trim();
@@ -1084,8 +1107,8 @@
         }
 
         function initLoginSuccess() {
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('portalSection').classList.remove('hidden');
+            closeLoginModal();
+            document.getElementById('authArea').classList.add('hidden');
             document.getElementById('userInfoArea').classList.remove('hidden');
 
             if (currentUserRole === 'admin') {
@@ -1100,11 +1123,13 @@
 
         function logout() {
             currentUserRole = null;
-            document.getElementById('loginSection').classList.remove('hidden');
-            document.getElementById('portalSection').classList.add('hidden');
+            document.getElementById('authArea').classList.remove('hidden');
             document.getElementById('userInfoArea').classList.add('hidden');
+            document.getElementById('adminBar').classList.add('hidden');
+            document.getElementById('adminNotifBtn').classList.add('hidden');
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
+            renderProducts();
         }
 
         function openSettingsModal() {
@@ -1282,18 +1307,15 @@
                 reader.onload = function(e) {
                     const img = new Image();
                     img.onload = function() {
-                        // Kare (1:1) beyaz stüdyo tuvali üzerine ortalayarak temiz beyaz arka planlı görsel oluştur
                         const canvas = document.createElement('canvas');
                         const CANVAS_SIZE = 500;
                         canvas.width = CANVAS_SIZE;
                         canvas.height = CANVAS_SIZE;
 
                         const ctx = canvas.getContext('2d');
-                        // Tam beyaz arka plan doldur
                         ctx.fillStyle = '#ffffff';
                         ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
-                        // Fotoğrafı kenarlardan %8 boşluk bırakarak orantılı ortala
                         const padding = 35;
                         const availSize = CANVAS_SIZE - (padding * 2);
                         const scale = Math.min(availSize / img.width, availSize / img.height);
@@ -1597,12 +1619,21 @@
         let currentDetailSlideIdx = 0;
         let activeDetailPhotos = [];
 
+        function openWpSelectModal(brand, size, pattern) {
+            const wpMsg = `Merhaba, ${brand} ${size} (${pattern || 'Standart'}) lastik için bilgi ve fiyat almak istiyorum.`;
+            const tamerUrl = `https://wa.me/905453947791?text=${encodeURIComponent(wpMsg)}`;
+            const ibrahimUrl = `https://wa.me/905421257009?text=${encodeURIComponent(wpMsg)}`;
+
+            document.getElementById('wpTamerBtn').href = tamerUrl;
+            document.getElementById('wpIbrahimBtn').href = ibrahimUrl;
+            document.getElementById('wpModal').style.display = 'flex';
+        }
+
         function openDetailModal(id) {
             const p = products.find(x => x.id === id);
             if (!p) return;
             selectedProductForModal = p;
             modalProductQty = 1;
-            document.getElementById('modalQtyVal').innerText = modalProductQty;
 
             const stockVal = parseInt(p.stock) || 0;
             
@@ -1631,8 +1662,40 @@
             }
            
             document.getElementById('dTitle').innerText = `${p.size} ${p.pattern || ''} ${p.brand}`.toUpperCase();
-            document.getElementById('dPrice').innerText = formatCurrency(p.price);
-            document.getElementById('dStockBadge').innerHTML = getStockBadgeHtml(stockVal);
+
+            const priceSection = document.getElementById('detailPriceSection');
+            const stockArea = document.getElementById('detailStockArea');
+            const actionRow = document.getElementById('detailActionRow');
+
+            if (currentUserRole === 'admin' || currentUserRole === 'bayi') {
+                priceSection.innerHTML = `
+                    <div class="b2b-price-box">
+                        <span class="b2b-price-label">Net Fiyat</span>
+                        <span class="b2b-price-val">${formatCurrency(p.price)}</span>
+                    </div>
+                `;
+                stockArea.innerHTML = `<span>${getStockBadgeHtml(stockVal)}</span>`;
+                actionRow.innerHTML = `
+                    <div class="b2b-qty-box">
+                        <button class="btn-qty" onclick="changeModalQty(-1)">-</button>
+                        <span id="modalQtyVal" style="font-weight:800; min-width:28px; text-align:center;">1</span>
+                        <button class="btn-qty" onclick="changeModalQty(1)">+</button>
+                    </div>
+                    <button class="b2b-btn-cart" onclick="alert('Ürün sepete eklenmiştir!')"><i class="fa-solid fa-cart-shopping"></i> Sepete Ekle</button>
+                `;
+            } else {
+                priceSection.innerHTML = `
+                    <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="padding: 12px; font-size: 1rem;">
+                        <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> WhatsApp ile Fiyat Sor / Bilgi Al (Tamer & İbrahim)
+                    </button>
+                `;
+                stockArea.innerHTML = `<span style="font-size: 0.82rem; color: var(--success-color); font-weight: 700;"><i class="fa-solid fa-store"></i> Çelebi Oto Lastik Karaman Stoklarında Mevcut</span>`;
+                actionRow.innerHTML = `
+                    <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="padding: 12px; font-size: 0.95rem; width:100%;">
+                        <i class="fa-brands fa-whatsapp" style="font-size: 1.1rem;"></i> Hemen WhatsApp'tan İletişime Geç
+                    </button>
+                `;
+            }
 
             const specTable = document.getElementById('detailSpecTable');
             let specHtml = `
@@ -1641,7 +1704,7 @@
                 <div class="b2b-spec-row"><span class="b2b-spec-key">Desen / Model:</span><span id="dPattern" class="b2b-spec-val">${(p.pattern || 'STANDART').toUpperCase()}</span></div>
             `;
 
-            if (p.group === '2. El') {
+            if (p.group === '2. El' && (currentUserRole === 'admin' || currentUserRole === 'bayi')) {
                 if (p.usedKm) specHtml += `<div class="b2b-spec-row" style="background:rgba(139,92,246,0.1);"><span class="b2b-spec-key" style="color:#c4b5fd;">Tahmini KM:</span><span class="b2b-spec-val" style="color:#c4b5fd;">${p.usedKm}</span></div>`;
                 if (p.usedTread) specHtml += `<div class="b2b-spec-row" style="background:rgba(139,92,246,0.1);"><span class="b2b-spec-key" style="color:#c4b5fd;">Diş Derinliği:</span><span class="b2b-spec-val" style="color:#c4b5fd;">${p.usedTread}</span></div>`;
                 if (p.usedCombo) specHtml += `<div class="b2b-spec-row" style="background:rgba(139,92,246,0.1);"><span class="b2b-spec-key" style="color:#c4b5fd;">Set / Kombinasyon:</span><span class="b2b-spec-val" style="color:#c4b5fd;">${p.usedCombo}</span></div>`;
@@ -1697,7 +1760,8 @@
         function changeModalQty(change) {
             modalProductQty += change;
             if (modalProductQty < 1) modalProductQty = 1;
-            document.getElementById('modalQtyVal').innerText = modalProductQty;
+            const qtyValElem = document.getElementById('modalQtyVal');
+            if (qtyValElem) qtyValElem.innerText = modalProductQty;
         }
 
         function getSortableSize(sizeStr) {
@@ -1769,25 +1833,42 @@
                     const brandUpper = (p.brand || 'STANDART').toUpperCase();
                     let cardBrandHtml = p.customLogo ? `<img src="${p.customLogo}" class="card-brand-logo-img" alt="${p.brand}">` : `<span class="card-brand-text">${brandUpper}</span>`;
 
-                    let adminControlsHtml = currentUserRole === 'admin' ? `
-                        <div class="admin-stock-control">
-                            <button class="btn-qty" onclick="updateStock('${p.id}', -1)">-</button>
-                            <span class="admin-stock-val">${stockVal} Adet</span>
-                            <button class="btn-qty" onclick="updateStock('${p.id}', 1)">+</button>
-                        </div>
-                    ` : getStockBadgeHtml(stockVal);
+                    let priceOrWpHtml = '';
+                    let adminActionsHtml = '';
 
-                    let adminActionsHtml = currentUserRole === 'admin' ? `
-                        <div class="row-actions">
-                            <button class="btn-edit-price" onclick="editProduct('${p.id}')" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn-icon" onclick="deleteProduct('${p.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    ` : '';
+                    if (currentUserRole === 'admin' || currentUserRole === 'bayi') {
+                        priceOrWpHtml = `
+                            <div class="card-price-row">
+                                <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">Net Fiyat</span>
+                                <span class="card-price-val">${formatCurrency(p.price)}</span>
+                            </div>
+                        `;
+                        adminActionsHtml = `
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <div class="admin-stock-control">
+                                    <button class="btn-qty" onclick="updateStock('${p.id}', -1)">-</button>
+                                    <span class="admin-stock-val">${stockVal} Adet</span>
+                                    <button class="btn-qty" onclick="updateStock('${p.id}', 1)">+</button>
+                                </div>
+                                <div class="row-actions">
+                                    <button class="btn-edit-price" onclick="editProduct('${p.id}')" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="btn-icon" onclick="deleteProduct('${p.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        priceOrWpHtml = `
+                            <button class="btn-card-whatsapp" onclick="event.stopPropagation(); openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')">
+                                <i class="fa-brands fa-whatsapp" style="font-size: 1rem;"></i> WhatsApp ile Fiyat Sor
+                            </button>
+                        `;
+                        adminActionsHtml = `<div>${getStockBadgeHtml(stockVal)}</div>`;
+                    }
 
                     const card = document.createElement('div');
                     card.className = 'product-card-item';
                     card.onclick = (e) => {
-                        if (!e.target.closest('.btn-qty') && !e.target.closest('.btn-edit-price') && !e.target.closest('.btn-icon')) {
+                        if (!e.target.closest('.btn-qty') && !e.target.closest('.btn-edit-price') && !e.target.closest('.btn-icon') && !e.target.closest('button')) {
                             openDetailModal(p.id);
                         }
                     };
@@ -1801,16 +1882,10 @@
                             <div class="card-brand-display">${cardBrandHtml}</div>
                         </div>
                         <div style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">Desen: <span style="color:var(--accent-yellow);">${p.pattern || 'STANDART'}</span> | DOT: ${p.dot || '2026'}</div>
-                        <div class="card-price-row">
-                            <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">Net Fiyat</span>
-                            <span class="card-price-val">${formatCurrency(p.price)}</span>
-                        </div>
+                        ${priceOrWpHtml}
                         <div class="card-footer-row">
                             <div>${catTag}</div>
-                            <div style="display:flex; align-items:center; gap:6px;">
-                                ${adminControlsHtml}
-                                ${adminActionsHtml}
-                            </div>
+                            <div>${adminActionsHtml}</div>
                         </div>
                     `;
                     grid.appendChild(card);
@@ -1859,25 +1934,41 @@
                     row.className = 'product-row';
                    
                     row.onclick = (e) => {
-                        if (!e.target.closest('.btn-qty') && !e.target.closest('.btn-edit-price') && !e.target.closest('.btn-icon')) {
+                        if (!e.target.closest('.btn-qty') && !e.target.closest('.btn-edit-price') && !e.target.closest('.btn-icon') && !e.target.closest('button')) {
                             openDetailModal(p.id);
                         }
                     };
 
-                    let adminControlsHtml = currentUserRole === 'admin' ? `
-                        <div class="admin-stock-control">
-                            <button class="btn-qty" onclick="updateStock('${p.id}', -1)">-</button>
-                            <span class="admin-stock-val">${stockVal} Adet</span>
-                            <button class="btn-qty" onclick="updateStock('${p.id}', 1)">+</button>
-                        </div>
-                    ` : getStockBadgeHtml(stockVal);
+                    let priceOrWpColumn = '';
+                    let stockOrActionColumn = '';
+                    let adminActionsColumn = '';
 
-                    let adminActionsHtml = currentUserRole === 'admin' ? `
-                        <div class="row-actions">
-                            <button class="btn-edit-price" onclick="editProduct('${p.id}')" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn-icon" onclick="deleteProduct('${p.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    ` : '';
+                    if (currentUserRole === 'admin' || currentUserRole === 'bayi') {
+                        priceOrWpColumn = `<div class="col-price">${formatCurrency(p.price)}</div>`;
+                        stockOrActionColumn = `
+                            <div class="admin-stock-control">
+                                <button class="btn-qty" onclick="updateStock('${p.id}', -1)">-</button>
+                                <span class="admin-stock-val">${stockVal} Adet</span>
+                                <button class="btn-qty" onclick="updateStock('${p.id}', 1)">+</button>
+                            </div>
+                        `;
+                        adminActionsColumn = `
+                            <div class="row-actions">
+                                <button class="btn-edit-price" onclick="editProduct('${p.id}')" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn-icon" onclick="deleteProduct('${p.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        `;
+                    } else {
+                        priceOrWpColumn = `
+                            <div>
+                                <button class="btn-card-whatsapp" onclick="event.stopPropagation(); openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="padding: 6px 10px; font-size: 0.75rem;">
+                                    <i class="fa-brands fa-whatsapp"></i> Fiyat Sor
+                                </button>
+                            </div>
+                        `;
+                        stockOrActionColumn = `<div>${getStockBadgeHtml(stockVal)}</div>`;
+                        adminActionsColumn = `<div></div>`;
+                    }
 
                     row.innerHTML = `
                         <div class="product-img-box">
@@ -1893,9 +1984,9 @@
                         </div>
                         <div>${catTag}</div>
                         <div><span class="tag">DOT ${p.dot || '2026'}</span></div>
-                        <div class="col-price">${formatCurrency(p.price)}</div>
-                        <div>${adminControlsHtml}</div>
-                        <div>${adminActionsHtml}</div>
+                        ${priceOrWpColumn}
+                        <div>${stockOrActionColumn}</div>
+                        <div>${adminActionsColumn}</div>
                     `;
                     grid.appendChild(row);
                 });
@@ -1938,7 +2029,7 @@
             });
             message += `\nMüsait olduğunuzda bu eksiklerimizi tamamlayıp bilgi verebilir misiniz? İyi çalışmalar.\nÇelebi Oto Lastik - Tamer Çelebi`;
 
-            const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            const url = `https://wa.me/905453947791?text=${encodeURIComponent(message)}`;
             window.open(url, '_blank');
         }
 
