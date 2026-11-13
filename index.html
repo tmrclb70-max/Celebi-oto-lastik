@@ -57,6 +57,7 @@
             --danger-color: #ef4444;
             --success-color: #10b981;
             --whatsapp-color: #25d366;
+            --icon-secondhand: #8b5cf6;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
@@ -227,8 +228,8 @@
         .product-row { 
             background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; 
             padding: 8px 12px; display: grid; 
-            grid-template-columns: 60px 1.1fr 1.3fr 1.3fr 100px 80px 1.1fr 100px auto; 
-            align-items: center; gap: 10px; transition: 0.2s; cursor: pointer;
+            grid-template-columns: 50px 1.1fr 1.3fr 1.2fr 90px 45px 1.1fr 90px auto; 
+            align-items: center; gap: 8px; transition: 0.2s; cursor: pointer;
         }
         .product-row:hover { border-color: var(--accent-yellow); transform: translateX(2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
 
@@ -344,17 +345,17 @@
         
         .product-img-box {
             display: flex; align-items: center; justify-content: center;
-            width: 52px; height: 38px; background: #ffffff; border-radius: 5px; overflow: hidden; flex-shrink: 0; padding: 3px;
+            width: 48px; height: 36px; background: #ffffff; border-radius: 5px; overflow: hidden; flex-shrink: 0; padding: 2px;
         }
         .product-img { width: 100%; height: 100%; object-fit: contain; background: #ffffff; }
 
-        .brand-display-box { display: flex; align-items: center; justify-content: flex-start; height: 38px; width: 100%; background: transparent; }
-        .brand-logo-img { width: 100%; max-width: 130px; height: 34px; object-fit: contain; object-position: left center; background: transparent !important; border: none !important; box-shadow: none !important; }
+        .brand-display-box { display: flex; align-items: center; justify-content: flex-start; height: 36px; width: 100%; background: transparent; }
+        .brand-logo-img { width: 100%; max-width: 120px; height: 32px; object-fit: contain; object-position: left center; background: transparent !important; border: none !important; box-shadow: none !important; }
         .brand-text-box {
             display: inline-flex; align-items: center; justify-content: center;
             background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(245, 158, 11, 0.6);
-            color: var(--accent-yellow); padding: 5px 10px; border-radius: 5px;
-            font-size: 0.82rem; font-weight: 800; text-transform: uppercase; text-align: center; white-space: nowrap;
+            color: var(--accent-yellow); padding: 4px 8px; border-radius: 5px;
+            font-size: 0.78rem; font-weight: 800; text-transform: uppercase; text-align: center; white-space: nowrap;
         }
 
         @media (max-width: 768px) {
@@ -365,37 +366,37 @@
             .brand-text-mobile { display: none !important; }
         }
 
-        .col-size { font-size: 1rem; font-weight: 800; color: #fff; white-space: nowrap; }
+        .col-size { font-size: 0.95rem; font-weight: 800; color: #fff; white-space: nowrap; }
         
         .pattern-box {
             display: inline-flex; align-items: center; justify-content: center; gap: 4px;
             background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(245, 158, 11, 0.5);
-            color: var(--accent-yellow); padding: 5px 10px; border-radius: 5px;
-            font-size: 0.78rem; font-weight: 700; text-transform: uppercase; text-align: center; white-space: nowrap;
+            color: var(--accent-yellow); padding: 4px 8px; border-radius: 5px;
+            font-size: 0.74rem; font-weight: 700; text-transform: uppercase; text-align: center; white-space: nowrap;
         }
 
         .col-price { 
-            font-size: 1rem; font-weight: 900; color: #34d399; text-align: right; 
-            background: rgba(16, 185, 129, 0.08); padding: 4px 8px; border-radius: 5px; 
+            font-size: 0.95rem; font-weight: 900; color: #34d399; text-align: right; 
+            background: rgba(16, 185, 129, 0.08); padding: 4px 6px; border-radius: 5px; 
             border: 1px solid rgba(16, 185, 129, 0.2); white-space: nowrap;
         }
         
-        .tag { font-size: 0.72rem; padding: 4px 8px; border-radius: 5px; background: #0f172a; color: var(--text-main); border: 1px solid var(--card-border); font-weight: 700; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 5px; white-space: nowrap; }
+        .tag { font-size: 0.7rem; padding: 4px 6px; border-radius: 5px; background: #0f172a; color: var(--text-main); border: 1px solid var(--card-border); font-weight: 700; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; }
         .tag-category { color: var(--accent-yellow); border-color: rgba(245, 158, 11, 0.4); }
 
-        .stock-badge-in { background: rgba(16, 185, 129, 0.15); color: var(--success-color); border: 1.5px solid var(--success-color); font-weight: 800; padding: 4px 8px; border-radius: 5px; font-size: 0.75rem; text-align: center; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; }
-        .stock-badge-low { background: rgba(245, 158, 11, 0.15); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); font-weight: 800; padding: 4px 8px; border-radius: 5px; font-size: 0.75rem; text-align: center; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; }
-        .stock-badge-out { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1.5px solid var(--danger-color); font-weight: 800; padding: 4px 8px; border-radius: 5px; font-size: 0.75rem; text-align: center; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; }
+        .stock-badge-in { background: rgba(16, 185, 129, 0.15); color: var(--success-color); border: 1.5px solid var(--success-color); font-weight: 800; padding: 4px 6px; border-radius: 5px; font-size: 0.7rem; text-align: center; white-space: nowrap; display: inline-flex; align-items: center; gap: 3px; }
+        .stock-badge-low { background: rgba(245, 158, 11, 0.15); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); font-weight: 800; padding: 4px 6px; border-radius: 5px; font-size: 0.7rem; text-align: center; white-space: nowrap; display: inline-flex; align-items: center; gap: 3px; }
+        .stock-badge-out { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1.5px solid var(--danger-color); font-weight: 800; padding: 4px 6px; border-radius: 5px; font-size: 0.7rem; text-align: center; white-space: nowrap; display: inline-flex; align-items: center; gap: 3px; }
         
-        .admin-stock-control { display: flex; align-items: center; gap: 4px; background: rgba(15, 23, 42, 0.8); padding: 2px 5px; border-radius: 5px; border: 1px solid var(--card-border); }
-        .admin-stock-val { font-weight: 800; color: #fff; font-size: 0.8rem; min-width: 38px; text-align: center; }
+        .admin-stock-control { display: flex; align-items: center; gap: 3px; background: rgba(15, 23, 42, 0.8); padding: 2px 4px; border-radius: 5px; border: 1px solid var(--card-border); }
+        .admin-stock-val { font-weight: 800; color: #fff; font-size: 0.75rem; min-width: 32px; text-align: center; }
         
-        .btn-qty { background: #334155; color: #fff; border: none; width: 24px; height: 24px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.88rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .btn-qty { background: #334155; color: #fff; border: none; width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.82rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .btn-qty:hover { background: var(--accent-yellow); color: #000; }
         
-        .row-actions { display: flex; gap: 5px; }
-        .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 30px; height: 30px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; }
-        .btn-edit-price { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); width: 30px; height: 30px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; }
+        .row-actions { display: flex; gap: 4px; }
+        .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 28px; height: 28px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; }
+        .btn-edit-price { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); width: 28px; height: 28px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; }
 
         /* BÜYÜTÜLMÜŞ VE ŞIK ÜRÜN DETAY MODALI */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 3000; padding: 15px; overflow-y: auto; }
@@ -660,7 +661,6 @@
                         <option value="14">
                         <option value="15">
                         <option value="16">
-                        <option value="17">
                         <option value="17.5">
                         <option value="18">
                         <option value="19">
@@ -692,12 +692,9 @@
                 </button>
             </div>
 
-            <!-- SIKIŞTIRILMAYAN, FERAH VE ŞIK FİLTRE BUTONLARI -->
+            <!-- FİLTRE BUTONLARI (YAZ KIŞ 4 MEVSİM BUTONLARI KALDIRILDI, SEÇENEKLİ YAPILDI) -->
             <div class="filter-buttons">
                 <button class="filter-btn active" onclick="setCategory('all', this)">🌐 Tüm Ürünler</button>
-                <button class="filter-btn" onclick="setCategory('Yaz', this)">☀️ Yaz</button>
-                <button class="filter-btn" onclick="setCategory('Kış', this)">❄️ Kış</button>
-                <button class="filter-btn" onclick="setCategory('4 Mevsim', this)">🌤️ 4 Mevsim</button>
                 <button class="filter-btn" onclick="setCategory('Otomobil', this)">🚗 Otomobil</button>
                 <button class="filter-btn" onclick="setCategory('Hafif Ticari', this)">🚐 Hafif Ticari</button>
                 <button class="filter-btn" onclick="setCategory('Zirai', this)">🚜 Zirai / Traktör</button>
@@ -712,7 +709,7 @@
                 <h3 style="color: var(--text-muted); font-size: 0.88rem;"><i class="fa-solid fa-boxes-stacked"></i> Stok Yönetimi & Kontrolü</h3>
                 <div style="display: flex; gap: 6px;">
                     <button class="btn-add" onclick="openAddModal()"><i class="fa-solid fa-plus"></i> Yeni Ürün Ekle</button>
-                    <!-- 2. EL LASTİK EKLE BUTONUNA ÇERÇEVE EKLENDİ -->
+                    <!-- 2. EL LASTİK EKLE ÇERÇEVELİ BUTON -->
                     <button class="btn-add" style="background: var(--icon-secondhand); border: 1.5px solid rgba(139, 92, 246, 0.8);" onclick="openAddModal('2. El')"><i class="fa-solid fa-rotate-right"></i> 2. El Lastik Ekle</button>
                     <button class="btn-add" style="background: #3b82f6;" onclick="openSettingsModal()"><i class="fa-solid fa-gear"></i> Ayarlar</button>
                 </div>
@@ -1037,7 +1034,7 @@
                 <input type="text" id="pPattern" class="form-control" placeholder="Örn: PT741, Traktör Dişli, 5mm Vb.">
             </div>
 
-            <!-- ZİRAİ VE AĞIR VASITADA OTOMATİK GİZLENEN MEVSİM ALANI -->
+            <!-- AĞIR VASITA VE ZİRAİDE OTOMATİK GİZLENEN MEVSİM ALANI -->
             <div class="form-group" id="seasonGroup">
                 <label>Mevsim / Tür</label>
                 <select id="pSeason" class="form-control">
@@ -1110,7 +1107,7 @@
         </div>
     </div>
 
-    <!-- YAN YANA TAMER (YEŞİL) & İBRAHİM (MAVİ) WHATSAPP SEÇİM MODALI -->
+    <!-- YAN YANA TAMER & İBRAHİM (İKİSİ DE MAVİ) WHATSAPP SEÇİM MODALI -->
     <div id="wpModal" class="modal" style="max-width: 440px;">
         <div class="modal-content" style="text-align: center;">
             <div class="modal-header">
@@ -1120,7 +1117,8 @@
             <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">Hangi yetkilimize ulaşmak istersiniz?</p>
             
             <div style="display: flex; gap: 10px; justify-content: center;">
-                <a id="wpTamerBtn" href="#" target="_blank" class="btn-card-whatsapp" style="flex: 1; padding: 12px 8px; justify-content: center; font-size: 0.85rem; flex-direction: column; gap: 4px;">
+                <!-- TAMER ÇELEBİ BUTONU MAVİ TONDA -->
+                <a id="wpTamerBtn" href="#" target="_blank" class="btn-card-whatsapp" style="flex: 1; background: #0284c7; padding: 12px 8px; justify-content: center; font-size: 0.85rem; flex-direction: column; gap: 4px;">
                     <i class="fa-brands fa-whatsapp" style="font-size: 1.4rem;"></i>
                     <span>Tamer Çelebi</span>
                     <small style="font-size:0.72rem; opacity:0.9;">0545 394 77 91</small>
@@ -1413,7 +1411,7 @@
             renderProducts();
         }
 
-        // ZİRAİ VE AĞIR VASITADA MEVSİM ALANINI OTOMATİK GİZLEME
+        // AĞIR VASITA VE ZİRAİDE MEVSİM ALANINI OTOMATİK GİZLEME
         function toggleGroupFields(val) {
             const seasonGroup = document.getElementById('seasonGroup');
             const normalLogoGroup = document.getElementById('normalLogoGroup');
@@ -1837,11 +1835,11 @@
                     <button class="b2b-btn-cart" onclick="alert('Ürün sepete eklenmiştir!')"><i class="fa-solid fa-cart-shopping"></i> Sepete Ekle</button>
                 `;
             } else {
-                // MİSAFİR DETAY: ÜSTTE YAN YANA TAMER (YEŞİL) VE İBRAHİM (MAVİ) WHATSAPP SEÇENEĞİ VE GERÇEKÇİ STOK
+                // MİSAFİR DETAY: ÜSTTE İKİSİ DE MAVİ TONDA TAMER VE İBRAHİM WHATSAPP SEÇENEĞİ
                 priceSection.innerHTML = `
                     <div style="font-size: 0.88rem; font-weight: 800; color: var(--accent-yellow); margin-bottom: 6px; text-align: center;">💬 WhatsApp ile Fiyat Sor / Bilgi Al</div>
                     <div style="display: flex; gap: 8px; width: 100%;">
-                        <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="flex:1; padding: 10px; font-size: 0.82rem; flex-direction:column; gap:2px;">
+                        <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="flex:1; background:#0284c7; padding: 10px; font-size: 0.82rem; flex-direction:column; gap:2px;">
                             <span>Tamer Çelebi</span>
                             <small style="font-size:0.72rem; opacity:0.9;">0545 394 77 91</small>
                         </button>
@@ -1859,7 +1857,7 @@
                 stockArea.innerHTML = guestStockHtml;
                 
                 actionRow.innerHTML = `
-                    <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="padding: 12px; font-size: 1rem; width:100%; justify-content:center;">
+                    <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="background:#0284c7; padding: 12px; font-size: 1rem; width:100%; justify-content:center;">
                         <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Hemen WhatsApp'tan İletişime Geç
                     </button>
                 `;
@@ -1879,7 +1877,6 @@
                 if (p.usedNote) specHtml += `<div class="b2b-spec-row" style="background:rgba(239,68,68,0.1);"><span class="b2b-spec-key" style="color:#fca5a5;">Kusur / Açıklama:</span><span class="b2b-spec-val" style="color:#fca5a5;">${p.usedNote}</span></div>`;
             }
 
-            // ÜRÜN BİLGİSİNDE EMOJİLİ GÖSTERİM (KULLANICI TALEBİ ÜZERİNE)
             let typeText = '🚗 Otomobil Lastiği';
             if (p.group === 'Hafif Ticari') typeText = '🚐 Hafif Ticari Lastik';
             else if (p.group === 'Zirai') typeText = '🚜 Zirai Grubu';
@@ -1950,7 +1947,7 @@
 
                 let matchCat = false;
                 if (currentCategory === 'all') {
-                    matchCat = !isInnerTube && !isSecondHand;
+                    matchCat = true;
                 } else if (currentCategory === 'İç Lastik') {
                     matchCat = isInnerTube;
                 } else if (currentCategory === '2. El') {
@@ -2007,6 +2004,22 @@
                     if (!displayImg) displayImg = 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
 
                     let catTag = `<span class="tag tag-category"><i class="fa-solid fa-car"></i> ${p.group || 'Otomobil'}</span>`;
+
+                    // KART GÖRÜNÜMÜ İÇİN PARLAK EMOJİLİ MEVSİM / TÜR GÖSTERİMİ (2. FOTOĞRAF İSTEĞİ)
+                    let seasonEmojiTag = '';
+                    if (p.group === 'Zirai') {
+                        seasonEmojiTag = `<span class="tag" style="color:#fbbf24;" title="Zirai Grubu">🚜</span>`;
+                    } else if (p.group === 'Ağır Vasıta') {
+                        seasonEmojiTag = `<span class="tag" style="color:#38bdf8;" title="Ağır Vasıta">🚛</span>`;
+                    } else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') {
+                        seasonEmojiTag = `<span class="tag" style="color:#a78bfa;" title="İç Lastik">⭕</span>`;
+                    } else if (p.season === 'Kış') {
+                        seasonEmojiTag = `<span class="tag" style="color:#38bdf8;" title="Kış Lastiği">❄️</span>`;
+                    } else if (p.season === '4 Mevsim') {
+                        seasonEmojiTag = `<span class="tag" style="color:#fbbf24;" title="4 Mevsim Lastik">🌤️</span>`;
+                    } else {
+                        seasonEmojiTag = `<span class="tag" style="color:#fb923c;" title="Yaz Lastiği">☀️</span>`;
+                    }
 
                     const brandUpper = (p.brand || 'STANDART').toUpperCase();
                     let cardBrandHtml = p.customLogo ? `<img src="${p.customLogo}" class="card-brand-logo-img" alt="${p.brand}">` : `<span class="card-brand-text">${brandUpper}</span>`;
@@ -2065,10 +2078,13 @@
                             <div class="card-title">${p.size}</div>
                             <div class="card-brand-display">${cardBrandHtml}</div>
                         </div>
-                        <div style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">Desen: <span style="color:var(--accent-yellow);">${p.pattern || 'STANDART'}</span> | DOT: ${p.dot || '2026'}</div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">
+                            <span>Desen: <span style="color:var(--accent-yellow);">${p.pattern || 'STANDART'}</span></span>
+                            <span>DOT: ${p.dot || '2026'}</span>
+                        </div>
                         ${priceOrWpHtml}
                         <div class="card-footer-row">
-                            <div>${catTag}</div>
+                            <div style="display:flex; gap:5px; align-items:center;">${catTag} ${seasonEmojiTag}</div>
                             <div>${adminActionsHtml}</div>
                         </div>
                     `;
@@ -2084,6 +2100,22 @@
                     if (!displayImg) displayImg = 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
 
                     let catTag = `<span class="tag tag-category"><i class="fa-solid fa-car"></i> ${p.group || 'Otomobil'}</span>`;
+
+                    // TABLO GÖRÜNÜMÜ İÇİN YAZILAR OLMADAN SADECE PARLAK EMOJİ (3. FOTOĞRAF İSTEĞİ)
+                    let rowSeasonEmojiTag = '';
+                    if (p.group === 'Zirai') {
+                        rowSeasonEmojiTag = `<span class="tag" style="color:#fbbf24;" title="Zirai Grubu">🚜</span>`;
+                    } else if (p.group === 'Ağır Vasıta') {
+                        rowSeasonEmojiTag = `<span class="tag" style="color:#38bdf8;" title="Ağır Vasıta">🚛</span>`;
+                    } else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') {
+                        rowSeasonEmojiTag = `<span class="tag" style="color:#a78bfa;" title="İç Lastik">⭕</span>`;
+                    } else if (p.season === 'Kış') {
+                        rowSeasonEmojiTag = `<span class="tag" style="color:#38bdf8;" title="Kış Lastiği">❄️</span>`;
+                    } else if (p.season === '4 Mevsim') {
+                        rowSeasonEmojiTag = `<span class="tag" style="color:#fbbf24;" title="4 Mevsim Lastik">🌤️</span>`;
+                    } else {
+                        rowSeasonEmojiTag = `<span class="tag" style="color:#fb923c;" title="Yaz Lastiği">☀️</span>`;
+                    }
 
                     let brandHtml = '';
                     const brandUpper = (p.brand || 'STANDART').toUpperCase();
@@ -2136,14 +2168,14 @@
                     } else {
                         priceOrWpColumn = `
                             <div>
-                                <button class="btn-card-whatsapp" onclick="event.stopPropagation(); openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="padding: 6px 10px; font-size: 0.75rem;">
+                                <button class="btn-card-whatsapp" onclick="event.stopPropagation(); openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="padding: 6px 10px; font-size: 0.72rem;">
                                     <i class="fa-brands fa-whatsapp"></i> Fiyat Sor
                                 </button>
                             </div>
                         `;
                         
                         let rowStockText = stockVal >= 1 ? `<span style="color:var(--success-color);"><i class="fa-solid fa-store"></i> Stokta Var</span>` : `<span style="color:var(--danger-color);"><i class="fa-solid fa-lock"></i> Rezerve Stok</span>`;
-                        stockOrActionColumn = `<div style="font-size:0.75rem; font-weight:700;">${rowStockText}</div>`;
+                        stockOrActionColumn = `<div style="font-size:0.72rem; font-weight:700;">${rowStockText}</div>`;
                         adminActionsColumn = `<div></div>`;
                     }
 
@@ -2160,6 +2192,7 @@
                             </div>
                         </div>
                         <div>${catTag}</div>
+                        <div style="text-align:center;">${rowSeasonEmojiTag}</div>
                         <div><span class="tag">DOT ${p.dot || '2026'}</span></div>
                         ${priceOrWpColumn}
                         <div>${stockOrActionColumn}</div>
