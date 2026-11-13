@@ -97,7 +97,7 @@
         .user-info { display: flex; align-items: center; gap: 8px; background: rgba(15, 23, 42, 0.85); padding: 5px 10px; border-radius: 6px; border: 1px solid var(--card-border); backdrop-filter: blur(8px); }
         .user-badge { color: var(--accent-yellow); font-weight: 600; font-size: 0.82rem; }
         .btn-logout { background: var(--danger-color); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 0.78rem; display: flex; align-items: center; gap: 5px; }
-        .btn-login-open { background: var(--accent-yellow); color: #000; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 800; font-size: 0.82rem; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
+        .btn-login-open { background: var(--accent-yellow); color: #000; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; transition: 0.2s; box-shadow: 0 4px 12px rgba(245,158,11,0.3); }
         .btn-login-open:hover { filter: brightness(1.1); }
 
         .main-container { max-width: 1400px; margin: 15px auto; padding: 0 12px; }
@@ -162,6 +162,35 @@
         .btn-primary { width: 100%; padding: 10px; background: var(--accent-yellow); color: #000; font-weight: 800; border: none; border-radius: 6px; cursor: pointer; font-size: 0.92rem; transition: 0.2s; margin-top: 6px; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
         .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
 
+        /* GELİŞMİŞ MİSAFİR FİLTRE PANELİ */
+        .smart-filter-box {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1.5px solid rgba(245, 158, 11, 0.4);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .filter-grid-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .filter-dropdown-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .filter-dropdown-group label {
+            font-size: 0.78rem;
+            color: var(--accent-yellow);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
         .controls-section { background: var(--card-bg); padding: 12px; border-radius: 10px; border: 1px solid var(--card-border); margin-bottom: 15px; }
         .search-bar-row { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; flex-wrap: wrap; }
         .search-box { position: relative; flex: 1; min-width: 220px; }
@@ -175,7 +204,8 @@
         .notif-badge { position: absolute; top: -4px; right: -4px; background: var(--danger-color); color: white; font-size: 0.68rem; font-weight: 800; padding: 1px 5px; border-radius: 8px; border: 2px solid var(--card-bg); }
 
         .filter-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
-        .filter-btn { flex: 1; min-width: 85px; padding: 7px 8px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 0.78rem; }
+        .filter-btn { flex: 1; min-width: 85px; padding: 7px 8px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 0.78rem; transition: 0.2s; }
+        .filter-btn:hover { border-color: var(--accent-yellow); }
         .filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
 
         .icon-sun { color: var(--icon-sun) !important; filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.6)); }
@@ -516,7 +546,7 @@
             </div>
 
             <div id="authArea">
-                <button class="btn-login-open" onclick="openLoginModal()"><i class="fa-solid fa-right-to-bracket"></i> Giriş Yap</button>
+                <button class="btn-login-open" onclick="openLoginModal()"><i class="fa-solid fa-user-lock"></i> Bayi / Yönetici Girişi</button>
             </div>
 
             <div id="userInfoArea" class="user-info hidden">
@@ -546,11 +576,105 @@
             </div>
         </div>
 
+        <!-- MİSAFİR / DIŞ MÜŞTERİ İÇİN AKILLI EBAT & MARKA FİLTRE PANELİ -->
+        <div id="guestSmartFilterSection" class="smart-filter-box">
+            <div style="font-size: 0.95rem; font-weight: 800; color: var(--accent-yellow); display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                <i class="fa-solid fa-sliders"></i> Aradığınız Lastiği Ebat ve Markaya Göre Bulun
+            </div>
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px;">Aracınıza uygun ebatları seçerek saniyeler içinde doğru lastiği filtreleyin:</div>
+            
+            <div class="filter-grid-row">
+                <!-- Marka Seçimi -->
+                <div class="filter-dropdown-group">
+                    <label><i class="fa-solid fa-copyright"></i> Marka Seçin</label>
+                    <select id="filterBrandSelect" class="form-control" onchange="renderProducts()">
+                        <option value="all">Tüm Markalar</option>
+                        <option value="Petlas">Petlas</option>
+                        <option value="Lassa">Lassa</option>
+                        <option value="Bridgestone">Bridgestone</option>
+                        <option value="Michelin">Michelin</option>
+                        <option value="Goodyear">Goodyear</option>
+                        <option value="Pirelli">Pirelli</option>
+                        <option value="Continental">Continental</option>
+                        <option value="Starmaxx">Starmaxx</option>
+                        <option value="Milestone">Milestone</option>
+                        <option value="Hankook">Hankook</option>
+                        <option value="Laufenn">Laufenn</option>
+                        <option value="Falken">Falken</option>
+                        <option value="Dunlop">Dunlop</option>
+                        <option value="Kabat">Kabat</option>
+                        <option value="BKT">BKT</option>
+                    </select>
+                </div>
+
+                <!-- Taban Genişliği -->
+                <div class="filter-dropdown-group">
+                    <label><i class="fa-solid fa-arrows-left-right"></i> Taban Genişliği</label>
+                    <select id="filterWidthSelect" class="form-control" onchange="renderProducts()">
+                        <option value="all">Tüm Genişlikler</option>
+                        <option value="145">145</option>
+                        <option value="155">155</option>
+                        <option value="165">165</option>
+                        <option value="175">175</option>
+                        <option value="185">185</option>
+                        <option value="195">195</option>
+                        <option value="205">205</option>
+                        <option value="215">215</option>
+                        <option value="225">225</option>
+                        <option value="235">235</option>
+                        <option value="245">245</option>
+                        <option value="255">255</option>
+                        <option value="265">265</option>
+                        <option value="275">275</option>
+                    </select>
+                </div>
+
+                <!-- Yanak Oranı -->
+                <div class="filter-dropdown-group">
+                    <label><i class="fa-solid fa-arrows-up-down"></i> Yanak Oranı</label>
+                    <select id="filterProfileSelect" class="form-control" onchange="renderProducts()">
+                        <option value="all">Tüm Yanaklar</option>
+                        <option value="30">30</option>
+                        <option value="35">35</option>
+                        <option value="40">40</option>
+                        <option value="45">45</option>
+                        <option value="50">50</option>
+                        <option value="55">55</option>
+                        <option value="60">60</option>
+                        <option value="65">65</option>
+                        <option value="70">70</option>
+                        <option value="75">75</option>
+                        <option value="80">80</option>
+                        <option value="82">82</option>
+                    </select>
+                </div>
+
+                <!-- Çap / Jant -->
+                <div class="filter-dropdown-group">
+                    <label><i class="fa-solid fa-circle-notch"></i> Çap (Jant)</label>
+                    <select id="filterRimSelect" class="form-control" onchange="renderProducts()">
+                        <option value="all">Tüm Çaplar (Jant)</option>
+                        <option value="12">12 Jant</option>
+                        <option value="13">13 Jant</option>
+                        <option value="14">14 Jant</option>
+                        <option value="15">15 Jant</option>
+                        <option value="16">16 Jant</option>
+                        <option value="17">17 Jant</option>
+                        <option value="18">18 Jant</option>
+                        <option value="19">19 Jant</option>
+                        <option value="20">20 Jant</option>
+                        <option value="21">21 Jant</option>
+                        <option value="22">22 Jant</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
         <div class="controls-section">
             <div class="search-bar-row">
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="searchInput" oninput="renderProducts()" placeholder="Ebat, Marka veya Desen Ara... (Örn: 205/55, Petlas)">
+                    <input type="text" id="searchInput" oninput="renderProducts()" placeholder="Hızlı Arama (Örn: 205/55, Petlas, Traktör)...">
                 </div>
 
                 <button id="viewToggleBtn" class="btn-view-toggle" onclick="toggleViewMode()">
@@ -565,18 +689,21 @@
 
             <div class="filter-buttons">
                 <button class="filter-btn active" onclick="setCategory('all', this)"><i class="fa-solid fa-border-all"></i> Tüm Ürünler</button>
-                <button class="filter-btn" onclick="setCategory('Yaz', this)"><i class="fa-solid fa-sun icon-sun"></i> Yaz Lastikleri</button>
-                <button class="filter-btn" onclick="setCategory('Kış', this)"><i class="fa-solid fa-snowflake icon-snow"></i> Kış Lastikleri</button>
+                <button class="filter-btn" onclick="setCategory('Yaz', this)"><i class="fa-solid fa-sun icon-sun"></i> Yaz</button>
+                <button class="filter-btn" onclick="setCategory('Kış', this)"><i class="fa-solid fa-snowflake icon-snow"></i> Kış</button>
                 <button class="filter-btn" onclick="setCategory('4 Mevsim', this)"><i class="fa-solid fa-cloud-sun-rain icon-all"></i> 4 Mevsim</button>
+                <button class="filter-btn" onclick="setCategory('Otomobil', this)"><i class="fa-solid fa-car"></i> Otomobil</button>
+                <button class="filter-btn" onclick="setCategory('Hafif Ticari', this)"><i class="fa-solid fa-van-shuttle"></i> Hafif Ticari</button>
                 <button class="filter-btn" onclick="setCategory('Zirai', this)"><i class="fa-solid fa-tractor icon-tractor"></i> Zirai Grubu</button>
-                <button class="filter-btn" onclick="setCategory('İç Lastik', this)"><i class="fa-solid fa-circle-dot icon-tube"></i> İç Lastikler</button>
-                <button class="filter-btn" onclick="setCategory('2. El', this)"><i class="fa-solid fa-rotate-right icon-secondhand"></i> 2. El Lastikler</button>
+                <button class="filter-btn" onclick="setCategory('Ağır Vasıta', this)"><i class="fa-solid fa-truck"></i> Ağır Vasıta</button>
+                <button class="filter-btn" onclick="setCategory('İç Lastik', this)"><i class="fa-solid fa-circle-dot icon-tube"></i> İç Lastik</button>
+                <button class="filter-btn" onclick="setCategory('2. El', this)"><i class="fa-solid fa-rotate-right icon-secondhand"></i> 2. El</button>
             </div>
         </div>
 
         <div id="adminBar" class="admin-bar hidden">
             <div class="admin-bar-header">
-                <h3 style="color: var(--text-muted); font-size: 0.88rem;"><i class="fa-solid fa-boxes-stacked"></i> Stok Yönetimi</h3>
+                <h3 style="color: var(--text-muted); font-size: 0.88rem;"><i class="fa-solid fa-boxes-stacked"></i> Stok Yönetimi & Kontrolü</h3>
                 <div style="display: flex; gap: 6px;">
                     <button class="btn-add" onclick="openAddModal()"><i class="fa-solid fa-plus"></i> Yeni Ürün Ekle</button>
                     <button class="btn-add" style="background: var(--icon-secondhand);" onclick="openAddModal('2. El')"><i class="fa-solid fa-rotate-right"></i> 2. El Lastik Ekle</button>
@@ -792,10 +919,12 @@
             <input type="hidden" id="pCustomLogoBase64" value="">
 
             <div class="form-group">
-                <label>Ürün Grubu / Kategorisi</label>
+                <label>Ürün / Araç Grubu</label>
                 <select id="pGroupSelect" class="form-control" onchange="toggleGroupFields(this.value)">
-                    <option value="Otomobil">Otomobil / Hafif Ticari Lastiği</option>
+                    <option value="Otomobil">Otomobil Lastiği</option>
+                    <option value="Hafif Ticari">Hafif Ticari (Minibüs / Panelvan)</option>
                     <option value="Zirai">Zirai Grubu (Traktör / İş Makinesi)</option>
+                    <option value="Ağır Vasıta">Ağır Vasıta (Kamyon / Tır)</option>
                     <option value="İç Lastik">İç Lastik (Şambrel)</option>
                     <option value="2. El">2. El Lastik Grubu</option>
                 </select>
@@ -817,7 +946,7 @@
             </div>
             <div class="form-group hidden" id="customSizeGroup">
                 <label>Manuel Ebat Girin</label>
-                <input type="text" id="pCustomSize" class="form-control" placeholder="Örn: 16.9-30, 6.50-16 Vb.">
+                <input type="text" id="pCustomSize" class="form-control" placeholder="Örn: 16.9-30, 315/80R22.5 Vb.">
             </div>
             
             <div class="form-group">
@@ -836,12 +965,14 @@
                     <option value="Laufenn">Laufenn</option>
                     <option value="Falken">Falken</option>
                     <option value="Dunlop">Dunlop</option>
+                    <option value="Kabat">Kabat</option>
+                    <option value="BKT">BKT</option>
                     <option value="Diger">Diğer (Manuel Yaz)</option>
                 </select>
             </div>
             <div class="form-group hidden" id="customBrandGroup">
                 <label>Manuel Marka Adı</label>
-                <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Kabat, BKT Vb.">
+                <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Öзкаş, Sava Vb.">
             </div>
 
             <div class="form-group" id="normalLogoGroup">
@@ -869,7 +1000,7 @@
             </div>
 
             <div id="usedTireExtraFields" class="hidden" style="background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; border: 1px dashed var(--accent-yellow); margin-bottom: 12px;">
-                <div style="font-size: 0.82rem; font-weight: 800; color: var(--accent-yellow); margin-bottom: 8px;"><i class="fa-solid fa-circle-info"></i> 2. El Detaylı Bilgileri (Bayi Ekranında Görünür)</div>
+                <div style="font-size: 0.82rem; font-weight: 800; color: var(--accent-yellow); margin-bottom: 8px;"><i class="fa-solid fa-circle-info"></i> 2. El Detaylı Bilgileri</div>
                 
                 <div class="form-group">
                     <label>Tahmini Yapılan Kilometre (KM)</label>
@@ -891,7 +1022,7 @@
 
             <div class="form-group">
                 <label>Lastik Deseni / Diş Durumu / Özellik</label>
-                <input type="text" id="pPattern" class="form-control" placeholder="Örn: 5mm Dişli, TEMİZ Vb.">
+                <input type="text" id="pPattern" class="form-control" placeholder="Örn: PT741, Competus, 5mm Dişli Vb.">
             </div>
 
             <div class="form-group" id="seasonGroup">
@@ -905,7 +1036,7 @@
 
             <div class="form-group">
                 <label>DOT (Üretim Yılı)</label>
-                <input type="text" id="pDot" class="form-control" placeholder="Örn: 2024">
+                <input type="text" id="pDot" class="form-control" placeholder="Örn: 2026">
             </div>
 
             <div class="form-group">
@@ -966,7 +1097,7 @@
         </div>
     </div>
 
-    <!-- WHATSAPP SEÇİM MODALI (İKİ KİŞİ ARASINDAN SEÇİM İÇİN) -->
+    <!-- WHATSAPP SEÇİM MODALI -->
     <div id="wpModal" class="modal" style="max-width: 380px;">
         <div class="modal-content" style="text-align: center;">
             <div class="modal-header">
@@ -989,7 +1120,7 @@
     <script>
         let products = [];
         let currentCategory = 'all';
-        let currentUserRole = null; 
+        let currentUserRole = null; // null = dış müşteri (fiyat gizli, stok gizli, akıllı filtreler aktif), 'bayi' = fiyat ve stok görür ama düzenleyemez, 'admin' = tam yetki
         let selectedProductForModal = null;
         let modalProductQty = 1;
         let isCardView = false;
@@ -1097,7 +1228,7 @@
                 currentUserRole = 'admin';
                 document.getElementById('userBadge').innerText = 'Yönetici (Tamer Çelebi)';
                 initLoginSuccess();
-            } else if (u === '1234' || p === '1234' || p === bayiPass || u === 'bayi') {
+            } else if (u === 'bayi' || u === '1234' || p === '1234' || p === bayiPass) {
                 currentUserRole = 'bayi';
                 document.getElementById('userBadge').innerText = 'Bayi / Meslektaş';
                 initLoginSuccess();
@@ -1111,6 +1242,7 @@
             document.getElementById('authArea').classList.add('hidden');
             document.getElementById('userInfoArea').classList.remove('hidden');
 
+            // Sadece yönetici ise stok artırma/azaltma ve ekleme çubuğunu aç
             if (currentUserRole === 'admin') {
                 document.getElementById('adminBar').classList.remove('hidden');
                 document.getElementById('adminNotifBtn').classList.remove('hidden');
@@ -1491,7 +1623,7 @@
                 alert('Ürün başarıyla kaydedildi!');
             } catch (err) {
                 console.error("Kayıt hatası:", err);
-                alert("Ürün kaydedilirken bir hata oluştu. Fotoğraf boyutu çok büyük olabilir, fotoğrafsız deneyebilir misiniz?");
+                alert("Ürün kaydedilirken bir hata oluştu.");
             }
         }
 
@@ -1684,6 +1816,7 @@
                     <button class="b2b-btn-cart" onclick="alert('Ürün sepete eklenmiştir!')"><i class="fa-solid fa-cart-shopping"></i> Sepete Ekle</button>
                 `;
             } else {
+                // MİSAFİR DETAY: FİYAT VE STOK GİZLİ, WHATSAPP VAR
                 priceSection.innerHTML = `
                     <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="padding: 12px; font-size: 1rem;">
                         <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> WhatsApp ile Fiyat Sor / Bilgi Al (Tamer & İbrahim)
@@ -1711,27 +1844,22 @@
                 if (p.usedNote) specHtml += `<div class="b2b-spec-row" style="background:rgba(239,68,68,0.1);"><span class="b2b-spec-key" style="color:#fca5a5;">Kusur / Açıklama:</span><span class="b2b-spec-val" style="color:#fca5a5;">${p.usedNote}</span></div>`;
             }
 
-            let typeText = 'Otomobil / Hafif Ticari';
+            let typeText = p.group || 'Otomobil';
             let seasonText = p.season || 'Yaz';
             let seasonIcon = 'fa-sun icon-sun';
 
             if (p.group === 'Zirai') {
-                typeText = 'Zirai Grubu';
                 seasonText = 'Zirai Grubu';
                 seasonIcon = 'fa-tractor icon-tractor';
             } else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') {
-                typeText = 'İç Lastik (Şambrel)';
                 seasonText = 'İç Lastik';
                 seasonIcon = 'fa-circle-dot icon-tube';
             } else if (p.group === '2. El') {
-                typeText = '2. El Lastik';
                 seasonText = p.season || '2. El';
                 seasonIcon = 'fa-rotate-right icon-secondhand';
             } else if (p.season === 'Kış') {
-                seasonText = 'Kış';
                 seasonIcon = 'fa-snowflake icon-snow';
             } else if (p.season === '4 Mevsim') {
-                seasonText = '4 Mevsim';
                 seasonIcon = 'fa-cloud-sun-rain icon-all';
             }
 
@@ -1777,34 +1905,73 @@
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             const search = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            // Akıllı Filitre Değerleri (Misafirler için)
+            const fBrand = document.getElementById('filterBrandSelect').value;
+            const fWidth = document.getElementById('filterWidthSelect').value;
+            const fProfile = document.getElementById('filterProfileSelect').value;
+            const fRim = document.getElementById('filterRimSelect').value;
+
             grid.innerHTML = '';
 
             let filtered = products.filter(p => {
                 const isInnerTube = (p.group === 'İç Lastik' || p.season === 'İç Lastik');
                 const isSecondHand = (p.group === '2. El');
-                const isZirai = (p.group === 'Zirai');
 
+                // Kategori Butonları Eşleşmesi
                 let matchCat = false;
                 if (currentCategory === 'all') {
-                    matchCat = !isInnerTube && !isSecondHand;
+                    matchCat = true;
                 } else if (currentCategory === 'İç Lastik') {
                     matchCat = isInnerTube;
                 } else if (currentCategory === '2. El') {
                     matchCat = isSecondHand;
+                } else if (currentCategory === 'Otomobil') {
+                    matchCat = (p.group === 'Otomobil');
+                } else if (currentCategory === 'Hafif Ticari') {
+                    matchCat = (p.group === 'Hafif Ticari');
                 } else if (currentCategory === 'Zirai') {
-                    matchCat = isZirai;
+                    matchCat = (p.group === 'Zirai');
+                } else if (currentCategory === 'Ağır Vasıta') {
+                    matchCat = (p.group === 'Ağır Vasıta');
                 } else {
-                    matchCat = (p.season === currentCategory && !isInnerTube && !isSecondHand && !isZirai);
+                    matchCat = (p.season === currentCategory && !isInnerTube && !isSecondHand);
+                }
+
+                if (!matchCat) return false;
+
+                // Marka Filtresi
+                if (fBrand !== 'all') {
+                    if (!p.brand || p.brand.toLowerCase() !== fBrand.toLowerCase()) return false;
+                }
+
+                const sizeStr = (p.size || '').toUpperCase();
+
+                // Taban Genişliği Filtresi
+                if (fWidth !== 'all') {
+                    if (!sizeStr.startsWith(fWidth)) return false;
+                }
+
+                // Yanak Filtresi
+                if (fProfile !== 'all') {
+                    // Örn: 205/55R16 -> /55 arayalım
+                    if (!sizeStr.includes(`/${fProfile}`)) return false;
+                }
+
+                // Çap (Jant) Filtresi
+                if (fRim !== 'all') {
+                    // Örn: R16 veya 16
+                    if (!sizeStr.includes(`R${fRim}`) && !sizeStr.includes(`-${fRim}`) && !sizeStr.includes(`/${fRim}`) && !sizeStr.endsWith(`${fRim}`)) return false;
                 }
                
-                const fullStr = `${p.size} ${p.brand} ${p.pattern} ${p.dot} ${p.usedKm} ${p.usedCombo}`.toLowerCase();
-                return matchCat && fullStr.includes(search);
+                const fullStr = `${p.size} ${p.brand} ${p.pattern} ${p.dot} ${p.group}`.toLowerCase();
+                return fullStr.includes(search);
             });
 
             filtered.sort((a, b) => getSortableSize(a.size) - getSortableSize(b.size));
 
             if (filtered.length === 0) {
-                grid.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 25px; font-size: 0.9rem; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--card-border);">Henüz kayıtlı ürün bulunmuyor veya arama eşleşmedi.</div>`;
+                grid.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 25px; font-size: 0.9rem; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--card-border);">Aradığınız kriterlere uygun lastik bulunamadı. Lütfen filtreleri değiştirerek tekrar deneyin.</div>`;
                 return;
             }
 
@@ -1816,19 +1983,7 @@
                     if (!displayImg && p.photos && p.photos.length > 0) displayImg = p.photos[0];
                     if (!displayImg) displayImg = 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
 
-                    let catTag = '';
-                    if (p.group === 'Zirai') {
-                        catTag = `<span class="tag tag-category"><i class="fa-solid fa-tractor icon-tractor"></i> Zirai</span>`;
-                    } else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') {
-                        catTag = `<span class="tag tag-category"><i class="fa-solid fa-circle-dot icon-tube"></i> İç Lastik</span>`;
-                    } else if (p.group === '2. El') {
-                        catTag = `<span class="tag tag-category"><i class="fa-solid fa-rotate-right icon-secondhand"></i> 2. El</span>`;
-                    } else {
-                        let iconClass = 'fa-sun icon-sun';
-                        if (p.season === 'Kış') iconClass = 'fa-snowflake icon-snow';
-                        else if (p.season === '4 Mevsim') iconClass = 'fa-cloud-sun-rain icon-all';
-                        catTag = `<span class="tag tag-category"><i class="fa-solid ${iconClass}"></i> ${p.season || 'Yaz'}</span>`;
-                    }
+                    let catTag = `<span class="tag tag-category"><i class="fa-solid fa-car"></i> ${p.group || 'Otomobil'}</span>`;
 
                     const brandUpper = (p.brand || 'STANDART').toUpperCase();
                     let cardBrandHtml = p.customLogo ? `<img src="${p.customLogo}" class="card-brand-logo-img" alt="${p.brand}">` : `<span class="card-brand-text">${brandUpper}</span>`;
@@ -1843,26 +1998,33 @@
                                 <span class="card-price-val">${formatCurrency(p.price)}</span>
                             </div>
                         `;
-                        adminActionsHtml = `
-                            <div style="display:flex; align-items:center; gap:6px;">
-                                <div class="admin-stock-control">
-                                    <button class="btn-qty" onclick="updateStock('${p.id}', -1)">-</button>
-                                    <span class="admin-stock-val">${stockVal} Adet</span>
-                                    <button class="btn-qty" onclick="updateStock('${p.id}', 1)">+</button>
+                        // SADECE YÖNETİCİ STOK DEĞİŞTİREBİLİR VEYA DÜZENLEYEBİLİR (BAYİ DEĞİŞTİREMEZ)
+                        if (currentUserRole === 'admin') {
+                            adminActionsHtml = `
+                                <div style="display:flex; align-items:center; gap:6px;">
+                                    <div class="admin-stock-control">
+                                        <button class="btn-qty" onclick="updateStock('${p.id}', -1)">-</button>
+                                        <span class="admin-stock-val">${stockVal} Adet</span>
+                                        <button class="btn-qty" onclick="updateStock('${p.id}', 1)">+</button>
+                                    </div>
+                                    <div class="row-actions">
+                                        <button class="btn-edit-price" onclick="editProduct('${p.id}')" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
+                                        <button class="btn-icon" onclick="deleteProduct('${p.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>
+                                    </div>
                                 </div>
-                                <div class="row-actions">
-                                    <button class="btn-edit-price" onclick="editProduct('${p.id}')" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
-                                    <button class="btn-icon" onclick="deleteProduct('${p.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>
-                                </div>
-                            </div>
-                        `;
+                            `;
+                        } else {
+                            // BAYİ GÖSTERGESİ (Sadece Stok Miktarı, Buton Yok)
+                            adminActionsHtml = `<div>${getStockBadgeHtml(stockVal)}</div>`;
+                        }
                     } else {
+                        // MİSAFİR: FİYAT VE STOK GİZLİ, WHATSAPP VAR
                         priceOrWpHtml = `
                             <button class="btn-card-whatsapp" onclick="event.stopPropagation(); openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')">
                                 <i class="fa-brands fa-whatsapp" style="font-size: 1rem;"></i> WhatsApp ile Fiyat Sor
                             </button>
                         `;
-                        adminActionsHtml = `<div>${getStockBadgeHtml(stockVal)}</div>`;
+                        adminActionsHtml = `<div style="font-size:0.75rem; color:var(--success-color); font-weight:700;"><i class="fa-solid fa-store"></i> Stokta Mevcut</div>`;
                     }
 
                     const card = document.createElement('div');
@@ -1899,22 +2061,7 @@
                     if (!displayImg && p.photos && p.photos.length > 0) displayImg = p.photos[0];
                     if (!displayImg) displayImg = 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
 
-                    let catTag = '';
-                    if (p.group === 'Zirai') {
-                        catTag = `<span class="tag tag-category"><i class="fa-solid fa-tractor icon-tractor"></i> Zirai</span>`;
-                    } else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') {
-                        catTag = `<span class="tag tag-category"><i class="fa-solid fa-circle-dot icon-tube"></i> İç Lastik</span>`;
-                    } else if (p.group === '2. El') {
-                        let sIcon = 'fa-sun icon-sun';
-                        if (p.season === 'Kış') sIcon = 'fa-snowflake icon-snow';
-                        else if (p.season === '4 Mevsim') sIcon = 'fa-cloud-sun-rain icon-all';
-                        catTag = `<span class="tag tag-category"><i class="fa-solid fa-rotate-right icon-secondhand"></i> 2. El (<i class="fa-solid ${sIcon}"></i> ${p.season || 'Yaz'})</span>`;
-                    } else {
-                        let iconClass = 'fa-sun icon-sun';
-                        if (p.season === 'Kış') iconClass = 'fa-snowflake icon-snow';
-                        else if (p.season === '4 Mevsim') iconClass = 'fa-cloud-sun-rain icon-all';
-                        catTag = `<span class="tag tag-category"><i class="fa-solid ${iconClass}"></i> ${p.season || 'Yaz'}</span>`;
-                    }
+                    let catTag = `<span class="tag tag-category"><i class="fa-solid fa-car"></i> ${p.group || 'Otomobil'}</span>`;
 
                     let brandHtml = '';
                     const brandUpper = (p.brand || 'STANDART').toUpperCase();
@@ -1945,19 +2092,26 @@
 
                     if (currentUserRole === 'admin' || currentUserRole === 'bayi') {
                         priceOrWpColumn = `<div class="col-price">${formatCurrency(p.price)}</div>`;
-                        stockOrActionColumn = `
-                            <div class="admin-stock-control">
-                                <button class="btn-qty" onclick="updateStock('${p.id}', -1)">-</button>
-                                <span class="admin-stock-val">${stockVal} Adet</span>
-                                <button class="btn-qty" onclick="updateStock('${p.id}', 1)">+</button>
-                            </div>
-                        `;
-                        adminActionsColumn = `
-                            <div class="row-actions">
-                                <button class="btn-edit-price" onclick="editProduct('${p.id}')" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
-                                <button class="btn-icon" onclick="deleteProduct('${p.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        `;
+                        
+                        if (currentUserRole === 'admin') {
+                            stockOrActionColumn = `
+                                <div class="admin-stock-control">
+                                    <button class="btn-qty" onclick="updateStock('${p.id}', -1)">-</button>
+                                    <span class="admin-stock-val">${stockVal} Adet</span>
+                                    <button class="btn-qty" onclick="updateStock('${p.id}', 1)">+</button>
+                                </div>
+                            `;
+                            adminActionsColumn = `
+                                <div class="row-actions">
+                                    <button class="btn-edit-price" onclick="editProduct('${p.id}')" title="Düzenle"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="btn-icon" onclick="deleteProduct('${p.id}')" title="Sil"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            `;
+                        } else {
+                            // BAYİ TABLO: Sadece stok adedini görür, butonlar kapalı
+                            stockOrActionColumn = `<div>${getStockBadgeHtml(stockVal)}</div>`;
+                            adminActionsColumn = `<div></div>`;
+                        }
                     } else {
                         priceOrWpColumn = `
                             <div>
@@ -1966,7 +2120,7 @@
                                 </button>
                             </div>
                         `;
-                        stockOrActionColumn = `<div>${getStockBadgeHtml(stockVal)}</div>`;
+                        stockOrActionColumn = `<div style="font-size:0.75rem; color:var(--success-color); font-weight:700;"><i class="fa-solid fa-store"></i> Stokta Var</div>`;
                         adminActionsColumn = `<div></div>`;
                     }
 
@@ -1994,6 +2148,7 @@
         }
 
         async function updateStock(id, change) {
+            if (currentUserRole !== 'admin') return;
             const p = products.find(x => x.id === id);
             if (!p) return;
             let newStock = (parseInt(p.stock) || 0) + change;
@@ -2002,6 +2157,7 @@
         }
 
         async function deleteProduct(id) {
+            if (currentUserRole !== 'admin') return;
             if (confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
                 await window.deleteDoc(window.doc(window.db, "lastik_stoklari", id));
             }
