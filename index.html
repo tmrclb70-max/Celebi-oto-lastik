@@ -201,7 +201,7 @@
         .filter-btn:hover { border-color: var(--accent-yellow); }
         .filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
 
-        /* PETLAS TARZI ALT KATEGORİ ÇUBUĞU */
+        /* PETLAS TARZI SADE VE ÖLÇEKLİ ALT KATEGORİ ÇUBUĞU */
         .sub-filter-bar {
             display: none;
             gap: 6px;
@@ -209,11 +209,12 @@
             justify-content: center;
             align-items: center;
             margin-top: 10px;
-            padding: 8px;
-            background: rgba(15, 23, 42, 0.7);
+            padding: 9px;
+            background: rgba(15, 23, 42, 0.85);
             border-radius: 8px;
-            border: 1px dashed rgba(245, 158, 11, 0.5);
+            border: 1px solid rgba(245, 158, 11, 0.4);
             animation: fadeIn 0.3s ease-in-out;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
         }
         .sub-filter-bar.visible { display: flex; }
         .sub-filter-btn {
@@ -221,21 +222,23 @@
             background: #0f172a;
             border: 1px solid var(--card-border);
             color: var(--text-muted);
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: 700;
-            font-size: 0.74rem;
+            font-size: 0.76rem;
             transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
-        .sub-filter-btn:hover { border-color: var(--accent-yellow); color: #fff; }
-        .sub-filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
+        .sub-filter-btn:hover { border-color: var(--accent-yellow); color: #fff; transform: translateY(-1px); }
+        .sub-filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); box-shadow: 0 0 10px rgba(245,158,11,0.4); }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-4px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* AÇILIR MEVSİM SEÇİM BUTONU (SADECE YAZ, KIŞ, 4 MEVSİM) */
         .season-dropdown-container { position: relative; flex: 1; min-width: 110px; }
         .season-select-box {
             width: 100%; padding: 9px 8px; background: #0f172a; border: 1px solid var(--card-border);
@@ -666,11 +669,10 @@
                 </button>
             </div>
 
-            <!-- FİLTRE BUTONLARI + PETLAS TARZI ALT KATEGORİ ÇUBUKLARI -->
+            <!-- ANA FİLTRE BUTONLARI -->
             <div class="filter-buttons">
                 <button class="filter-btn active" onclick="setCategory('all', this)">🌐 Tüm Ürünler</button>
                 
-                <!-- AÇILIR MEVSİM SEÇİM MENÜSÜ (SADECE YAZ, KIŞ, 4 MEVSİM) -->
                 <div class="season-dropdown-container" id="seasonDropdownContainer">
                     <div class="season-select-box" id="seasonSelectBox">
                         <span id="seasonDropdownLabel"><i class="fa-solid fa-filter"></i> Mevsim Seç</span>
@@ -692,23 +694,24 @@
                 <button class="filter-btn" onclick="setCategory('2. El', this)">♻️ 2. El</button>
             </div>
 
-            <!-- PETLAS TARZI ZİRAİ ALT KATEGORİLERİ -->
+            <!-- ZİRAİ GRUBU ÖZEL ALT BUTONLAR (SADE VE ÖLÇEKLİ) -->
             <div id="ziraiSubBar" class="sub-filter-bar">
-                <button class="sub-filter-btn active" onclick="setSubCategory('all', this)">Tüm Zirai</button>
+                <button class="sub-filter-btn active" onclick="setSubCategory('all', this)">🌾 Tüm Zirai</button>
                 <button class="sub-filter-btn" onclick="setSubCategory('Traktör Ön', this)">🚜 Traktör Ön</button>
                 <button class="sub-filter-btn" onclick="setSubCategory('Traktör Arka', this)">🚜 Traktör Arka</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Radial', this)">⚙️ Radial</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Römork', this)">🛒 Römork / Zirai</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Bezli', this)">🧵 Bezli</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Radial', this)">⚡ Radial</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Römork', this)">🛒 Römork</button>
                 <button class="sub-filter-btn" onclick="setSubCategory('Biçerdöver', this)">🌾 Biçerdöver</button>
             </div>
 
-            <!-- PETLAS TARZI AĞIR VASITA ALT KATEGORİLERİ -->
+            <!-- AĞIR VASITA ÖZEL ALT BUTONLAR (SADE VE ÖLÇEKLİ) -->
             <div id="agirVasiptaSubBar" class="sub-filter-bar">
-                <button class="sub-filter-btn active" onclick="setSubCategory('all', this)">Tüm Ağır Vasıta</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Çeker', this)">🚛 Çeker (Çeker Aks)</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Direksiyon', this)">🚚 Direksiyon (Ön Aks)</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Römork', this)">📦 Römork (Dorse)</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Hafriyat', this)">🏗️ Hafriyat / Damper</button>
+                <button class="sub-filter-btn active" onclick="setSubCategory('all', this)">🚛 Tüm Ağır Vasıta</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Çeker', this)">🔥 Çeker Gurubu</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Ön (Düz)', this)">🧭 Ön Gurup (Düz)</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Dorse', this)">⛓️ Dorse</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Hafriyat', this)">⛏️ Hafriyat Tipi</button>
             </div>
         </div>
 
@@ -942,19 +945,21 @@
                 </select>
             </div>
 
-            <!-- EKLEME ESNASINDA ALT KATEGORİ SEÇİMİ -->
+            <!-- EKLEME ESNASINDA SEÇİLECEK ALT KATEGORİLER -->
             <div class="form-group" id="subCategorySelectGroup">
-                <label>Alt Kategori (Petlas Tarzı Model)</label>
+                <label>Alt Kategori Seçimi</label>
                 <select id="pSubCat" class="form-control">
                     <option value="Standart">Standart / Genel</option>
                     <option value="Traktör Ön">Traktör Ön</option>
                     <option value="Traktör Arka">Traktör Arka</option>
+                    <option value="Bezli">Bezli</option>
                     <option value="Radial">Radial</option>
-                    <option value="Römork">Römork / Zirai</option>
+                    <option value="Römork">Römork</option>
                     <option value="Biçerdöver">Biçerdöver</option>
-                    <option value="Çeker">Çeker Aks (Ağır Vasıta)</option>
-                    <option value="Direksiyon">Direksiyon (Ön Aks)</option>
-                    <option value="Hafriyat">Hafriyat / Damper</option>
+                    <option value="Çeker">Çeker Gurubu</option>
+                    <option value="Ön (Düz)">Ön Gurup (Düz)</option>
+                    <option value="Dorse">Dorse</option>
+                    <option value="Hafriyat">Hafriyat Tipi</option>
                 </select>
             </div>
 
@@ -1518,24 +1523,24 @@
             const normalImgUrlGroup = document.getElementById('normalImgUrlGroup');
             const subCatSelect = document.getElementById('pSubCat');
 
-            // Alt kategori seçeneklerini gruba göre güncelle
             subCatSelect.innerHTML = '';
             if (val === 'Zirai') {
                 subCatSelect.innerHTML = `
                     <option value="Standart">Standart / Genel</option>
                     <option value="Traktör Ön">Traktör Ön</option>
                     <option value="Traktör Arka">Traktör Arka</option>
+                    <option value="Bezli">Bezli</option>
                     <option value="Radial">Radial</option>
-                    <option value="Römork">Römork / Zirai</option>
+                    <option value="Römork">Römork</option>
                     <option value="Biçerdöver">Biçerdöver</option>
                 `;
             } else if (val === 'Ağır Vasıta') {
                 subCatSelect.innerHTML = `
                     <option value="Standart">Standart / Genel</option>
-                    <option value="Çeker">Çeker Aks</option>
-                    <option value="Direksiyon">Direksiyon (Ön Aks)</option>
-                    <option value="Römork">Römork (Dorse)</option>
-                    <option value="Hafriyat">Hafriyat / Damper</option>
+                    <option value="Çeker">Çeker Gurubu</option>
+                    <option value="Ön (Düz)">Ön Gurup (Düz)</option>
+                    <option value="Dorse">Dorse</option>
+                    <option value="Hafriyat">Hafriyat Tipi</option>
                 `;
             } else {
                 subCatSelect.innerHTML = `<option value="Standart">Standart / Genel</option>`;
