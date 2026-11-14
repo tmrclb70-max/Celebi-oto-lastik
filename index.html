@@ -96,23 +96,15 @@
 
         .main-container { max-width: 1400px; margin: 15px auto; padding: 0 12px; }
 
-        /* ORTA BANNER / SLİDER ALANI */
+        /* ORTA SLİDER BANNER ALANI (TÜM ÜRÜNLER İÇİN 5'Lİ VEYA KATEGORİ İÇİN 3'LÜ) */
         .slider-container {
             position: relative; width: 100%; height: 260px; border-radius: 10px;
             overflow: hidden; border: 1.5px solid var(--accent-yellow); margin-bottom: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4); background: #1e293b;
         }
         .slider-wrapper { display: flex; width: 100%; height: 100%; transition: transform 0.5s ease-in-out; }
         .slide { min-width: 100%; height: 100%; position: relative; }
         .slide img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* TEKLİ KATEGORİ BANNER GÖRSELİ */
-        .single-banner-container {
-            position: relative; width: 100%; height: 260px; border-radius: 10px;
-            overflow: hidden; border: 1.5px solid var(--accent-yellow); margin-bottom: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4); background: #1e293b; display: none;
-        }
-        .single-banner-container img { width: 100%; height: 100%; object-fit: cover; }
 
         .slider-btn {
             position: absolute; top: 50%; transform: translateY(-50%); background: rgba(15,23,42,0.7);
@@ -208,11 +200,11 @@
         .filter-buttons::-webkit-scrollbar { height: 4px; }
         .filter-buttons::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 2px; }
 
-        .filter-btn { flex: 0 0 auto; padding: 8px 12px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 0.76rem; transition: 0.2s; white-space: nowrap; }
+        .filter-btn { flex: 0 0 auto; padding: 8px 12px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.76rem; transition: 0.2s; white-space: nowrap; }
         .filter-btn:hover { border-color: var(--accent-yellow); }
         .filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
 
-        /* ALT KATEGORİ ÇUBUĞU - KUSURSUZ SIĞDIRMA */
+        /* ALT KATEGORİ ÇUBUĞU */
         .sub-filter-bar {
             display: none;
             gap: 6px;
@@ -245,7 +237,7 @@
             transition: 0.2s;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             white-space: nowrap;
         }
         .sub-filter-btn:hover { border-color: var(--accent-yellow); color: #fff; transform: translateY(-1px); }
@@ -260,7 +252,7 @@
         .season-select-box {
             width: 100%; padding: 8px 10px; background: #0f172a; border: 1px solid var(--card-border);
             color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.76rem;
-            display: flex; align-items: center; justify-content: space-between; transition: 0.2s; white-space: nowrap;
+            display: flex; align-items: center; justify-content: space-between; transition: 0.2s; white-space: nowrap; gap: 6px;
         }
         .season-select-box:hover { border-color: var(--accent-yellow); }
         .season-select-box.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
@@ -277,7 +269,7 @@
         .btn-bulk-item { 
             background: #1e293b; color: var(--text-main); border: 1px solid var(--card-border); 
             padding: 5px 8px; border-radius: 5px; cursor: pointer; font-weight: 600; 
-            display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem; transition: 0.2s; 
+            display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; transition: 0.2s; 
         }
 
         .products-list-wrapper { width: 100%; }
@@ -610,27 +602,18 @@
 
     <div id="portalSection" class="main-container">
 
-        <!-- 3'LÜ SLİDER BANNER (TÜM ÜRÜNLER İÇİN) -->
-        <div class="slider-container" id="multiSliderContainer">
+        <!-- ORTA SLİDER BANNER ALANI (5'Lİ VEYA 3'LÜ DİNAMİK KAYAN) -->
+        <div class="slider-container" id="sliderContainerBox">
             <button class="slider-btn prev" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
             <button class="slider-btn next" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
 
             <div class="slider-wrapper" id="sliderWrapper">
-                <div class="slide"><img id="bannerSlide1" src="" alt="Kampanya 1"></div>
-                <div class="slide"><img id="bannerSlide2" src="" alt="Kampanya 2"></div>
-                <div class="slide"><img id="bannerSlide3" src="" alt="Kampanya 3"></div>
+                <!-- JS ile aktif slaytlar buraya dolacak -->
             </div>
 
             <div class="dots-container" id="dotsContainer">
-                <div class="dot active" onclick="currentSlide(0)"></div>
-                <div class="dot" onclick="currentSlide(1)"></div>
-                <div class="dot" onclick="currentSlide(2)"></div>
+                <!-- JS ile dotlar buraya dolacak -->
             </div>
-        </div>
-
-        <!-- ÖZEL KATEGORİ TEK BANNER ALANI -->
-        <div class="single-banner-container" id="singleBannerContainer">
-            <img id="singleBannerImg" src="" alt="Kategori Banner Görseli">
         </div>
 
         <!-- AKILLI ARAMA KUTUSU: SADECE MİSAFİR GÖRÜNÜMÜNDE AÇIK OLACAK -->
@@ -692,49 +675,49 @@
                 </button>
             </div>
 
-            <!-- ANA FİLTRE BUTONLARI -->
+            <!-- ANA FİLTRE BUTONLARI (PROFESYONEL İKONLARLA) -->
             <div class="filter-buttons">
-                <button class="filter-btn active" onclick="setCategory('all', this)">🌐 Tüm Ürünler</button>
+                <button class="filter-btn active" onclick="setCategory('all', this)"><i class="fa-solid fa-globe"></i> Tüm Ürünler</button>
                 
                 <div class="season-dropdown-container" id="seasonDropdownContainer">
                     <div class="season-select-box" id="seasonSelectBox">
-                        <span id="seasonDropdownLabel"><i class="fa-solid fa-filter"></i> Mevsim Seç</span>
+                        <span id="seasonDropdownLabel"><i class="fa-solid fa-cloud-sun"></i> Mevsim Seç</span>
                         <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i>
                         <select id="seasonDropdownSelect" onchange="handleSeasonDropdownChange(this)">
                             <option value="">-- Mevsim Seç --</option>
-                            <option value="Yaz">☀️ Yaz</option>
-                            <option value="Kış">❄️ Kış</option>
-                            <option value="4 Mevsim">🌤️ 4 Mevsim</option>
+                            <option value="Yaz">Yaz Sezonu</option>
+                            <option value="Kış">Kış Sezonu</option>
+                            <option value="4 Mevsim">4 Mevsim</option>
                         </select>
                     </div>
                 </div>
 
-                <button class="filter-btn" onclick="setCategory('Otomobil', this)">🚗 Otomobil</button>
-                <button class="filter-btn" onclick="setCategory('Hafif Ticari', this)">🚐 Hafif Ticari</button>
-                <button class="filter-btn" onclick="setCategory('Zirai', this)">🚜 Zirai</button>
-                <button class="filter-btn" onclick="setCategory('Ağır Vasıta', this)">🚛 Ağır Vasıta</button>
-                <button class="filter-btn" onclick="setCategory('İç Lastik', this)">⭕ İç Lastik</button>
-                <button class="filter-btn" onclick="setCategory('2. El', this)">♻️ 2. El</button>
+                <button class="filter-btn" onclick="setCategory('Otomobil', this)"><i class="fa-solid fa-car"></i> Otomobil</button>
+                <button class="filter-btn" onclick="setCategory('Hafif Ticari', this)"><i class="fa-solid fa-van-shuttle"></i> Hafif Ticari</button>
+                <button class="filter-btn" onclick="setCategory('Zirai', this)"><i class="fa-solid fa-tractor"></i> Zirai</button>
+                <button class="filter-btn" onclick="setCategory('Ağır Vasıta', this)"><i class="fa-solid fa-truck-moving"></i> Ağır Vasıta</button>
+                <button class="filter-btn" onclick="setCategory('İç Lastik', this)"><i class="fa-solid fa-circle-dot"></i> İç Lastik</button>
+                <button class="filter-btn" onclick="setCategory('2. El', this)"><i class="fa-solid fa-rotate"></i> 2. El</button>
             </div>
 
-            <!-- ZİRAİ GRUBU ÖZEL ALT BUTONLAR (GÜNCELLENDİ: Traktör Ön Bezli/Radial, Traktör Arka Bezli/Radial vb.) -->
+            <!-- ZİRAİ GRUBU ÖZEL ALT BUTONLAR -->
             <div id="ziraiSubBar" class="sub-filter-bar">
-                <button class="sub-filter-btn active" onclick="setSubCategory('all', this)">🌾 Tüm Zirai</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Traktör Ön (Bezli)', this)">🚜 Traktör Ön (Bezli)</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Traktör Ön (Radial)', this)">⚡ Traktör Ön (Radial)</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Traktör Arka (Bezli)', this)">🚜 Traktör Arka (Bezli)</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Traktör Arka (Radial)', this)">⚡ Traktör Arka (Radial)</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Römork', this)">🛒 Römork</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Biçerdöver', this)">🌾 Biçerdöver</button>
+                <button class="sub-filter-btn active" onclick="setSubCategory('all', this)"><i class="fa-solid fa-tractor"></i> Tüm Zirai</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Traktör Ön (Bezli)', this)"><i class="fa-solid fa-gear"></i> Traktör Ön (Bezli)</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Traktör Ön (Radial)', this)"><i class="fa-solid fa-bolt"></i> Traktör Ön (Radial)</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Traktör Arka (Bezli)', this)"><i class="fa-solid fa-gear"></i> Traktör Arka (Bezli)</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Traktör Arka (Radial)', this)"><i class="fa-solid fa-bolt"></i> Traktör Arka (Radial)</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Römork', this)"><i class="fa-solid fa-trailer"></i> Römork</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Biçerdöver', this)"><i class="fa-solid fa-wheat-awn"></i> Biçerdöver</button>
             </div>
 
             <!-- AĞIR VASITA ÖZEL ALT BUTONLAR -->
             <div id="agirVasiptaSubBar" class="sub-filter-bar">
-                <button class="sub-filter-btn active" onclick="setSubCategory('all', this)">🚛 Tüm Ağır Vasıta</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Çeker', this)">🔥 Çeker Gurubu</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Ön (Düz)', this)">🧭 Ön Gurup (Düz)</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Dorse', this)">⛓️ Dorse</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Hafriyat', this)">⛏️ Hafriyat Tipi</button>
+                <button class="sub-filter-btn active" onclick="setSubCategory('all', this)"><i class="fa-solid fa-truck-moving"></i> Tüm Ağır Vasıta</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Çeker', this)"><i class="fa-solid fa-fire"></i> Çeker Gurubu</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Ön (Düz)', this)"><i class="fa-solid fa-compass"></i> Ön Gurup (Düz)</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Dorse', this)"><i class="fa-solid fa-link"></i> Dorse</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Hafriyat', this)"><i class="fa-solid fa-mountain"></i> Hafriyat Tipi</button>
             </div>
         </div>
 
@@ -750,13 +733,13 @@
             
             <div class="admin-btn-group">
                 <span style="font-size: 0.75rem; color: var(--accent-yellow); font-weight:700; display:flex; align-items:center; gap:3px;"><i class="fa-solid fa-percent"></i> Toplu Zam/İndirim:</span>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('Yaz')">☀️ % Yaz</button>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('Kış')">❄️ % Kış</button>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('4 Mevsim')">🌤️ % 4 Mevsim</button>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('Zirai')">🚜 % Zirai</button>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('Ağır Vasıta')">🚛 % Ağır Vasıta</button>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('İç Lastik')">⭕ % İç Lastik</button>
-                <button class="btn-bulk-item" onclick="openBulkPriceModal('2. El')">♻️ % 2. El</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('Yaz')"><i class="fa-solid fa-sun"></i> % Yaz</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('Kış')"><i class="fa-solid fa-snowflake"></i> % Kış</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('4 Mevsim')"><i class="fa-solid fa-cloud-sun"></i> % 4 Mevsim</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('Zirai')"><i class="fa-solid fa-tractor"></i> % Zirai</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('Ağır Vasıta')"><i class="fa-solid fa-truck"></i> % Ağır Vasıta</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('İç Lastik')"><i class="fa-solid fa-circle-dot"></i> % İç Lastik</button>
+                <button class="btn-bulk-item" onclick="openBulkPriceModal('2. El')"><i class="fa-solid fa-rotate"></i> % 2. El</button>
             </div>
         </div>
 
@@ -884,11 +867,11 @@
         </div>
     </div>
 
-    <!-- AYARLAR MODALI -->
-    <div id="settingsModal" class="modal" style="max-width: 520px;">
+    <!-- AYARLAR MODALI (5'Lİ ANA SLİDER VE 3'LÜ KATEGORİ SLİDER URL ALANLARI İLE) -->
+    <div id="settingsModal" class="modal" style="max-width: 540px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fa-solid fa-gear"></i> Sistem ve Kategori Banner Ayarları</h3>
+                <h3><i class="fa-solid fa-gear"></i> Sistem ve Slider Banner Ayarları</h3>
                 <span class="close-btn" onclick="closeModal('settingsModal')">&times;</span>
             </div>
             
@@ -927,47 +910,46 @@
                 <input type="text" id="cfgHeaderBg" class="form-control" placeholder="Resim URL yapıştırın">
             </div>
 
-            <div class="settings-section-title"><i class="fa-solid fa-images"></i> 3'lü Slider Banner Resimleri (Tüm Ürünler / Ana Sayfa)</div>
-            <div class="form-group">
-                <label>1. Banner Fotoğrafı (URL)</label>
-                <input type="text" id="cfgBanner1" class="form-control" placeholder="1. görsel URL">
-            </div>
-            <div class="form-group">
-                <label>2. Banner Fotoğrafı (URL)</label>
-                <input type="text" id="cfgBanner2" class="form-control" placeholder="2. görsel URL">
-            </div>
-            <div class="form-group">
-                <label>3. Banner Fotoğrafı (URL)</label>
-                <input type="text" id="cfgBanner3" class="form-control" placeholder="3. görsel URL">
-            </div>
+            <div class="settings-section-title"><i class="fa-solid fa-images"></i> 5'li Slider Banner Resimleri (Tüm Ürünler / Ana Sayfa)</div>
+            <div class="form-group"><label>1. Banner Fotoğrafı (URL)</label><input type="text" id="cfgBanner1" class="form-control" placeholder="Görsel URL"></div>
+            <div class="form-group"><label>2. Banner Fotoğrafı (URL)</label><input type="text" id="cfgBanner2" class="form-control" placeholder="Görsel URL"></div>
+            <div class="form-group"><label>3. Banner Fotoğrafı (URL)</label><input type="text" id="cfgBanner3" class="form-control" placeholder="Görsel URL"></div>
+            <div class="form-group"><label>4. Banner Fotoğrafı (URL)</label><input type="text" id="cfgBanner4" class="form-control" placeholder="Görsel URL"></div>
+            <div class="form-group"><label>5. Banner Fotoğrafı (URL)</label><input type="text" id="cfgBanner5" class="form-control" placeholder="Görsel URL"></div>
 
-            <div class="settings-section-title"><i class="fa-solid fa-panorama"></i> Kategoriye Özel Orta Banner Görselleri (URL)</div>
-            <div class="form-group">
-                <label>🚗 Otomobil Kategori Banner URL</label>
-                <input type="text" id="cfgBannerOtomobil" class="form-control" placeholder="Otomobil seçilince çıkacak görsel URL">
-            </div>
-            <div class="form-group">
-                <label>🚐 Hafif Ticari Kategori Banner URL</label>
-                <input type="text" id="cfgBannerTicari" class="form-control" placeholder="Hafif Ticari seçilince çıkacak görsel URL">
-            </div>
-            <div class="form-group">
-                <label>🚜 Zirai Kategori Banner URL</label>
-                <input type="text" id="cfgBannerZirai" class="form-control" placeholder="Zirai seçilince çıkacak görsel URL">
-            </div>
-            <div class="form-group">
-                <label>🚛 Ağır Vasıta Kategori Banner URL</label>
-                <input type="text" id="cfgBannerAgir" class="form-control" placeholder="Ağır Vasıta seçilince çıkacak görsel URL">
-            </div>
-            <div class="form-group">
-                <label>⭕ İç Lastik Kategori Banner URL</label>
-                <input type="text" id="cfgBannerIc" class="form-control" placeholder="İç Lastik seçilince çıkacak görsel URL">
-            </div>
-            <div class="form-group">
-                <label>♻️ 2. El Kategori Banner URL</label>
-                <input type="text" id="cfgBannerIkinciEl" class="form-control" placeholder="2. El seçilince çıkacak görsel URL">
-            </div>
+            <div class="settings-section-title"><i class="fa-solid fa-panorama"></i> Kategoriye Özel 3'lü Slider Banner Resimleri (URL)</div>
+            
+            <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">🚗 Otomobil Kategorisi (3 Görsel)</div>
+            <div class="form-group"><input type="text" id="cfgOto1" class="form-control" placeholder="Otomobil 1. Görsel URL"></div>
+            <div class="form-group"><input type="text" id="cfgOto2" class="form-control" placeholder="Otomobil 2. Görsel URL"></div>
+            <div class="form-group"><input type="text" id="cfgOto3" class="form-control" placeholder="Otomobil 3. Görsel URL"></div>
 
-            <button class="btn-primary" style="background: #3b82f6; color: white;" onclick="saveSettings()"><i class="fa-solid fa-floppy-disk"></i> Ayarları Kaydet</button>
+            <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">🚐 Hafif Ticari Kategorisi (3 Görsel)</div>
+            <div class="form-group"><input type="text" id="cfgTic1" class="form-control" placeholder="Ticari 1. Görsel URL"></div>
+            <div class="form-group"><input type="text" id="cfgTic2" class="form-control" placeholder="Ticari 2. Görsel URL"></div>
+            <div class="form-group"><input type="text" id="cfgTic3" class="form-control" placeholder="Ticari 3. Görsel URL"></div>
+
+            <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">🚜 Zirai Kategorisi (3 Görsel)</div>
+            <div class="form-group"><input type="text" id="cfgZir1" class="form-control" placeholder="Zirai 1. Görsel URL"></div>
+            <div class="form-group"><input type="text" id="cfgZir2" class="form-control" placeholder="Zirai 2. Görsel URL"></div>
+            <div class="form-group"><input type="text" id="cfgZir3" class="form-control" placeholder="Zirai 3. Görsel URL"></div>
+
+            <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">🚛 Ağır Vasıta Kategorisi (3 Görsel)</div>
+            <div class="form-group"><input type="text" id="cfgAgr1" class="form-control" placeholder="Ağır Vasıta 1. Görsel URL"></div>
+            <div class="form-group"><input type="text" id="cfgAgr2" class="form-control" placeholder="Ağır Vasıta 2. Görsel URL"></div>
+            <div class="form-group"><input type="text" id="cfgAgr3" class="form-control" placeholder="Ağır Vasıta 3. Görsel URL"></div>
+
+            <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">⭕ İç Lastik Kategorisi (3 Görsel)</div>
+            <div class="form-group"><input type="text" id="cfgIc1" class="form-control" placeholder="İç Lastik 1. Görsel URL"></div>
+            <div class="form-group"><input type="text" id="cfgIc2" class="form-control" placeholder="İç Lastik 2. Görsel URL"></div>
+            <div class="form-group"><input type="text" id="cfgIc3" class="form-control" placeholder="İç Lastik 3. Görsel URL"></div>
+
+            <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">♻️ 2. El Kategorisi (3 Görsel)</div>
+            <div class="form-group"><input type="text" id="cfg2El1" class="form-control" placeholder="2. El 1. Görsel URL"></div>
+            <div class="form-group"><input type="text" id="cfg2El2" class="form-control" placeholder="2. El 2. Görsel URL"></div>
+            <div class="form-group"><input type="text" id="cfg2El3" class="form-control" placeholder="2. El 3. Görsel URL"></div>
+
+            <button class="btn-primary" style="background: #3b82f6; color: white; margin-top: 15px;" onclick="saveSettings()"><i class="fa-solid fa-floppy-disk"></i> Ayarları Kaydet</button>
         </div>
     </div>
 
@@ -1186,7 +1168,7 @@
                 <h3><i class="fa-brands fa-whatsapp" style="color: var(--whatsapp-color);"></i> WhatsApp ile İletişim</h3>
                 <span class="close-btn" onclick="closeModal('wpModal')">&times;</span>
             </div>
-            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">Hangi kelime / yetkilimize ulaşmak istersiniz?</p>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">Hangi yetkilimize ulaşmak istersiniz?</p>
             
             <div style="display: flex; gap: 10px; justify-content: center;">
                 <a id="wpTamerBtn" href="#" target="_blank" class="btn-card-whatsapp" style="flex: 1; background: #0284c7; padding: 12px 8px; justify-content: center; font-size: 0.85rem; flex-direction: column; gap: 4px;">
@@ -1219,15 +1201,21 @@
             siteLogoBase64: localStorage.getItem('cfg_siteLogoBase64') || '',
             loginBg: localStorage.getItem('cfg_loginBg') || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80',
             headerBg: localStorage.getItem('cfg_headerBg') || 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Petlas_logo.svg/1200px-Petlas_logo.svg.png',
-            banner1: localStorage.getItem('cfg_banner1') || 'https://araclo-bucket.sfo3.cdn.digitaloceanspaces.com/blog/1233242a-ea59-497c-b3c9-83f339a50e40.jpg',
-            banner2: localStorage.getItem('cfg_banner2') || 'https://images.unsplash.com/photo-1543465077-db45d34b88a5?w=1200&q=80',
-            banner3: localStorage.getItem('cfg_banner3') || 'https://images.unsplash.com/photo-1613214149922-f1809c99b414?w=1200&q=80',
-            bannerOtomobil: localStorage.getItem('cfg_bannerOtomobil') || '',
-            bannerTicari: localStorage.getItem('cfg_bannerTicari') || '',
-            bannerZirai: localStorage.getItem('cfg_bannerZirai') || '',
-            bannerAgir: localStorage.getItem('cfg_bannerAgir') || '',
-            bannerIc: localStorage.getItem('cfg_bannerIc') || '',
-            bannerIkinciEl: localStorage.getItem('cfg_bannerIkinciEl') || ''
+            
+            // 5'li Ana Slider (Tüm Ürünler)
+            b1: localStorage.getItem('cfg_banner1') || 'https://araclo-bucket.sfo3.cdn.digitaloceanspaces.com/blog/1233242a-ea59-497c-b3c9-83f339a50e40.jpg',
+            b2: localStorage.getItem('cfg_banner2') || 'https://images.unsplash.com/photo-1543465077-db45d34b88a5?w=1200&q=80',
+            b3: localStorage.getItem('cfg_banner3') || 'https://images.unsplash.com/photo-1613214149922-f1809c99b414?w=1200&q=80',
+            b4: localStorage.getItem('cfg_banner4') || '',
+            b5: localStorage.getItem('cfg_banner5') || '',
+
+            // Kategoriye özel 3'er adet slider
+            oto: [localStorage.getItem('cfg_oto1') || '', localStorage.getItem('cfg_oto2') || '', localStorage.getItem('cfg_oto3') || ''],
+            tic: [localStorage.getItem('cfg_tic1') || '', localStorage.getItem('cfg_tic2') || '', localStorage.getItem('cfg_tic3') || ''],
+            zir: [localStorage.getItem('cfg_zir1') || '', localStorage.getItem('cfg_zir2') || '', localStorage.getItem('cfg_zir3') || ''],
+            agr: [localStorage.getItem('cfg_agr1') || '', localStorage.getItem('cfg_agr2') || '', localStorage.getItem('cfg_agr3') || ''],
+            ic: [localStorage.getItem('cfg_ic1') || '', localStorage.getItem('cfg_ic2') || '', localStorage.getItem('cfg_ic3') || ''],
+            ikinciEl: [localStorage.getItem('cfg_2El1') || '', localStorage.getItem('cfg_2El2') || '', localStorage.getItem('cfg_2El3') || '']
         };
 
         window.initFirebaseData = function() {
@@ -1241,15 +1229,20 @@
                     if (data.siteLogoBase64 !== undefined) siteImages.siteLogoBase64 = data.siteLogoBase64;
                     if (data.loginBg) siteImages.loginBg = data.loginBg;
                     if (data.headerBg) siteImages.headerBg = data.headerBg;
-                    if (data.banner1) siteImages.banner1 = data.banner1;
-                    if (data.banner2) siteImages.banner2 = data.banner2;
-                    if (data.banner3) siteImages.banner3 = data.banner3;
-                    if (data.bannerOtomobil !== undefined) siteImages.bannerOtomobil = data.bannerOtomobil;
-                    if (data.bannerTicari !== undefined) siteImages.bannerTicari = data.bannerTicari;
-                    if (data.bannerZirai !== undefined) siteImages.bannerZirai = data.bannerZirai;
-                    if (data.bannerAgir !== undefined) siteImages.bannerAgir = data.bannerAgir;
-                    if (data.bannerIc !== undefined) siteImages.bannerIc = data.bannerIc;
-                    if (data.bannerIkinciEl !== undefined) siteImages.bannerIkinciEl = data.bannerIkinciEl;
+                    
+                    if (data.b1 !== undefined) siteImages.b1 = data.b1;
+                    if (data.b2 !== undefined) siteImages.b2 = data.b2;
+                    if (data.b3 !== undefined) siteImages.b3 = data.b3;
+                    if (data.b4 !== undefined) siteImages.b4 = data.b4;
+                    if (data.b5 !== undefined) siteImages.b5 = data.b5;
+
+                    if (data.oto) siteImages.oto = data.oto;
+                    if (data.tic) siteImages.tic = data.tic;
+                    if (data.zir) siteImages.zir = data.zir;
+                    if (data.agr) siteImages.agr = data.agr;
+                    if (data.ic) siteImages.ic = data.ic;
+                    if (data.ikinciEl) siteImages.ikinciEl = data.ikinciEl;
+
                     applySiteImages();
                 }
             });
@@ -1284,38 +1277,81 @@
                 }
             }
 
-            const b1 = document.getElementById('bannerSlide1');
-            const b2 = document.getElementById('bannerSlide2');
-            const b3 = document.getElementById('bannerSlide3');
-            if (b1) b1.src = siteImages.banner1;
-            if (b2) b2.src = siteImages.banner2;
-            if (b3) b3.src = siteImages.banner3;
-
-            updateCategoryBannerDisplay();
+            setupActiveSliderImages();
         }
 
-        function updateCategoryBannerDisplay() {
-            const multiSlider = document.getElementById('multiSliderContainer');
-            const singleBanner = document.getElementById('singleBannerContainer');
-            const singleImg = document.getElementById('singleBannerImg');
+        let activeSliderImages = [];
+        let slideIndex = 0;
 
-            let activeCustomImg = '';
-            if (currentCategory === 'Otomobil') activeCustomImg = siteImages.bannerOtomobil;
-            else if (currentCategory === 'Hafif Ticari') activeCustomImg = siteImages.bannerTicari;
-            else if (currentCategory === 'Zirai') activeCustomImg = siteImages.bannerZirai;
-            else if (currentCategory === 'Ağır Vasıta') activeCustomImg = siteImages.bannerAgir;
-            else if (currentCategory === 'İç Lastik') activeCustomImg = siteImages.bannerIc;
-            else if (currentCategory === '2. El') activeCustomImg = siteImages.bannerIkinciEl;
+        function setupActiveSliderImages() {
+            let list = [];
+            
+            if (currentCategory === 'Otomobil') list = siteImages.oto.filter(x => x && x.trim() !== '');
+            else if (currentCategory === 'Hafif Ticari') list = siteImages.tic.filter(x => x && x.trim() !== '');
+            else if (currentCategory === 'Zirai') list = siteImages.zir.filter(x => x && x.trim() !== '');
+            else if (currentCategory === 'Ağır Vasıta') list = siteImages.agr.filter(x => x && x.trim() !== '');
+            else if (currentCategory === 'İç Lastik') list = siteImages.ic.filter(x => x && x.trim() !== '');
+            else if (currentCategory === '2. El') list = siteImages.ikinciEl.filter(x => x && x.trim() !== '');
+            
+            // Eğer kategori özelinde görsel girilmemişse veya 'all' ise 5'li ana slider gösterilir
+            if (list.length === 0) {
+                list = [siteImages.b1, siteImages.b2, siteImages.b3, siteImages.b4, siteImages.b5].filter(x => x && x.trim() !== '');
+            }
 
-            if (currentCategory !== 'all' && activeCustomImg && activeCustomImg.trim() !== '') {
-                multiSlider.style.display = 'none';
-                singleBanner.style.display = 'block';
-                singleImg.src = activeCustomImg;
-            } else {
-                multiSlider.style.display = 'block';
-                singleBanner.style.display = 'none';
+            if (list.length === 0) {
+                list = ['https://araclo-bucket.sfo3.cdn.digitaloceanspaces.com/blog/1233242a-ea59-497c-b3c9-83f339a50e40.jpg'];
+            }
+
+            activeSliderImages = list;
+            slideIndex = 0;
+
+            const wrapper = document.getElementById('sliderWrapper');
+            const dotsContainer = document.getElementById('dotsContainer');
+            if (!wrapper || !dotsContainer) return;
+
+            wrapper.innerHTML = activeSliderImages.map(imgUrl => `
+                <div class="slide"><img src="${imgUrl}" alt="Banner Görseli"></div>
+            `).join('');
+
+            dotsContainer.innerHTML = activeSliderImages.map((_, idx) => `
+                <div class="dot ${idx === 0 ? 'active' : ''}" onclick="currentSlide(${idx})"></div>
+            `).join('');
+
+            updateSliderPosition();
+        }
+
+        function updateSliderPosition() {
+            const wrapper = document.getElementById('sliderWrapper');
+            const dots = document.querySelectorAll('.dot');
+            if (!wrapper) return;
+
+            wrapper.style.transform = `translateX(-${slideIndex * 100}%)`;
+            if (dots.length > 0) {
+                dots.forEach((dot, idx) => {
+                    if (idx === slideIndex) dot.classList.add('active');
+                    else dot.classList.remove('active');
+                });
             }
         }
+
+        function moveSlide(step) {
+            slideIndex += step;
+            if (slideIndex >= activeSliderImages.length) slideIndex = 0;
+            if (slideIndex < 0) slideIndex = activeSliderImages.length - 1;
+            updateSliderPosition();
+        }
+
+        function currentSlide(index) {
+            slideIndex = index;
+            updateSliderPosition();
+        }
+
+        setInterval(() => {
+            if (activeSliderImages.length > 1) {
+                slideIndex = (slideIndex + 1) % activeSliderImages.length;
+                updateSliderPosition();
+            }
+        }, 4000);
 
         function formatCurrency(val) {
             return '₺' + Number(val || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -1409,16 +1445,36 @@
 
             document.getElementById('cfgLoginBg').value = siteImages.loginBg || '';
             document.getElementById('cfgHeaderBg').value = siteImages.headerBg || '';
-            document.getElementById('cfgBanner1').value = siteImages.banner1 || '';
-            document.getElementById('cfgBanner2').value = siteImages.banner2 || '';
-            document.getElementById('cfgBanner3').value = siteImages.banner3 || '';
+            
+            document.getElementById('cfgBanner1').value = siteImages.b1 || '';
+            document.getElementById('cfgBanner2').value = siteImages.b2 || '';
+            document.getElementById('cfgBanner3').value = siteImages.b3 || '';
+            document.getElementById('cfgBanner4').value = siteImages.b4 || '';
+            document.getElementById('cfgBanner5').value = siteImages.b5 || '';
 
-            document.getElementById('cfgBannerOtomobil').value = siteImages.bannerOtomobil || '';
-            document.getElementById('cfgBannerTicari').value = siteImages.bannerTicari || '';
-            document.getElementById('cfgBannerZirai').value = siteImages.bannerZirai || '';
-            document.getElementById('cfgBannerAgir').value = siteImages.bannerAgir || '';
-            document.getElementById('cfgBannerIc').value = siteImages.bannerIc || '';
-            document.getElementById('cfgBannerIkinciEl').value = siteImages.bannerIkinciEl || '';
+            document.getElementById('cfgOto1').value = siteImages.oto[0] || '';
+            document.getElementById('cfgOto2').value = siteImages.oto[1] || '';
+            document.getElementById('cfgOto3').value = siteImages.oto[2] || '';
+
+            document.getElementById('cfgTic1').value = siteImages.tic[0] || '';
+            document.getElementById('cfgTic2').value = siteImages.tic[1] || '';
+            document.getElementById('cfgTic3').value = siteImages.tic[2] || '';
+
+            document.getElementById('cfgZir1').value = siteImages.zir[0] || '';
+            document.getElementById('cfgZir2').value = siteImages.zir[1] || '';
+            document.getElementById('cfgZir3').value = siteImages.zir[2] || '';
+
+            document.getElementById('cfgAgr1').value = siteImages.agr[0] || '';
+            document.getElementById('cfgAgr2').value = siteImages.agr[1] || '';
+            document.getElementById('cfgAgr3').value = siteImages.agr[2] || '';
+
+            document.getElementById('cfgIc1').value = siteImages.ic[0] || '';
+            document.getElementById('cfgIc2').value = siteImages.ic[1] || '';
+            document.getElementById('cfgIc3').value = siteImages.ic[2] || '';
+
+            document.getElementById('cfg2El1').value = siteImages.ikinciEl[0] || '';
+            document.getElementById('cfg2El2').value = siteImages.ikinciEl[1] || '';
+            document.getElementById('cfg2El3').value = siteImages.ikinciEl[2] || '';
 
             document.getElementById('settingsModal').style.display = 'flex';
         }
@@ -1468,30 +1524,36 @@
             const sLogoBase64 = document.getElementById('cfgSiteLogoBase64').value.trim();
             const lBg = document.getElementById('cfgLoginBg').value.trim();
             const hBg = document.getElementById('cfgHeaderBg').value.trim();
-            const b1 = document.getElementById('cfgBanner1').value.trim();
-            const b2 = document.getElementById('cfgBanner2').value.trim();
-            const b3 = document.getElementById('cfgBanner3').value.trim();
-
-            const bOto = document.getElementById('cfgBannerOtomobil').value.trim();
-            const bTic = document.getElementById('cfgBannerTicari').value.trim();
-            const bZir = document.getElementById('cfgBannerZirai').value.trim();
-            const bAgr = document.getElementById('cfgBannerAgir').value.trim();
-            const bIc = document.getElementById('cfgBannerIc').value.trim();
-            const b2El = document.getElementById('cfgBannerIkinciEl').value.trim();
-
+            
             siteImages.siteLogoBase64 = sLogoBase64; localStorage.setItem('cfg_siteLogoBase64', sLogoBase64);
             if (lBg) { siteImages.loginBg = lBg; localStorage.setItem('cfg_loginBg', lBg); }
             if (hBg) { siteImages.headerBg = hBg; localStorage.setItem('cfg_headerBg', hBg); }
-            if (b1) { siteImages.banner1 = b1; localStorage.setItem('cfg_banner1', b1); }
-            if (b2) { siteImages.banner2 = b2; localStorage.setItem('cfg_banner2', b2); }
-            if (b3) { siteImages.banner3 = b3; localStorage.setItem('cfg_banner3', b3); }
 
-            siteImages.bannerOtomobil = bOto; localStorage.setItem('cfg_bannerOtomobil', bOto);
-            siteImages.bannerTicari = bTic; localStorage.setItem('cfg_bannerTicari', bTic);
-            siteImages.bannerZirai = bZir; localStorage.setItem('cfg_bannerZirai', bZir);
-            siteImages.bannerAgir = bAgr; localStorage.setItem('cfg_bannerAgir', bAgr);
-            siteImages.bannerIc = bIc; localStorage.setItem('cfg_bannerIc', bIc);
-            siteImages.bannerIkinciEl = b2El; localStorage.setItem('cfg_bannerIkinciEl', b2El);
+            siteImages.b1 = document.getElementById('cfgBanner1').value.trim();
+            siteImages.b2 = document.getElementById('cfgBanner2').value.trim();
+            siteImages.b3 = document.getElementById('cfgBanner3').value.trim();
+            siteImages.b4 = document.getElementById('cfgBanner4').value.trim();
+            siteImages.b5 = document.getElementById('cfgBanner5').value.trim();
+
+            localStorage.setItem('cfg_banner1', siteImages.b1);
+            localStorage.setItem('cfg_banner2', siteImages.b2);
+            localStorage.setItem('cfg_banner3', siteImages.b3);
+            localStorage.setItem('cfg_banner4', siteImages.b4);
+            localStorage.setItem('cfg_banner5', siteImages.b5);
+
+            siteImages.oto = [document.getElementById('cfgOto1').value.trim(), document.getElementById('cfgOto2').value.trim(), document.getElementById('cfgOto3').value.trim()];
+            siteImages.tic = [document.getElementById('cfgTic1').value.trim(), document.getElementById('cfgTic2').value.trim(), document.getElementById('cfgTic3').value.trim()];
+            siteImages.zir = [document.getElementById('cfgZir1').value.trim(), document.getElementById('cfgZir2').value.trim(), document.getElementById('cfgZir3').value.trim()];
+            siteImages.agr = [document.getElementById('cfgAgr1').value.trim(), document.getElementById('cfgAgr2').value.trim(), document.getElementById('cfgAgr3').value.trim()];
+            siteImages.ic = [document.getElementById('cfgIc1').value.trim(), document.getElementById('cfgIc2').value.trim(), document.getElementById('cfgIc3').value.trim()];
+            siteImages.ikinciEl = [document.getElementById('cfg2El1').value.trim(), document.getElementById('cfg2El2').value.trim(), document.getElementById('cfg2El3').value.trim()];
+
+            localStorage.setItem('cfg_oto1', siteImages.oto[0]); localStorage.setItem('cfg_oto2', siteImages.oto[1]); localStorage.setItem('cfg_oto3', siteImages.oto[2]);
+            localStorage.setItem('cfg_tic1', siteImages.tic[0]); localStorage.setItem('cfg_tic2', siteImages.tic[1]); localStorage.setItem('cfg_tic3', siteImages.tic[2]);
+            localStorage.setItem('cfg_zir1', siteImages.zir[0]); localStorage.setItem('cfg_zir2', siteImages.zir[1]); localStorage.setItem('cfg_zir3', siteImages.zir[2]);
+            localStorage.setItem('cfg_agr1', siteImages.agr[0]); localStorage.setItem('cfg_agr2', siteImages.agr[1]); localStorage.setItem('cfg_agr3', siteImages.agr[2]);
+            localStorage.setItem('cfg_ic1', siteImages.ic[0]); localStorage.setItem('cfg_ic2', siteImages.ic[1]); localStorage.setItem('cfg_ic3', siteImages.ic[2]);
+            localStorage.setItem('cfg_2El1', siteImages.ikinciEl[0]); localStorage.setItem('cfg_2El2', siteImages.ikinciEl[1]); localStorage.setItem('cfg_2El3', siteImages.ikinciEl[2]);
 
             applySiteImages();
 
@@ -1499,7 +1561,7 @@
                 await window.setDoc(window.doc(window.db, "site_ayarlari", "gorseller"), siteImages, { merge: true });
             }
 
-            alert('Tüm ayarlar ve kategori banner görselleri başarıyla kaydedildi!');
+            alert('Tüm ayarlar ve slider banner görselleri başarıyla kaydedildi!');
             closeModal('settingsModal');
         }
 
@@ -1550,7 +1612,7 @@
             document.getElementById('seasonDropdownSelect').value = '';
             const dropBox = document.getElementById('seasonSelectBox');
             dropBox.classList.remove('active');
-            document.getElementById('seasonDropdownLabel').innerHTML = `<i class="fa-solid fa-filter"></i> Mevsim Seç`;
+            document.getElementById('seasonDropdownLabel').innerHTML = `<i class="fa-solid fa-cloud-sun"></i> Mevsim Seç`;
 
             const ziraiSubBar = document.getElementById('ziraiSubBar');
             const agirSubBar = document.getElementById('agirVasiptaSubBar');
@@ -1566,7 +1628,7 @@
                 resetSubBtns(agirSubBar);
             }
 
-            updateCategoryBannerDisplay();
+            setupActiveSliderImages();
             renderProducts();
         }
 
@@ -1601,21 +1663,21 @@
                 currentSubCategory = 'all';
                 dropBox.classList.add('active');
                 
-                let icon = '☀️';
-                if (val === 'Kış') icon = '❄️';
-                else if (val === '4 Mevsim') icon = '🌤️';
+                let icon = '<i class="fa-solid fa-sun"></i>';
+                if (val === 'Kış') icon = '<i class="fa-solid fa-snowflake"></i>';
+                else if (val === '4 Mevsim') icon = '<i class="fa-solid fa-cloud-sun"></i>';
 
                 label.innerHTML = `${icon} ${val}`;
             } else {
                 currentCategory = 'all';
                 currentSubCategory = 'all';
                 dropBox.classList.remove('active');
-                label.innerHTML = `<i class="fa-solid fa-filter"></i> Mevsim Seç`;
+                label.innerHTML = `<i class="fa-solid fa-cloud-sun"></i> Mevsim Seç`;
                 const allBtn = document.querySelector('.filter-btn');
                 if (allBtn) allBtn.classList.add('active');
             }
 
-            updateCategoryBannerDisplay();
+            setupActiveSliderImages();
             renderProducts();
         }
 
@@ -2123,26 +2185,25 @@
                 if (p.usedNote) specHtml += `<div class="b2b-spec-row" style="background:rgba(239,68,68,0.1);"><span class="b2b-spec-key" style="color:#fca5a5;">Kusur / Açıklama:</span><span class="b2b-spec-val" style="color:#fca5a5;">${p.usedNote}</span></div>`;
             }
 
-            let typeText = '🚗 Otomobil Lastiği';
-            if (p.group === 'Hafif Ticari') typeText = '🚐 Hafif Ticari Lastik';
-            else if (p.group === 'Zirai') typeText = `🚜 Zirai Grubu (${p.subCat || 'Standart'})`;
-            else if (p.group === 'Ağır Vasıta') typeText = `🚛 Ağır Vasıta (${p.subCat || 'Standart'})`;
-            else if (p.group === 'İç Lastik') typeText = '⭕ İç Lastik (Şambrel)';
-            else if (p.group === '2. El') typeText = '♻️ 2. El Lastik';
+            let typeText = 'Otomobil Lastiği';
+            if (p.group === 'Hafif Ticari') typeText = 'Hafif Ticari Lastik';
+            else if (p.group === 'Zirai') typeText = `Zirai Grubu (${p.subCat || 'Standart'})`;
+            else if (p.group === 'Ağır Vasıta') typeText = `Ağır Vasıta (${p.subCat || 'Standart'})`;
+            else if (p.group === 'İç Lastik') typeText = 'İç Lastik (Şambrel)';
+            else if (p.group === '2. El') typeText = '2. El Lastik';
 
             specHtml += `<div class="b2b-spec-row"><span class="b2b-spec-key">Ürün Türü:</span><span id="dType" class="b2b-spec-val">${typeText}</span></div>`;
 
-            // AĞIR VASITA VEYA ZİRAİ İSE MEVSİM BİLGİSİNİ GÖSTERME/GİZLE
             const seasonRow = document.getElementById('detailSeasonRow');
             if (p.group === 'Ağır Vasıta') {
                 if (seasonRow) seasonRow.style.display = 'none';
             } else {
                 if (seasonRow) seasonRow.style.display = 'flex';
-                let seasonText = '☀️ Yaz';
-                if (p.season === 'Kış') seasonText = '❄️ Kış';
-                else if (p.season === '4 Mevsim') seasonText = '🌤️ 4 Mevsim';
-                else if (p.group === 'Zirai') seasonText = '🚜 Zirai';
-                else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') seasonText = '⭕ İç Lastik';
+                let seasonText = 'Yaz';
+                if (p.season === 'Kış') seasonText = 'Kış';
+                else if (p.season === '4 Mevsim') seasonText = '4 Mevsim';
+                else if (p.group === 'Zirai') seasonText = 'Zirai';
+                else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') seasonText = 'İç Lastik';
                 
                 const dSeasonElem = document.getElementById('dSeason');
                 if (dSeasonElem) dSeasonElem.innerText = seasonText;
@@ -2268,19 +2329,19 @@
                     }
                     let catTag = `<span class="tag tag-category"><i class="fa-solid fa-car"></i> ${catTitle}</span>`;
 
-                    let seasonEmojiTag = '';
+                    let seasonIconTag = '';
                     if (p.group === 'Ağır Vasıta') {
-                        seasonEmojiTag = `<span class="tag" style="color:#38bdf8;" title="Ağır Vasıta">🚛</span>`;
+                        seasonIconTag = `<span class="tag" style="color:#38bdf8;" title="Ağır Vasıta"><i class="fa-solid fa-truck-moving"></i></span>`;
                     } else if (p.group === 'Zirai') {
-                        seasonEmojiTag = `<span class="tag" style="color:#fbbf24;" title="Zirai Grubu">🚜</span>`;
+                        seasonIconTag = `<span class="tag" style="color:#fbbf24;" title="Zirai Grubu"><i class="fa-solid fa-tractor"></i></span>`;
                     } else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') {
-                        seasonEmojiTag = `<span class="tag" style="color:#a78bfa;" title="İç Lastik">⭕</span>`;
+                        seasonIconTag = `<span class="tag" style="color:#a78bfa;" title="İç Lastik"><i class="fa-solid fa-circle-dot"></i></span>`;
                     } else if (p.season === 'Kış') {
-                        seasonEmojiTag = `<span class="tag" style="color:#38bdf8;" title="Kış Lastiği">❄️</span>`;
+                        seasonIconTag = `<span class="tag" style="color:#38bdf8;" title="Kış Lastiği"><i class="fa-solid fa-snowflake"></i></span>`;
                     } else if (p.season === '4 Mevsim') {
-                        seasonEmojiTag = `<span class="tag" style="color:#fbbf24;" title="4 Mevsim Lastik">🌤️</span>`;
+                        seasonIconTag = `<span class="tag" style="color:#fbbf24;" title="4 Mevsim Lastik"><i class="fa-solid fa-cloud-sun"></i></span>`;
                     } else {
-                        seasonEmojiTag = `<span class="tag" style="color:#fb923c;" title="Yaz Lastiği">☀️</span>`;
+                        seasonIconTag = `<span class="tag" style="color:#fb923c;" title="Yaz Lastiği"><i class="fa-solid fa-sun"></i></span>`;
                     }
 
                     const brandUpper = (p.brand || 'STANDART').toUpperCase();
@@ -2345,7 +2406,7 @@
                         </div>
                         ${priceOrWpHtml}
                         <div class="card-footer-row">
-                            <div style="display:flex; gap:5px; align-items:center;">${catTag} ${seasonEmojiTag}</div>
+                            <div style="display:flex; gap:5px; align-items:center;">${catTag} ${seasonIconTag}</div>
                             <div>${adminActionsHtml}</div>
                         </div>
                     `;
@@ -2366,19 +2427,19 @@
                     }
                     let catTag = `<span class="tag tag-category"><i class="fa-solid fa-car"></i> ${catTitle}</span>`;
 
-                    let rowSeasonEmojiTag = '';
+                    let rowSeasonIconTag = '';
                     if (p.group === 'Ağır Vasıta') {
-                        rowSeasonEmojiTag = `<span class="tag" style="color:#38bdf8;" title="Ağır Vasıta">🚛</span>`;
+                        rowSeasonIconTag = `<span class="tag" style="color:#38bdf8;" title="Ağır Vasıta"><i class="fa-solid fa-truck-moving"></i></span>`;
                     } else if (p.group === 'Zirai') {
-                        rowSeasonEmojiTag = `<span class="tag" style="color:#fbbf24;" title="Zirai Grubu">🚜</span>`;
+                        rowSeasonIconTag = `<span class="tag" style="color:#fbbf24;" title="Zirai Grubu"><i class="fa-solid fa-tractor"></i></span>`;
                     } else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') {
-                        rowSeasonEmojiTag = `<span class="tag" style="color:#a78bfa;" title="İç Lastik">⭕</span>`;
+                        rowSeasonIconTag = `<span class="tag" style="color:#a78bfa;" title="İç Lastik"><i class="fa-solid fa-circle-dot"></i></span>`;
                     } else if (p.season === 'Kış') {
-                        rowSeasonEmojiTag = `<span class="tag" style="color:#38bdf8;" title="Kış Lastiği">❄️</span>`;
+                        rowSeasonIconTag = `<span class="tag" style="color:#38bdf8;" title="Kış Lastiği"><i class="fa-solid fa-snowflake"></i></span>`;
                     } else if (p.season === '4 Mevsim') {
-                        rowSeasonEmojiTag = `<span class="tag" style="color:#fbbf24;" title="4 Mevsim Lastik">🌤️</span>`;
+                        rowSeasonIconTag = `<span class="tag" style="color:#fbbf24;" title="4 Mevsim Lastik"><i class="fa-solid fa-cloud-sun"></i></span>`;
                     } else {
-                        rowSeasonEmojiTag = `<span class="tag" style="color:#fb923c;" title="Yaz Lastiği">☀️</span>`;
+                        rowSeasonIconTag = `<span class="tag" style="color:#fb923c;" title="Yaz Lastiği"><i class="fa-solid fa-sun"></i></span>`;
                     }
 
                     let brandHtml = '';
@@ -2455,7 +2516,7 @@
                             </div>
                         </div>
                         <div>${catTag}</div>
-                        <div style="text-align:center;">${rowSeasonEmojiTag}</div>
+                        <div style="text-align:center;">${rowSeasonIconTag}</div>
                         <div><span class="tag">DOT ${p.dot || '2026'}</span></div>
                         ${priceOrWpColumn}
                         <div>${stockOrActionColumn}</div>
@@ -2569,39 +2630,6 @@
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
         }
-
-        let slideIndex = 0;
-        function showSlide(index) {
-            const slides = document.querySelectorAll('.slide');
-            const dots = document.querySelectorAll('.dot');
-            const wrapper = document.getElementById('sliderWrapper');
-            if (!wrapper) return;
-
-            if (index >= slides.length) slideIndex = 0;
-            if (index < 0) slideIndex = slides.length - 1;
-
-            wrapper.style.transform = `translateX(-${slideIndex * 100}%)`;
-            if (dots.length > 0) {
-                dots.forEach(dot => dot.classList.remove('active'));
-                dots[slideIndex].classList.add('active');
-            }
-        }
-
-        function moveSlide(step) {
-            slideIndex += step;
-            showSlide(slideIndex);
-        }
-
-        function currentSlide(index) {
-            slideIndex = index;
-            showSlide(slideIndex);
-        }
-
-        setInterval(() => {
-            if (currentCategory === 'all' || !siteImages[`banner${currentCategory}`]) {
-                moveSlide(1);
-            }
-        }, 4000);
     </script>
 </body>
 </html>
