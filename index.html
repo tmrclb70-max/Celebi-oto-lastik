@@ -197,12 +197,46 @@
         .notif-badge { position: absolute; top: -4px; right: -4px; background: var(--danger-color); color: white; font-size: 0.68rem; font-weight: 800; padding: 1px 5px; border-radius: 8px; border: 2px solid var(--card-bg); }
 
         .filter-buttons { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; align-items: center; }
-        .filter-btn { flex: 1; min-width: 100px; padding: 9px 8px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 0.78rem; transition: 0.2s; }
+        .filter-btn { flex: 1; min-width: 95px; padding: 9px 8px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 0.78rem; transition: 0.2s; }
         .filter-btn:hover { border-color: var(--accent-yellow); }
         .filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
 
+        /* PETLAS TARZI ALT KATEGORİ ÇUBUĞU */
+        .sub-filter-bar {
+            display: none;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+            padding: 8px;
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 8px;
+            border: 1px dashed rgba(245, 158, 11, 0.5);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .sub-filter-bar.visible { display: flex; }
+        .sub-filter-btn {
+            padding: 6px 12px;
+            background: #0f172a;
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.74rem;
+            transition: 0.2s;
+        }
+        .sub-filter-btn:hover { border-color: var(--accent-yellow); color: #fff; }
+        .sub-filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* AÇILIR MEVSİM SEÇİM BUTONU (SADECE YAZ, KIŞ, 4 MEVSİM) */
-        .season-dropdown-container { position: relative; flex: 1; min-width: 120px; }
+        .season-dropdown-container { position: relative; flex: 1; min-width: 110px; }
         .season-select-box {
             width: 100%; padding: 9px 8px; background: #0f172a; border: 1px solid var(--card-border);
             color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.78rem;
@@ -585,47 +619,7 @@
                     <label><i class="fa-solid fa-copyright"></i> Marka Seç / Yaz</label>
                     <input type="text" id="filterBrandInput" list="brandListOptions" class="form-control" placeholder="Örn: Petlas, Lassa, Michelin, BKT..." oninput="renderProducts()">
                     <datalist id="brandListOptions">
-                        <option value="Petlas">
-                        <option value="Lassa">
-                        <option value="Bridgestone">
-                        <option value="Michelin">
-                        <option value="Goodyear">
-                        <option value="Pirelli">
-                        <option value="Continental">
-                        <option value="Starmaxx">
-                        <option value="Milestone">
-                        <option value="Hankook">
-                        <option value="Laufenn">
-                        <option value="Falken">
-                        <option value="Dunlop">
-                        <option value="Yokohama">
-                        <option value="Kumho">
-                        <option value="Nokian">
-                        <option value="Toyo">
-                        <option value="Matador">
-                        <option value="Sava">
-                        <option value="Kabat">
-                        <option value="BKT">
-                        <option value="Ozka">
-                        <option value="Seha">
-                        <option value="Alliance">
-                        <option value="Aeolus">
-                        <option value="Barum">
-                        <option value="Debica">
-                        <option value="Kelly">
-                        <option value="Fulda">
-                        <option value="General Tire">
-                        <option value="Nexen">
-                        <option value="Riken">
-                        <option value="Taurus">
-                        <option value="Orium">
-                        <option value="Kormoran">
-                        <option value="Triangle">
-                        <option value="Double Coin">
-                        <option value="Linglong">
-                        <option value="Sailun">
-                        <option value="Westlake">
-                        <option value="Goodride">
+                        <option value="Petlas"><option value="Lassa"><option value="Bridgestone"><option value="Michelin"><option value="Goodyear"><option value="Pirelli"><option value="Continental"><option value="Starmaxx"><option value="Milestone"><option value="Hankook"><option value="Laufenn"><option value="Falken"><option value="Dunlop"><option value="Yokohama"><option value="Kumho"><option value="Nokian"><option value="Toyo"><option value="Matador"><option value="Sava"><option value="Kabat"><option value="BKT"><option value="Ozka"><option value="Seha"><option value="Alliance"><option value="Aeolus"><option value="Barum"><option value="Debica"><option value="Kelly"><option value="Fulda"><option value="General Tire"><option value="Nexen"><option value="Riken"><option value="Taurus"><option value="Orium"><option value="Kormoran"><option value="Triangle"><option value="Double Coin"><option value="Linglong"><option value="Sailun"><option value="Westlake"><option value="Goodride">
                     </datalist>
                 </div>
 
@@ -672,7 +666,7 @@
                 </button>
             </div>
 
-            <!-- FİLTRE BUTONLARI + YENİ DÜZENLENDİĞİ GİBİ AÇILIR SADECE YAZ, KIŞ, 4 MEVSİM MENÜSÜ -->
+            <!-- FİLTRE BUTONLARI + PETLAS TARZI ALT KATEGORİ ÇUBUKLARI -->
             <div class="filter-buttons">
                 <button class="filter-btn active" onclick="setCategory('all', this)">🌐 Tüm Ürünler</button>
                 
@@ -696,6 +690,25 @@
                 <button class="filter-btn" onclick="setCategory('Ağır Vasıta', this)">🚛 Ağır Vasıta</button>
                 <button class="filter-btn" onclick="setCategory('İç Lastik', this)">⭕ İç Lastik</button>
                 <button class="filter-btn" onclick="setCategory('2. El', this)">♻️ 2. El</button>
+            </div>
+
+            <!-- PETLAS TARZI ZİRAİ ALT KATEGORİLERİ -->
+            <div id="ziraiSubBar" class="sub-filter-bar">
+                <button class="sub-filter-btn active" onclick="setSubCategory('all', this)">Tüm Zirai</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Traktör Ön', this)">🚜 Traktör Ön</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Traktör Arka', this)">🚜 Traktör Arka</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Radial', this)">⚙️ Radial</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Römork', this)">🛒 Römork / Zirai</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Biçerdöver', this)">🌾 Biçerdöver</button>
+            </div>
+
+            <!-- PETLAS TARZI AĞIR VASITA ALT KATEGORİLERİ -->
+            <div id="agirVasiptaSubBar" class="sub-filter-bar">
+                <button class="sub-filter-btn active" onclick="setSubCategory('all', this)">Tüm Ağır Vasıta</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Çeker', this)">🚛 Çeker (Çeker Aks)</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Direksiyon', this)">🚚 Direksiyon (Ön Aks)</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Römork', this)">📦 Römork (Dorse)</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Hafriyat', this)">🏗️ Hafriyat / Damper</button>
             </div>
         </div>
 
@@ -922,10 +935,26 @@
                 <select id="pGroupSelect" class="form-control" onchange="toggleGroupFields(this.value)">
                     <option value="Otomobil">🚗 Otomobil Lastiği</option>
                     <option value="Hafif Ticari">🚐 Hafif Ticari (Minibüs / Panelvan)</option>
-                    <option value="Zirai">🚜 Zirai Grubu (Traktör / Römork / İş Makinesi)</option>
+                    <option value="Zirai">🚜 Zirai Grubu (Traktör / İş Makinesi)</option>
                     <option value="Ağır Vasıta">🚛 Ağır Vasıta (Kamyon / Tır)</option>
                     <option value="İç Lastik">⭕ İç Lastik (Şambrel)</option>
                     <option value="2. El">♻️ 2. El Lastik Grubu</option>
+                </select>
+            </div>
+
+            <!-- EKLEME ESNASINDA ALT KATEGORİ SEÇİMİ -->
+            <div class="form-group" id="subCategorySelectGroup">
+                <label>Alt Kategori (Petlas Tarzı Model)</label>
+                <select id="pSubCat" class="form-control">
+                    <option value="Standart">Standart / Genel</option>
+                    <option value="Traktör Ön">Traktör Ön</option>
+                    <option value="Traktör Arka">Traktör Arka</option>
+                    <option value="Radial">Radial</option>
+                    <option value="Römork">Römork / Zirai</option>
+                    <option value="Biçerdöver">Biçerdöver</option>
+                    <option value="Çeker">Çeker Aks (Ağır Vasıta)</option>
+                    <option value="Direksiyon">Direksiyon (Ön Aks)</option>
+                    <option value="Hafriyat">Hafriyat / Damper</option>
                 </select>
             </div>
 
@@ -1128,6 +1157,7 @@
     <script>
         let products = [];
         let currentCategory = 'all';
+        let currentSubCategory = 'all';
         let currentUserRole = null; 
         let selectedProductForModal = null;
         let modalProductQty = 1;
@@ -1250,7 +1280,6 @@
             document.getElementById('authArea').classList.add('hidden');
             document.getElementById('userInfoArea').classList.remove('hidden');
 
-            // MİSAFİR AKILLI ARAMA KUTUSU: BAYİ VEYA YÖNETİCİ GİRİNCE GİZLENİR
             const smartFilterSec = document.getElementById('guestSmartFilterSection');
             if (smartFilterSec) smartFilterSec.classList.add('hidden');
 
@@ -1271,7 +1300,6 @@
             document.getElementById('adminBar').classList.add('hidden');
             document.getElementById('adminNotifBtn').classList.add('hidden');
             
-            // ÇIKIŞ YAPILINCA MİSAFİR AKILLI ARAMA KUTUSU YENİDEN GÖRÜNÜR
             const smartFilterSec = document.getElementById('guestSmartFilterSection');
             if (smartFilterSec) smartFilterSec.classList.remove('hidden');
 
@@ -1407,6 +1435,8 @@
 
         function setCategory(cat, btn) {
             currentCategory = cat;
+            currentSubCategory = 'all';
+
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             if (btn) btn.classList.add('active');
 
@@ -1415,19 +1445,52 @@
             dropBox.classList.remove('active');
             document.getElementById('seasonDropdownLabel').innerHTML = `<i class="fa-solid fa-filter"></i> Mevsim Seç`;
 
+            const ziraiSubBar = document.getElementById('ziraiSubBar');
+            const agirSubBar = document.getElementById('agirVasiptaSubBar');
+
+            ziraiSubBar.classList.remove('visible');
+            agirSubBar.classList.remove('visible');
+
+            if (cat === 'Zirai') {
+                ziraiSubBar.classList.add('visible');
+                resetSubBtns(ziraiSubBar);
+            } else if (cat === 'Ağır Vasıta') {
+                agirSubBar.classList.add('visible');
+                resetSubBtns(agirSubBar);
+            }
+
             renderProducts();
         }
 
-        // AÇILIR MEVSİM SEÇİM FONKSİYONU (SADECE YAZ, KIŞ, 4 MEVSİM)
+        function resetSubBtns(barElem) {
+            barElem.querySelectorAll('.sub-filter-btn').forEach((b, idx) => {
+                if (idx === 0) b.classList.add('active');
+                else b.classList.remove('active');
+            });
+        }
+
+        function setSubCategory(subCat, btn) {
+            currentSubCategory = subCat;
+            const parentBar = btn.closest('.sub-filter-bar');
+            if (parentBar) {
+                parentBar.querySelectorAll('.sub-filter-btn').forEach(b => b.classList.remove('active'));
+            }
+            btn.classList.add('active');
+            renderProducts();
+        }
+
         function handleSeasonDropdownChange(selectElem) {
             const val = selectElem.value;
             const dropBox = document.getElementById('seasonSelectBox');
             const label = document.getElementById('seasonDropdownLabel');
 
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('ziraiSubBar').classList.remove('visible');
+            document.getElementById('agirVasiptaSubBar').classList.remove('visible');
 
             if (val !== '') {
                 currentCategory = val;
+                currentSubCategory = 'all';
                 dropBox.classList.add('active');
                 
                 let icon = '☀️';
@@ -1437,6 +1500,7 @@
                 label.innerHTML = `${icon} ${val}`;
             } else {
                 currentCategory = 'all';
+                currentSubCategory = 'all';
                 dropBox.classList.remove('active');
                 label.innerHTML = `<i class="fa-solid fa-filter"></i> Mevsim Seç`;
                 const allBtn = document.querySelector('.filter-btn');
@@ -1452,6 +1516,30 @@
             const usedTirePhotosGroup = document.getElementById('usedTirePhotosGroup');
             const usedTireExtraFields = document.getElementById('usedTireExtraFields');
             const normalImgUrlGroup = document.getElementById('normalImgUrlGroup');
+            const subCatSelect = document.getElementById('pSubCat');
+
+            // Alt kategori seçeneklerini gruba göre güncelle
+            subCatSelect.innerHTML = '';
+            if (val === 'Zirai') {
+                subCatSelect.innerHTML = `
+                    <option value="Standart">Standart / Genel</option>
+                    <option value="Traktör Ön">Traktör Ön</option>
+                    <option value="Traktör Arka">Traktör Arka</option>
+                    <option value="Radial">Radial</option>
+                    <option value="Römork">Römork / Zirai</option>
+                    <option value="Biçerdöver">Biçerdöver</option>
+                `;
+            } else if (val === 'Ağır Vasıta') {
+                subCatSelect.innerHTML = `
+                    <option value="Standart">Standart / Genel</option>
+                    <option value="Çeker">Çeker Aks</option>
+                    <option value="Direksiyon">Direksiyon (Ön Aks)</option>
+                    <option value="Römork">Römork (Dorse)</option>
+                    <option value="Hafriyat">Hafriyat / Damper</option>
+                `;
+            } else {
+                subCatSelect.innerHTML = `<option value="Standart">Standart / Genel</option>`;
+            }
 
             if (val === '2. El') {
                 if (seasonGroup) seasonGroup.classList.remove('hidden');
@@ -1578,6 +1666,7 @@
             document.getElementById('pGroupSelect').value = defaultGroup;
             toggleGroupFields(defaultGroup);
             
+            document.getElementById('pSubCat').value = 'Standart';
             document.getElementById('pSizeSelect').value = '205/55R16';
             document.getElementById('customSizeGroup').classList.add('hidden');
             document.getElementById('pCustomSize').value = '';
@@ -1626,6 +1715,8 @@
         async function saveProduct() {
             try {
                 const group = document.getElementById('pGroupSelect').value;
+                const subCat = document.getElementById('pSubCat').value || 'Standart';
+                
                 let size = document.getElementById('pSizeSelect').value;
                 if (size === 'Diger') size = document.getElementById('pCustomSize').value.trim();
 
@@ -1671,7 +1762,7 @@
                 const editingId = document.getElementById('editingProductId').value;
                 const id = editingId ? editingId : 'p_' + Date.now();
 
-                const productData = { group, size, brand, customLogo, pattern, season, dot, stock, price, img, photos, usedKm, usedTread, usedCombo, usedNote };
+                const productData = { group, subCat, size, brand, customLogo, pattern, season, dot, stock, price, img, photos, usedKm, usedTread, usedCombo, usedNote };
                 
                 await window.setDoc(window.doc(window.db, "lastik_stoklari", id), productData);
                 closeModal('productModal');
@@ -1690,6 +1781,8 @@
             document.getElementById('modalTitleText').innerHTML = '<i class="fa-solid fa-pen"></i> Ürün Düzenle';
             document.getElementById('pGroupSelect').value = p.group || 'Otomobil';
             toggleGroupFields(p.group || 'Otomobil');
+
+            document.getElementById('pSubCat').value = p.subCat || 'Standart';
 
             const sizeSel = document.getElementById('pSizeSelect');
             let sizeFound = false;
@@ -1794,7 +1887,6 @@
             closeModal('bulkPriceModal');
         }
 
-        // AKILLI STOK ROZETİ MANTIĞI: BAYİ İÇİN 4 VE ÜZERİ MİKTAR GİZLENDİ, "STOKTA VAR" YAZIYOR
         function getSmartStockBadgeHtml(stockVal) {
             const isAuthorized = (currentUserRole === 'admin' || currentUserRole === 'bayi');
 
@@ -1802,7 +1894,6 @@
                 if (currentUserRole === 'admin') {
                     return `<div class="stock-badge-in"><i class="fa-solid fa-check"></i> Stokta Var (${stockVal} Adet)</div>`;
                 } else if (currentUserRole === 'bayi') {
-                    // BAYİ GİRİNCE MİKTAR GİZLENİR, DİREKT "STOKTA VAR" YAZAR
                     return `<div class="stock-badge-in"><i class="fa-solid fa-store"></i> Stokta Var</div>`;
                 } else {
                     return `<div class="stock-badge-in"><i class="fa-solid fa-store"></i> Stokta Var</div>`;
@@ -1925,8 +2016,8 @@
 
             let typeText = '🚗 Otomobil Lastiği';
             if (p.group === 'Hafif Ticari') typeText = '🚐 Hafif Ticari Lastik';
-            else if (p.group === 'Zirai') typeText = '🚜 Zirai Grubu';
-            else if (p.group === 'Ağır Vasıta') typeText = '🚛 Ağır Vasıta / Tır';
+            else if (p.group === 'Zirai') typeText = `🚜 Zirai Grubu (${p.subCat || 'Standart'})`;
+            else if (p.group === 'Ağır Vasıta') typeText = `🚛 Ağır Vasıta (${p.subCat || 'Standart'})`;
             else if (p.group === 'İç Lastik') typeText = '⭕ İç Lastik (Şambrel)';
             else if (p.group === '2. El') typeText = '♻️ 2. El Lastik';
 
@@ -2004,10 +2095,15 @@
                     matchCat = (p.group === 'Hafif Ticari');
                 } else if (currentCategory === 'Zirai') {
                     matchCat = (p.group === 'Zirai');
+                    if (matchCat && currentSubCategory !== 'all') {
+                        if (p.subCat !== currentSubCategory) matchCat = false;
+                    }
                 } else if (currentCategory === 'Ağır Vasıta') {
                     matchCat = (p.group === 'Ağır Vasıta');
+                    if (matchCat && currentSubCategory !== 'all') {
+                        if (p.subCat !== currentSubCategory) matchCat = false;
+                    }
                 } else {
-                    // Sadece Yaz, Kış, 4 Mevsim seçildiyse
                     matchCat = (p.season === currentCategory && !isInnerTube && !isSecondHand);
                 }
 
@@ -2031,7 +2127,7 @@
                     if (!sizeStr.includes(`r${fRim}`) && !sizeStr.includes(`-${fRim}`) && !sizeStr.includes(`/${fRim}`) && !sizeStr.endsWith(`${fRim}`)) return false;
                 }
                
-                const fullStr = `${p.size} ${p.brand} ${p.pattern} ${p.dot} ${p.group}`.toLowerCase();
+                const fullStr = `${p.size} ${p.brand} ${p.pattern} ${p.dot} ${p.group} ${p.subCat || ''}`.toLowerCase();
                 return fullStr.includes(search);
             });
 
@@ -2050,7 +2146,11 @@
                     if (!displayImg && p.photos && p.photos.length > 0) displayImg = p.photos[0];
                     if (!displayImg) displayImg = 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
 
-                    let catTag = `<span class="tag tag-category"><i class="fa-solid fa-car"></i> ${p.group || 'Otomobil'}</span>`;
+                    let catTitle = p.group || 'Otomobil';
+                    if ((p.group === 'Zirai' || p.group === 'Ağır Vasıta') && p.subCat && p.subCat !== 'Standart') {
+                        catTitle += ` (${p.subCat})`;
+                    }
+                    let catTag = `<span class="tag tag-category"><i class="fa-solid fa-car"></i> ${catTitle}</span>`;
 
                     let seasonEmojiTag = '';
                     if (p.group === 'Zirai') {
@@ -2144,7 +2244,11 @@
                     if (!displayImg && p.photos && p.photos.length > 0) displayImg = p.photos[0];
                     if (!displayImg) displayImg = 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=600&auto=format&fit=crop&q=80';
 
-                    let catTag = `<span class="tag tag-category"><i class="fa-solid fa-car"></i> ${p.group || 'Otomobil'}</span>`;
+                    let catTitle = p.group || 'Otomobil';
+                    if ((p.group === 'Zirai' || p.group === 'Ağır Vasıta') && p.subCat && p.subCat !== 'Standart') {
+                        catTitle += ` (${p.subCat})`;
+                    }
+                    let catTag = `<span class="tag tag-category"><i class="fa-solid fa-car"></i> ${catTitle}</span>`;
 
                     let rowSeasonEmojiTag = '';
                     if (p.group === 'Zirai') {
