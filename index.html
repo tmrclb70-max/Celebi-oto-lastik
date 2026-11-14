@@ -153,7 +153,7 @@
         .form-control { width: 100%; padding: 9px 11px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(15, 23, 42, 0.8); color: white; font-size: 0.88rem; transition: 0.2s; }
         .form-control:focus { outline: none; border-color: var(--accent-yellow); box-shadow: 0 0 8px rgba(245, 158, 11, 0.3); }
 
-        .btn-primary { width: 100%; padding: 10px; background: var(--accent-yellow); color: #000; font-weight: 800; border: none; border-radius: 6px; cursor: pointer; font-size: 0.92rem; transition: 0.2s; margin-top: 6px; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+        .btn-primary { width: 100%; padding: 10px; background: var(--accent-yellow); color: #000; font-weight: 800; border: none; border-radius: 6px; cursor: pointer; font-size: 0.92rem; transition: 0.2s; margin-top: 6px; box-shadow: 0 4px 15px rgba(245,158,11,0.3); }
         .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
 
         .smart-filter-box {
@@ -455,39 +455,40 @@
         .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 28px; height: 28px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; }
         .btn-edit-price { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); width: 28px; height: 28px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; }
 
-        /* ÜRÜN DETAY MODALI - TAM EKRAN SABİT ALAN */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.92); justify-content: center; align-items: center; z-index: 3000; padding: 10px; overflow: hidden; }
-        .modal-content { background: var(--card-bg); border-radius: 16px; padding: 24px; width: 100%; max-width: 1300px; height: 92vh; border: 2px solid rgba(245,158,11,0.6); display: flex; flex-direction: column; overflow-y: auto; box-shadow: 0 30px 80px rgba(0,0,0,0.95); }
-        .modal-content::-webkit-scrollbar { width: 6px; }
-        .modal-content::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 3px; }
+        /* ÜRÜN DETAY MODALI - TAM EKRAN SABİT ALAN (KAYDIRMA YOK) */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.94); justify-content: center; align-items: center; z-index: 3000; padding: 10px; overflow: hidden; }
+        .modal-content { background: var(--card-bg); border-radius: 14px; padding: 18px 22px; width: 98vw; max-width: 1250px; height: 94vh; border: 2px solid rgba(245,158,11,0.7); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 30px 90px rgba(0,0,0,0.95); }
 
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; width: 100%; flex-shrink: 0; }
-        .modal-header h3 { color: var(--accent-yellow); font-size: 1.4rem; font-weight: 900; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; width: 100%; flex-shrink: 0; }
+        .modal-header h3 { color: var(--accent-yellow); font-size: 1.25rem; font-weight: 900; }
         .close-btn { font-size: 1.8rem; cursor: pointer; color: var(--text-muted); transition: 0.2s; }
         .close-btn:hover { color: var(--danger-color); }
 
-        .b2b-detail-layout { display: flex; gap: 30px; flex-wrap: wrap; align-items: stretch; flex: 1; }
-        .b2b-detail-img-area { flex: 1.3; min-width: 320px; background: #ffffff; border-radius: 12px; padding: 24px; display: flex; align-items: center; justify-content: center; border: 1px solid #e2e8f0; min-height: 380px; }
-        .b2b-detail-img-area img { width: 100%; max-height: 450px; object-fit: contain; background: #ffffff; }
+        .b2b-detail-layout { display: flex; gap: 24px; flex-wrap: nowrap; align-items: center; flex: 1; overflow: hidden; }
+        .b2b-detail-img-area { flex: 1.2; height: 100%; background: #ffffff; border-radius: 10px; padding: 15px; display: flex; align-items: center; justify-content: center; border: 1px solid #e2e8f0; overflow: hidden; }
+        .b2b-detail-img-area img { width: 100%; max-height: 100%; object-fit: contain; background: #ffffff; }
         
-        .b2b-detail-info-area { flex: 1.6; min-width: 320px; display: flex; flex-direction: column; gap: 14px; }
-        .b2b-product-title { font-size: 1.8rem; font-weight: 900; color: #fff; line-height: 1.3; }
-        
-        .b2b-price-box { background: rgba(16, 185, 129, 0.1); border: 1.5px solid rgba(16, 185, 129, 0.4); padding: 14px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .b2b-price-label { font-size: 1rem; color: var(--text-muted); font-weight: 700; }
-        .b2b-price-val { font-size: 2rem; font-weight: 900; color: var(--success-color); }
+        .b2b-detail-info-area { flex: 1.5; height: 100%; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; overflow-y: auto; padding-right: 4px; }
+        .b2b-detail-info-area::-webkit-scrollbar { width: 5px; }
+        .b2b-detail-info-area::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 3px; }
 
-        .b2b-action-row { display: flex; gap: 12px; align-items: center; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 10px; border: 1px solid var(--card-border); }
-        .b2b-qty-box { display: flex; align-items: center; gap: 8px; background: #0f172a; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--card-border); }
-        .b2b-btn-cart { flex: 1; background: #ffffff; color: #000; font-weight: 900; border: none; padding: 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem; transition: 0.2s; }
+        .b2b-product-title { font-size: 1.5rem; font-weight: 900; color: #fff; line-height: 1.2; }
+        
+        .b2b-price-box { background: rgba(16, 185, 129, 0.1); border: 1.5px solid rgba(16, 185, 129, 0.4); padding: 10px 14px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .b2b-price-label { font-size: 0.95rem; color: var(--text-muted); font-weight: 700; }
+        .b2b-price-val { font-size: 1.75rem; font-weight: 900; color: var(--success-color); }
+
+        .b2b-action-row { display: flex; gap: 10px; align-items: center; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; border: 1px solid var(--card-border); }
+        .b2b-qty-box { display: flex; align-items: center; gap: 8px; background: #0f172a; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--card-border); }
+        .b2b-btn-cart { flex: 1; background: #ffffff; color: #000; font-weight: 900; border: none; padding: 10px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.95rem; transition: 0.2s; }
         .b2b-btn-cart:hover { background: var(--accent-yellow); }
 
-        .b2b-spec-table { display: flex; flex-direction: column; gap: 8px; margin-top: 2px; }
-        .b2b-spec-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(15, 23, 42, 0.7); border-radius: 8px; border: 1px solid var(--card-border); font-size: 0.95rem; }
+        .b2b-spec-table { display: flex; flex-direction: column; gap: 6px; }
+        .b2b-spec-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(15, 23, 42, 0.7); border-radius: 6px; border: 1px solid var(--card-border); font-size: 0.9rem; }
         .b2b-spec-key { color: var(--text-muted); font-weight: 700; }
         .b2b-spec-val { color: var(--text-main); font-weight: 900; display: flex; align-items: center; gap: 6px; }
 
-        .detail-brand-logo { max-height: 28px; max-width: 120px; object-fit: contain; }
+        .detail-brand-logo { max-height: 24px; max-width: 110px; object-fit: contain; }
 
         .input-with-btn { display: flex; gap: 6px; }
         .btn-search-img { background: #3b82f6; color: white; border: none; padding: 0 10px; border-radius: 5px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 0.78rem; display: flex; align-items: center; gap: 4px; }
@@ -500,17 +501,17 @@
         .file-upload-box:hover { background: rgba(245, 158, 11, 0.15); }
 
         .used-tire-slider-box {
-            position: relative; width: 100%; height: 380px; background: #ffffff; border-radius: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center;
+            position: relative; width: 100%; height: 100%; background: #ffffff; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center;
         }
         .used-tire-slides { display: flex; width: 100%; height: 100%; transition: transform 0.4s ease-in-out; }
-        .used-tire-slide { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #ffffff; padding: 12px; }
-        .used-tire-slide img { width: 100%; height: 100%; object-fit: contain; background: #ffffff; border-radius: 6px; }
+        .used-tire-slide { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #ffffff; padding: 10px; }
+        .used-tire-slide img { width: 100%; height: 100%; object-fit: contain; background: #ffffff; border-radius: 4px; }
         
         .ut-slider-btn {
-            position: absolute; top: 50%; transform: translateY(-50%); background: rgba(15, 23, 42, 0.75); color: #fff; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 5;
+            position: absolute; top: 50%; transform: translateY(-50%); background: rgba(15, 23, 42, 0.75); color: #fff; border: none; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 5;
         }
-        .ut-slider-btn.prev { left: 10px; }
-        .ut-slider-btn.next { right: 10px; }
+        .ut-slider-btn.prev { left: 8px; }
+        .ut-slider-btn.next { right: 8px; }
         
         .photo-preview-grid { display: flex; gap: 8px; overflow-x: auto; margin-top: 8px; padding-bottom: 5px; }
         .preview-thumb { width: 65px; height: 65px; border-radius: 6px; object-fit: contain; background: #ffffff; padding: 3px; border: 1.5px solid var(--accent-yellow); flex-shrink: 0; }
@@ -802,7 +803,7 @@
         </div>
     </footer>
 
-    <!-- ÜRÜN DETAY MODALI (TAM EKRAN SABİT ALAN) -->
+    <!-- ÜRÜN DETAY MODALI (TRUE TAM EKRAN VE MEVSİM SIRALAMASI) -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -822,7 +823,7 @@
                     <div style="display:flex; align-items:center; gap:8px;" id="detailStockArea"></div>
                     <div class="b2b-action-row" id="detailActionRow"></div>
 
-                    <div style="font-size:1.05rem; font-weight:800; color:var(--accent-yellow); margin-top:2px;">Detaylı Teknik Bilgiler</div>
+                    <div style="font-size:0.95rem; font-weight:800; color:var(--accent-yellow); margin-top:2px;">Detaylı Teknik Bilgiler</div>
                     <div class="b2b-spec-table" id="detailSpecTable">
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Ürün Ebatı:</span><span id="dSize" class="b2b-spec-val">--</span></div>
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Marka:</span><span id="dBrand" class="b2b-spec-val">--</span></div>
@@ -837,7 +838,7 @@
     </div>
 
     <!-- BİLDİRİM MODALI -->
-    <div id="notifModal" class="modal" style="max-width: 580px; width: 96%; height: auto; max-height: 90vh;">
+    <div id="notifModal" class="modal" style="max-width: 580px; width: 96%; height: auto;">
         <div class="modal-content" style="height: auto;">
             <div class="modal-header">
                 <h3><i class="fa-solid fa-bell" style="color: var(--accent-yellow);"></i> Kategorize Stok Uyarıları</h3>
@@ -865,8 +866,8 @@
     </div>
 
     <!-- AYARLAR MODALI -->
-    <div id="settingsModal" class="modal" style="max-width: 540px; width: 96%; height: auto; max-height: 94vh;">
-        <div class="modal-content" style="height: auto; max-height: 88vh;">
+    <div id="settingsModal" class="modal" style="max-width: 540px; width: 96%; height: auto;">
+        <div class="modal-content" style="height: auto; max-height: 90vh;">
             <div class="modal-header">
                 <h3><i class="fa-solid fa-gear"></i> Sistem ve Slider Banner Ayarları</h3>
                 <span class="close-btn" onclick="closeModal('settingsModal')">&times;</span>
@@ -951,8 +952,8 @@
     </div>
 
     <!-- YENİ ÜRÜN EKLE MODALI -->
-    <div id="productModal" class="modal" style="max-width: 480px; width: 96%; height: auto; max-height: 94vh;">
-        <div class="modal-content" style="height: auto; max-height: 88vh;">
+    <div id="productModal" class="modal" style="max-width: 480px; width: 96%; height: auto;">
+        <div class="modal-content" style="height: auto; max-height: 90vh;">
             <div class="modal-header">
                 <h3 id="modalTitleText"><i class="fa-solid fa-plus-circle"></i> Yeni Ürün Ekle</h3>
                 <span class="close-btn" onclick="closeModal('productModal')">&times;</span>
@@ -1472,6 +1473,7 @@
 
             document.getElementById('settingsModal').style.display = 'flex';
             document.body.classList.add('modal-open');
+            history.pushState({ modalOpen: true }, '');
         }
 
         function handleSiteLogoUpload(input) {
@@ -1810,6 +1812,7 @@
             document.getElementById('karOraniSelect').value = '10';
             document.getElementById('karModal').style.display = 'flex';
             document.body.classList.add('modal-open');
+            history.pushState({ modalOpen: true }, '');
         }
 
         function hesaplaVeAktar() {
@@ -1864,6 +1867,7 @@
 
             document.getElementById('productModal').style.display = 'flex';
             document.body.classList.add('modal-open');
+            history.pushState({ modalOpen: true }, '');
         }
 
         function openGoogleSearch(type) {
@@ -2024,6 +2028,7 @@
 
             document.getElementById('productModal').style.display = 'flex';
             document.body.classList.add('modal-open');
+            history.pushState({ modalOpen: true }, '');
         }
 
         function openBulkPriceModal(category) {
@@ -2032,6 +2037,7 @@
             document.getElementById('bulkPercentInput').value = '';
             document.getElementById('bulkPriceModal').style.display = 'flex';
             document.body.classList.add('modal-open');
+            history.pushState({ modalOpen: true }, '');
         }
 
         async function applyBulkPrice() {
@@ -2089,6 +2095,7 @@
             document.getElementById('wpIbrahimBtn').href = ibrahimUrl;
             document.getElementById('wpModal').style.display = 'flex';
             document.body.classList.add('modal-open');
+            history.pushState({ modalOpen: true }, '');
         }
 
         function openDetailModal(id) {
@@ -2113,14 +2120,14 @@
                 currentDetailSlideIdx = 0;
                 let slidesHtml = activeDetailPhotos.map(photo => `<div class="used-tire-slide"><img src="${photo}" alt="Lastik Fotoğrafı"></div>`).join('');
                 imgAreaContainer.innerHTML = `
-                    <div class="used-tire-slider-box" style="height: 380px;">
+                    <div class="used-tire-slider-box">
                         <button class="ut-slider-btn prev" onclick="moveDetailSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
                         <button class="ut-slider-btn next" onclick="moveDetailSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
                         <div class="used-tire-slides" id="detailSlidesWrapper">${slidesHtml}</div>
                     </div>
                 `;
             } else {
-                imgAreaContainer.innerHTML = `<img id="dImg" src="${activeDetailPhotos[0]}" alt="Lastik Görseli" style="width:100%; max-height:400px; object-fit:contain; background:#ffffff;">`;
+                imgAreaContainer.innerHTML = `<img id="dImg" src="${activeDetailPhotos[0]}" alt="Lastik Görseli" style="width:100%; max-height:100%; object-fit:contain; background:#ffffff;">`;
             }
            
             document.getElementById('dTitle').innerText = `${p.size} ${p.pattern || ''} ${p.brand}`.toUpperCase();
@@ -2147,15 +2154,15 @@
                 `;
             } else {
                 priceSection.innerHTML = `
-                    <div style="font-size: 0.88rem; font-weight: 800; color: var(--accent-yellow); margin-bottom: 6px; text-align: center;">💬 WhatsApp ile Fiyat Sor / Bilgi Al</div>
+                    <div style="font-size: 0.82rem; font-weight: 800; color: var(--accent-yellow); margin-bottom: 4px; text-align: center;">💬 WhatsApp ile Fiyat Sor / Bilgi Al</div>
                     <div style="display: flex; gap: 8px; width: 100%;">
-                        <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="flex:1; background:#0284c7; padding: 10px; font-size: 0.82rem; flex-direction:column; gap:2px;">
+                        <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="flex:1; background:#0284c7; padding: 8px; font-size: 0.8rem; flex-direction:column; gap:2px;">
                             <span>Tamer Çelebi</span>
-                            <small style="font-size:0.72rem; opacity:0.9;">0545 394 77 91</small>
+                            <small style="font-size:0.7rem; opacity:0.9;">0545 394 77 91</small>
                         </button>
-                        <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="flex:1; background:#0284c7; padding: 10px; font-size: 0.82rem; flex-direction:column; gap:2px;">
+                        <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="flex:1; background:#0284c7; padding: 8px; font-size: 0.8rem; flex-direction:column; gap:2px;">
                             <span>İbrahim Çelebi</span>
-                            <small style="font-size:0.72rem; opacity:0.9;">0542 125 70 09</small>
+                            <small style="font-size:0.7rem; opacity:0.9;">0542 125 70 09</small>
                         </button>
                     </div>
                 `;
@@ -2163,8 +2170,8 @@
                 stockArea.innerHTML = `<span>${getSmartStockBadgeHtml(stockVal)}</span>`;
                 
                 actionRow.innerHTML = `
-                    <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="background:#25d366; padding: 12px; font-size: 1rem; width:100%; justify-content:center;">
-                        <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Hemen WhatsApp'tan İletişime Geç
+                    <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="background:#25d366; padding: 10px; font-size: 0.95rem; width:100%; justify-content:center;">
+                        <i class="fa-brands fa-whatsapp" style="font-size: 1.1rem;"></i> Hemen WhatsApp'tan İletişime Geç
                     </button>
                 `;
             }
@@ -2176,13 +2183,6 @@
                 <div class="b2b-spec-row"><span class="b2b-spec-key">Desen / Model:</span><span id="dPattern" class="b2b-spec-val">${(p.pattern || 'STANDART').toUpperCase()}</span></div>
             `;
 
-            if (p.group === '2. El' && (currentUserRole === 'admin' || currentUserRole === 'bayi')) {
-                if (p.usedKm) specHtml += `<div class="b2b-spec-row" style="background:rgba(139,92,246,0.1);"><span class="b2b-spec-key" style="color:#c4b5fd;">Tahmini KM:</span><span class="b2b-spec-val" style="color:#c4b5fd;">${p.usedKm}</span></div>`;
-                if (p.usedTread) specHtml += `<div class="b2b-spec-row" style="background:rgba(139,92,246,0.1);"><span class="b2b-spec-key" style="color:#c4b5fd;">Diş Derinliği:</span><span class="b2b-spec-val" style="color:#c4b5fd;">${p.usedTread}</span></div>`;
-                if (p.usedCombo) specHtml += `<div class="b2b-spec-row" style="background:rgba(139,92,246,0.1);"><span class="b2b-spec-key" style="color:#c4b5fd;">Set / Kombinasyon:</span><span class="b2b-spec-val" style="color:#c4b5fd;">${p.usedCombo}</span></div>`;
-                if (p.usedNote) specHtml += `<div class="b2b-spec-row" style="background:rgba(239,68,68,0.1);"><span class="b2b-spec-key" style="color:#fca5a5;">Kusur / Açıklama:</span><span class="b2b-spec-val" style="color:#fca5a5;">${p.usedNote}</span></div>`;
-            }
-
             let typeText = 'Otomobil Lastiği';
             if (p.group === 'Hafif Ticari') typeText = 'Hafif Ticari Lastik';
             else if (p.group === 'Zirai') typeText = `Zirai Grubu (${p.subCat || 'Standart'})`;
@@ -2192,7 +2192,7 @@
 
             specHtml += `<div class="b2b-spec-row"><span class="b2b-spec-key">Ürün Türü:</span><span id="dType" class="b2b-spec-val">${typeText}</span></div>`;
 
-            // OTOMOBİL, HAFİF TİCARİ VE 2. EL İÇİN PARLAK EMOJİLİ MEVSİM BİLGİSİ
+            // FOTOĞRAFTA İSTEDİĞİNİZ GİBİ: ÜRÜN TÜRÜNÜN ALTINDA EMOJİLİ MEVSİM BİLGİSİ YER ALIYOR
             const seasonRow = document.getElementById('detailSeasonRow');
             if (p.group === 'Otomobil' || p.group === 'Hafif Ticari' || p.group === '2. El') {
                 if (seasonRow) seasonRow.style.display = 'flex';
@@ -2202,9 +2202,16 @@
                 else if (seasonText === '4 Mevsim') seasonEmoji = '🌦️ 4 Mevsim';
 
                 const dSeasonElem = document.getElementById('dSeason');
-                if (dSeasonElem) dSeasonElem.innerHTML = `<span style="font-size:1.05rem; font-weight:900; color:var(--accent-yellow); text-shadow:0 0 10px rgba(245,158,11,0.5);">${seasonEmoji}</span>`;
+                if (dSeasonElem) dSeasonElem.innerHTML = `<span style="font-size:1rem; font-weight:900; color:var(--accent-yellow); text-shadow:0 0 10px rgba(245,158,11,0.5);">${seasonEmoji}</span>`;
             } else {
                 if (seasonRow) seasonRow.style.display = 'none';
+            }
+
+            if (p.group === '2. El' && (currentUserRole === 'admin' || currentUserRole === 'bayi')) {
+                if (p.usedKm) specHtml += `<div class="b2b-spec-row" style="background:rgba(139,92,246,0.1);"><span class="b2b-spec-key" style="color:#c4b5fd;">Tahmini KM:</span><span class="b2b-spec-val" style="color:#c4b5fd;">${p.usedKm}</span></div>`;
+                if (p.usedTread) specHtml += `<div class="b2b-spec-row" style="background:rgba(139,92,246,0.1);"><span class="b2b-spec-key" style="color:#c4b5fd;">Diş Derinliği:</span><span class="b2b-spec-val" style="color:#c4b5fd;">${p.usedTread}</span></div>`;
+                if (p.usedCombo) specHtml += `<div class="b2b-spec-row" style="background:rgba(139,92,246,0.1);"><span class="b2b-spec-key" style="color:#c4b5fd;">Set / Kombinasyon:</span><span class="b2b-spec-val" style="color:#c4b5fd;">${p.usedCombo}</span></div>`;
+                if (p.usedNote) specHtml += `<div class="b2b-spec-row" style="background:rgba(239,68,68,0.1);"><span class="b2b-spec-key" style="color:#fca5a5;">Kusur / Açıklama:</span><span class="b2b-spec-val" style="color:#fca5a5;">${p.usedNote}</span></div>`;
             }
 
             specHtml += `<div class="b2b-spec-row"><span class="b2b-spec-key">Üretim Yılı (DOT):</span><span id="dDot" class="b2b-spec-val">${p.dot || '2026'}</span></div>`;
@@ -2212,7 +2219,14 @@
             specTable.innerHTML = specHtml;
             document.getElementById('detailModal').style.display = 'flex';
             document.body.classList.add('modal-open');
+            history.pushState({ modalOpen: true }, '');
         }
+
+        // TARAYICI GERİ TUŞUNA BASINCA MODALLARI KAPATMA
+        window.addEventListener('popstate', function(event) {
+            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+            document.body.classList.remove('modal-open');
+        });
 
         function moveDetailSlide(n) {
             if (activeDetailPhotos.length <= 1) return;
@@ -2617,6 +2631,7 @@
             }
             document.getElementById('notifModal').style.display = 'flex';
             document.body.classList.add('modal-open');
+            history.pushState({ modalOpen: true }, '');
         }
 
         function sendGroupWhatsApp(catName) {
