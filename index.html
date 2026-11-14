@@ -96,7 +96,7 @@
 
         .main-container { max-width: 1400px; margin: 15px auto; padding: 0 12px; }
 
-        /* ORTA SLİDER BANNER ALANI (TÜM ÜRÜNLER İÇİN 5'Lİ VEYA KATEGORİ İÇİN 3'LÜ) */
+        /* ORTA SLİDER BANNER ALANI (5'Lİ VEYA 3'LÜ DİNAMİK) */
         .slider-container {
             position: relative; width: 100%; height: 260px; border-radius: 10px;
             overflow: hidden; border: 1.5px solid var(--accent-yellow); margin-bottom: 15px;
@@ -204,7 +204,6 @@
         .filter-btn:hover { border-color: var(--accent-yellow); }
         .filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
 
-        /* ALT KATEGORİ ÇUBUĞU */
         .sub-filter-bar {
             display: none;
             gap: 6px;
@@ -456,8 +455,9 @@
         .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 28px; height: 28px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; }
         .btn-edit-price { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); width: 28px; height: 28px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; }
 
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 3000; padding: 15px; overflow-y: auto; }
-        .modal-content { background: var(--card-bg); border-radius: 14px; padding: 28px; width: 98%; max-width: 1000px; border: 2px solid rgba(245,158,11,0.5); max-height: 96vh; overflow-y: auto; box-shadow: 0 25px 60px rgba(0,0,0,0.95); }
+        /* ÜRÜN DETAY MODALI (GENİŞLETİLMİŞ BÜYÜK TAM EKRANA YAKIN ALAN) */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); justify-content: center; align-items: center; z-index: 3000; padding: 10px; overflow-y: auto; }
+        .modal-content { background: var(--card-bg); border-radius: 16px; padding: 24px; width: 100%; max-width: 1250px; border: 2px solid rgba(245,158,11,0.6); max-height: 96vh; overflow-y: auto; box-shadow: 0 30px 80px rgba(0,0,0,0.95); }
 
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; width: 100%; }
         .modal-header h3 { color: var(--accent-yellow); font-size: 1.4rem; font-weight: 900; }
@@ -465,15 +465,15 @@
         .close-btn:hover { color: var(--danger-color); }
 
         .b2b-detail-layout { display: flex; gap: 30px; flex-wrap: wrap; align-items: stretch; }
-        .b2b-detail-img-area { flex: 1.2; min-width: 320px; background: #ffffff; border-radius: 12px; padding: 24px; display: flex; align-items: center; justify-content: center; border: 1px solid #e2e8f0; }
-        .b2b-detail-img-area img { width: 100%; max-height: 380px; object-fit: contain; background: #ffffff; }
+        .b2b-detail-img-area { flex: 1.3; min-width: 320px; background: #ffffff; border-radius: 12px; padding: 24px; display: flex; align-items: center; justify-content: center; border: 1px solid #e2e8f0; min-height: 400px; }
+        .b2b-detail-img-area img { width: 100%; max-height: 480px; object-fit: contain; background: #ffffff; }
         
-        .b2b-detail-info-area { flex: 1.5; min-width: 320px; display: flex; flex-direction: column; gap: 16px; }
-        .b2b-product-title { font-size: 1.6rem; font-weight: 900; color: #fff; line-height: 1.3; }
+        .b2b-detail-info-area { flex: 1.6; min-width: 320px; display: flex; flex-direction: column; gap: 16px; }
+        .b2b-product-title { font-size: 1.8rem; font-weight: 900; color: #fff; line-height: 1.3; }
         
         .b2b-price-box { background: rgba(16, 185, 129, 0.1); border: 1.5px solid rgba(16, 185, 129, 0.4); padding: 16px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
         .b2b-price-label { font-size: 1rem; color: var(--text-muted); font-weight: 700; }
-        .b2b-price-val { font-size: 1.8rem; font-weight: 900; color: var(--success-color); }
+        .b2b-price-val { font-size: 2rem; font-weight: 900; color: var(--success-color); }
 
         .b2b-action-row { display: flex; gap: 12px; align-items: center; background: rgba(255,255,255,0.03); padding: 14px; border-radius: 10px; border: 1px solid var(--card-border); }
         .b2b-qty-box { display: flex; align-items: center; gap: 8px; background: #0f172a; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--card-border); }
@@ -481,7 +481,7 @@
         .b2b-btn-cart:hover { background: var(--accent-yellow); }
 
         .b2b-spec-table { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
-        .b2b-spec-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 14px; background: rgba(15, 23, 42, 0.7); border-radius: 8px; border: 1px solid var(--card-border); font-size: 0.95rem; }
+        .b2b-spec-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: rgba(15, 23, 42, 0.7); border-radius: 8px; border: 1px solid var(--card-border); font-size: 1rem; }
         .b2b-spec-key { color: var(--text-muted); font-weight: 700; }
         .b2b-spec-val { color: var(--text-main); font-weight: 900; display: flex; align-items: center; gap: 6px; }
 
@@ -498,7 +498,7 @@
         .file-upload-box:hover { background: rgba(245, 158, 11, 0.15); }
 
         .used-tire-slider-box {
-            position: relative; width: 100%; height: 320px; background: #ffffff; border-radius: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center;
+            position: relative; width: 100%; height: 380px; background: #ffffff; border-radius: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center;
         }
         .used-tire-slides { display: flex; width: 100%; height: 100%; transition: transform 0.4s ease-in-out; }
         .used-tire-slide { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #ffffff; padding: 12px; }
@@ -602,21 +602,16 @@
 
     <div id="portalSection" class="main-container">
 
-        <!-- ORTA SLİDER BANNER ALANI (5'Lİ VEYA 3'LÜ DİNAMİK KAYAN) -->
+        <!-- ORTA SLİDER BANNER ALANI -->
         <div class="slider-container" id="sliderContainerBox">
             <button class="slider-btn prev" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
             <button class="slider-btn next" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
 
-            <div class="slider-wrapper" id="sliderWrapper">
-                <!-- JS ile aktif slaytlar buraya dolacak -->
-            </div>
-
-            <div class="dots-container" id="dotsContainer">
-                <!-- JS ile dotlar buraya dolacak -->
-            </div>
+            <div class="slider-wrapper" id="sliderWrapper"></div>
+            <div class="dots-container" id="dotsContainer"></div>
         </div>
 
-        <!-- AKILLI ARAMA KUTUSU: SADECE MİSAFİR GÖRÜNÜMÜNDE AÇIK OLACAK -->
+        <!-- AKILLI ARAMA KUTUSU -->
         <div id="guestSmartFilterSection" class="smart-filter-box">
             <div style="font-size: 0.98rem; font-weight: 800; color: var(--accent-yellow); display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
                 <i class="fa-solid fa-sliders"></i> Akıllı Lastik Arama ve Filtreleme Motoru
@@ -675,7 +670,7 @@
                 </button>
             </div>
 
-            <!-- ANA FİLTRE BUTONLARI (PROFESYONEL İKONLARLA) -->
+            <!-- ANA FİLTRE BUTONLARI -->
             <div class="filter-buttons">
                 <button class="filter-btn active" onclick="setCategory('all', this)"><i class="fa-solid fa-globe"></i> Tüm Ürünler</button>
                 
@@ -700,7 +695,7 @@
                 <button class="filter-btn" onclick="setCategory('2. El', this)"><i class="fa-solid fa-rotate"></i> 2. El</button>
             </div>
 
-            <!-- ZİRAİ GRUBU ÖZEL ALT BUTONLAR -->
+            <!-- ZİRAİ ÖZEL ALT BUTONLAR -->
             <div id="ziraiSubBar" class="sub-filter-bar">
                 <button class="sub-filter-btn active" onclick="setSubCategory('all', this)"><i class="fa-solid fa-tractor"></i> Tüm Zirai</button>
                 <button class="sub-filter-btn" onclick="setSubCategory('Traktör Ön (Bezli)', this)"><i class="fa-solid fa-gear"></i> Traktör Ön (Bezli)</button>
@@ -805,7 +800,7 @@
         </div>
     </footer>
 
-    <!-- ÜRÜN DETAY MODALI -->
+    <!-- ÜRÜN DETAY MODALI (GENİŞLETİLMİŞ TAM EKRAN) -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -825,7 +820,7 @@
                     <div style="display:flex; align-items:center; gap:8px;" id="detailStockArea"></div>
                     <div class="b2b-action-row" id="detailActionRow"></div>
 
-                    <div style="font-size:0.95rem; font-weight:800; color:var(--accent-yellow); margin-top:4px;">Detaylı Teknik Bilgiler</div>
+                    <div style="font-size:1.05rem; font-weight:800; color:var(--accent-yellow); margin-top:4px;">Detaylı Teknik Bilgiler</div>
                     <div class="b2b-spec-table" id="detailSpecTable">
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Ürün Ebatı:</span><span id="dSize" class="b2b-spec-val">--</span></div>
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Marka:</span><span id="dBrand" class="b2b-spec-val">--</span></div>
@@ -846,7 +841,7 @@
                 <h3><i class="fa-solid fa-bell" style="color: var(--accent-yellow);"></i> Kategorize Stok Uyarıları</h3>
                 <span class="close-btn" onclick="closeModal('notifModal')">&times;</span>
             </div>
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">Kritik seviyedeki (0, 1, 2, 3 adet) ürünler gruplara ayrılmıştır. Tedarikçinize tek tuşla WhatsApp siparişi gönderebilirsiniz:</p>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">Kritik seviyedeki ürünler gruplara ayrılmıştır. Tedarikçinize tek tuşla WhatsApp siparişi gönderebilirsiniz:</p>
             <div id="notifListContainer"></div>
         </div>
     </div>
@@ -867,7 +862,7 @@
         </div>
     </div>
 
-    <!-- AYARLAR MODALI (5'Lİ ANA SLİDER VE 3'LÜ KATEGORİ SLİDER URL ALANLARI İLE) -->
+    <!-- AYARLAR MODALI -->
     <div id="settingsModal" class="modal" style="max-width: 540px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -1161,7 +1156,7 @@
         </div>
     </div>
 
-    <!-- YAN YANA TAMER & İBRAHİM WHATSAPP SEÇİM MODALI -->
+    <!-- WHATSAPP SEÇİM MODALI -->
     <div id="wpModal" class="modal" style="max-width: 440px;">
         <div class="modal-content" style="text-align: center;">
             <div class="modal-header">
@@ -1202,14 +1197,12 @@
             loginBg: localStorage.getItem('cfg_loginBg') || 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=1920&auto=format&fit=crop&q=80',
             headerBg: localStorage.getItem('cfg_headerBg') || 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Petlas_logo.svg/1200px-Petlas_logo.svg.png',
             
-            // 5'li Ana Slider (Tüm Ürünler)
             b1: localStorage.getItem('cfg_banner1') || 'https://araclo-bucket.sfo3.cdn.digitaloceanspaces.com/blog/1233242a-ea59-497c-b3c9-83f339a50e40.jpg',
             b2: localStorage.getItem('cfg_banner2') || 'https://images.unsplash.com/photo-1543465077-db45d34b88a5?w=1200&q=80',
             b3: localStorage.getItem('cfg_banner3') || 'https://images.unsplash.com/photo-1613214149922-f1809c99b414?w=1200&q=80',
             b4: localStorage.getItem('cfg_banner4') || '',
             b5: localStorage.getItem('cfg_banner5') || '',
 
-            // Kategoriye özel 3'er adet slider
             oto: [localStorage.getItem('cfg_oto1') || '', localStorage.getItem('cfg_oto2') || '', localStorage.getItem('cfg_oto3') || ''],
             tic: [localStorage.getItem('cfg_tic1') || '', localStorage.getItem('cfg_tic2') || '', localStorage.getItem('cfg_tic3') || ''],
             zir: [localStorage.getItem('cfg_zir1') || '', localStorage.getItem('cfg_zir2') || '', localStorage.getItem('cfg_zir3') || ''],
@@ -1293,7 +1286,6 @@
             else if (currentCategory === 'İç Lastik') list = siteImages.ic.filter(x => x && x.trim() !== '');
             else if (currentCategory === '2. El') list = siteImages.ikinciEl.filter(x => x && x.trim() !== '');
             
-            // Eğer kategori özelinde görsel girilmemişse veya 'all' ise 5'li ana slider gösterilir
             if (list.length === 0) {
                 list = [siteImages.b1, siteImages.b2, siteImages.b3, siteImages.b4, siteImages.b5].filter(x => x && x.trim() !== '');
             }
@@ -2019,7 +2011,7 @@
             document.getElementById('pUsedNote').value = p.usedNote || '';
 
             document.getElementById('pPattern').value = p.pattern || '';
-            document.getElementById('pSeason').value = (p.season === 'İç Lastik' || p.season === 'Zirai' || p.season === 'Ağır Vasıta') ? 'Yaz' : (p.season || 'Yaz');
+            document.getElementById('pSeason').value = (p.group === 'İç Lastik' || p.group === 'Zirai' || p.group === 'Ağır Vasıta') ? 'Yaz' : (p.season || 'Yaz');
             document.getElementById('pDot').value = p.dot || '2026';
             document.getElementById('pStock').value = p.stock || 0;
             document.getElementById('pPrice').value = p.price || 0;
@@ -2064,8 +2056,6 @@
             if (stockVal >= 4) {
                 if (currentUserRole === 'admin') {
                     return `<div class="stock-badge-in"><i class="fa-solid fa-check"></i> Stokta Var (${stockVal} Adet)</div>`;
-                } else if (currentUserRole === 'bayi') {
-                    return `<div class="stock-badge-in"><i class="fa-solid fa-store"></i> Stokta Var</div>`;
                 } else {
                     return `<div class="stock-badge-in"><i class="fa-solid fa-store"></i> Stokta Var</div>`;
                 }
@@ -2115,14 +2105,14 @@
                 currentDetailSlideIdx = 0;
                 let slidesHtml = activeDetailPhotos.map(photo => `<div class="used-tire-slide"><img src="${photo}" alt="Lastik Fotoğrafı"></div>`).join('');
                 imgAreaContainer.innerHTML = `
-                    <div class="used-tire-slider-box">
+                    <div class="used-tire-slider-box" style="height: 420px;">
                         <button class="ut-slider-btn prev" onclick="moveDetailSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
                         <button class="ut-slider-btn next" onclick="moveDetailSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
                         <div class="used-tire-slides" id="detailSlidesWrapper">${slidesHtml}</div>
                     </div>
                 `;
             } else {
-                imgAreaContainer.innerHTML = `<img id="dImg" src="${activeDetailPhotos[0]}" alt="Lastik Görseli" style="width:100%; max-height:380px; object-fit:contain; background:#ffffff;">`;
+                imgAreaContainer.innerHTML = `<img id="dImg" src="${activeDetailPhotos[0]}" alt="Lastik Görseli" style="width:100%; max-height:450px; object-fit:contain; background:#ffffff;">`;
             }
            
             document.getElementById('dTitle').innerText = `${p.size} ${p.pattern || ''} ${p.brand}`.toUpperCase();
@@ -2194,19 +2184,19 @@
 
             specHtml += `<div class="b2b-spec-row"><span class="b2b-spec-key">Ürün Türü:</span><span id="dType" class="b2b-spec-val">${typeText}</span></div>`;
 
+            // OTOMOBİL, HAFİF TİCARİ VE 2. EL İÇİN PARLAK EMOJİLİ MEVSİM BİLGİSİ
             const seasonRow = document.getElementById('detailSeasonRow');
-            if (p.group === 'Ağır Vasıta') {
-                if (seasonRow) seasonRow.style.display = 'none';
-            } else {
+            if (p.group === 'Otomobil' || p.group === 'Hafif Ticari' || p.group === '2. El') {
                 if (seasonRow) seasonRow.style.display = 'flex';
-                let seasonText = 'Yaz';
-                if (p.season === 'Kış') seasonText = 'Kış';
-                else if (p.season === '4 Mevsim') seasonText = '4 Mevsim';
-                else if (p.group === 'Zirai') seasonText = 'Zirai';
-                else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') seasonText = 'İç Lastik';
-                
+                let seasonText = p.season || 'Yaz';
+                let seasonEmoji = '☀️ Yaz Sezonu';
+                if (seasonText === 'Kış') seasonEmoji = '❄️ Kış Sezonu';
+                else if (seasonText === '4 Mevsim') seasonEmoji = '🌦️ 4 Mevsim';
+
                 const dSeasonElem = document.getElementById('dSeason');
-                if (dSeasonElem) dSeasonElem.innerText = seasonText;
+                if (dSeasonElem) dSeasonElem.innerHTML = `<span style="font-size:1.05rem; font-weight:900; color:var(--accent-yellow); text-shadow:0 0 10px rgba(245,158,11,0.5);">${seasonEmoji}</span>`;
+            } else {
+                if (seasonRow) seasonRow.style.display = 'none';
             }
 
             specHtml += `<div class="b2b-spec-row"><span class="b2b-spec-key">Üretim Yılı (DOT):</span><span id="dDot" class="b2b-spec-val">${p.dot || '2026'}</span></div>`;
