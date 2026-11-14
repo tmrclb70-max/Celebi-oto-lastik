@@ -96,15 +96,23 @@
 
         .main-container { max-width: 1400px; margin: 15px auto; padding: 0 12px; }
 
+        /* ORTA BANNER / SLİDER ALANI */
         .slider-container {
             position: relative; width: 100%; height: 260px; border-radius: 10px;
             overflow: hidden; border: 1.5px solid var(--accent-yellow); margin-bottom: 15px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.4);
         }
-
         .slider-wrapper { display: flex; width: 100%; height: 100%; transition: transform 0.5s ease-in-out; }
         .slide { min-width: 100%; height: 100%; position: relative; }
         .slide img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* TEKLİ KATEGORİ BANNER GÖRSELİ */
+        .single-banner-container {
+            position: relative; width: 100%; height: 260px; border-radius: 10px;
+            overflow: hidden; border: 1.5px solid var(--accent-yellow); margin-bottom: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4); background: #1e293b; display: none;
+        }
+        .single-banner-container img { width: 100%; height: 100%; object-fit: cover; }
 
         .slider-btn {
             position: absolute; top: 50%; transform: translateY(-50%); background: rgba(15,23,42,0.7);
@@ -196,40 +204,49 @@
         .btn-notification { position: relative; background: #0f172a; border: 1px solid var(--card-border); color: var(--accent-yellow); padding: 0 12px; height: 38px; border-radius: 6px; cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 6px; font-size: 0.85rem; white-space: nowrap; }
         .notif-badge { position: absolute; top: -4px; right: -4px; background: var(--danger-color); color: white; font-size: 0.68rem; font-weight: 800; padding: 1px 5px; border-radius: 8px; border: 2px solid var(--card-bg); }
 
-        .filter-buttons { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; align-items: center; }
-        .filter-btn { flex: 1; min-width: 95px; padding: 9px 8px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 0.78rem; transition: 0.2s; }
+        .filter-buttons { display: flex; gap: 6px; flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; align-items: center; padding-bottom: 4px; }
+        .filter-buttons::-webkit-scrollbar { height: 4px; }
+        .filter-buttons::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 2px; }
+
+        .filter-btn { flex: 0 0 auto; padding: 8px 12px; background: #0f172a; border: 1px solid var(--card-border); color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 0.76rem; transition: 0.2s; white-space: nowrap; }
         .filter-btn:hover { border-color: var(--accent-yellow); }
         .filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
 
-        /* PETLAS TARZI SADE VE ÖLÇEKLİ ALT KATEGORİ ÇUBUĞU */
+        /* ALT KATEGORİ ÇUBUĞU - KUSURSUZ SIĞDIRMA */
         .sub-filter-bar {
             display: none;
             gap: 6px;
-            flex-wrap: wrap;
-            justify-content: center;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            justify-content: flex-start;
             align-items: center;
             margin-top: 10px;
-            padding: 9px;
-            background: rgba(15, 23, 42, 0.85);
+            padding: 8px 10px;
+            background: rgba(15, 23, 42, 0.88);
             border-radius: 8px;
             border: 1px solid rgba(245, 158, 11, 0.4);
             animation: fadeIn 0.3s ease-in-out;
             box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
         }
+        .sub-filter-bar::-webkit-scrollbar { height: 4px; }
+        .sub-filter-bar::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 2px; }
         .sub-filter-bar.visible { display: flex; }
+        
         .sub-filter-btn {
-            padding: 6px 12px;
+            flex: 0 0 auto;
+            padding: 6px 10px;
             background: #0f172a;
             border: 1px solid var(--card-border);
             color: var(--text-muted);
             border-radius: 6px;
             cursor: pointer;
             font-weight: 700;
-            font-size: 0.76rem;
+            font-size: 0.74rem;
             transition: 0.2s;
             display: flex;
             align-items: center;
             gap: 5px;
+            white-space: nowrap;
         }
         .sub-filter-btn:hover { border-color: var(--accent-yellow); color: #fff; transform: translateY(-1px); }
         .sub-filter-btn.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); box-shadow: 0 0 10px rgba(245,158,11,0.4); }
@@ -239,11 +256,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .season-dropdown-container { position: relative; flex: 1; min-width: 110px; }
+        .season-dropdown-container { position: relative; flex: 0 0 auto; min-width: 110px; }
         .season-select-box {
-            width: 100%; padding: 9px 8px; background: #0f172a; border: 1px solid var(--card-border);
-            color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.78rem;
-            display: flex; align-items: center; justify-content: space-between; transition: 0.2s;
+            width: 100%; padding: 8px 10px; background: #0f172a; border: 1px solid var(--card-border);
+            color: var(--text-main); border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.76rem;
+            display: flex; align-items: center; justify-content: space-between; transition: 0.2s; white-space: nowrap;
         }
         .season-select-box:hover { border-color: var(--accent-yellow); }
         .season-select-box.active { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
@@ -593,7 +610,8 @@
 
     <div id="portalSection" class="main-container">
 
-        <div class="slider-container">
+        <!-- 3'LÜ SLİDER BANNER (TÜM ÜRÜNLER İÇİN) -->
+        <div class="slider-container" id="multiSliderContainer">
             <button class="slider-btn prev" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
             <button class="slider-btn next" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
 
@@ -608,6 +626,11 @@
                 <div class="dot" onclick="currentSlide(1)"></div>
                 <div class="dot" onclick="currentSlide(2)"></div>
             </div>
+        </div>
+
+        <!-- ÖZEL KATEGORİ TEK BANNER ALANI -->
+        <div class="single-banner-container" id="singleBannerContainer">
+            <img id="singleBannerImg" src="" alt="Kategori Banner Görseli">
         </div>
 
         <!-- AKILLI ARAMA KUTUSU: SADECE MİSAFİR GÖRÜNÜMÜNDE AÇIK OLACAK -->
@@ -687,25 +710,25 @@
                 </div>
 
                 <button class="filter-btn" onclick="setCategory('Otomobil', this)">🚗 Otomobil</button>
-                <button class="filter-btn" onclick="setCategory('Hafif Ticari', this)">🚐 Ticari</button>
+                <button class="filter-btn" onclick="setCategory('Hafif Ticari', this)">🚐 Hafif Ticari</button>
                 <button class="filter-btn" onclick="setCategory('Zirai', this)">🚜 Zirai</button>
                 <button class="filter-btn" onclick="setCategory('Ağır Vasıta', this)">🚛 Ağır Vasıta</button>
                 <button class="filter-btn" onclick="setCategory('İç Lastik', this)">⭕ İç Lastik</button>
                 <button class="filter-btn" onclick="setCategory('2. El', this)">♻️ 2. El</button>
             </div>
 
-            <!-- ZİRAİ GRUBU ÖZEL ALT BUTONLAR (SADE VE ÖLÇEKLİ) -->
+            <!-- ZİRAİ GRUBU ÖZEL ALT BUTONLAR (GÜNCELLENDİ: Traktör Ön Bezli/Radial, Traktör Arka Bezli/Radial vb.) -->
             <div id="ziraiSubBar" class="sub-filter-bar">
                 <button class="sub-filter-btn active" onclick="setSubCategory('all', this)">🌾 Tüm Zirai</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Traktör Ön', this)">🚜 Traktör Ön</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Traktör Arka', this)">🚜 Traktör Arka</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Bezli', this)">🧵 Bezli</button>
-                <button class="sub-filter-btn" onclick="setSubCategory('Radial', this)">⚡ Radial</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Traktör Ön (Bezli)', this)">🚜 Traktör Ön (Bezli)</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Traktör Ön (Radial)', this)">⚡ Traktör Ön (Radial)</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Traktör Arka (Bezli)', this)">🚜 Traktör Arka (Bezli)</button>
+                <button class="sub-filter-btn" onclick="setSubCategory('Traktör Arka (Radial)', this)">⚡ Traktör Arka (Radial)</button>
                 <button class="sub-filter-btn" onclick="setSubCategory('Römork', this)">🛒 Römork</button>
                 <button class="sub-filter-btn" onclick="setSubCategory('Biçerdöver', this)">🌾 Biçerdöver</button>
             </div>
 
-            <!-- AĞIR VASITA ÖZEL ALT BUTONLAR (SADE VE ÖLÇEKLİ) -->
+            <!-- AĞIR VASITA ÖZEL ALT BUTONLAR -->
             <div id="agirVasiptaSubBar" class="sub-filter-bar">
                 <button class="sub-filter-btn active" onclick="setSubCategory('all', this)">🚛 Tüm Ağır Vasıta</button>
                 <button class="sub-filter-btn" onclick="setSubCategory('Çeker', this)">🔥 Çeker Gurubu</button>
@@ -825,7 +848,7 @@
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Marka:</span><span id="dBrand" class="b2b-spec-val">--</span></div>
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Desen / Model:</span><span id="dPattern" class="b2b-spec-val">--</span></div>
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Ürün Türü:</span><span id="dType" class="b2b-spec-val">--</span></div>
-                        <div class="b2b-spec-row"><span class="b2b-spec-key">Mevsimi:</span><span id="dSeason" class="b2b-spec-val">--</span></div>
+                        <div class="b2b-spec-row" id="detailSeasonRow"><span class="b2b-spec-key">Mevsimi:</span><span id="dSeason" class="b2b-spec-val">--</span></div>
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Üretim Yılı (DOT):</span><span id="dDot" class="b2b-spec-val">--</span></div>
                     </div>
                 </div>
@@ -862,10 +885,10 @@
     </div>
 
     <!-- AYARLAR MODALI -->
-    <div id="settingsModal" class="modal" style="max-width: 480px;">
+    <div id="settingsModal" class="modal" style="max-width: 520px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fa-solid fa-gear"></i> Sistem ve Görsel Ayarları</h3>
+                <h3><i class="fa-solid fa-gear"></i> Sistem ve Kategori Banner Ayarları</h3>
                 <span class="close-btn" onclick="closeModal('settingsModal')">&times;</span>
             </div>
             
@@ -904,7 +927,7 @@
                 <input type="text" id="cfgHeaderBg" class="form-control" placeholder="Resim URL yapıştırın">
             </div>
 
-            <div class="settings-section-title"><i class="fa-solid fa-images"></i> 3'lü Slider Banner Resimleri</div>
+            <div class="settings-section-title"><i class="fa-solid fa-images"></i> 3'lü Slider Banner Resimleri (Tüm Ürünler / Ana Sayfa)</div>
             <div class="form-group">
                 <label>1. Banner Fotoğrafı (URL)</label>
                 <input type="text" id="cfgBanner1" class="form-control" placeholder="1. görsel URL">
@@ -916,6 +939,32 @@
             <div class="form-group">
                 <label>3. Banner Fotoğrafı (URL)</label>
                 <input type="text" id="cfgBanner3" class="form-control" placeholder="3. görsel URL">
+            </div>
+
+            <div class="settings-section-title"><i class="fa-solid fa-panorama"></i> Kategoriye Özel Orta Banner Görselleri (URL)</div>
+            <div class="form-group">
+                <label>🚗 Otomobil Kategori Banner URL</label>
+                <input type="text" id="cfgBannerOtomobil" class="form-control" placeholder="Otomobil seçilince çıkacak görsel URL">
+            </div>
+            <div class="form-group">
+                <label>🚐 Hafif Ticari Kategori Banner URL</label>
+                <input type="text" id="cfgBannerTicari" class="form-control" placeholder="Hafif Ticari seçilince çıkacak görsel URL">
+            </div>
+            <div class="form-group">
+                <label>🚜 Zirai Kategori Banner URL</label>
+                <input type="text" id="cfgBannerZirai" class="form-control" placeholder="Zirai seçilince çıkacak görsel URL">
+            </div>
+            <div class="form-group">
+                <label>🚛 Ağır Vasıta Kategori Banner URL</label>
+                <input type="text" id="cfgBannerAgir" class="form-control" placeholder="Ağır Vasıta seçilince çıkacak görsel URL">
+            </div>
+            <div class="form-group">
+                <label>⭕ İç Lastik Kategori Banner URL</label>
+                <input type="text" id="cfgBannerIc" class="form-control" placeholder="İç Lastik seçilince çıkacak görsel URL">
+            </div>
+            <div class="form-group">
+                <label>♻️ 2. El Kategori Banner URL</label>
+                <input type="text" id="cfgBannerIkinciEl" class="form-control" placeholder="2. El seçilince çıkacak görsel URL">
             </div>
 
             <button class="btn-primary" style="background: #3b82f6; color: white;" onclick="saveSettings()"><i class="fa-solid fa-floppy-disk"></i> Ayarları Kaydet</button>
@@ -945,21 +994,16 @@
                 </select>
             </div>
 
-            <!-- EKLEME ESNASINDA SEÇİLECEK ALT KATEGORİLER -->
             <div class="form-group" id="subCategorySelectGroup">
                 <label>Alt Kategori Seçimi</label>
                 <select id="pSubCat" class="form-control">
                     <option value="Standart">Standart / Genel</option>
-                    <option value="Traktör Ön">Traktör Ön</option>
-                    <option value="Traktör Arka">Traktör Arka</option>
-                    <option value="Bezli">Bezli</option>
-                    <option value="Radial">Radial</option>
+                    <option value="Traktör Ön (Bezli)">Traktör Ön (Bezli)</option>
+                    <option value="Traktör Ön (Radial)">Traktör Ön (Radial)</option>
+                    <option value="Traktör Arka (Bezli)">Traktör Arka (Bezli)</option>
+                    <option value="Traktör Arka (Radial)">Traktör Arka (Radial)</option>
                     <option value="Römork">Römork</option>
                     <option value="Biçerdöver">Biçerdöver</option>
-                    <option value="Çeker">Çeker Gurubu</option>
-                    <option value="Ön (Düz)">Ön Gurup (Düz)</option>
-                    <option value="Dorse">Dorse</option>
-                    <option value="Hafriyat">Hafriyat Tipi</option>
                 </select>
             </div>
 
@@ -1142,7 +1186,7 @@
                 <h3><i class="fa-brands fa-whatsapp" style="color: var(--whatsapp-color);"></i> WhatsApp ile İletişim</h3>
                 <span class="close-btn" onclick="closeModal('wpModal')">&times;</span>
             </div>
-            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">Hangi yetkilimize ulaşmak istersiniz?</p>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">Hangi kelime / yetkilimize ulaşmak istersiniz?</p>
             
             <div style="display: flex; gap: 10px; justify-content: center;">
                 <a id="wpTamerBtn" href="#" target="_blank" class="btn-card-whatsapp" style="flex: 1; background: #0284c7; padding: 12px 8px; justify-content: center; font-size: 0.85rem; flex-direction: column; gap: 4px;">
@@ -1177,7 +1221,13 @@
             headerBg: localStorage.getItem('cfg_headerBg') || 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Petlas_logo.svg/1200px-Petlas_logo.svg.png',
             banner1: localStorage.getItem('cfg_banner1') || 'https://araclo-bucket.sfo3.cdn.digitaloceanspaces.com/blog/1233242a-ea59-497c-b3c9-83f339a50e40.jpg',
             banner2: localStorage.getItem('cfg_banner2') || 'https://images.unsplash.com/photo-1543465077-db45d34b88a5?w=1200&q=80',
-            banner3: localStorage.getItem('cfg_banner3') || 'https://images.unsplash.com/photo-1613214149922-f1809c99b414?w=1200&q=80'
+            banner3: localStorage.getItem('cfg_banner3') || 'https://images.unsplash.com/photo-1613214149922-f1809c99b414?w=1200&q=80',
+            bannerOtomobil: localStorage.getItem('cfg_bannerOtomobil') || '',
+            bannerTicari: localStorage.getItem('cfg_bannerTicari') || '',
+            bannerZirai: localStorage.getItem('cfg_bannerZirai') || '',
+            bannerAgir: localStorage.getItem('cfg_bannerAgir') || '',
+            bannerIc: localStorage.getItem('cfg_bannerIc') || '',
+            bannerIkinciEl: localStorage.getItem('cfg_bannerIkinciEl') || ''
         };
 
         window.initFirebaseData = function() {
@@ -1194,6 +1244,12 @@
                     if (data.banner1) siteImages.banner1 = data.banner1;
                     if (data.banner2) siteImages.banner2 = data.banner2;
                     if (data.banner3) siteImages.banner3 = data.banner3;
+                    if (data.bannerOtomobil !== undefined) siteImages.bannerOtomobil = data.bannerOtomobil;
+                    if (data.bannerTicari !== undefined) siteImages.bannerTicari = data.bannerTicari;
+                    if (data.bannerZirai !== undefined) siteImages.bannerZirai = data.bannerZirai;
+                    if (data.bannerAgir !== undefined) siteImages.bannerAgir = data.bannerAgir;
+                    if (data.bannerIc !== undefined) siteImages.bannerIc = data.bannerIc;
+                    if (data.bannerIkinciEl !== undefined) siteImages.bannerIkinciEl = data.bannerIkinciEl;
                     applySiteImages();
                 }
             });
@@ -1234,6 +1290,31 @@
             if (b1) b1.src = siteImages.banner1;
             if (b2) b2.src = siteImages.banner2;
             if (b3) b3.src = siteImages.banner3;
+
+            updateCategoryBannerDisplay();
+        }
+
+        function updateCategoryBannerDisplay() {
+            const multiSlider = document.getElementById('multiSliderContainer');
+            const singleBanner = document.getElementById('singleBannerContainer');
+            const singleImg = document.getElementById('singleBannerImg');
+
+            let activeCustomImg = '';
+            if (currentCategory === 'Otomobil') activeCustomImg = siteImages.bannerOtomobil;
+            else if (currentCategory === 'Hafif Ticari') activeCustomImg = siteImages.bannerTicari;
+            else if (currentCategory === 'Zirai') activeCustomImg = siteImages.bannerZirai;
+            else if (currentCategory === 'Ağır Vasıta') activeCustomImg = siteImages.bannerAgir;
+            else if (currentCategory === 'İç Lastik') activeCustomImg = siteImages.bannerIc;
+            else if (currentCategory === '2. El') activeCustomImg = siteImages.bannerIkinciEl;
+
+            if (currentCategory !== 'all' && activeCustomImg && activeCustomImg.trim() !== '') {
+                multiSlider.style.display = 'none';
+                singleBanner.style.display = 'block';
+                singleImg.src = activeCustomImg;
+            } else {
+                multiSlider.style.display = 'block';
+                singleBanner.style.display = 'none';
+            }
         }
 
         function formatCurrency(val) {
@@ -1332,6 +1413,13 @@
             document.getElementById('cfgBanner2').value = siteImages.banner2 || '';
             document.getElementById('cfgBanner3').value = siteImages.banner3 || '';
 
+            document.getElementById('cfgBannerOtomobil').value = siteImages.bannerOtomobil || '';
+            document.getElementById('cfgBannerTicari').value = siteImages.bannerTicari || '';
+            document.getElementById('cfgBannerZirai').value = siteImages.bannerZirai || '';
+            document.getElementById('cfgBannerAgir').value = siteImages.bannerAgir || '';
+            document.getElementById('cfgBannerIc').value = siteImages.bannerIc || '';
+            document.getElementById('cfgBannerIkinciEl').value = siteImages.bannerIkinciEl || '';
+
             document.getElementById('settingsModal').style.display = 'flex';
         }
 
@@ -1384,6 +1472,13 @@
             const b2 = document.getElementById('cfgBanner2').value.trim();
             const b3 = document.getElementById('cfgBanner3').value.trim();
 
+            const bOto = document.getElementById('cfgBannerOtomobil').value.trim();
+            const bTic = document.getElementById('cfgBannerTicari').value.trim();
+            const bZir = document.getElementById('cfgBannerZirai').value.trim();
+            const bAgr = document.getElementById('cfgBannerAgir').value.trim();
+            const bIc = document.getElementById('cfgBannerIc').value.trim();
+            const b2El = document.getElementById('cfgBannerIkinciEl').value.trim();
+
             siteImages.siteLogoBase64 = sLogoBase64; localStorage.setItem('cfg_siteLogoBase64', sLogoBase64);
             if (lBg) { siteImages.loginBg = lBg; localStorage.setItem('cfg_loginBg', lBg); }
             if (hBg) { siteImages.headerBg = hBg; localStorage.setItem('cfg_headerBg', hBg); }
@@ -1391,13 +1486,20 @@
             if (b2) { siteImages.banner2 = b2; localStorage.setItem('cfg_banner2', b2); }
             if (b3) { siteImages.banner3 = b3; localStorage.setItem('cfg_banner3', b3); }
 
+            siteImages.bannerOtomobil = bOto; localStorage.setItem('cfg_bannerOtomobil', bOto);
+            siteImages.bannerTicari = bTic; localStorage.setItem('cfg_bannerTicari', bTic);
+            siteImages.bannerZirai = bZir; localStorage.setItem('cfg_bannerZirai', bZir);
+            siteImages.bannerAgir = bAgr; localStorage.setItem('cfg_bannerAgir', bAgr);
+            siteImages.bannerIc = bIc; localStorage.setItem('cfg_bannerIc', bIc);
+            siteImages.bannerIkinciEl = b2El; localStorage.setItem('cfg_bannerIkinciEl', b2El);
+
             applySiteImages();
 
             if (window.db) {
                 await window.setDoc(window.doc(window.db, "site_ayarlari", "gorseller"), siteImages, { merge: true });
             }
 
-            alert('Tüm ayarlar ve büyük logo başarıyla kaydedildi!');
+            alert('Tüm ayarlar ve kategori banner görselleri başarıyla kaydedildi!');
             closeModal('settingsModal');
         }
 
@@ -1464,6 +1566,7 @@
                 resetSubBtns(agirSubBar);
             }
 
+            updateCategoryBannerDisplay();
             renderProducts();
         }
 
@@ -1512,6 +1615,7 @@
                 if (allBtn) allBtn.classList.add('active');
             }
 
+            updateCategoryBannerDisplay();
             renderProducts();
         }
 
@@ -1527,10 +1631,10 @@
             if (val === 'Zirai') {
                 subCatSelect.innerHTML = `
                     <option value="Standart">Standart / Genel</option>
-                    <option value="Traktör Ön">Traktör Ön</option>
-                    <option value="Traktör Arka">Traktör Arka</option>
-                    <option value="Bezli">Bezli</option>
-                    <option value="Radial">Radial</option>
+                    <option value="Traktör Ön (Bezli)">Traktör Ön (Bezli)</option>
+                    <option value="Traktör Ön (Radial)">Traktör Ön (Radial)</option>
+                    <option value="Traktör Arka (Bezli)">Traktör Arka (Bezli)</option>
+                    <option value="Traktör Arka (Radial)">Traktör Arka (Radial)</option>
                     <option value="Römork">Römork</option>
                     <option value="Biçerdöver">Biçerdöver</option>
                 `;
@@ -2026,18 +2130,25 @@
             else if (p.group === 'İç Lastik') typeText = '⭕ İç Lastik (Şambrel)';
             else if (p.group === '2. El') typeText = '♻️ 2. El Lastik';
 
-            let seasonText = '☀️ Yaz';
-            if (p.season === 'Kış') seasonText = '❄️ Kış';
-            else if (p.season === '4 Mevsim') seasonText = '🌤️ 4 Mevsim';
-            else if (p.group === 'Zirai') seasonText = '🚜 Zirai';
-            else if (p.group === 'Ağır Vasıta') seasonText = '🚛 Ağır Vasıta';
-            else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') seasonText = '⭕ İç Lastik';
+            specHtml += `<div class="b2b-spec-row"><span class="b2b-spec-key">Ürün Türü:</span><span id="dType" class="b2b-spec-val">${typeText}</span></div>`;
 
-            specHtml += `
-                <div class="b2b-spec-row"><span class="b2b-spec-key">Ürün Türü:</span><span id="dType" class="b2b-spec-val">${typeText}</span></div>
-                <div class="b2b-spec-row"><span class="b2b-spec-key">Mevsimi:</span><span id="dSeason" class="b2b-spec-val">${seasonText}</span></div>
-                <div class="b2b-spec-row"><span class="b2b-spec-key">Üretim Yılı (DOT):</span><span id="dDot" class="b2b-spec-val">${p.dot || '2026'}</span></div>
-            `;
+            // AĞIR VASITA VEYA ZİRAİ İSE MEVSİM BİLGİSİNİ GÖSTERME/GİZLE
+            const seasonRow = document.getElementById('detailSeasonRow');
+            if (p.group === 'Ağır Vasıta') {
+                if (seasonRow) seasonRow.style.display = 'none';
+            } else {
+                if (seasonRow) seasonRow.style.display = 'flex';
+                let seasonText = '☀️ Yaz';
+                if (p.season === 'Kış') seasonText = '❄️ Kış';
+                else if (p.season === '4 Mevsim') seasonText = '🌤️ 4 Mevsim';
+                else if (p.group === 'Zirai') seasonText = '🚜 Zirai';
+                else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') seasonText = '⭕ İç Lastik';
+                
+                const dSeasonElem = document.getElementById('dSeason');
+                if (dSeasonElem) dSeasonElem.innerText = seasonText;
+            }
+
+            specHtml += `<div class="b2b-spec-row"><span class="b2b-spec-key">Üretim Yılı (DOT):</span><span id="dDot" class="b2b-spec-val">${p.dot || '2026'}</span></div>`;
 
             specTable.innerHTML = specHtml;
             document.getElementById('detailModal').style.display = 'flex';
@@ -2109,7 +2220,7 @@
                         if (p.subCat !== currentSubCategory) matchCat = false;
                     }
                 } else {
-                    matchCat = (p.season === currentCategory && !isInnerTube && !isSecondHand);
+                    matchCat = (p.season === currentCategory && !isInnerTube && !isSecondHand && p.group !== 'Ağır Vasıta');
                 }
 
                 if (!matchCat) return false;
@@ -2158,10 +2269,10 @@
                     let catTag = `<span class="tag tag-category"><i class="fa-solid fa-car"></i> ${catTitle}</span>`;
 
                     let seasonEmojiTag = '';
-                    if (p.group === 'Zirai') {
-                        seasonEmojiTag = `<span class="tag" style="color:#fbbf24;" title="Zirai Grubu">🚜</span>`;
-                    } else if (p.group === 'Ağır Vasıta') {
+                    if (p.group === 'Ağır Vasıta') {
                         seasonEmojiTag = `<span class="tag" style="color:#38bdf8;" title="Ağır Vasıta">🚛</span>`;
+                    } else if (p.group === 'Zirai') {
+                        seasonEmojiTag = `<span class="tag" style="color:#fbbf24;" title="Zirai Grubu">🚜</span>`;
                     } else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') {
                         seasonEmojiTag = `<span class="tag" style="color:#a78bfa;" title="İç Lastik">⭕</span>`;
                     } else if (p.season === 'Kış') {
@@ -2256,10 +2367,10 @@
                     let catTag = `<span class="tag tag-category"><i class="fa-solid fa-car"></i> ${catTitle}</span>`;
 
                     let rowSeasonEmojiTag = '';
-                    if (p.group === 'Zirai') {
-                        rowSeasonEmojiTag = `<span class="tag" style="color:#fbbf24;" title="Zirai Grubu">🚜</span>`;
-                    } else if (p.group === 'Ağır Vasıta') {
+                    if (p.group === 'Ağır Vasıta') {
                         rowSeasonEmojiTag = `<span class="tag" style="color:#38bdf8;" title="Ağır Vasıta">🚛</span>`;
+                    } else if (p.group === 'Zirai') {
+                        rowSeasonEmojiTag = `<span class="tag" style="color:#fbbf24;" title="Zirai Grubu">🚜</span>`;
                     } else if (p.group === 'İç Lastik' || p.season === 'İç Lastik') {
                         rowSeasonEmojiTag = `<span class="tag" style="color:#a78bfa;" title="İç Lastik">⭕</span>`;
                     } else if (p.season === 'Kış') {
@@ -2487,7 +2598,9 @@
         }
 
         setInterval(() => {
-            moveSlide(1);
+            if (currentCategory === 'all' || !siteImages[`banner${currentCategory}`]) {
+                moveSlide(1);
+            }
         }, 4000);
     </script>
 </body>
