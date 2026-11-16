@@ -61,7 +61,7 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding-bottom: 30px; overflow-x: hidden; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding-bottom: 30px; overflow-x: hidden; width: 100%; }
         body.modal-open { overflow: hidden !important; }
 
         header { 
@@ -95,7 +95,7 @@
         .btn-login-open { background: var(--accent-yellow); color: #000; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; transition: 0.2s; box-shadow: 0 4px 12px rgba(245,158,11,0.3); }
         .btn-login-open:hover { filter: brightness(1.1); }
 
-        .main-container { max-width: 1400px; margin: 15px auto; padding: 0 12px; }
+        .main-container { max-width: 1400px; margin: 15px auto; padding: 0 12px; width: 100%; overflow-x: hidden; }
 
         .slider-container {
             position: relative; width: 100%; height: 260px; border-radius: 10px;
@@ -126,20 +126,21 @@
         }
         .dot.active { background: var(--danger-color); width: 24px; border-radius: 8px; }
 
+        /* BAYİ GİRİŞİ EKRANI TAM ORTALANMIŞ DURUMDA */
         .login-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center;
-            display: flex; justify-content: flex-start; align-items: center; z-index: 2000;
+            display: flex; justify-content: center; align-items: center; z-index: 2000;
             padding: 15px;
         }
         
         .login-card { 
             width: 100%; max-width: 400px; 
-            background: rgba(15, 23, 42, 0.88); 
+            background: rgba(15, 23, 42, 0.92); 
             padding: 24px 20px; 
             border-radius: 14px; 
-            border: 1.5px solid rgba(245, 158, 11, 0.4); 
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8); 
+            border: 1.5px solid rgba(245, 158, 11, 0.5); 
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85); 
             text-align: center; 
             backdrop-filter: blur(14px); 
         }
@@ -186,7 +187,7 @@
 
         .controls-section { background: var(--card-bg); padding: 12px; border-radius: 10px; border: 1px solid var(--card-border); margin-bottom: 15px; }
         .search-bar-row { display: flex; gap: 8px; margin-bottom: 12px; align-items: center; flex-wrap: wrap; }
-        .search-box { position: relative; flex: 1; min-width: 220px; }
+        .search-box { position: relative; flex: 1; min-width: 200px; }
         .search-box i { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.95rem; }
         .search-box input { width: 100%; padding: 10px 10px 10px 34px; background: #0f172a; border: 1px solid var(--card-border); border-radius: 6px; color: white; font-size: 0.9rem; }
         
@@ -271,44 +272,49 @@
             display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; transition: 0.2s; 
         }
 
-        .products-list-wrapper { width: 100%; }
+        /* TABLO VE KART GÖRÜNÜMÜ TAŞMA ENGELLEYİCİ YAPILAR */
+        .products-list-wrapper { width: 100%; max-width: 100%; }
+        .products-list-wrapper.is-table-mode { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 6px; }
+        .products-list-wrapper.is-card-mode { overflow-x: hidden; }
         
-        @media (max-width: 768px) {
-            .products-list-wrapper { overflow-x: auto; }
-            .products-list { display: flex; flex-direction: column; gap: 8px; min-width: 780px; }
-        }
-        @media (min-width: 769px) {
-            .products-list-wrapper { overflow-x: hidden; }
-            .products-list { display: flex; flex-direction: column; gap: 8px; width: 100%; }
-        }
+        .products-list { display: flex; flex-direction: column; gap: 8px; width: 100%; min-width: 820px; }
         
         .product-row { 
             background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; 
             padding: 8px 12px; display: grid; 
-            grid-template-columns: 50px 1.1fr 1.3fr 1.2fr 90px 45px 1.1fr 90px auto; 
-            align-items: center; gap: 8px; transition: 0.2s; cursor: pointer;
+            grid-template-columns: 50px 1.1fr 1.2fr 1.2fr 1.1fr 42px 85px 1fr 95px auto; 
+            align-items: center; gap: 8px; transition: 0.2s; cursor: pointer; width: 100%;
         }
-        .product-row:hover { border-color: var(--accent-yellow); transform: translateX(2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .product-row:hover { border-color: var(--accent-yellow); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
 
         .products-grid-view {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 14px;
             width: 100%;
+            max-width: 100%;
+        }
+
+        @media (max-width: 560px) {
+            .products-grid-view {
+                grid-template-columns: 1fr;
+            }
         }
 
         .product-card-item {
             background: var(--card-bg);
             border: 1.5px solid var(--card-border);
             border-radius: 10px;
-            padding: 14px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 9px;
             transition: 0.2s;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             width: 100%;
+            min-width: 0;
+            overflow: hidden;
         }
         .product-card-item:hover {
             border-color: var(--accent-yellow);
@@ -317,14 +323,14 @@
         }
         .card-img-box {
             width: 100%;
-            height: 165px;
+            height: 160px;
             background: #ffffff;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            padding: 12px;
+            padding: 10px;
             position: relative;
             box-shadow: inset 0 0 0 1px #e2e8f0;
         }
@@ -341,27 +347,33 @@
             align-items: center;
             gap: 8px;
             margin-top: 2px;
+            min-width: 0;
         }
         .card-title {
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 900;
             color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
         }
         .card-brand-display {
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            max-width: 110px;
+            max-width: 105px;
             height: 28px;
+            flex-shrink: 0;
         }
         .card-brand-logo-img {
-            max-width: 100px;
+            max-width: 95px;
             max-height: 26px;
             object-fit: contain;
             background: transparent !important;
         }
         .card-brand-text {
-            font-size: 0.78rem;
+            font-size: 0.76rem;
             font-weight: 800;
             color: var(--accent-yellow);
             background: rgba(15, 23, 42, 0.8);
@@ -369,6 +381,26 @@
             padding: 2px 6px;
             border-radius: 4px;
             text-transform: uppercase;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 105px;
+        }
+        .card-meta-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            min-width: 0;
+        }
+        .card-meta-pattern {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
         }
         .card-price-row {
             display: flex;
@@ -376,11 +408,11 @@
             align-items: center;
             background: rgba(16, 185, 129, 0.08);
             border: 1px solid rgba(16, 185, 129, 0.2);
-            padding: 8px 10px;
+            padding: 7px 10px;
             border-radius: 6px;
         }
         .card-price-val {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 900;
             color: var(--success-color);
         }
@@ -398,6 +430,8 @@
             align-items: center;
             gap: 6px;
             margin-top: 2px;
+            flex-wrap: wrap;
+            min-width: 0;
         }
         
         .product-img-box {
@@ -406,13 +440,13 @@
         }
         .product-img { width: 100%; height: 100%; object-fit: contain; background: #ffffff; }
 
-        .brand-display-box { display: flex; align-items: center; justify-content: flex-start; height: 36px; width: 100%; background: transparent; }
-        .brand-logo-img { width: 100%; max-width: 120px; height: 32px; object-fit: contain; object-position: left center; background: transparent !important; border: none !important; box-shadow: none !important; }
+        .brand-display-box { display: flex; align-items: center; justify-content: flex-start; height: 36px; width: 100%; background: transparent; overflow: hidden; }
+        .brand-logo-img { width: 100%; max-width: 115px; height: 32px; object-fit: contain; object-position: left center; background: transparent !important; border: none !important; box-shadow: none !important; }
         .brand-text-box {
             display: inline-flex; align-items: center; justify-content: center;
             background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(245, 158, 11, 0.6);
             color: var(--accent-yellow); padding: 4px 8px; border-radius: 5px;
-            font-size: 0.78rem; font-weight: 800; text-transform: uppercase; text-align: center; white-space: nowrap;
+            font-size: 0.76rem; font-weight: 800; text-transform: uppercase; text-align: center; white-space: nowrap;
         }
 
         @media (max-width: 768px) {
@@ -423,71 +457,85 @@
             .brand-text-mobile { display: none !important; }
         }
 
-        .col-size { font-size: 0.95rem; font-weight: 800; color: #fff; white-space: nowrap; }
+        .col-size { font-size: 0.92rem; font-weight: 800; color: #fff; white-space: nowrap; }
         
         .pattern-box {
             display: inline-flex; align-items: center; justify-content: center; gap: 4px;
             background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(245, 158, 11, 0.5);
             color: var(--accent-yellow); padding: 4px 8px; border-radius: 5px;
-            font-size: 0.74rem; font-weight: 700; text-transform: uppercase; text-align: center; white-space: nowrap;
+            font-size: 0.72rem; font-weight: 700; text-transform: uppercase; text-align: center; white-space: nowrap;
+            max-width: 100%; overflow: hidden; text-overflow: ellipsis;
         }
 
         .col-price { 
-            font-size: 0.95rem; font-weight: 900; color: #34d399; text-align: right; 
+            font-size: 0.92rem; font-weight: 900; color: #34d399; text-align: right; 
             background: rgba(16, 185, 129, 0.08); padding: 4px 6px; border-radius: 5px; 
             border: 1px solid rgba(16, 185, 129, 0.2); white-space: nowrap;
         }
         
-        .tag { font-size: 0.7rem; padding: 4px 6px; border-radius: 5px; background: #0f172a; color: var(--text-main); border: 1px solid var(--card-border); font-weight: 700; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; }
+        .tag { font-size: 0.68rem; padding: 4px 6px; border-radius: 5px; background: #0f172a; color: var(--text-main); border: 1px solid var(--card-border); font-weight: 700; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; }
         .tag-category { color: var(--accent-yellow); border-color: rgba(245, 158, 11, 0.4); }
 
-        .stock-badge-in { background: rgba(16, 185, 129, 0.15); color: var(--success-color); border: 1.5px solid var(--success-color); font-weight: 800; padding: 4px 6px; border-radius: 5px; font-size: 0.7rem; text-align: center; white-space: nowrap; display: inline-flex; align-items: center; gap: 3px; }
-        .stock-badge-low { background: rgba(245, 158, 11, 0.15); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); font-weight: 800; padding: 4px 6px; border-radius: 5px; font-size: 0.7rem; text-align: center; white-space: nowrap; display: inline-flex; align-items: center; gap: 3px; }
-        .stock-badge-out { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1.5px solid var(--danger-color); font-weight: 800; padding: 4px 6px; border-radius: 5px; font-size: 0.7rem; text-align: center; white-space: nowrap; display: inline-flex; align-items: center; gap: 3px; }
+        .stock-badge-in { background: rgba(16, 185, 129, 0.15); color: var(--success-color); border: 1.5px solid var(--success-color); font-weight: 800; padding: 4px 6px; border-radius: 5px; font-size: 0.68rem; text-align: center; white-space: nowrap; display: inline-flex; align-items: center; gap: 3px; }
+        .stock-badge-low { background: rgba(245, 158, 11, 0.15); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); font-weight: 800; padding: 4px 6px; border-radius: 5px; font-size: 0.68rem; text-align: center; white-space: nowrap; display: inline-flex; align-items: center; gap: 3px; }
+        .stock-badge-out { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1.5px solid var(--danger-color); font-weight: 800; padding: 4px 6px; border-radius: 5px; font-size: 0.68rem; text-align: center; white-space: nowrap; display: inline-flex; align-items: center; gap: 3px; }
         
         .admin-stock-control { display: flex; align-items: center; gap: 3px; background: rgba(15, 23, 42, 0.8); padding: 2px 4px; border-radius: 5px; border: 1px solid var(--card-border); }
-        .admin-stock-val { font-weight: 800; color: #fff; font-size: 0.75rem; min-width: 32px; text-align: center; }
+        .admin-stock-val { font-weight: 800; color: #fff; font-size: 0.74rem; min-width: 30px; text-align: center; }
         
         .btn-qty { background: #334155; color: #fff; border: none; width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.82rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .btn-qty:hover { background: var(--accent-yellow); color: #000; }
         
         .row-actions { display: flex; gap: 4px; }
-        .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 28px; height: 28px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; }
-        .btn-edit-price { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); width: 28px; height: 28px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; }
+        .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 26px; height: 26px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.76rem; }
+        .btn-edit-price { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); width: 26px; height: 26px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.76rem; }
 
-        /* GENEL SOLA HİZALANMIŞ / KAYDIRILABİLİR MODAL YAPISI */
+        /* SOLA HİZALI / KAYDIRILABİLİR MODAL YAPISI */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.94); justify-content: flex-start; align-items: center; z-index: 3000; padding: 10px; overflow-x: hidden; overflow-y: auto; }
         
-        .modal-content { background: var(--card-bg); border-radius: 14px; padding: 18px 22px; width: 98vw; max-width: 1250px; height: 94vh; border: 2px solid rgba(245,158,11,0.7); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 30px 90px rgba(0,0,0,0.95); margin: auto 0 auto 10px; }
+        .modal-content { background: var(--card-bg); border-radius: 14px; padding: 16px 20px; width: 96vw; max-width: 1180px; height: 92vh; border: 2px solid rgba(245,158,11,0.7); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 30px 90px rgba(0,0,0,0.95); margin: auto 0 auto 8px; }
 
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; width: 100%; flex-shrink: 0; }
-        .modal-header h3 { color: var(--accent-yellow); font-size: 1.25rem; font-weight: 900; }
-        .close-btn { font-size: 1.8rem; cursor: pointer; color: var(--text-muted); transition: 0.2s; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; width: 100%; flex-shrink: 0; gap: 8px; }
+        .modal-header h3 { color: var(--accent-yellow); font-size: 1.15rem; font-weight: 900; }
+        .close-btn { font-size: 1.8rem; cursor: pointer; color: var(--text-muted); transition: 0.2s; line-height: 1; }
         .close-btn:hover { color: var(--danger-color); }
 
-        .b2b-detail-layout { display: flex; gap: 24px; flex-wrap: nowrap; align-items: center; flex: 1; overflow: hidden; }
-        .b2b-detail-img-area { flex: 1.2; height: 100%; background: #ffffff; border-radius: 10px; padding: 15px; display: flex; align-items: center; justify-content: center; border: 1px solid #e2e8f0; overflow: hidden; }
+        /* ÜRÜN DETAY PENCERESİ (MASAÜSTÜ VE MOBİL TAM UYUMLU) */
+        .b2b-detail-layout { display: flex; gap: 20px; flex-wrap: nowrap; align-items: stretch; flex: 1; overflow: hidden; min-height: 0; }
+        .b2b-detail-img-area { flex: 1.1; height: 100%; background: #ffffff; border-radius: 10px; padding: 14px; display: flex; align-items: center; justify-content: center; border: 1px solid #e2e8f0; overflow: hidden; }
         .b2b-detail-img-area img { width: 100%; max-height: 100%; object-fit: contain; background: #ffffff; }
         
-        .b2b-detail-info-area { flex: 1.5; height: 100%; display: flex; flex-direction: column; justify-content: flex-start; gap: 10px; overflow-y: auto; padding-right: 6px; }
+        .b2b-detail-info-area { flex: 1.5; height: 100%; display: flex; flex-direction: column; justify-content: flex-start; gap: 10px; overflow-y: auto; padding-right: 6px; min-width: 0; }
         .b2b-detail-info-area::-webkit-scrollbar { width: 6px; }
         .b2b-detail-info-area::-webkit-scrollbar-thumb { background: var(--accent-yellow); border-radius: 3px; }
 
-        .b2b-product-title { font-size: 1.5rem; font-weight: 900; color: #fff; line-height: 1.2; }
+        @media (max-width: 768px) {
+            .modal { padding: 8px; justify-content: center; }
+            .modal-content { width: 95vw; height: 90vh; margin: auto; padding: 14px; }
+            .modal-header h3 { font-size: 1rem; }
+            .b2b-detail-layout { flex-direction: column; overflow-y: auto; gap: 12px; padding-right: 2px; }
+            .b2b-detail-img-area { flex: none; width: 100%; height: 195px; padding: 10px; }
+            .b2b-detail-info-area { flex: none; height: auto; overflow-y: visible; padding-right: 0; }
+            .b2b-product-title { font-size: 1.15rem !important; }
+            .b2b-price-val { font-size: 1.35rem !important; }
+            .b2b-spec-row { padding: 7px 10px; font-size: 0.82rem; }
+        }
+
+        .b2b-product-title { font-size: 1.45rem; font-weight: 900; color: #fff; line-height: 1.25; word-break: break-word; }
         
         .b2b-price-box { background: rgba(16, 185, 129, 0.1); border: 1.5px solid rgba(16, 185, 129, 0.4); padding: 10px 14px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .b2b-price-label { font-size: 0.95rem; color: var(--text-muted); font-weight: 700; }
-        .b2b-price-val { font-size: 1.75rem; font-weight: 900; color: var(--success-color); }
+        .b2b-price-label { font-size: 0.92rem; color: var(--text-muted); font-weight: 700; }
+        .b2b-price-val { font-size: 1.65rem; font-weight: 900; color: var(--success-color); }
 
         .b2b-action-row { display: flex; gap: 10px; align-items: center; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; border: 1px solid var(--card-border); }
         .b2b-qty-box { display: flex; align-items: center; gap: 8px; background: #0f172a; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--card-border); }
-        .b2b-btn-cart { flex: 1; background: #ffffff; color: #000; font-weight: 900; border: none; padding: 10px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.95rem; transition: 0.2s; }
+        .b2b-btn-cart { flex: 1; background: #ffffff; color: #000; font-weight: 900; border: none; padding: 10px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.92rem; transition: 0.2s; }
         .b2b-btn-cart:hover { background: var(--accent-yellow); }
 
         .b2b-spec-table { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
-        .b2b-spec-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(15, 23, 42, 0.7); border-radius: 6px; border: 1px solid var(--card-border); font-size: 0.9rem; }
-        .b2b-spec-key { color: var(--text-muted); font-weight: 700; }
-        .b2b-spec-val { color: var(--text-main); font-weight: 900; display: flex; align-items: center; gap: 6px; }
+        .b2b-spec-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(15, 23, 42, 0.7); border-radius: 6px; border: 1px solid var(--card-border); font-size: 0.88rem; gap: 8px; }
+        .b2b-spec-key { color: var(--text-muted); font-weight: 700; flex-shrink: 0; }
+        .b2b-spec-val { color: var(--text-main); font-weight: 900; display: flex; align-items: center; gap: 6px; text-align: right; word-break: break-word; }
 
         .detail-brand-logo { max-height: 24px; max-width: 110px; object-fit: contain; }
 
@@ -509,7 +557,7 @@
         .used-tire-slide img { width: 100%; height: 100%; object-fit: contain; background: #ffffff; border-radius: 4px; }
         
         .ut-slider-btn {
-            position: absolute; top: 50%; transform: translateY(-50%); background: rgba(15, 23, 42, 0.75); color: #fff; border: none; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 5;
+            position: absolute; top: 50%; transform: translateY(-50%); background: rgba(15, 23, 42, 0.75); color: #fff; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 5;
         }
         .ut-slider-btn.prev { left: 8px; }
         .ut-slider-btn.next { right: 8px; }
@@ -517,18 +565,17 @@
         .photo-preview-grid { display: flex; gap: 8px; overflow-x: auto; margin-top: 8px; padding-bottom: 5px; }
         .preview-thumb { width: 65px; height: 65px; border-radius: 6px; object-fit: contain; background: #ffffff; padding: 3px; border: 1.5px solid var(--accent-yellow); flex-shrink: 0; }
 
-        /* ÖZEL İÇERİK KAYDIRMA ALANLARI VE PENCERE BOYUTLARI */
-        .notif-modal-content { max-width: 580px; width: 96%; height: 85vh; max-height: 650px; display: flex; flex-direction: column; overflow: hidden; }
+        .notif-modal-content { max-width: 580px; width: 95vw; height: 85vh; max-height: 650px; display: flex; flex-direction: column; overflow: hidden; }
         .notif-scroll-area { flex: 1; overflow-y: auto; padding-right: 4px; }
         .notif-scroll-area::-webkit-scrollbar { width: 6px; }
         .notif-scroll-area::-webkit-scrollbar-thumb { background: var(--accent-yellow); border-radius: 3px; }
 
-        .settings-modal-content { max-width: 540px; width: 96%; height: 90vh; max-height: 750px; display: flex; flex-direction: column; overflow: hidden; }
+        .settings-modal-content { max-width: 540px; width: 95vw; height: 90vh; max-height: 750px; display: flex; flex-direction: column; overflow: hidden; }
         .settings-scroll-area { flex: 1; overflow-y: auto; padding-right: 6px; }
         .settings-scroll-area::-webkit-scrollbar { width: 6px; }
         .settings-scroll-area::-webkit-scrollbar-thumb { background: var(--accent-yellow); border-radius: 3px; }
 
-        .product-modal-content { max-width: 480px; width: 96%; height: 90vh; max-height: 750px; display: flex; flex-direction: column; overflow: hidden; }
+        .product-modal-content { max-width: 480px; width: 95vw; height: 90vh; max-height: 750px; display: flex; flex-direction: column; overflow: hidden; }
         .product-scroll-area { flex: 1; overflow-y: auto; padding-right: 6px; }
         .product-scroll-area::-webkit-scrollbar { width: 6px; }
         .product-scroll-area::-webkit-scrollbar-thumb { background: var(--accent-yellow); border-radius: 3px; }
@@ -739,7 +786,7 @@
         <div id="adminBar" class="admin-bar hidden">
             <div class="admin-bar-header">
                 <h3 style="color: var(--text-muted); font-size: 0.88rem;"><i class="fa-solid fa-boxes-stacked"></i> Stok Yönetimi & Kontrolü</h3>
-                <div style="display: flex; gap: 6px;">
+                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
                     <button class="btn-add" onclick="openAddModal()"><i class="fa-solid fa-plus"></i> Yeni Ürün Ekle</button>
                     <button class="btn-add" style="background: var(--icon-secondhand); border: 1.5px solid rgba(139, 92, 246, 0.8);" onclick="openAddModal('2. El')"><i class="fa-solid fa-rotate-right"></i> 2. El Lastik Ekle</button>
                     <button class="btn-add" style="background: #3b82f6;" onclick="openSettingsModal()"><i class="fa-solid fa-gear"></i> Ayarlar</button>
@@ -758,7 +805,7 @@
             </div>
         </div>
 
-        <div class="products-list-wrapper">
+        <div id="productsListWrapper" class="products-list-wrapper is-table-mode">
             <div id="productsGrid" class="products-list"></div>
         </div>
 
@@ -840,7 +887,7 @@
                     <div style="display:flex; align-items:center; gap:8px;" id="detailStockArea"></div>
                     <div class="b2b-action-row" id="detailActionRow"></div>
 
-                    <div style="font-size:0.95rem; font-weight:800; color:var(--accent-yellow); margin-top:2px;">Detaylı Teknik Bilgiler</div>
+                    <div style="font-size:0.9rem; font-weight:800; color:var(--accent-yellow); margin-top:2px;">Detaylı Teknik Bilgiler</div>
                     <div class="b2b-spec-table" id="detailSpecTable">
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Ürün Ebatı:</span><span id="dSize" class="b2b-spec-val">--</span></div>
                         <div class="b2b-spec-row"><span class="b2b-spec-key">Marka:</span><span id="dBrand" class="b2b-spec-val">--</span></div>
@@ -2091,13 +2138,13 @@
 
             if (stockVal >= 4) {
                 if (currentUserRole === 'admin') {
-                    return `<div class="stock-badge-in"><i class="fa-solid fa-check"></i> Stokta Var (${stockVal} Adet)</div>`;
+                    return `<div class="stock-badge-in"><i class="fa-solid fa-check"></i> Stokta (${stockVal})</div>`;
                 } else {
                     return `<div class="stock-badge-in"><i class="fa-solid fa-store"></i> Stokta Var</div>`;
                 }
             } else if (stockVal > 0 && stockVal < 4) {
                 if (isAuthorized) {
-                    return `<div class="stock-badge-low"><i class="fa-solid fa-triangle-exclamation"></i> Kritik Stok (${stockVal} Adet)</div>`;
+                    return `<div class="stock-badge-low"><i class="fa-solid fa-triangle-exclamation"></i> Kritik (${stockVal})</div>`;
                 } else {
                     return `<div class="stock-badge-in"><i class="fa-solid fa-store"></i> Stokta Var</div>`;
                 }
@@ -2177,15 +2224,15 @@
                 `;
             } else {
                 priceSection.innerHTML = `
-                    <div style="font-size: 0.82rem; font-weight: 800; color: var(--accent-yellow); margin-bottom: 4px; text-align: center;">💬 WhatsApp ile Fiyat Sor / Bilgi Al</div>
+                    <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-yellow); margin-bottom: 4px; text-align: center;">💬 WhatsApp ile Fiyat Sor / Bilgi Al</div>
                     <div style="display: flex; gap: 8px; width: 100%;">
-                        <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="flex:1; background:#0284c7; padding: 8px; font-size: 0.8rem; flex-direction:column; gap:2px;">
+                        <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="flex:1; background:#0284c7; padding: 7px; font-size: 0.78rem; flex-direction:column; gap:2px;">
                             <span>Tamer Çelebi</span>
-                            <small style="font-size:0.7rem; opacity:0.9;">0545 394 77 91</small>
+                            <small style="font-size:0.68rem; opacity:0.9;">0545 394 77 91</small>
                         </button>
-                        <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="flex:1; background:#0284c7; padding: 8px; font-size: 0.8rem; flex-direction:column; gap:2px;">
+                        <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="flex:1; background:#0284c7; padding: 7px; font-size: 0.78rem; flex-direction:column; gap:2px;">
                             <span>İbrahim Çelebi</span>
-                            <small style="font-size:0.7rem; opacity:0.9;">0542 125 70 09</small>
+                            <small style="font-size:0.68rem; opacity:0.9;">0542 125 70 09</small>
                         </button>
                     </div>
                 `;
@@ -2193,8 +2240,8 @@
                 stockArea.innerHTML = `<span>${getSmartStockBadgeHtml(stockVal)}</span>`;
                 
                 actionRow.innerHTML = `
-                    <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="background:#25d366; padding: 10px; font-size: 0.95rem; width:100%; justify-content:center;">
-                        <i class="fa-brands fa-whatsapp" style="font-size: 1.1rem;"></i> Hemen WhatsApp'tan İletişime Geç
+                    <button class="btn-card-whatsapp" onclick="openWpSelectModal('${p.brand}', '${p.size}', '${p.pattern || ''}')" style="background:#25d366; padding: 9px; font-size: 0.88rem; width:100%; justify-content:center;">
+                        <i class="fa-brands fa-whatsapp" style="font-size: 1.05rem;"></i> Hemen WhatsApp'tan İletişime Geç
                     </button>
                 `;
             }
@@ -2226,7 +2273,7 @@
             specHtml += `
                 <div class="b2b-spec-row" id="detailSeasonRow">
                     <span class="b2b-spec-key">Mevsimi:</span>
-                    <span id="dSeason" class="b2b-spec-val"><span style="font-size:0.95rem; font-weight:900; color:var(--accent-yellow);">${seasonEmoji}</span></span>
+                    <span id="dSeason" class="b2b-spec-val"><span style="font-size:0.88rem; font-weight:900; color:var(--accent-yellow);">${seasonEmoji}</span></span>
                 </div>
             `;
 
@@ -2281,6 +2328,7 @@
 
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
+            const wrapper = document.getElementById('productsListWrapper');
             const search = document.getElementById('searchInput').value.toLowerCase().trim();
             
             const fBrand = document.getElementById('filterBrandInput').value.toLowerCase().trim();
@@ -2346,11 +2394,20 @@
             filtered.sort((a, b) => getSortableSize(a.size) - getSortableSize(b.size));
 
             if (filtered.length === 0) {
+                if (wrapper) {
+                    wrapper.classList.remove('is-table-mode');
+                    wrapper.classList.add('is-card-mode');
+                }
+                grid.className = '';
                 grid.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 25px; font-size: 0.9rem; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--card-border);">Aradığınız kriterlere uygun lastik bulunamadı. Lütfen filtreleri veya arama terimini değiştirin.</div>`;
                 return;
             }
 
             if (isCardView) {
+                if (wrapper) {
+                    wrapper.classList.remove('is-table-mode');
+                    wrapper.classList.add('is-card-mode');
+                }
                 grid.className = 'products-grid-view';
                 filtered.forEach(p => {
                     const stockVal = parseInt(p.stock) || 0;
@@ -2388,16 +2445,16 @@
                     if (currentUserRole === 'admin' || currentUserRole === 'bayi') {
                         priceOrWpHtml = `
                             <div class="card-price-row">
-                                <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">Net Fiyat</span>
+                                <span style="font-size:0.78rem; color:var(--text-muted); font-weight:600;">Net Fiyat</span>
                                 <span class="card-price-val">${formatCurrency(p.price)}</span>
                             </div>
                         `;
                         if (currentUserRole === 'admin') {
                             adminActionsHtml = `
-                                <div style="display:flex; align-items:center; gap:6px;">
+                                <div style="display:flex; align-items:center; gap:5px;">
                                     <div class="admin-stock-control">
                                         <button class="btn-qty" onclick="updateStock('${p.id}', -1)">-</button>
-                                        <span class="admin-stock-val">${stockVal} Adet</span>
+                                        <span class="admin-stock-val">${stockVal}</span>
                                         <button class="btn-qty" onclick="updateStock('${p.id}', 1)">+</button>
                                     </div>
                                     <div class="row-actions">
@@ -2435,13 +2492,13 @@
                             <div class="card-title">${p.size}</div>
                             <div class="card-brand-display">${cardBrandHtml}</div>
                         </div>
-                        <div style="display:flex; justify-content:space-between; align-items:center; font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">
-                            <span>Desen: <span style="color:var(--accent-yellow);">${p.pattern || 'STANDART'}</span></span>
-                            <span>DOT: ${p.dot || '2026'}</span>
+                        <div class="card-meta-line">
+                            <span class="card-meta-pattern">Desen: <span style="color:var(--accent-yellow);">${p.pattern || 'STANDART'}</span></span>
+                            <span style="flex-shrink:0;">DOT: ${p.dot || '2026'}</span>
                         </div>
                         ${priceOrWpHtml}
                         <div class="card-footer-row">
-                            <div style="display:flex; gap:5px; align-items:center;">${catTag} ${seasonIconTag}</div>
+                            <div style="display:flex; gap:4px; align-items:center; flex-wrap:wrap;">${catTag} ${seasonIconTag}</div>
                             <div>${adminActionsHtml}</div>
                         </div>
                     `;
@@ -2449,6 +2506,10 @@
                 });
 
             } else {
+                if (wrapper) {
+                    wrapper.classList.remove('is-card-mode');
+                    wrapper.classList.add('is-table-mode');
+                }
                 grid.className = 'products-list';
                 filtered.forEach(p => {
                     const stockVal = parseInt(p.stock) || 0;
