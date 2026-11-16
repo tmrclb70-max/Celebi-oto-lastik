@@ -455,7 +455,7 @@
         .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 28px; height: 28px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; }
         .btn-edit-price { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); width: 28px; height: 28px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; }
 
-        /* ÜRÜN DETAY MODALI - TAM EKRAN (YUKARI-AŞAĞI KAYDIRILABİLİR İÇ ALAN) */
+        /* ÜRÜN DETAY MODALI (İÇİ KAYDIRILABİLİR) */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.94); justify-content: center; align-items: center; z-index: 3000; padding: 10px; overflow: hidden; }
         .modal-content { background: var(--card-bg); border-radius: 14px; padding: 18px 22px; width: 98vw; max-width: 1250px; height: 94vh; border: 2px solid rgba(245,158,11,0.7); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 30px 90px rgba(0,0,0,0.95); }
 
@@ -516,11 +516,17 @@
         .photo-preview-grid { display: flex; gap: 8px; overflow-x: auto; margin-top: 8px; padding-bottom: 5px; }
         .preview-thumb { width: 65px; height: 65px; border-radius: 6px; object-fit: contain; background: #ffffff; padding: 3px; border: 1.5px solid var(--accent-yellow); flex-shrink: 0; }
 
-        /* BİLDİRİM MODALI (YUKARI AŞAĞI KAYDIRILABİLİR İÇ ALAN) */
+        /* BİLDİRİM MODALI (İÇİ KAYDIRILABİLİR) */
         .notif-modal-content { max-width: 580px; width: 96%; height: 85vh; max-height: 650px; display: flex; flex-direction: column; overflow: hidden; }
         .notif-scroll-area { flex: 1; overflow-y: auto; padding-right: 4px; }
         .notif-scroll-area::-webkit-scrollbar { width: 6px; }
         .notif-scroll-area::-webkit-scrollbar-thumb { background: var(--accent-yellow); border-radius: 3px; }
+
+        /* AYARLAR MODALI (İÇİ KAYDIRILABİLİR) */
+        .settings-modal-content { max-width: 540px; width: 96%; height: 90vh; max-height: 750px; display: flex; flex-direction: column; overflow: hidden; }
+        .settings-scroll-area { flex: 1; overflow-y: auto; padding-right: 6px; }
+        .settings-scroll-area::-webkit-scrollbar { width: 6px; }
+        .settings-scroll-area::-webkit-scrollbar-thumb { background: var(--accent-yellow); border-radius: 3px; }
 
         .notif-section-card { background: rgba(15, 23, 42, 0.9); border: 1px solid var(--card-border); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
         .notif-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px; }
@@ -873,89 +879,91 @@
         </div>
     </div>
 
-    <!-- AYARLAR MODALI -->
-    <div id="settingsModal" class="modal" style="max-width: 540px; width: 96%; height: auto;">
-        <div class="modal-content" style="height: auto; max-height: 90vh;">
+    <!-- AYARLAR MODALI (İÇİ KAYDIRILABİLİR) -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content settings-modal-content">
             <div class="modal-header">
                 <h3><i class="fa-solid fa-gear"></i> Sistem ve Slider Banner Ayarları</h3>
                 <span class="close-btn" onclick="closeModal('settingsModal')">&times;</span>
             </div>
             
-            <div class="settings-section-title"><i class="fa-solid fa-lock"></i> Şifre Değiştirme</div>
-            <div class="form-group">
-                <label>Yönetici Şifresi Değiştir</label>
-                <input type="password" id="newAdminPass" class="form-control" placeholder="Yeni Yönetici Şifresi">
-            </div>
-            <div class="form-group">
-                <label>Bayi Şifresi Değiştir</label>
-                <input type="password" id="newBayiPass" class="form-control" placeholder="Yeni Bayi Şifresi (Varsayılan: 1234)">
-            </div>
-
-            <div class="settings-section-title"><i class="fa-solid fa-image"></i> Sol Üst Köşe Logo ve Arka Planlar</div>
-            
-            <input type="hidden" id="cfgSiteLogoBase64" value="">
-            <div class="form-group">
-                <label><i class="fa-solid fa-shield-halved" style="color:var(--accent-yellow);"></i> Bilgisayardan Sol Üst Köşe Şeffaf Logosu Seç</label>
-                <div class="file-upload-box" onclick="document.getElementById('siteLogoFileInput').click()">
-                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 1.3rem; color: var(--accent-yellow); margin-bottom: 4px;"></i>
-                    <p id="siteLogoFileText" style="font-size: 0.8rem; color: var(--text-muted);">Bilgisayarınızdan şeffaf PNG logo seçmek için tıklayın</p>
-                    <input type="file" id="siteLogoFileInput" accept="image/png, image/webp, image/svg+xml" style="display:none;" onchange="handleSiteLogoUpload(this)">
+            <div class="settings-scroll-area">
+                <div class="settings-section-title"><i class="fa-solid fa-lock"></i> Şifre Değiştirme</div>
+                <div class="form-group">
+                    <label>Yönetici Şifresi Değiştir</label>
+                    <input type="password" id="newAdminPass" class="form-control" placeholder="Yeni Yönetici Şifresi">
                 </div>
-                <div id="siteLogoPreviewContainer" style="margin-top: 6px; text-align: center; display: none;">
-                    <img id="siteLogoPreviewImg" src="" style="max-height: 50px; background: rgba(255,255,255,0.1); padding: 4px; border-radius: 4px;">
-                    <button type="button" style="background: var(--danger-color); color: white; border: none; padding: 2px 6px; border-radius: 4px; font-size: 0.72rem; margin-left: 8px; cursor: pointer;" onclick="clearSiteLogo()">Logoyu Kaldır</button>
+                <div class="form-group">
+                    <label>Bayi Şifresi Değiştir</label>
+                    <input type="password" id="newBayiPass" class="form-control" placeholder="Yeni Bayi Şifresi (Varsayılan: 1234)">
                 </div>
+
+                <div class="settings-section-title"><i class="fa-solid fa-image"></i> Sol Üst Köşe Logo ve Arka Planlar</div>
+                
+                <input type="hidden" id="cfgSiteLogoBase64" value="">
+                <div class="form-group">
+                    <label><i class="fa-solid fa-shield-halved" style="color:var(--accent-yellow);"></i> Bilgisayardan Sol Üst Köşe Şeffaf Logosu Seç</label>
+                    <div class="file-upload-box" onclick="document.getElementById('siteLogoFileInput').click()">
+                        <i class="fa-solid fa-cloud-arrow-up" style="font-size: 1.3rem; color: var(--accent-yellow); margin-bottom: 4px;"></i>
+                        <p id="siteLogoFileText" style="font-size: 0.8rem; color: var(--text-muted);">Bilgisayarınızdan şeffaf PNG logo seçmek için tıklayın</p>
+                        <input type="file" id="siteLogoFileInput" accept="image/png, image/webp, image/svg+xml" style="display:none;" onchange="handleSiteLogoUpload(this)">
+                    </div>
+                    <div id="siteLogoPreviewContainer" style="margin-top: 6px; text-align: center; display: none;">
+                        <img id="siteLogoPreviewImg" src="" style="max-height: 50px; background: rgba(255,255,255,0.1); padding: 4px; border-radius: 4px;">
+                        <button type="button" style="background: var(--danger-color); color: white; border: none; padding: 2px 6px; border-radius: 4px; font-size: 0.72rem; margin-left: 8px; cursor: pointer;" onclick="clearSiteLogo()">Logoyu Kaldır</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Giriş Ekranı Arka Plan Resmi (URL)</label>
+                    <input type="text" id="cfgLoginBg" class="form-control" placeholder="Resim URL yapıştırın">
+                </div>
+                <div class="form-group">
+                    <label>En Üst Header Arka Plan Resmi (URL)</label>
+                    <input type="text" id="cfgHeaderBg" class="form-control" placeholder="Resim URL yapıştırın">
+                </div>
+
+                <div class="settings-section-title"><i class="fa-solid fa-images"></i> 5'li Slider Banner Resimleri (Tüm Ürünler / Ana Sayfa)</div>
+                <div class="form-group"><label>1. Banner Fotoğrafı (URL)</label><input type="text" id="cfgBanner1" class="form-control" placeholder="Görsel URL"></div>
+                <div class="form-group"><label>2. Banner Fotoğrafı (URL)</label><input type="text" id="cfgBanner2" class="form-control" placeholder="Görsel URL"></div>
+                <div class="form-group"><label>3. Banner Fotoğrafı (URL)</label><input type="text" id="cfgBanner3" class="form-control" placeholder="Görsel URL"></div>
+                <div class="form-group"><label>4. Banner Fotoğrafı (URL)</label><input type="text" id="cfgBanner4" class="form-control" placeholder="Görsel URL"></div>
+                <div class="form-group"><label>5. Banner Fotoğrafı (URL)</label><input type="text" id="cfgBanner5" class="form-control" placeholder="Görsel URL"></div>
+
+                <div class="settings-section-title"><i class="fa-solid fa-panorama"></i> Kategoriye Özel 3'lü Slider Banner Resimleri (URL)</div>
+                
+                <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">🚗 Otomobil Kategorisi (3 Görsel)</div>
+                <div class="form-group"><input type="text" id="cfgOto1" class="form-control" placeholder="Otomobil 1. Görsel URL"></div>
+                <div class="form-group"><input type="text" id="cfgOto2" class="form-control" placeholder="Otomobil 2. Görsel URL"></div>
+                <div class="form-group"><input type="text" id="cfgOto3" class="form-control" placeholder="Otomobil 3. Görsel URL"></div>
+
+                <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">🚐 Hafif Ticari Kategorisi (3 Görsel)</div>
+                <div class="form-group"><input type="text" id="cfgTic1" class="form-control" placeholder="Ticari 1. Görsel URL"></div>
+                <div class="form-group"><input type="text" id="cfgTic2" class="form-control" placeholder="Ticari 2. Görsel URL"></div>
+                <div class="form-group"><input type="text" id="cfgTic3" class="form-control" placeholder="Ticari 3. Görsel URL"></div>
+
+                <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">🚜 Zirai Kategorisi (3 Görsel)</div>
+                <div class="form-group"><input type="text" id="cfgZir1" class="form-control" placeholder="Zirai 1. Görsel URL"></div>
+                <div class="form-group"><input type="text" id="cfgZir2" class="form-control" placeholder="Zirai 2. Görsel URL"></div>
+                <div class="form-group"><input type="text" id="cfgZir3" class="form-control" placeholder="Zirai 3. Görsel URL"></div>
+
+                <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">🚛 Ağır Vasıta Kategorisi (3 Görsel)</div>
+                <div class="form-group"><input type="text" id="cfgAgr1" class="form-control" placeholder="Ağır Vasıta 1. Görsel URL"></div>
+                <div class="form-group"><input type="text" id="cfgAgr2" class="form-control" placeholder="Ağır Vasıta 2. Görsel URL"></div>
+                <div class="form-group"><input type="text" id="cfgAgr3" class="form-control" placeholder="Ağır Vasıta 3. Görsel URL"></div>
+
+                <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">⭕ İç Lastik Kategorisi (3 Görsel)</div>
+                <div class="form-group"><input type="text" id="cfgIc1" class="form-control" placeholder="İç Lastik 1. Görsel URL"></div>
+                <div class="form-group"><input type="text" id="cfgIc2" class="form-control" placeholder="İç Lastik 2. Görsel URL"></div>
+                <div class="form-group"><input type="text" id="cfgIc3" class="form-control" placeholder="İç Lastik 3. Görsel URL"></div>
+
+                <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">♻️ 2. El Kategorisi (3 Görsel)</div>
+                <div class="form-group"><input type="text" id="cfg2El1" class="form-control" placeholder="2. El 1. Görsel URL"></div>
+                <div class="form-group"><input type="text" id="cfg2El2" class="form-control" placeholder="2. El 2. Görsel URL"></div>
+                <div class="form-group"><input type="text" id="cfg2El3" class="form-control" placeholder="2. El 3. Görsel URL"></div>
+
+                <button class="btn-primary" style="background: #3b82f6; color: white; margin-top: 15px; margin-bottom: 10px;" onclick="saveSettings()"><i class="fa-solid fa-floppy-disk"></i> Ayarları Kaydet</button>
             </div>
-
-            <div class="form-group">
-                <label>Giriş Ekranı Arka Plan Resmi (URL)</label>
-                <input type="text" id="cfgLoginBg" class="form-control" placeholder="Resim URL yapıştırın">
-            </div>
-            <div class="form-group">
-                <label>En Üst Header Arka Plan Resmi (URL)</label>
-                <input type="text" id="cfgHeaderBg" class="form-control" placeholder="Resim URL yapıştırın">
-            </div>
-
-            <div class="settings-section-title"><i class="fa-solid fa-images"></i> 5'li Slider Banner Resimleri (Tüm Ürünler / Ana Sayfa)</div>
-            <div class="form-group"><label>1. Banner Fotoğrafı (URL)</label><input type="text" id="cfgBanner1" class="form-control" placeholder="Görsel URL"></div>
-            <div class="form-group"><label>2. Banner Fotoğrafı (URL)</label><input type="text" id="cfgBanner2" class="form-control" placeholder="Görsel URL"></div>
-            <div class="form-group"><label>3. Banner Fotoğrafı (URL)</label><input type="text" id="cfgBanner3" class="form-control" placeholder="Görsel URL"></div>
-            <div class="form-group"><label>4. Banner Fotoğrafı (URL)</label><input type="text" id="cfgBanner4" class="form-control" placeholder="Görsel URL"></div>
-            <div class="form-group"><label>5. Banner Fotoğrafı (URL)</label><input type="text" id="cfgBanner5" class="form-control" placeholder="Görsel URL"></div>
-
-            <div class="settings-section-title"><i class="fa-solid fa-panorama"></i> Kategoriye Özel 3'lü Slider Banner Resimleri (URL)</div>
-            
-            <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">🚗 Otomobil Kategorisi (3 Görsel)</div>
-            <div class="form-group"><input type="text" id="cfgOto1" class="form-control" placeholder="Otomobil 1. Görsel URL"></div>
-            <div class="form-group"><input type="text" id="cfgOto2" class="form-control" placeholder="Otomobil 2. Görsel URL"></div>
-            <div class="form-group"><input type="text" id="cfgOto3" class="form-control" placeholder="Otomobil 3. Görsel URL"></div>
-
-            <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">🚐 Hafif Ticari Kategorisi (3 Görsel)</div>
-            <div class="form-group"><input type="text" id="cfgTic1" class="form-control" placeholder="Ticari 1. Görsel URL"></div>
-            <div class="form-group"><input type="text" id="cfgTic2" class="form-control" placeholder="Ticari 2. Görsel URL"></div>
-            <div class="form-group"><input type="text" id="cfgTic3" class="form-control" placeholder="Ticari 3. Görsel URL"></div>
-
-            <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">🚜 Zirai Kategorisi (3 Görsel)</div>
-            <div class="form-group"><input type="text" id="cfgZir1" class="form-control" placeholder="Zirai 1. Görsel URL"></div>
-            <div class="form-group"><input type="text" id="cfgZir2" class="form-control" placeholder="Zirai 2. Görsel URL"></div>
-            <div class="form-group"><input type="text" id="cfgZir3" class="form-control" placeholder="Zirai 3. Görsel URL"></div>
-
-            <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">🚛 Ağır Vasıta Kategorisi (3 Görsel)</div>
-            <div class="form-group"><input type="text" id="cfgAgr1" class="form-control" placeholder="Ağır Vasıta 1. Görsel URL"></div>
-            <div class="form-group"><input type="text" id="cfgAgr2" class="form-control" placeholder="Ağır Vasıta 2. Görsel URL"></div>
-            <div class="form-group"><input type="text" id="cfgAgr3" class="form-control" placeholder="Ağır Vasıta 3. Görsel URL"></div>
-
-            <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">⭕ İç Lastik Kategorisi (3 Görsel)</div>
-            <div class="form-group"><input type="text" id="cfgIc1" class="form-control" placeholder="İç Lastik 1. Görsel URL"></div>
-            <div class="form-group"><input type="text" id="cfgIc2" class="form-control" placeholder="İç Lastik 2. Görsel URL"></div>
-            <div class="form-group"><input type="text" id="cfgIc3" class="form-control" placeholder="İç Lastik 3. Görsel URL"></div>
-
-            <div style="font-size:0.8rem; color:var(--accent-yellow); font-weight:700; margin-top:8px;">♻️ 2. El Kategorisi (3 Görsel)</div>
-            <div class="form-group"><input type="text" id="cfg2El1" class="form-control" placeholder="2. El 1. Görsel URL"></div>
-            <div class="form-group"><input type="text" id="cfg2El2" class="form-control" placeholder="2. El 2. Görsel URL"></div>
-            <div class="form-group"><input type="text" id="cfg2El3" class="form-control" placeholder="2. El 3. Görsel URL"></div>
-
-            <button class="btn-primary" style="background: #3b82f6; color: white; margin-top: 15px;" onclick="saveSettings()"><i class="fa-solid fa-floppy-disk"></i> Ayarları Kaydet</button>
         </div>
     </div>
 
