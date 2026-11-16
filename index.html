@@ -129,7 +129,7 @@
         .login-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center;
-            display: flex; justify-content: center; align-items: center; z-index: 2000;
+            display: flex; justify-content: flex-start; align-items: center; z-index: 2000;
             padding: 15px;
         }
         
@@ -455,9 +455,10 @@
         .btn-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); width: 28px; height: 28px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; }
         .btn-edit-price { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1.5px solid var(--accent-yellow); width: 28px; height: 28px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; }
 
-        /* ÜRÜN DETAY MODALI (İÇİ KAYDIRILABİLİR) */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.94); justify-content: center; align-items: center; z-index: 3000; padding: 10px; overflow: hidden; }
-        .modal-content { background: var(--card-bg); border-radius: 14px; padding: 18px 22px; width: 98vw; max-width: 1250px; height: 94vh; border: 2px solid rgba(245,158,11,0.7); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 30px 90px rgba(0,0,0,0.95); }
+        /* GENEL SOLA HİZALANMIŞ / KAYDIRILABİLİR MODAL YAPISI */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.94); justify-content: flex-start; align-items: center; z-index: 3000; padding: 10px; overflow-x: hidden; overflow-y: auto; }
+        
+        .modal-content { background: var(--card-bg); border-radius: 14px; padding: 18px 22px; width: 98vw; max-width: 1250px; height: 94vh; border: 2px solid rgba(245,158,11,0.7); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 30px 90px rgba(0,0,0,0.95); margin: auto 0 auto 10px; }
 
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; width: 100%; flex-shrink: 0; }
         .modal-header h3 { color: var(--accent-yellow); font-size: 1.25rem; font-weight: 900; }
@@ -516,17 +517,21 @@
         .photo-preview-grid { display: flex; gap: 8px; overflow-x: auto; margin-top: 8px; padding-bottom: 5px; }
         .preview-thumb { width: 65px; height: 65px; border-radius: 6px; object-fit: contain; background: #ffffff; padding: 3px; border: 1.5px solid var(--accent-yellow); flex-shrink: 0; }
 
-        /* BİLDİRİM MODALI (İÇİ KAYDIRILABİLİR) */
+        /* ÖZEL İÇERİK KAYDIRMA ALANLARI VE PENCERE BOYUTLARI */
         .notif-modal-content { max-width: 580px; width: 96%; height: 85vh; max-height: 650px; display: flex; flex-direction: column; overflow: hidden; }
         .notif-scroll-area { flex: 1; overflow-y: auto; padding-right: 4px; }
         .notif-scroll-area::-webkit-scrollbar { width: 6px; }
         .notif-scroll-area::-webkit-scrollbar-thumb { background: var(--accent-yellow); border-radius: 3px; }
 
-        /* AYARLAR MODALI (İÇİ KAYDIRILABİLİR) */
         .settings-modal-content { max-width: 540px; width: 96%; height: 90vh; max-height: 750px; display: flex; flex-direction: column; overflow: hidden; }
         .settings-scroll-area { flex: 1; overflow-y: auto; padding-right: 6px; }
         .settings-scroll-area::-webkit-scrollbar { width: 6px; }
         .settings-scroll-area::-webkit-scrollbar-thumb { background: var(--accent-yellow); border-radius: 3px; }
+
+        .product-modal-content { max-width: 480px; width: 96%; height: 90vh; max-height: 750px; display: flex; flex-direction: column; overflow: hidden; }
+        .product-scroll-area { flex: 1; overflow-y: auto; padding-right: 6px; }
+        .product-scroll-area::-webkit-scrollbar { width: 6px; }
+        .product-scroll-area::-webkit-scrollbar-thumb { background: var(--accent-yellow); border-radius: 3px; }
 
         .notif-section-card { background: rgba(15, 23, 42, 0.9); border: 1px solid var(--card-border); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
         .notif-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px; }
@@ -815,7 +820,7 @@
         </div>
     </footer>
 
-    <!-- ÜRÜN DETAY MODALI (İÇİ KAYDIRILABİLİR) -->
+    <!-- ÜRÜN DETAY MODALI -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -849,7 +854,7 @@
         </div>
     </div>
 
-    <!-- BİLDİRİM MODALI (İÇİ KAYDIRILABİLİR) -->
+    <!-- BİLDİRİM MODALI -->
     <div id="notifModal" class="modal">
         <div class="modal-content notif-modal-content">
             <div class="modal-header">
@@ -879,7 +884,7 @@
         </div>
     </div>
 
-    <!-- AYARLAR MODALI (İÇİ KAYDIRILABİLİR) -->
+    <!-- AYARLAR MODALI -->
     <div id="settingsModal" class="modal">
         <div class="modal-content settings-modal-content">
             <div class="modal-header">
@@ -967,178 +972,180 @@
         </div>
     </div>
 
-    <!-- YENİ ÜRÜN EKLE MODALI -->
-    <div id="productModal" class="modal" style="max-width: 480px; width: 96%; height: auto;">
-        <div class="modal-content" style="height: auto; max-height: 90vh;">
+    <!-- YENİ ÜRÜN EKLE / DÜZENLE MODALI -->
+    <div id="productModal" class="modal">
+        <div class="modal-content product-modal-content">
             <div class="modal-header">
                 <h3 id="modalTitleText"><i class="fa-solid fa-plus-circle"></i> Yeni Ürün Ekle</h3>
                 <span class="close-btn" onclick="closeModal('productModal')">&times;</span>
             </div>
 
-            <input type="hidden" id="editingProductId" value="">
-            <input type="hidden" id="pCustomLogoBase64" value="">
+            <div class="product-scroll-area">
+                <input type="hidden" id="editingProductId" value="">
+                <input type="hidden" id="pCustomLogoBase64" value="">
 
-            <div class="form-group">
-                <label>Ürün / Araç Grubu</label>
-                <select id="pGroupSelect" class="form-control" onchange="toggleGroupFields(this.value)">
-                    <option value="Otomobil">🚗 Otomobil Lastiği</option>
-                    <option value="Hafif Ticari">🚐 Hafif Ticari (Minibüs / Panelvan)</option>
-                    <option value="Zirai">🚜 Zirai Grubu (Traktör / İş Makinesi)</option>
-                    <option value="Ağır Vasıta">🚛 Ağır Vasıta (Kamyon / Tır)</option>
-                    <option value="İç Lastik">⭕ İç Lastik (Şambrel)</option>
-                    <option value="2. El">♻️ 2. El Lastik Grubu</option>
-                </select>
-            </div>
-
-            <div class="form-group" id="subCategorySelectGroup">
-                <label>Alt Kategori Seçimi</label>
-                <select id="pSubCat" class="form-control">
-                    <option value="Standart">Standart / Genel</option>
-                    <option value="Traktör Ön (Bezli)">Traktör Ön (Bezli)</option>
-                    <option value="Traktör Ön (Radial)">Traktör Ön (Radial)</option>
-                    <option value="Traktör Arka (Bezli)">Traktör Arka (Bezli)</option>
-                    <option value="Traktör Arka (Radial)">Traktör Arka (Radial)</option>
-                    <option value="Römork">Römork</option>
-                    <option value="Biçerdöver">Biçerdöver</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Ebat Seçin veya Yazın</label>
-                <select id="pSizeSelect" class="form-control" onchange="checkCustomSize(this)">
-                    <option value="165/80R13">165/80R13</option>
-                    <option value="175/65R14">175/65R14</option>
-                    <option value="185/65R15">185/65R15</option>
-                    <option value="195/65R15">195/65R15</option>
-                    <option value="205/55R16" selected>205/55R16</option>
-                    <option value="215/55R17">215/55R17</option>
-                    <option value="225/45R17">225/45R17</option>
-                    <option value="235/60R18">235/60R18</option>
-                    <option value="315/80R22.5">315/80R22.5 (Tır)</option>
-                    <option value="16.9-30">16.9-30 (Traktör)</option>
-                    <option value="Diger">Diğer (Manuel Ebat Yaz)</option>
-                </select>
-            </div>
-            <div class="form-group hidden" id="customSizeGroup">
-                <label>Manuel Ebat Girin</label>
-                <input type="text" id="pCustomSize" class="form-control" placeholder="Örn: 16.9-30, 315/80R22.5 Vb.">
-            </div>
-            
-            <div class="form-group">
-                <label>Marka Seçin veya Yazın</label>
-                <select id="pBrandSelect" class="form-control" onchange="checkCustomBrand(this)">
-                    <option value="Petlas">Petlas</option>
-                    <option value="Lassa">Lassa</option>
-                    <option value="Bridgestone">Bridgestone</option>
-                    <option value="Michelin">Michelin</option>
-                    <option value="Goodyear">Goodyear</option>
-                    <option value="Pirelli">Pirelli</option>
-                    <option value="Continental">Continental</option>
-                    <option value="Starmaxx">Starmaxx</option>
-                    <option value="Milestone">Milestone</option>
-                    <option value="Hankook">Hankook</option>
-                    <option value="Laufenn">Laufenn</option>
-                    <option value="Falken">Falken</option>
-                    <option value="Dunlop">Dunlop</option>
-                    <option value="Kabat">Kabat</option>
-                    <option value="BKT">BKT</option>
-                    <option value="Ozka">Özka</option>
-                    <option value="Seha">Seha</option>
-                    <option value="Alliance">Alliance</option>
-                    <option value="Diger">Diğer (Manuel Yaz)</option>
-                </select>
-            </div>
-            <div class="form-group hidden" id="customBrandGroup">
-                <label>Manuel Marka Adı</label>
-                <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Sava, Matador Vb.">
-            </div>
-
-            <div class="form-group" id="normalLogoGroup">
-                <label><i class="fa-solid fa-file-image" style="color: var(--accent-yellow);"></i> Bilgisayar İçin Marka Logosu (Şeffaf PNG)</label>
-                <div class="file-upload-box" onclick="document.getElementById('logoFileInput').click()">
-                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 1.3rem; color: var(--accent-yellow); margin-bottom: 4px;"></i>
-                    <p id="fileUploadText" style="font-size: 0.8rem; color: var(--text-muted);">Bilgisayarınızdan şeffaf PNG logosu seçebilirsiniz</p>
-                    <input type="file" id="logoFileInput" accept="image/png, image/webp, image/svg+xml" style="display:none;" onchange="handleLogoUpload(this)">
+                <div class="form-group">
+                    <label>Ürün / Araç Grubu</label>
+                    <select id="pGroupSelect" class="form-control" onchange="toggleGroupFields(this.value)">
+                        <option value="Otomobil">🚗 Otomobil Lastiği</option>
+                        <option value="Hafif Ticari">🚐 Hafif Ticari (Minibüs / Panelvan)</option>
+                        <option value="Zirai">🚜 Zirai Grubu (Traktör / İş Makinesi)</option>
+                        <option value="Ağır Vasıta">🚛 Ağır Vasıta (Kamyon / Tır)</option>
+                        <option value="İç Lastik">⭕ İç Lastik (Şambrel)</option>
+                        <option value="2. El">♻️ 2. El Lastik Grubu</option>
+                    </select>
                 </div>
-                <div id="logoPreviewContainer" style="margin-top: 6px; text-align: center; display: none;">
-                    <img id="logoPreviewImg" src="" style="max-height: 40px; background: rgba(255,255,255,0.1); padding: 4px; border-radius: 4px;">
-                    <button type="button" style="background: var(--danger-color); color: white; border: none; padding: 2px 6px; border-radius: 4px; font-size: 0.72rem; margin-left: 8px; cursor: pointer;" onclick="clearUploadedLogo()">Kaldır</button>
-                </div>
-            </div>
 
-            <div class="form-group hidden" id="usedTirePhotosGroup">
-                <label><i class="fa-solid fa-camera-retro" style="color: var(--accent-yellow);"></i> 2. El Lastik Fotoğrafları (En Fazla 4 Adet Çekin / Seçin)</label>
-                <div class="file-upload-box" onclick="document.getElementById('usedTirePhotosInput').click()">
-                    <i class="fa-solid fa-camera" style="font-size: 1.3rem; color: var(--accent-yellow); margin-bottom: 4px;"></i>
-                    <p id="usedTireUploadText" style="font-size: 0.8rem; color: var(--text-muted);">Telefon kamerasını açmak ve 4 fotoğraf seçmek için tıklayın</p>
-                    <input type="file" id="usedTirePhotosInput" accept="image/*" multiple style="display:none;" onchange="handleUsedTirePhotosUpload(this)">
+                <div class="form-group" id="subCategorySelectGroup">
+                    <label>Alt Kategori Seçimi</label>
+                    <select id="pSubCat" class="form-control">
+                        <option value="Standart">Standart / Genel</option>
+                        <option value="Traktör Ön (Bezli)">Traktör Ön (Bezli)</option>
+                        <option value="Traktör Ön (Radial)">Traktör Ön (Radial)</option>
+                        <option value="Traktör Arka (Bezli)">Traktör Arka (Bezli)</option>
+                        <option value="Traktör Arka (Radial)">Traktör Arka (Radial)</option>
+                        <option value="Römork">Römork</option>
+                        <option value="Biçerdöver">Biçerdöver</option>
+                    </select>
                 </div>
-                <div id="usedTirePhotoPreviewGrid" class="photo-preview-grid"></div>
-                <button type="button" id="clearUsedPhotosBtn" class="hidden" style="background: var(--danger-color); color: white; border: none; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; margin-top: 6px; cursor: pointer;" onclick="clearUsedTirePhotos()"><i class="fa-solid fa-trash"></i> Tüm Fotoğrafları Sil / Temizle</button>
-            </div>
 
-            <div id="usedTireExtraFields" class="hidden" style="background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; border: 1px dashed var(--accent-yellow); margin-bottom: 12px;">
-                <div style="font-size: 0.82rem; font-weight: 800; color: var(--accent-yellow); margin-bottom: 8px;"><i class="fa-solid fa-circle-info"></i> 2. El Detaylı Bilgileri</div>
+                <div class="form-group">
+                    <label>Ebat Seçin veya Yazın</label>
+                    <select id="pSizeSelect" class="form-control" onchange="checkCustomSize(this)">
+                        <option value="165/80R13">165/80R13</option>
+                        <option value="175/65R14">175/65R14</option>
+                        <option value="185/65R15">185/65R15</option>
+                        <option value="195/65R15">195/65R15</option>
+                        <option value="205/55R16" selected>205/55R16</option>
+                        <option value="215/55R17">215/55R17</option>
+                        <option value="225/45R17">225/45R17</option>
+                        <option value="235/60R18">235/60R18</option>
+                        <option value="315/80R22.5">315/80R22.5 (Tır)</option>
+                        <option value="16.9-30">16.9-30 (Traktör)</option>
+                        <option value="Diger">Diğer (Manuel Ebat Yaz)</option>
+                    </select>
+                </div>
+                <div class="form-group hidden" id="customSizeGroup">
+                    <label>Manuel Ebat Girin</label>
+                    <input type="text" id="pCustomSize" class="form-control" placeholder="Örn: 16.9-30, 315/80R22.5 Vb.">
+                </div>
                 
                 <div class="form-group">
-                    <label>Tahmini Yapılan Kilometre (KM)</label>
-                    <input type="text" id="pUsedKm" class="form-control" placeholder="Örn: 20.000 KM veya Az Kullanılmış">
+                    <label>Marka Seçin veya Yazın</label>
+                    <select id="pBrandSelect" class="form-control" onchange="checkCustomBrand(this)">
+                        <option value="Petlas">Petlas</option>
+                        <option value="Lassa">Lassa</option>
+                        <option value="Bridgestone">Bridgestone</option>
+                        <option value="Michelin">Michelin</option>
+                        <option value="Goodyear">Goodyear</option>
+                        <option value="Pirelli">Pirelli</option>
+                        <option value="Continental">Continental</option>
+                        <option value="Starmaxx">Starmaxx</option>
+                        <option value="Milestone">Milestone</option>
+                        <option value="Hankook">Hankook</option>
+                        <option value="Laufenn">Laufenn</option>
+                        <option value="Falken">Falken</option>
+                        <option value="Dunlop">Dunlop</option>
+                        <option value="Kabat">Kabat</option>
+                        <option value="BKT">BKT</option>
+                        <option value="Ozka">Özka</option>
+                        <option value="Seha">Seha</option>
+                        <option value="Alliance">Alliance</option>
+                        <option value="Diger">Diğer (Manuel Yaz)</option>
+                    </select>
                 </div>
+                <div class="form-group hidden" id="customBrandGroup">
+                    <label>Manuel Marka Adı</label>
+                    <input type="text" id="pCustomBrand" class="form-control" placeholder="Örn: Sava, Matador Vb.">
+                </div>
+
+                <div class="form-group" id="normalLogoGroup">
+                    <label><i class="fa-solid fa-file-image" style="color: var(--accent-yellow);"></i> Bilgisayar İçin Marka Logosu (Şeffaf PNG)</label>
+                    <div class="file-upload-box" onclick="document.getElementById('logoFileInput').click()">
+                        <i class="fa-solid fa-cloud-arrow-up" style="font-size: 1.3rem; color: var(--accent-yellow); margin-bottom: 4px;"></i>
+                        <p id="fileUploadText" style="font-size: 0.8rem; color: var(--text-muted);">Bilgisayarınızdan şeffaf PNG logosu seçebilirsiniz</p>
+                        <input type="file" id="logoFileInput" accept="image/png, image/webp, image/svg+xml" style="display:none;" onchange="handleLogoUpload(this)">
+                    </div>
+                    <div id="logoPreviewContainer" style="margin-top: 6px; text-align: center; display: none;">
+                        <img id="logoPreviewImg" src="" style="max-height: 40px; background: rgba(255,255,255,0.1); padding: 4px; border-radius: 4px;">
+                        <button type="button" style="background: var(--danger-color); color: white; border: none; padding: 2px 6px; border-radius: 4px; font-size: 0.72rem; margin-left: 8px; cursor: pointer;" onclick="clearUploadedLogo()">Kaldır</button>
+                    </div>
+                </div>
+
+                <div class="form-group hidden" id="usedTirePhotosGroup">
+                    <label><i class="fa-solid fa-camera-retro" style="color: var(--accent-yellow);"></i> 2. El Lastik Fotoğrafları (En Fazla 4 Adet Çekin / Seçin)</label>
+                    <div class="file-upload-box" onclick="document.getElementById('usedTirePhotosInput').click()">
+                        <i class="fa-solid fa-camera" style="font-size: 1.3rem; color: var(--accent-yellow); margin-bottom: 4px;"></i>
+                        <p id="usedTireUploadText" style="font-size: 0.8rem; color: var(--text-muted);">Telefon kamerasını açmak ve 4 fotoğraf seçmek için tıklayın</p>
+                        <input type="file" id="usedTirePhotosInput" accept="image/*" multiple style="display:none;" onchange="handleUsedTirePhotosUpload(this)">
+                    </div>
+                    <div id="usedTirePhotoPreviewGrid" class="photo-preview-grid"></div>
+                    <button type="button" id="clearUsedPhotosBtn" class="hidden" style="background: var(--danger-color); color: white; border: none; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; margin-top: 6px; cursor: pointer;" onclick="clearUsedTirePhotos()"><i class="fa-solid fa-trash"></i> Tüm Fotoğrafları Sil / Temizle</button>
+                </div>
+
+                <div id="usedTireExtraFields" class="hidden" style="background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; border: 1px dashed var(--accent-yellow); margin-bottom: 12px;">
+                    <div style="font-size: 0.82rem; font-weight: 800; color: var(--accent-yellow); margin-bottom: 8px;"><i class="fa-solid fa-circle-info"></i> 2. El Detaylı Bilgileri</div>
+                    
+                    <div class="form-group">
+                        <label>Tahmini Yapılan Kilometre (KM)</label>
+                        <input type="text" id="pUsedKm" class="form-control" placeholder="Örn: 20.000 KM veya Az Kullanılmış">
+                    </div>
+                    <div class="form-group">
+                        <label>Diş Derinliği (mm)</label>
+                        <input type="text" id="pUsedTread" class="form-control" placeholder="Örn: 5.5 mm / Dişleri Çok İyi">
+                    </div>
+                    <div class="form-group">
+                        <label>Marka / Set Kombinasyonu (Çeşit)</label>
+                        <input type="text" id="pUsedCombo" class="form-control" placeholder="Örn: 2 Adet Lassa, 2 Adet Petlas Vb.">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>Kusur / Özel Açıklama Notu</label>
+                        <input type="text" id="pUsedNote" class="form-control" placeholder="Örn: Yanak kısmında ufak yüzey çiziği var, yama yok">
+                    </div>
+                </div>
+
                 <div class="form-group">
-                    <label>Diş Derinliği (mm)</label>
-                    <input type="text" id="pUsedTread" class="form-control" placeholder="Örn: 5.5 mm / Dişleri Çok İyi">
+                    <label>Lastik Deseni / Diş Durumu / Özellik</label>
+                    <input type="text" id="pPattern" class="form-control" placeholder="Örn: PT741, Traktör Dişli, 5mm Vb.">
                 </div>
+
+                <div class="form-group" id="seasonGroup">
+                    <label>Mevsim / Tür</label>
+                    <select id="pSeason" class="form-control">
+                        <option value="Yaz">Yaz</option>
+                        <option value="Kış">Kış</option>
+                        <option value="4 Mevsim">4 Mevsim</option>
+                    </select>
+                </div>
+
                 <div class="form-group">
-                    <label>Marka / Set Kombinasyonu (Çeşit)</label>
-                    <input type="text" id="pUsedCombo" class="form-control" placeholder="Örn: 2 Adet Lassa, 2 Adet Petlas Vb.">
+                    <label>DOT (Üretim Yılı)</label>
+                    <input type="text" id="pDot" class="form-control" placeholder="Örn: 2026">
                 </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label>Kusur / Özel Açıklama Notu</label>
-                    <input type="text" id="pUsedNote" class="form-control" placeholder="Örn: Yanak kısmında ufak yüzey çiziği var, yama yok">
+
+                <div class="form-group">
+                    <label>Stok Adedi</label>
+                    <input type="number" id="pStock" class="form-control" value="2">
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label>Lastik Deseni / Diş Durumu / Özellik</label>
-                <input type="text" id="pPattern" class="form-control" placeholder="Örn: PT741, Traktör Dişli, 5mm Vb.">
-            </div>
-
-            <div class="form-group" id="seasonGroup">
-                <label>Mevsim / Tür</label>
-                <select id="pSeason" class="form-control">
-                    <option value="Yaz">Yaz</option>
-                    <option value="Kış">Kış</option>
-                    <option value="4 Mevsim">4 Mevsim</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>DOT (Üretim Yılı)</label>
-                <input type="text" id="pDot" class="form-control" placeholder="Örn: 2026">
-            </div>
-
-            <div class="form-group">
-                <label>Stok Adedi</label>
-                <input type="number" id="pStock" class="form-control" value="2">
-            </div>
-
-            <div class="form-group">
-                <label>Birim Satış Fiyatı (TL)</label>
-                <div class="input-with-btn">
-                    <input type="number" id="pPrice" class="form-control" placeholder="Örn: 1000">
-                    <button class="btn-search-img" type="button" onclick="openKarModal()"><i class="fa-solid fa-percent"></i> Kar Hesapla</button>
+                <div class="form-group">
+                    <label>Birim Satış Fiyatı (TL)</label>
+                    <div class="input-with-btn">
+                        <input type="number" id="pPrice" class="form-control" placeholder="Örn: 1000">
+                        <button class="btn-search-img" type="button" onclick="openKarModal()"><i class="fa-solid fa-percent"></i> Kar Hesapla</button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group" id="normalImgUrlGroup">
-                <label>Ürün Görsel Bağlantısı (URL)</label>
-                <div class="input-with-btn">
-                    <input type="text" id="pImg" class="form-control" placeholder="Ürün resmi URL kopyalayıp yapıştırın">
-                    <button class="btn-search-img" type="button" onclick="openGoogleSearch('resim')"><i class="fa-solid fa-arrow-up-right-from-square"></i> Resim Ara</button>
+                <div class="form-group" id="normalImgUrlGroup">
+                    <label>Ürün Görsel Bağlantısı (URL)</label>
+                    <div class="input-with-btn">
+                        <input type="text" id="pImg" class="form-control" placeholder="Ürün resmi URL kopyalayıp yapıştırın">
+                        <button class="btn-search-img" type="button" onclick="openGoogleSearch('resim')"><i class="fa-solid fa-arrow-up-right-from-square"></i> Resim Ara</button>
+                    </div>
                 </div>
-            </div>
 
-            <button class="btn-primary" style="background: var(--success-color); color: white;" onclick="saveProduct()"><i class="fa-solid fa-check"></i> Ürünü Kaydet</button>
+                <button class="btn-primary" style="background: var(--success-color); color: white; margin-bottom: 10px;" onclick="saveProduct()"><i class="fa-solid fa-check"></i> Ürünü Kaydet</button>
+            </div>
         </div>
     </div>
 
